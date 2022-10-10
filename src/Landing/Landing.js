@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import "./Landing.css";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import MyCard from '../MyCard'
 
 const Landing = () => {
   return (
@@ -349,6 +350,15 @@ const Landing = () => {
             </div>
           </div>
         </div>
+      </div>
+      {/* -------------------------Special Offers & Discount----------------------------- */}
+      <div>
+        <h3>Special Offers & Discount</h3>
+        <p>Lorem Ipsum is simply dummy text the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,</p>
+        
+        {/* ---------------CARDS----START */}
+        <MyCard/>
+        {/* ---------------CARDS----END */}
       </div>
     </>
   );
