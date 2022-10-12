@@ -1,9 +1,18 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import "react-multi-carousel/lib/styles.css";
 import "./Landing.css";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import MyCard from '../MyCard'
+import MyCard from "../MyCard";
+import { styled } from "@mui/material/styles";
+import Box from "@mui/material/Box";
+import Paper from "@mui/material/Paper";
+import Grid from "@mui/material/Grid";
+import { Container } from "@mui/material";
+import videoplayback from "../Assets/videoplayback.mp4";
+import CardSlider from "../CardSlider";
+import "../CardSlider.css";
+import { TopDes } from "../TopDes";
+import Footer from "../Footer/Footer";
 
 const Landing = () => {
   return (
@@ -24,6 +33,7 @@ const Landing = () => {
                           aria-controls="flights"
                           role="tab"
                           data-toggle="tab"
+                          className="active"
                         >
                           Flights
                         </a>
@@ -115,7 +125,7 @@ const Landing = () => {
                               </select>
                             </section>
                           </div> */}
-             
+
                           <div className="col-xxs-12  col-xs-6 col-md-6 mt">
                             <section>
                               <label for="className">Adult:</label>
@@ -352,14 +362,97 @@ const Landing = () => {
         </div>
       </div>
       {/* -------------------------Special Offers & Discount----------------------------- */}
-      <div>
-        <h3>Special Offers & Discount</h3>
-        <p>Lorem Ipsum is simply dummy text the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,</p>
-        
-        {/* ---------------CARDS----START */}
-        <MyCard/>
-        {/* ---------------CARDS----END */}
-      </div>
+      <Container>
+        <div className="mt-5">
+          <h3>Special Offers & Discount</h3>
+          <p>
+            Lorem Ipsum is simply dummy text the printing and typesetting
+            industry. Lorem Ipsum has been the industry's standard dummy text
+            ever since the 1500s,
+          </p>
+
+          {/* ---------------CARDS----START */}
+          <MyCard />
+          {/* ---------------CARDS----END */}
+        </div>
+
+        {/* -----ABOUT-US-START----------- */}
+        <Grid container className="mt-5">
+          <Grid xs={12} lg={6}>
+            <Box style={{ textAlign: "center", padding: "52px 04px" }}>
+              <h3>What You Know About Pakistan?</h3>
+              <p style={{ textAlign: "justify", marginTop: "10px" }}>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
+                urna lectus, lacinia ut magna eu, congue dictum libero.
+                Curabitur est elit, scelerisque nec congue quis, rutrum non
+                enim. Fusce hendrerit aliquam ipsum, et finibus ligula. Aliquam
+                vitae pellentesque neque. Nulla ac augue dictum, tincidunt nibh
+                a, venenatis libero. Vestibulum euismod leo ex, sit amet ornare
+                ex scelerisque blandit. Quisque blandit orci quis varius
+                tincidunt. Nullam gravida egestas scelerisque. Cras feugiat
+                ligula vitae varius finibus. Vivamus fringilla ultricies leo
+                eget suscipit. Morbi imperdiet velit eu ipsum euismod finibus.{" "}
+              </p>
+            </Box>
+          </Grid>
+          <Grid xs={12} lg={6} style={{ padding: "30px" }}>
+            <Box>
+              <video width="100%" controls loop={true}>
+                <source src={videoplayback} />
+              </video>
+            </Box>
+          </Grid>
+        </Grid>
+        {/* -----ABOUT-US-END----------- */}
+
+        {/* ---HOLIDAY_PLANS_START------ */}
+
+        <Box className="mt-5" style={{ textAlign: "center" }}>
+          <h3>Perfect Holiday Plan</h3>
+          <p>
+            No vis fastidii accumsan, ignota postulant ea mea. Vis et prima
+            integre, ei vis ridens moderatius reformidans cu vim doctus accumsan
+            ignota.
+          </p>
+        </Box>
+
+        <CardSlider />
+
+        {/* ---HOLIDAY_PLANS_END------ */}
+
+        {/* -----ARTICLES--- */}
+        <Grid container className="mt-5">
+          <Grid xs={12} lg={12}>
+            <div style={{ position: "relative", textAlign: "center" }}>
+              <Link to="/artciles">
+                <img
+                  src="https://i.dawn.com/primary/2019/01/5c2c5a5cdbc6a.jpg"
+                  alt=""
+                  width="80%"
+                  style={{}}
+                />
+                <p
+                  style={{
+                    position: "absolute",
+                    top: "50%",
+                    fontSize: "29px",
+                    color: "white",
+                    width: " 100%",
+                  }}
+                >
+                  CUSTOMS AND CUISINE OF PAKISTAN
+                </p>
+              </Link>
+            </div>
+          </Grid>
+        </Grid>
+        {/* -----ARTICLES--- */}
+
+        {/* ----TOP DESTINATION-START---- */}
+        <TopDes />
+        {/* ----TOP DESTINATION-END---- */}
+      </Container>
+      <Footer />
     </>
   );
 };

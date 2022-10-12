@@ -1,0 +1,105 @@
+.react-multi-carousel-list {
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+    margin-top: 30px;
+}
+.mur{
+    margin: 0 20px;
+    text-align: center;
+    cursor: pointer;
+}
+.react-multi-carousel-item:hover{
+    color: blue;
+    /* border: 1px solid rgb(255, 254, 254); */
+    transition: .3s ease-in-out;
+    box-shadow: -1px 6px 17px 0px rgba(0,0,0,0.75);
+-webkit-box-shadow: -1px 6px 17px 0px rgba(0,0,0,0.75);
+-moz-box-shadow: -1px 6px 17px 0px rgba(0,0,0,0.75);
+}
+.react-multiple-carousel__arrow {
+    position: absolute;
+    outline: 0;
+    transition: all .5s;
+    border-radius: 35px;
+    z-index: 1000;
+    border: 0;
+    background: rgba(255, 255, 255, 0.5);
+    min-width: 43px;
+    min-height: 43px;
+    opacity: 1;
+    cursor: pointer;
+    margin: 0px -63px;
+
+}
+.react-multiple-carousel__arrow::before {
+    font-size: 20px;
+    color: rgb(0, 0, 0);
+    display: block;
+    font-family: revicons;
+    text-align: center;
+    z-index: 2;
+    position: relative;
+}
+.react-multiple-carousel__arrow:hover{
+    background-color: white;
+    color: black;
+}
+
+.murree{
+    background-image: url('https://media.istockphoto.com/photos/co-murree-islamabad-pakistan-picture-id1323614314?b=1&k=20&m=1323614314&s=170667a&w=0&h=YVf2Bffdto8Xui2nUBO8vthMv7jYGdDlxPfX9FUiTnU=');
+    width: 100%;
+    height: 348px;
+    background-repeat: no-repeat;
+    background-size: inherit;
+    filter: brightness(.5);
+}
+.murree:hover{
+    filter: brightness(.7);
+}
+.cholistan{
+    background-image: url('https://media.istockphoto.com/photos/jamgarh-fort-pakistan-picture-id953180082?b=1&k=20&m=953180082&s=170667a&w=0&h=-nCIANvpt1T0fZgzn9IA9eyg-d_qb4DaRYM3mqVcOCk=');
+    width: 100%;
+    height: 348px;
+    background-repeat: no-repeat;
+    background-size: inherit;
+    filter: brightness(.5);
+}
+.cholistan:hover{
+    filter: brightness(.7);
+}
+.chitral{
+    background-image: url('https://media.istockphoto.com/photos/water-stream-trees-and-mountains-picture-picture-id1217782500?b=1&k=20&m=1217782500&s=170667a&w=0&h=jnJE3mJLiSKRLmW-8kre2fnZa2zRkIlyCTZRu3AYVGI=');
+    width: 100%;
+    height: 348px;
+    background-repeat: no-repeat;
+    background-size: inherit;
+    filter: brightness(.5);
+}
+.chitral:hover{
+    filter: brightness(.7);
+}
+.Kalam{
+    background-image: url('https://media.istockphoto.com/photos/kalam-valley-picture-id1416783245?b=1&k=20&m=1416783245&s=170667a&w=0&h=ZDRRiTl1c5UpRhfHtD3JC6ZMYT1vT-GdO40BxJEK2sA=');
+    width: 100%;
+    height: 348px;
+    background-repeat: no-repeat;
+    background-size: inherit;
+    filter: brightness(.5);
+}
+.Kalam:hover{
+    filter: brightness(.7);
+}
+.mur{
+    position: relative;
+}
+.titles{
+    top: 50%;
+    z-index: 10000000;
+    position: absolute;
+    color: rgb(255 255 255);
+    z-index: 1000000000;
+    width: 100%;
+    text-align: center;
+}
