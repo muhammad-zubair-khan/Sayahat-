@@ -5,7 +5,7 @@ import {
 import { Link } from "react-router-dom";
 import logo from "../Assets/logo/SAYAHAT.png";
 import { useScrollTrigger } from "@mui/material";
-import React from "react";
+import React,{useState,useEffect} from "react";
 import "./Navbar.css";
 
 function ChangeColorOnScroll(props) {
@@ -17,11 +17,34 @@ function ChangeColorOnScroll(props) {
   });
 
   return React.cloneElement(children, {
-    style: { background: trigger ? "white" : "transparent" },
+    style: { background: trigger ? "white" : "white", },
   });
 }
 
+
 const Navbar = (props) => {
+  
+  const [prevScrollPos, setPrevScrollPos] = useState(0);
+const [visible, setVisible] = useState(true)
+
+const handleScroll = () => {
+    const currentScrollPos = window.scrollY
+
+    if(currentScrollPos > prevScrollPos){
+        setVisible(false)
+    }else{
+        setVisible(true)
+    }
+
+    setPrevScrollPos(currentScrollPos)
+}
+
+useEffect( () => {
+    window.addEventListener('scroll', handleScroll);
+
+    return () => window.removeEventListener('scroll', handleScroll)
+})
+
   const theme = useTheme();
   console.log(theme);
   const isMatch = useMediaQuery(theme.breakpoints.down("md"));
@@ -73,16 +96,16 @@ const Navbar = (props) => {
                 </li>
 
                 <li>
-                  <Link to="/Hotels">Hotels</Link>
+                  <Link to="/hotels">Hotels</Link>
                 </li>
                 <li>
-                  <Link to="/Cars">Cars</Link>
+                  <Link to="/cars">Cars</Link>
                 </li>
                 <li>
-                  <Link to="/Aboutus">About us</Link>
+                  <Link to="/aboutus">About us</Link>
                 </li>
                 <li>
-                  <Link to="/Contactus">Contact Us</Link>
+                  <Link to="/contactus">Contact Us</Link>
                 </li>
               </ul>
             </div>
