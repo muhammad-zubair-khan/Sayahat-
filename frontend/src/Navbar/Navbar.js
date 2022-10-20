@@ -3,7 +3,7 @@ import {
   useTheme,
 } from "@mui/material";
 import { Link } from "react-router-dom";
-import logo from "../Assets/logo/SAYAHAT.png";
+import logo from "../Assets/logo/logo-no-background.png";
 import { useScrollTrigger } from "@mui/material";
 import React,{useState,useEffect} from "react";
 import "./Navbar.css";
@@ -17,7 +17,7 @@ function ChangeColorOnScroll(props) {
   });
 
   return React.cloneElement(children, {
-    style: { background: trigger ? "white" : "white", },
+    style: { background: trigger ? "black" : "transparent",},
   });
 }
 
@@ -78,19 +78,19 @@ useEffect( () => {
                   <label for="show-features">Vacations</label>
                   <ul>
                     <li>
-                      <Link to="/Karachi">Karachi</Link>
+                      <Link to="/Karachi" className="menues" >Karachi</Link>
                     </li>
                     <li>
-                      <Link to="/Lahore">Lahore</Link>
+                      <Link to="/Lahore" className="menues" >Lahore</Link>
                     </li>
                     <li>
-                      <Link to="/Islamabad">Islamabad</Link>
+                      <Link to="/Islamabad" className="menues" >Islamabad</Link>
                     </li>
                     <li>
-                      <Link to="/Peshawar">Peshawar</Link>
+                      <Link to="/Peshawar" className="menues" >Peshawar</Link>
                     </li>
                     <li>
-                      <Link to="/Kashmir">Kashmir</Link>
+                      <Link to="/Kashmir" className="menues" >Kashmir</Link>
                     </li>
                   </ul>
                 </li>

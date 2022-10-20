@@ -99,7 +99,7 @@ const Landing = () => {
           <div className="desc">
             <div className="container">
               <div className="row">
-                <div className="col-sm-5 col-md-5">
+                <div className="col-sm-12 col-md-5 col-lg-5">
                   <div className="tabulation animate-box">
                     {/* <!-- Nav tabs --> */}
                     <ul className="nav nav-tabs" role="tablist">
@@ -109,7 +109,7 @@ const Landing = () => {
                           aria-controls="cars"
                           role="tab"
                           data-toggle="tab"
-                          className="active"
+                          className="active tab-menu"
                         >
                           Cars
                         </a>
@@ -120,6 +120,8 @@ const Landing = () => {
                           aria-controls="stays"
                           role="tab"
                           data-toggle="tab"
+                        className="tab-menu"
+
                         >
                           Stays
                         </a>
@@ -130,6 +132,8 @@ const Landing = () => {
                           aria-controls="packages"
                           role="tab"
                           data-toggle="tab"
+                        className="tab-menu"
+
                         >
                           Packages
                         </a>
@@ -174,10 +178,10 @@ const Landing = () => {
                           </div>
                           <div className="col-xxs-12 col-xs-6 mt alternate">
                             <div className="input-field search-item">
-                              <CalendarMonthIcon style={{ color: "black" }} />
+                              <CalendarMonthIcon style={{ color: "white" }} />
                               <span
                                 style={{
-                                  color: "rgba(0, 0, 0, 0.5)",
+                                  color: "rgba(255, 255, 255, 0.8)",
                                   fontSize: "14px",
                                 }}
                                 onClick={() => setOpenDate(!openDate)}
@@ -227,10 +231,11 @@ const Landing = () => {
 
                           <div className="col-xxs-12 col-xs-6 mt alternate">
                             <div className="input-field search-item">
-                              <CalendarMonthIcon style={{ color: "black" }} />
+                              <CalendarMonthIcon style={{ color: "white" }} />
                               <span
                                 style={{
-                                  color: "rgba(0, 0, 0, 0.5)",
+                                  color: "rgba(255, 255, 255, 0.8)",
+                                  
                                   fontSize: "14px",
                                 }}
                                 onClick={() => setOpenHotelDate(!openHotelDate)}
@@ -260,7 +265,8 @@ const Landing = () => {
                             <section>
                               <span
                                 style={{
-                                  color: "rgba(0, 0, 0, 0.5)",
+                                  color: "rgba(255, 255, 255, 0.8)",
+
                                   fontSize: "14px",
                                   cursor: "pointer",
                                 }}
@@ -422,10 +428,11 @@ const Landing = () => {
                           </div>
                           <div className="col-xxs-12 col-xs-6 mt alternate">
                             <div className="input-field search-item">
-                              <CalendarMonthIcon style={{ color: "black" }} />
+                              <CalendarMonthIcon style={{ color: "white" }} />
                               <span
                                 style={{
-                                  color: "rgba(0, 0, 0, 0.5)",
+                                  color: "rgba(255, 255, 255, 0.8)",
+
                                   fontSize: "14px",
                                 }}
                                 onClick={() =>
@@ -458,7 +465,7 @@ const Landing = () => {
                             <section>
                               <span
                                 style={{
-                                  color: "rgba(0, 0, 0, 0.5)",
+                                  color: "rgba(255, 255, 255, 0.8)",
                                   fontSize: "14px",
                                   cursor: "pointer",
                                 }}
@@ -601,13 +608,12 @@ const Landing = () => {
                     </div>
                   </div>
                 </div>
-                {/* <div className="desc2 animate-box">
-								<div className="col-sm-7 col-sm-push-1 col-md-7 col-md-push-1">
-									<h3>Fly to Hong Kong via Los Angeles, USA</h3>
-									<span className="price">$599</span>
-									<p><Link className="btn btn-primary btn-lg" href="#">Get Started</Link></p>
+                <div className="desc2 animate-box col-md-7 col-sm-12 col-lg-7">
+								<div>
+									<h2>Be a Traveler not a <br/> Tourist</h2>
+									<span style={{color:'#c3bfbf'}}>Travel to the any corner of the world, without going around in circles</span>
 								</div>
-							</div> */}
+							</div>
               </div>
             </div>
           </div>

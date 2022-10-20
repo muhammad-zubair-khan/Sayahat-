@@ -46,8 +46,8 @@ nav .content .links {
 }
 .content .links li a,
 .content .links li label {
-  /* color: #fff; */
-  color: #000000;
+  color: #fff;
+  /* color: #000000; */
   font-size: 18px;
   font-weight: 500;
   padding: 9px 10px;
@@ -55,6 +55,9 @@ nav .content .links {
   transition: all 0.3s ease;
   /* font-family: 'Times New Roman', Times, serif; */
   font-family: system-ui;
+}
+.menues{
+  color: black !important;
 }
 .content .links li label {
   display: none;
