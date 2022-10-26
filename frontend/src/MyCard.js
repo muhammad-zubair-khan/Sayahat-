@@ -106,12 +106,17 @@ const MyCard = () => {
 
   let [progress, setprogress] = useState(34);
 
+  // const [isDisabled, setDisabled] = useState(false);
+
   let countIncrement = () => {
     if (count < 3) {
       setcount(count + 1);
       setprogress(progress + 34);
     } else {
-      document.getElementById("nextBtn").disabled = true;
+      document.getElementById("nextBtn").style.display = 'none';
+      // setDisabled(true);
+      // buttonRef.current.disabled = true;
+      console.log("disabled")
     }
   };
 
@@ -119,6 +124,8 @@ const MyCard = () => {
     if (count > 1) {
       setcount(count - 1);
       setprogress(progress - 34);
+      document.getElementById("nextBtn").style.display = 'block';
+
     }
   };
   return (
@@ -132,6 +139,7 @@ const MyCard = () => {
               type="button"
               data-bs-target="#carouselExampleIndicators"
               data-bs-slide="prev"
+              
             >
               <span
                 className="carousel-control-prev-icon"
@@ -146,7 +154,8 @@ const MyCard = () => {
               type="button"
               data-bs-target="#carouselExampleIndicators"
               data-bs-slide="next"
-              disabled={count >= 3}
+              // disabled={count >= 3}
+              // disabled={isDisabled}
             >
               <span
                 className="carousel-control-next-icon"
@@ -180,7 +189,7 @@ const MyCard = () => {
                 <div className="carousel-item active">
                   <div className="container text-center">
                     <div className="row">
-                      {cardData.map((data) => {
+                      { cardData.map((data) => {
                         return (
                           <div className="col-md-4">
                             <div className="card">
