@@ -1,0 +1,46 @@
+.bgCarousel {
+    background-color: #071C55;
+}
+
+.btnPrev {
+    background-color: transparent;
+    position: absolute;
+    top: 150px;
+    left: 100px;
+    border: 1px solid white;
+    border-radius: 50%;
+    padding: 5px;
+}
+
+.btnPrev:hover {
+    border: 1px solid goldenrod;
+}
+
+.btnNext {
+    background-color: transparent;
+    position: absolute;
+    top: 150px;
+    left: 200px;
+    border: 1px solid white;
+    border-radius: 50%;
+    padding: 5px;
+}
+
+.btnNext:hover {
+    border: 1px solid goldenrod;
+}
+
+.countOfCard {
+    color: white;
+    position: absolute;
+    top: 250px;
+    left: 100px;
+
+}
+
+.stepBar {
+    position: relative;
+    top: 310px;
+    left: 90px;
+    width: 40%;
+}
