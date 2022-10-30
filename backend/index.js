@@ -19,6 +19,9 @@ process.on("uncaughtException", (err) => {
 const adminRoutes = require('./Routes/user');
 app.use('/api', adminRoutes);
 
+const vacationCategoryRoutes = require('./Routes/vacationCategory');
+app.use('/api',vacationCategoryRoutes);
+
 const PORT = process.env.PORT || 5001
 app.listen(process.env.PORT, ()=>{
     console.log(`Server is working on ${PORT}`)

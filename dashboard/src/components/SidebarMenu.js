@@ -2,7 +2,8 @@ import { AnimatePresence, motion } from "framer-motion";
 import React, { useState, useEffect } from "react";
 import { FaAngleDown } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
-
+import { useDispatch, useSelector } from "react-redux";
+import { getAllVacationsCategory } from "../Redux/Actions/vacationCategoryAction";
 const menuAnimation = {
   hidden: {
     opacity: 0,
@@ -36,6 +37,15 @@ const menuItemAnimation = {
 };
 
 const SidebarMenu = ({ route, showAnimation, isOpen, setIsOpen }) => {
+
+  const vacationCategory = useSelector((state) => state.Vacationcategory);
+  // console.log(vacationCategory.categories[0]);
+
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getAllVacationsCategory());
+  }, []);
+
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -89,14 +99,24 @@ const SidebarMenu = ({ route, showAnimation, isOpen, setIsOpen }) => {
             exit="hidden"
             className="menu_container"
           >
-            {route.subRoutes.map((subRoute, i) => (
+               {
+        vacationCategory.categories[0] && vacationCategory.categories[0].children.map((item,index)=>(
+          <motion.div variants={menuItemAnimation} custom={index} key={index}>
+            <NavLink to={`${item.slug}`} className="link">
+            <div className="icon"></div>
+            <motion.div className="link_text">{item.name}</motion.div>
+            </NavLink>
+          </motion.div>
+        ))
+      }
+            {/* {route.subRoutes.map((subRoute, i) => (
               <motion.div variants={menuItemAnimation} key={i} custom={i}>
                 <NavLink to={subRoute.path} className="link">
                   <div className="icon">{subRoute.icon}</div>
                   <motion.div className="link_text">{subRoute.name}</motion.div>
                 </NavLink>
               </motion.div>
-            ))}
+            ))} */}
           </motion.div>
         )}{" "}
       </AnimatePresence>

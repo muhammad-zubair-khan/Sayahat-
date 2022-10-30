@@ -1,12 +1,11 @@
-import {
-  useMediaQuery,
-  useTheme,
-} from "@mui/material";
+import { useMediaQuery, useTheme } from "@mui/material";
 import { Link } from "react-router-dom";
 import logo from "../Assets/logo/logo-no-background.png";
 import { useScrollTrigger } from "@mui/material";
-import React,{useState,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import "./Navbar.css";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllVacationsCategory } from "../Redux/Actions/vacationCategoryAction";
 
 function ChangeColorOnScroll(props) {
   const { children, window } = props;
@@ -17,38 +16,78 @@ function ChangeColorOnScroll(props) {
   });
 
   return React.cloneElement(children, {
-    style: { background: trigger ? "black" : "transparent",},
+    style: { background: trigger ? "black" : "transparent" },
   });
 }
 
-
 const Navbar = (props) => {
-  
+  const vacationCategory = useSelector((state) => state.Vacationcategory);
+  console.log(vacationCategory);
+
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getAllVacationsCategory());
+  }, []);
+
   const [prevScrollPos, setPrevScrollPos] = useState(0);
-const [visible, setVisible] = useState(true)
+  const [visible, setVisible] = useState(true);
 
-const handleScroll = () => {
-    const currentScrollPos = window.scrollY
+  const handleScroll = () => {
+    const currentScrollPos = window.scrollY;
 
-    if(currentScrollPos > prevScrollPos){
-        setVisible(false)
-    }else{
-        setVisible(true)
+    if (currentScrollPos > prevScrollPos) {
+      setVisible(false);
+    } else {
+      setVisible(true);
     }
 
-    setPrevScrollPos(currentScrollPos)
-}
+    setPrevScrollPos(currentScrollPos);
+  };
 
-useEffect( () => {
-    window.addEventListener('scroll', handleScroll);
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
 
-    return () => window.removeEventListener('scroll', handleScroll)
-})
+    return () => window.removeEventListener("scroll", handleScroll);
+  });
 
   const theme = useTheme();
-  console.log(theme);
+  // console.log(theme);
   const isMatch = useMediaQuery(theme.breakpoints.down("md"));
   console.log(isMatch);
+
+  const displayCategories = (categories) => {
+    let myCategories = [];
+    for (let category of categories) {
+      myCategories.push(
+        <li key={category.name}>
+          {category.parentId ? (
+            <>
+              <Link to={`${category.slug}`} className="menues">
+                {category.name}
+              </Link>
+            </>
+          ) : (
+            <>
+              <label htmlFor="show-features">{category.name}</label>
+              {!isMatch && <Link to="#">{category.name}</Link>}
+              <input type="checkbox" id="show-features" />
+              {/* <Link>
+              {category.name}
+             </Link>
+                  <label for="show-features">{category.name}</label>
+             <input type="checkbox" id="show-features" /> */}
+            </>
+          )}
+
+          {category.children.length > 0 ? (
+            <ul>{displayCategories(category.children)}</ul>
+          ) : null}
+        </li>
+      );
+    }
+
+    return myCategories;
+  };
 
   return (
     <>
@@ -70,7 +109,12 @@ useEffect( () => {
                 <li>
                   <Link to="/">Home</Link>
                 </li>
-                <li>
+                {vacationCategory.categories.length > 0
+                  ? displayCategories(vacationCategory.categories)
+                  : null}
+                {/* <input type="checkbox" id="show-features" /> */}
+
+                {/* <li>
                   <Link to="#" className="desktop-link">
                     Vacations
                   </Link>
@@ -93,7 +137,7 @@ useEffect( () => {
                       <Link to="/Kashmir" className="menues" >Kashmir</Link>
                     </li>
                   </ul>
-                </li>
+                </li> */}
 
                 <li>
                   <Link to="/hotels">Hotels</Link>
