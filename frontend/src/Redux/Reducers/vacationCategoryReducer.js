@@ -1,7 +1,5 @@
 import { 
-    GET_ALL_VACATION_CATEGORIES_REQUEST,
     GET_ALL_VACATION_CATEGORIES_SUCCESS,
-    GET_ALL_VACATION_CATEGORIES_FAIL,
     ADD_NEW_VACATION_CATEGORY_REQUEST,
     ADD_NEW_VACATION_CATEGORY_SUCCESS,
     ADD_NEW_VACATION_CATEGORY_FAIL
@@ -55,6 +53,7 @@ import {
   
   // eslint-disable-next-line import/no-anonymous-default-export
   export const VacationCategoryReducer = (state = initialState, action) => {
+    // eslint-disable-next-line default-case
     switch(action.type){
         case GET_ALL_VACATION_CATEGORIES_SUCCESS:
             state = {
@@ -85,6 +84,5 @@ import {
             }
             break;
     }
-  
     return state;
   }

@@ -22,15 +22,15 @@ function ChangeColorOnScroll(props) {
 
 const Navbar = (props) => {
   const vacationCategory = useSelector((state) => state.Vacationcategory);
-  console.log(vacationCategory);
 
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getAllVacationsCategory());
-  }, []);
+  }, [dispatch]);
 
   const [prevScrollPos, setPrevScrollPos] = useState(0);
-  const [visible, setVisible] = useState(true);
+  // const [visible, setVisible] = useState(true);
+  const [setVisible] = useState(true);
 
   const handleScroll = () => {
     const currentScrollPos = window.scrollY;
@@ -53,7 +53,7 @@ const Navbar = (props) => {
   const theme = useTheme();
   // console.log(theme);
   const isMatch = useMediaQuery(theme.breakpoints.down("md"));
-  console.log(isMatch);
+  // console.log(isMatch);
 
   const displayCategories = (categories) => {
     let myCategories = [];

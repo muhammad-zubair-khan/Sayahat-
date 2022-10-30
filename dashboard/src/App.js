@@ -1,12 +1,13 @@
+import React,{ useEffect } from "react";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { useDispatch ,useSelector} from "react-redux";
+import 'bootstrap/dist/css/bootstrap.min.css';
 import "./App.css";
 import "./responsive.css";
-import HomeScreen from "./screens/HomeScreen";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Signin from "./components/Signin";
 import PrivateRoute from "./components/Private/PrivateRoute";
+import HomeScreen from "./screens/Home/HomeScreen";
 import UserScreen from "./screens/User/UserScreen";
-import { useDispatch ,useSelector} from "react-redux";
-import { useEffect } from "react";
 import { isUserLoggedIn } from "./Redux/Actions/userActions";
 
 function App() {

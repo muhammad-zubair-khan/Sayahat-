@@ -1,7 +1,7 @@
 import {createStore, combineReducers, applyMiddleware} from 'redux';
 import thunk from 'redux-thunk';
 import {composeWithDevTools} from 'redux-devtools-extension';
-import { userLoginReducer,authReducer,allUsersReducer} from './Reducers/userReducers';
+import {authReducer,allUsersReducer} from './Reducers/userReducers';
 import { VacationCategoryReducer } from './Reducers/vacationCategoryReducer';
 
 const reducer = combineReducers({

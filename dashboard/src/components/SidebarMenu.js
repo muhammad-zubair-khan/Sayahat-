@@ -44,7 +44,7 @@ const SidebarMenu = ({ route, showAnimation, isOpen, setIsOpen }) => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getAllVacationsCategory());
-  }, []);
+  }, [dispatch]);
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const toggleMenu = () => {
