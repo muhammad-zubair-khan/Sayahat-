@@ -1,22 +1,20 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import ReactDOM from "react-dom";
+import "./index.css";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
+// import 'bootstrap/dist/css/bootstrap.min.css';
+// import 'bootstrap/dist/js/bootstrap.bundle.min';
 import { Provider } from "react-redux";
-import { BrowserRouter as Router } from "react-router-dom";
-import store from "./store";
-import { ToastProvider } from 'react-toast-notifications';
+import store from "./Redux/store";
 
 ReactDOM.render(
   <Provider store={store}>
-  <Router>
-  <ToastProvider>
+    <React.StrictMode>
       <App />
-  </ToastProvider>
-  </Router>
-</Provider>,
-  document.getElementById('root')
+    </React.StrictMode>
+  </Provider>,
+  document.getElementById("root")
 );
 
 // If you want to start measuring performance in your app, pass a function

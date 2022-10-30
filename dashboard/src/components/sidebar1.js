@@ -206,8 +206,8 @@ const routes = [
 ];
 const Sidebar = ({ children, history }) => {
   const dispatch = useDispatch();
-  const { user } = useSelector((state) => state.auth);
-
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
   const logoutt = () => {
     dispatch(logout());
   };
@@ -292,8 +292,8 @@ const Sidebar = ({ children, history }) => {
                   marginBottom: "10px",
                 }}
               />
-              <h5>{user.fullName}</h5>
-              <span>{user.email}</span>
+              <h5>{userInfo.firstName}</h5>
+              <span>{userInfo.email}</span>
               <span
                 style={{
                   color: "#2874f0",

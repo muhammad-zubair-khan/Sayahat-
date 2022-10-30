@@ -1,16 +1,13 @@
-import React, { useEffect } from "react";
 import "./App.css";
-// import 'bootstrap/dist/css/bootstrap.min.css';
-import { Route, Switch } from "react-router-dom";
-import "./scss/volt.scss";
-import { useDispatch, useSelector } from "react-redux";
-import { isUserLoggedIn, getInitialData, getCategory } from "./actions";
+import "./responsive.css";
+import HomeScreen from "./screens/HomeScreen";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import Signin from "./components/Signin";
 import PrivateRoute from "./components/Private/PrivateRoute";
-import Sidebar from "./components/Sidebar";
-import SignIn from "./pages/SignIn/SignIn"
-import DashboardOverview from "./pages/dashboard/DashboardOverview"
-import Navbar from "./components/Navbar";
-
+import UserScreen from "./screens/User/UserScreen";
+import { useDispatch ,useSelector} from "react-redux";
+import { useEffect } from "react";
+import { isUserLoggedIn } from "./Redux/Actions/userActions";
 
 function App() {
   const dispatch = useDispatch();
@@ -22,25 +19,16 @@ function App() {
     }
   
   }, [dispatch, auth.authenticate]);
-
   return (
-    // <Home/>
-    <div className="App">
-      {auth.authenticate && (
-        <>
-          <Sidebar />
-        </>
-      )}
-      <Switch>
-        {/* <main className="content"> */}
-          <PrivateRoute path="/" exact component={DashboardOverview} />
-          
+    <Router>
+        <Switch>
+          <PrivateRoute exact path="/" component={HomeScreen}/>
+          <PrivateRoute exact path="/users" component={UserScreen} />
+          <Route exact path="/login" component={Signin} />
 
-          <Route path="/signin" component={SignIn} />
-          {/* <Route path="**" component={PageNotFound}/> */}
-        {/* </main> */}
-      </Switch>
-    </div>
+          <Route path="*" component={<> not found</>} />
+        </Switch>
+    </Router>
   );
 }
 

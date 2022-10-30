@@ -1,6 +1,7 @@
 const userModel = require("../Models/user");
 const jwt = require("jsonwebtoken");
 const bcrypt = require('bcrypt');
+const asyncHandler = require('express-async-handler')
 
 exports.registerAdmin = async(req, res) => {
   userModel.findOne({ email: req.body.email }).exec((err, user) => {
@@ -10,14 +11,14 @@ exports.registerAdmin = async(req, res) => {
       });
     }
   });
-  const { firstName, lastName, email, password } = req.body;
+  const { firstName, lastName, email, password,isAdmin } = req.body;
   const hash_password =  await bcrypt.hash(password, 10);
   const _user = new userModel({
     firstName,
     lastName,
     email,
     hash_password,
-    role: "admin",
+    isAdmin,
   });
   _user.save((err, user) => {
     if (err) {
@@ -34,6 +35,14 @@ exports.registerAdmin = async(req, res) => {
   });
 };
 
+exports.getAllUsers = async(req,res) =>{
+  const users = await userModel.find();
+  res.status(200).json({
+    success: true,
+    users,
+  });
+}
+
 exports.login = (req, res) => {
   userModel.findOne({ email: req.body.email }).exec(async (err, user) => {
     if (err) {
@@ -41,17 +50,25 @@ exports.login = (req, res) => {
     }
     if (user) {
       const isPassword = await user.authenticate(req.body.password);
-      if (isPassword && user.role === "admin") {
+      if (isPassword && user.isAdmin === false) {
         const token = jwt.sign(
-          { _id: user._id, role: user.role },
+          { _id: user._id, isAdmin: user.isAdmin },
           process.env.JWT_SECRET,
           { expiresIn: "1d" }
         );
-        const { _id, firstName, lastName, email, role, fullName } = user;
+        const { _id, firstName, lastName, email, isAdmin, fullName } = user;
         res.cookie("token", token, { expiresIn: "1h" });
-        res.status(200).json({
+        res.json({
           token,
-          user: { _id, firstName, lastName, email, role, fullName },
+          user: { _id, firstName, lastName, email, isAdmin, fullName,token },
+          // _id: user._id,
+          // firstName: user.firstName,
+          // lastName: user.lastName,
+          // email: user.email,
+          // isAdmin: user.isAdmin,
+          // phone: user.phone,
+          // token: token,
+          // createdAt: user.createdAt
         });
       } else {
         return res.status(400).json({
@@ -65,6 +82,25 @@ exports.login = (req, res) => {
     }
   });
 };
+
+exports.userProfile = asyncHandler(async (req,res)=>{
+  const user = await userModel.findById(req.user._id);
+  if(user){
+    res.json({
+      _id: user._id,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+      isAdmin: user.isAdmin,
+      phone: user.phone,
+      createdAt: user.createdAt
+    });
+  }else{
+    return res.status(404).json({
+      message: "Something Went Wrong",
+    });
+  }
+})
 
 exports.logout = (req, res) => {
   res.clearCookie("token");
