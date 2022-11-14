@@ -50,7 +50,7 @@ exports.login = (req, res) => {
     }
     if (user) {
       const isPassword = await user.authenticate(req.body.password);
-      if (isPassword && user.isAdmin === false) {
+      if (isPassword && user.isAdmin === yes) {
         const token = jwt.sign(
           { _id: user._id, isAdmin: user.isAdmin },
           process.env.JWT_SECRET,
