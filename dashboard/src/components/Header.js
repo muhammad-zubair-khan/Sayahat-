@@ -67,7 +67,7 @@ const Header = () => {
               <img src="https://t3.ftcdn.net/jpg/03/46/83/96/360_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg" style={{width:'50px'}} className="img-xs rounded-circle" alt="User" />
             </Link>
             <div className="dropdown-menu dropdown-menu-end">
-              <Link className="dropdown-item" to="/">
+              <Link className="dropdown-item" to="/profile">
                 My Profile
               </Link>
               <Link className="dropdown-item" to="#">
