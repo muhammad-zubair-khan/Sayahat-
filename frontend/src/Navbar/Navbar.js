@@ -1,6 +1,7 @@
 import { useMediaQuery, useTheme } from "@mui/material";
 import { Link } from "react-router-dom";
 import logo from "../Assets/logo/logo-no-background.png";
+// import logo from "../Assets/logo/sayahat-logo (2).png";
 import { useScrollTrigger } from "@mui/material";
 import React, { useState, useEffect } from "react";
 import "./Navbar.css";
@@ -62,7 +63,7 @@ const Navbar = (props) => {
         <li key={category.name}>
           {category.parentId ? (
             <>
-              <Link to={`${category.slug}`} className="menues">
+              <Link to={`/vacation/${category.slug}`} className="menues">
                 {category.name}
               </Link>
             </>

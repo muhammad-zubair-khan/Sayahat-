@@ -137,7 +137,8 @@
   bottom: 0;
   right: 0;
   z-index: 1;
- background-image: url('https://preview.colorlib.com/theme/traveland/images/xbg_1.jpg.pagespeed.ic.RC9rBxK6Ci.webp');
+ /* background-image: url('https://preview.colorlib.com/theme/traveland/images/xbg_1.jpg.pagespeed.ic.RC9rBxK6Ci.webp'); */
+ background-image: url('https://preview.colorlib.com/theme/travello/images/home_slider.jpg.webp');
  filter: brightness(.6);
 background-attachment: fixed;
 }

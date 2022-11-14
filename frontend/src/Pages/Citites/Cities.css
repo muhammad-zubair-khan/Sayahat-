@@ -1,0 +1,48 @@
+  .wrapper-cards{
+    /* background-image: url('file:///C:/Users/HAIER/Documents/GitHub/Sayahat-/backend/uploads/xMQaPHknf-Lahore.jpg'); */
+    /* background-attachment: fixed; */
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100%;
+    height: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* filter: brightness(0.5); */
+}
+
+.wrapper-text{
+    position: absolute;
+    /* top: 45%; */
+    /* left: 40%; */
+    color: white;
+    font-weight: bolder;
+}
+
+
+.fh5co-cover1,
+.fh5co-hero1 {
+  position: relative;
+  height: 500px;
+}
+@media screen and (max-width: 768px) {
+  .fh5co-cover1,
+  .fh5co-hero1 {
+    height: 700px;
+  }
+}
+.fh5co-cover1 .fh5co-overlay1,
+.fh5co-hero1 .fh5co-overlay1 {
+  position: absolute !important;
+  width: 100%;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 1;
+ /* background-image: url('https://preview.colorlib.com/theme/traveland/images/xbg_1.jpg.pagespeed.ic.RC9rBxK6Ci.webp'); */
+ /* background-image: radial-gradient(circle, #000000, #363636, #6b6b6b, #a5a5a5, #e3e3e3); */
+ background-image: radial-gradient(circle, #000000, #1f1f1f, #393738, #555252, #726e6e);
+ filter: brightness(.6);
+background-attachment: fixed;
+}

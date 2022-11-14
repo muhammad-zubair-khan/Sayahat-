@@ -11,9 +11,9 @@ const VacationCategorySchema = new mongoose.Schema({
         required:true,
         unique:true
     },
-    // categoryImage:{
-    //     type:String
-    // },
+    categoryImage:{
+        type:String
+    },
     parentId:{
         type:String
     }

@@ -1,14 +1,26 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { logout } from "../Redux/Actions/userActions";
 const Header = () => {
+  const [theme, setTheme] = useState('light');
+  const toggleTheme = () => {
+    if (theme === 'light') {
+      setTheme('dark');
+    } else {
+      setTheme('light');
+    }
+  };
+  useEffect(() => {
+    document.body.className = theme;
+  }, [theme]);
   const dispatch = useDispatch();
   const logoutt = () => {
     dispatch(logout());
   };
+
   return (
-    <header className="main-header navbar">
+    <header className={`main-header navbar ${theme}`}>
       <div className="col-search">
         <form className="searchform">
           <div className="input-group">
@@ -33,9 +45,12 @@ const Header = () => {
       <div className="col-nav">
         <ul className="nav">
           <li className="nav-item">
-            <Link className={`nav-link btn-icon`} title="Dark-mode" to="#">
-              <i className="fas fa-moon"></i>
+            <Link className={`nav-link btn-icon`} title="Dark-mode" onClick={toggleTheme}>
+            <i className="fas fa-moon"></i>
             </Link>
+            {/* <button onClick={toggleTheme}>
+            <i className="fas fa-moon"></i>
+            </button> */}
           </li>
           <li className="nav-item">
             <Link className="nav-link btn-icon" to="#">
@@ -49,7 +64,7 @@ const Header = () => {
           </li>
           <li className="dropdown nav-item">
             <Link className="dropdown-toggle" data-bs-toggle="dropdown" to="#">
-              <img src="https://kamr.dexignlab.com/xhtml/images/header-img/pic-1.jpg" style={{width:'50px'}} className="img-xs rounded-circle" alt="User" />
+              <img src="https://t3.ftcdn.net/jpg/03/46/83/96/360_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg" style={{width:'50px'}} className="img-xs rounded-circle" alt="User" />
             </Link>
             <div className="dropdown-menu dropdown-menu-end">
               <Link className="dropdown-item" to="/">

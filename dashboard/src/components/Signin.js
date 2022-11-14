@@ -6,7 +6,9 @@ import { Row, Col } from "react-bootstrap";
 import { Form } from "react-bootstrap";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import logo from "../assets/logo/logo-black.png";
+import { Container } from "@mui/material";
+// import logo from "../assets/logo/logo-black.png";
+import logo from "../assets/logo/logo.png";
 
 const Signin = () => {
   const dispatch = useDispatch();
@@ -35,16 +37,16 @@ const Signin = () => {
   //     dispatch(login(email,password));
   // };
   return (
-    <div>
-      <Row style={{ marginTop: "100px" }}>
-        <Col md={6}>
+    <Container>
+      <Row>
+        <Col md={6} style={{ marginTop: "100px" }}>
           <img
             src={logo}
             alt="SAYAHAT"
-            style={{ width: "-webkit-fill-available", marginTop: "38px" }}
+            style={{ width: "-webkit-fill-available"}}
           />
         </Col>
-        <Col md={6}>
+        <Col md={6} style={{ marginTop: "150px" }}>
           <Typography variant="h5" style={{ fontWeight: "bold" }}>
             Login to Access Dashboard
           </Typography>
@@ -75,8 +77,7 @@ const Signin = () => {
           </Form>
         </Col>
       </Row>
-      {/* </Container> */}
-    </div>
+      </Container> 
   );
 };
 
