@@ -113,7 +113,7 @@ const MyCard = () => {
       setcount(count + 1);
       setprogress(progress + 34);
     } else {
-      document.getElementById("nextBtn").style.display = 'none';
+      // document.getElementById("nextBtn").style.display = 'none';
       // setDisabled(true);
       // buttonRef.current.disabled = true;
       console.log("disabled")

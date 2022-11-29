@@ -6,6 +6,8 @@ import React, { useState, useEffect } from "react";
 import "./Navbar.css";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllVacationsCategory } from "../Redux/Actions/vacationCategoryAction";
+import Dropdown from 'react-bootstrap/Dropdown';
+import DropdownButton from 'react-bootstrap/DropdownButton';
 
 function ChangeColorOnScroll(props) {
   const { children, window } = props;
@@ -144,6 +146,14 @@ const Navbar = (props) => {
                 </li>
                 <li>
                   <Link to="/cars">Cars</Link>
+                </li>
+                <li>
+                  <Link to="/lahore">Lahore</Link>
+                </li>
+                <li>
+                  <Link to='/tours'>
+                    Tours
+                  </Link>
                 </li>
                 <li>
                   <Link to="/aboutus">About us</Link>
