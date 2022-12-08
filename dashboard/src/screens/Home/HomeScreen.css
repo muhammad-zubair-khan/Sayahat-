@@ -6,7 +6,7 @@
   
   .dashboardSummary > div {
     display: flex;
-    background-color: white;
+    /* background-color: white; */
     justify-content: center;
   }
   /* .dashboardSummary > div > p {

@@ -25,8 +25,8 @@ const HomeScreen = () => {
       <Sidebar>
         <Header />
         <div className="dashboardSummary">
-          <div className="dashboardSummaryBox2" onClick={() => setLgShow(true)}>
-            <Link>
+          <div className="dashboardSummaryBox2">
+            <Link to="/vacations/add">
               <CategoryIcon />
               <p className="para">Vacations</p>
               <p>

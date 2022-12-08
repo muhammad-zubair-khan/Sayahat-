@@ -128,6 +128,7 @@ import SidebarMenu from "./SidebarMenu";
 import logo from "../assets/logo/logo-no-background.png";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../Redux/Actions/userActions";
+import AccountBoxIcon from '@mui/icons-material/AccountBox';
 const routes = [
   {
     path: "/",
@@ -196,9 +197,9 @@ const routes = [
   //   ],
   // },
   {
-    path: "/saved",
-    name: "Saved",
-    icon: <AiFillHeart />,
+    path: "/profile",
+    name: "Profile",
+    icon: <AccountBoxIcon />,
   },
 ];
 const Sidebar = ({ children, history }) => {
@@ -262,7 +263,7 @@ const Sidebar = ({ children, history }) => {
           <div className="top_section">
             <AnimatePresence>
               {isOpen && (
-                <Link >
+                <Link to={`/`}>
                   <motion.img
                     // variants={showAnimation}
                     initial="hidden"
@@ -283,16 +284,16 @@ const Sidebar = ({ children, history }) => {
           {isOpen && (
             <div className="avatar">
               <img
-                src="https://kamr.dexignlab.com/xhtml/images/header-img/pic-1.jpg"
+                src="https://t3.ftcdn.net/jpg/03/46/83/96/360_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg"
                 alt="avatar"
                 style={{
                   borderRadius: "100%",
-                  width: "50px",
+                  width: "65px",
                   marginBottom: "10px",
                 }}
               />
-              <h5>{user.fullName}</h5>
-              <span>{user.email}</span>
+              <h5 style={{marginBottom: '0'}}>{user.fullName}</h5>
+              <span style={{marginBottom: '15px'}}>{user.email}</span>
               <span
                 style={{
                   color: "#2874f0",

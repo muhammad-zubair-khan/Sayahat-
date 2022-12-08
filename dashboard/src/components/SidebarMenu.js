@@ -37,7 +37,6 @@ const menuItemAnimation = {
 };
 
 const SidebarMenu = ({ route, showAnimation, isOpen, setIsOpen }) => {
-
   const vacationCategory = useSelector((state) => state.Vacationcategory);
   // console.log(vacationCategory.categories[0]);
 
@@ -99,16 +98,28 @@ const SidebarMenu = ({ route, showAnimation, isOpen, setIsOpen }) => {
             exit="hidden"
             className="menu_container"
           >
-               {
-        vacationCategory.categories[0] && vacationCategory.categories[0].children.map((item,index)=>(
-          <motion.div variants={menuItemAnimation} custom={index} key={index}>
-            <NavLink to={`${item.slug}`} className="link">
-            <div className="icon"></div>
-            <motion.div className="link_text">{item.name}</motion.div>
+            <NavLink to="/create-vacations" className="link">
+              <div className="icon"></div>
+              <motion.div className="link_text">Add New Cities</motion.div>
             </NavLink>
-          </motion.div>
-        ))
-      }
+            <NavLink to="/all-cities" className="link">
+              <div className="icon"></div>
+              <motion.div className="link_text">All Cities</motion.div>
+            </NavLink>
+            {vacationCategory.categories[0] &&
+              vacationCategory.categories[0].children.map((item, index) => (
+                <motion.div
+                  variants={menuItemAnimation}
+                  custom={index}
+                  key={index}
+                >
+                  <NavLink to={`/vacations/${item.slug}`} className="link">
+                    <div className="icon"></div>
+                    <motion.div className="link_text">{item.name}</motion.div>
+                  </NavLink>
+                </motion.div>
+              ))}
+
             {/* {route.subRoutes.map((subRoute, i) => (
               <motion.div variants={menuItemAnimation} key={i} custom={i}>
                 <NavLink to={subRoute.path} className="link">
