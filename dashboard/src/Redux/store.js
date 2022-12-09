@@ -4,6 +4,7 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import { authReducer, allUsersReducer } from "./Reducers/userReducers";
 import { VacationCategoryReducer } from "./Reducers/vacationCategoryReducer";
 import { vacationProductReducer,addCitiesReducer,allCitiesReducer } from "./Reducers/VacationProductReducer";
+import { allHotelsReducer, hotelsReducer } from "./Reducers/hotelReducer";
 
 const reducer = combineReducers({
   auth: authReducer,
@@ -11,6 +12,9 @@ const reducer = combineReducers({
   Vacationcategory: VacationCategoryReducer,
   vacationProduct: vacationProductReducer,
   newVacation: addCitiesReducer,
+  hotelReducer: allHotelsReducer,
+  delhotelReducer: hotelsReducer,
+  
   // allVacation: allCitiesReducer,
   // userLogin: userLoginReducer,
   // userLogin: userLoginReducer,

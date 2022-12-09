@@ -11,7 +11,6 @@ const AllCities = () => {
 
     useEffect(() => {
       dispatch(getAllVacationProduct())
-   
     }, [])
     
   return (

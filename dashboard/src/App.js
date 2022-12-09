@@ -1,4 +1,4 @@
-import React, { useEffect,useState } from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -13,12 +13,13 @@ import { isUserLoggedIn } from "./Redux/Actions/userActions";
 import VacationScreen from "./screens/Vacation/VacationScreen";
 import AddNewCitites from "./screens/Vacation/AddNewCitites";
 import CitiesScreen from "./screens/Vacation/CitiesScreen";
+import CitiesManagementScreen from "./screens/Vacation/CitiesManagementScreen";
 import { getAllVacationsCategory } from "./Redux/Actions/vacationCategoryAction";
 import { getInitialData } from "./Redux/Actions/initialDataAction";
 import AllCities from "./screens/Vacation/AllCities";
+import AllHotels from "./screens/Vacation/AllHotels";
 
 function App() {
-
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
 
@@ -37,8 +38,18 @@ function App() {
         <PrivateRoute exact path="/" component={HomeScreen} />
         <PrivateRoute exact path="/vacations/add" component={VacationScreen} />
         <PrivateRoute exact path="/vacations/:slug" component={CitiesScreen} />
-        <PrivateRoute exact path="/create-vacations" component={AddNewCitites} />
+        <PrivateRoute
+          exact
+          path="/vacations/:slug/add"
+          component={CitiesManagementScreen}
+        />
+        <PrivateRoute
+          exact
+          path="/create-vacations"
+          component={AddNewCitites}
+        />
         <PrivateRoute exact path="/all-cities" component={AllCities} />
+        <PrivateRoute exact path="/all-hotels" component={AllHotels} />
         <PrivateRoute exact path="/users" component={UserScreen} />
         <PrivateRoute exact path="/profile" component={ProfileScreen} />
         <Route exact path="/login" component={Signin} />

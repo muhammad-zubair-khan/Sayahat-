@@ -148,14 +148,14 @@ const Navbar = (props) => {
                 <li>
                   <Link to="/cars">Cars</Link>
                 </li>
-                <li>
+                {/* <li>
                   <Link to="/lahore">Lahore</Link>
                 </li>
                 <li>
                   <Link to='/tours'>
                     Tours
                   </Link>
-                </li>
+                </li> */}
                 <li>
                   <Link to="/aboutus">About us</Link>
                 </li>

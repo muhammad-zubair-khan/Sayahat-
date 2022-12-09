@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
 import { getVacationProductsBySlug } from "../../Redux/Actions/vacationProductAction";
-import { ImageUrl } from "../../Redux/UrlConfig";
+// import { ImageUrl } from "../../Redux/UrlConfig";
 import "./AllVacations.css";
 
 const CitiesScreen = (props) => {
@@ -29,7 +29,7 @@ const CitiesScreen = (props) => {
                   {/* {ImageUrl(data.productVacationPicture)} */}
                   {/* file:///C:/Users/HAIER/Documents/GitHub/Sayahat-/backend/uploads/xMQaPHknf-Lahore.jpg */}
                   <div className="col-md-4 my-3">
-                    <Link to={`${data.slug}`}>
+                    <Link to={`${data.slug}/add`}>
                       <div className="wrapper">
                         <img
                           src={data.productVacationPicture}

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { createProduct } from "../../Redux/Actions/vacationProductAction";
 import Button from "@mui/material/Button";
@@ -20,7 +20,7 @@ const AddNewCitites = () => {
   const [productVacationPicture, setProductVacationPicture] = useState("");
   const category = useSelector((state) => state.Vacationcategory);
 
-  const { loading } = useSelector((state) => state.newVacation);
+  // const { loading } = useSelector((state) => state.newVacation);
   // console.log(loading);
 
   const onChangeFile = (e) => {
