@@ -107,6 +107,16 @@ const CitiesManagementScreen = () => {
                     fullWidth
                     required
                     id="outlined-required"
+                    label="CITY"
+                    //   value={name}
+                    //   onChange={(e) => setName(e.target.value)}
+                  />
+                </div>
+                <div>
+                  <TextField
+                    fullWidth
+                    required
+                    id="outlined-required"
                     label="Hotel Name"
                     //   value={name}
                     //   onChange={(e) => setName(e.target.value)}
