@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
 import Button from "@mui/material/Button";
@@ -12,6 +12,8 @@ import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
 import "./CitiesManagementScreen.css";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { getVacationProductsBySlug } from '../../Redux/Actions/vacationProductAction'
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -20,7 +22,15 @@ const Item = styled(Paper)(({ theme }) => ({
   textAlign: "center",
   color: theme.palette.text.secondary,
 }));
-const CitiesManagementScreen = () => {
+const CitiesManagementScreen = (props) => {
+  const dispatch = useDispatch()
+    const {products} = useSelector((state) => state.vacationProduct)
+    console.log(products)
+    useEffect(() => {
+      const { match } = props;
+    console.log(props);
+  }, [dispatch, props]);
+   
   const [hotelHidden, setHotelHidden] = useState(true);
   const handleShowHotel = () => {
     setHotelHidden((is) => !is);
@@ -107,9 +117,10 @@ const CitiesManagementScreen = () => {
                     fullWidth
                     required
                     id="outlined-required"
-                    label="CITY"
-                    //   value={name}
+                    label="City"
+                      value={props.match.params.slug}
                     //   onChange={(e) => setName(e.target.value)}
+                    disabled
                   />
                 </div>
                 <div>
