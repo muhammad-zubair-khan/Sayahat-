@@ -8,13 +8,17 @@ import HotelIcon from "@mui/icons-material/Hotel";
 import { getAllVacationsCategory } from "../../Redux/Actions/vacationCategoryAction";
 import "./HomeScreen.css";
 import { Modal, Button } from "react-bootstrap";
+import { getAllHotels } from "../../Redux/Actions/hotelAction";
 
 const HomeScreen = () => {
   const dispatch = useDispatch();
-  const vacation = useSelector((state) => state.Vacationcategory);
-  console.log(vacation);
+  const {categories} = useSelector((state) => state.Vacationcategory);
+  // console.log(vacation);
+  const {hotels} = useSelector((state) => state.hotelReducer);
+  console.log(hotels)
 
   useEffect(() => {
+    dispatch(getAllHotels())
     dispatch(getAllVacationsCategory());
   }, [dispatch]);
 
@@ -30,16 +34,19 @@ const HomeScreen = () => {
               <CategoryIcon />
               <p className="para">Vacations</p>
               <p>
-                {vacation.categories[0] &&
-                  vacation.categories[0].children.length}
+                {categories[0] &&
+                 categories[0].children.length}
               </p>
             </Link>
           </div>
           <div className="dashboardSummaryBox2">
-            <Link>
+            <Link to='/all-hotels'>
               <HotelIcon />
               <p className="para">Hotels</p>
-              <p>0</p>
+              <p>
+                {hotels &&
+                  hotels.length}
+              </p>
             </Link>
           </div>
         </div>
@@ -58,8 +65,8 @@ const HomeScreen = () => {
             </Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            {vacation.categories[0] &&
-              vacation.categories[0].children.map((item, index) => (
+            {categories[0] &&
+              categories[0].children.map((item, index) => (
                 <li
                   key={index}
                   style={{ fontFamily: "sans-serif", fontSize: "21px" }}

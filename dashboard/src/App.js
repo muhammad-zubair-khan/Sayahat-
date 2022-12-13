@@ -18,6 +18,7 @@ import { getAllVacationsCategory } from "./Redux/Actions/vacationCategoryAction"
 import { getInitialData } from "./Redux/Actions/initialDataAction";
 import AllCities from "./screens/Vacation/AllCities";
 import AllHotels from "./screens/Vacation/AllHotels";
+import GetHotelBySlug from "./screens/Vacation/GetHotelBySlug";
 
 function App() {
   const dispatch = useDispatch();
@@ -49,7 +50,8 @@ function App() {
           component={AddNewCitites}
         />
         <PrivateRoute exact path="/all-cities" component={AllCities} />
-        <PrivateRoute exact path="/all-hotels/:slug" component={AllHotels} />
+        <PrivateRoute exact path="/hotel/:slug" component={GetHotelBySlug} />
+        <PrivateRoute exact path="/all-hotels" component={AllHotels} />
         <PrivateRoute exact path="/users" component={UserScreen} />
         <PrivateRoute exact path="/profile" component={ProfileScreen} />
         <Route exact path="/login" component={Signin} />

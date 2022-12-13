@@ -11,7 +11,7 @@ import Zoom from "react-medium-image-zoom";
 import "react-medium-image-zoom/dist/styles.css";
 import { deleteHotel } from "../../Redux/Actions/hotelAction";
 
-const AllHotels = (props) => {
+const GetHotelBySlug = (props) => {
   const dispatch = useDispatch();
   const { hotels } = useSelector((state) => state.hotelReducer);
 
@@ -21,8 +21,10 @@ const AllHotels = (props) => {
   };
 
   useEffect(() => {
-    dispatch(getAllHotels);
-  }, []);
+    const { match } = props;
+  console.log(props);
+    dispatch(getHotelBySlug(match.params.slug));
+  }, [dispatch, props]);
 
   const columns = [
     {
@@ -130,7 +132,7 @@ const AllHotels = (props) => {
         pool: item.pool,
         Breakfast: item.Breakfast,
         Hottub: item.Hottub,
-        city: item.city,
+        city:item.city,
         // category:item.category
       });
     });
@@ -140,7 +142,7 @@ const AllHotels = (props) => {
         <Header />
         <div className="dashboard">
           <div className="productListContainer">
-            <h1 id="productListHeading">ALL Hotels</h1>
+            <h1 id="productListHeading">{`${props.match.params.slug} Hotels`}</h1>
             <DataGrid
               rows={rows}
               columns={columns}
@@ -156,4 +158,4 @@ const AllHotels = (props) => {
   );
 };
 
-export default AllHotels;
+export default GetHotelBySlug;

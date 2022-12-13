@@ -20,7 +20,9 @@ const CitiesScreen = (props) => {
     <>
       <Sidebar>
         <Header />
-        <div className="row container-fluid d-flex">
+      
+        
+          <div className="row container-fluid d-flex">
           {products &&
             products.map((data, index) => {
               //  ImageUrl(p.productPictures[0].img)

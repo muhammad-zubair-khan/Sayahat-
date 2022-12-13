@@ -133,16 +133,7 @@ const CitiesManagementScreen = (props) => {
     <>
       <Sidebar>
         <Header />
-        <Link
-          to={`/all-hotels/${props.match.params.slug}`}
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            marginTop: "36px",
-          }}
-        >
-          <Button variant="contained">View All Hotels</Button>
-        </Link>
+
         <Grid
           container
           spacing={2}
@@ -175,7 +166,12 @@ const CitiesManagementScreen = (props) => {
                 encType="multipart/form-data"
                 onSubmit={createHotelSubmitHandler}
               >
-                <h1>Add New Hotel</h1>
+                <div>
+                  <Link to={`/hotel/${props.match.params.slug}`}>
+                    <Button variant="contained">View All Hotels</Button>
+                  </Link>
+                  <h1 style={{ marginLeft: "20rem" }}>Add New Hotel</h1>
+                </div>
 
                 <div>
                   <TextField
@@ -296,8 +292,13 @@ const CitiesManagementScreen = (props) => {
                 encType="multipart/form-data"
                 //   onSubmit={createProductSubmitHandler}
               >
-                <h1>Add New Car</h1>
-
+                {/* <h1>Add New Car</h1> */}
+                <div>
+                  <Link to={`/hotel/${props.match.params.slug}`}>
+                    <Button variant="contained">View All Cars</Button>
+                  </Link>
+                  <h1 style={{ marginLeft: "20rem" }}>Add New Car</h1>
+                </div>
                 <div>
                   <TextField
                     fullWidth
@@ -411,7 +412,7 @@ const CitiesManagementScreen = (props) => {
 
                 <div>
                   <TextareaAutosize
-                  // fullWidth
+                    // fullWidth
                     placeholder="Description here..."
                     required
                     id="outlined-required"
@@ -460,7 +461,12 @@ const CitiesManagementScreen = (props) => {
                 encType="multipart/form-data"
                 //   onSubmit={createProductSubmitHandler}
               >
-                <h1>Add New Package</h1>
+                <div>
+                  <Link to={`/hotel/${props.match.params.slug}`}>
+                    <Button variant="contained">View All Packages</Button>
+                  </Link>
+                  <h1 style={{ marginLeft: "20rem" }}>Add New Package</h1>
+                </div>
 
                 <div>
                   <TextField
