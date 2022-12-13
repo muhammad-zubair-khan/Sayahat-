@@ -2,13 +2,13 @@ import {
     GET_ALL_VACATION_PRODUCTS_REQUEST,
     GET_ALL_VACATION_PRODUCTS_SUCCESS,
     GET_ALL_VACATION_PRODUCTS_FAIL,
-    GET_VACATION_PRODUCTS_BY_SLUG_REQUEST,
-    GET_VACATION_PRODUCTS_BY_SLUG_SUCCESS,
-    GET_VACATION_PRODUCTS_BY_SLUG_FAIL,
-    NEW_HOTEL_REQUEST,
-    NEW_HOTEL_SUCCESS,
-    NEW_HOTEL_FAIL,
-    NEW_HOTEL_RESET,
+    GET_HOTEL_BY_SLUG_REQUEST,
+    GET_HOTEL_BY_SLUG_SUCCESS,
+    GET_HOTEL_BY_SLUG_FAIL,
+    CREATE_NEW_HOTEL_REQUEST,
+    CREATE_NEW_HOTEL_SUCCESS,
+    CREATE_NEW_HOTEL_FAIL,
+    CREATE_NEW_HOTEL_RESET,
     GET_ALL_HOTELS_REQUEST,
     GET_ALL_HOTELS_SUCCESS,
     GET_ALL_HOTELS_FAIL,
@@ -25,26 +25,26 @@ import {
   
   export const newHotelReducer = (state = initialStateHotel, action) => {
     switch (action.type) {
-      case NEW_HOTEL_REQUEST:
+      case CREATE_NEW_HOTEL_REQUEST:
         return {
           // ...state,
           hotel:{},
           loading: false,
         };
-      case NEW_HOTEL_SUCCESS:
+      case CREATE_NEW_HOTEL_SUCCESS:
         return {
           loading: true,
           success: true,
           hotel: action.payload,
         };
-      case NEW_HOTEL_FAIL:
+      case CREATE_NEW_HOTEL_FAIL:
         return {
           // ...state,
           success: false,
           loading: false,
           error: action.payload,
         };
-      case NEW_HOTEL_RESET:
+      case CREATE_NEW_HOTEL_RESET:
         return {
           hotel: {},
           success: false,
@@ -73,21 +73,21 @@ import {
           error: action.payload,
         };
   
-      // case GET_VACATION_PRODUCTS_BY_SLUG_REQUEST:
-      //   return {
-      //     loading: true,
-      //     products: [],
-      //   };
-      // case GET_VACATION_PRODUCTS_BY_SLUG_SUCCESS:
-      //   return {
-      //     loading: false,
-      //     products: [...action.payload],
-      //   };
-      // case GET_VACATION_PRODUCTS_BY_SLUG_FAIL:
-      //   return {
-      //     loading: false,
-      //     error: action.payload,
-      //   };
+      case GET_HOTEL_BY_SLUG_REQUEST:
+        return {
+          loading: true,
+          hotels: [],
+        };
+      case GET_HOTEL_BY_SLUG_SUCCESS:
+        return {
+          loading: false,
+          hotels: [...action.payload],
+        };
+      case GET_HOTEL_BY_SLUG_FAIL:
+        return {
+          loading: false,
+          error: action.payload,
+        };
       // case CLEAR_ERRORS:
       //   return {
       //     ...state,
