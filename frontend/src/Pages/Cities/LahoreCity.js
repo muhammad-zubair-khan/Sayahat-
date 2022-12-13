@@ -1,14 +1,25 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React,{useEffect,useState} from "react";
+import { Link, useParams } from "react-router-dom";
 import Navbar from "../../Navbar/Navbar";
 import "./StyleCity.css";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
-import { useState } from "react";
 import Offcanvas from "react-bootstrap/Offcanvas";
 import Footer from "../../Footer/Footer";
+import {useDispatch,useSelector} from 'react-redux'
+import { getPackageBySlug } from "../../Redux/Actions/packageAction";
 
-function LahoreCity() {
+
+const  LahoreCity = (props) => {
+  const params = useParams()
+  const dispatch = useDispatch()
+  const { packages } = useSelector((state) => state.packagesReducer);
+console.log(packages)
+  useEffect(() => {
+   console.log(params)
+    dispatch(getPackageBySlug(params.slug));
+  }, [dispatch, props]);
+
   let readMore = () => {
     var dots = document.getElementById("dots");
     var moreText = document.getElementById("more");
@@ -184,7 +195,7 @@ function LahoreCity() {
         {/* Start of introduction of city */}
         <div className="row ms-4 mt-5">
           <div className="col-10 ms-5">
-            <h1 className="lhrH1">Lahore</h1>
+            <h1 className="lhrH1">{params.slug}</h1>
             <p className="lhrIntro mt-5">
               Lahore is the city of wonders with a rich history of over a
               millennium. Lahore the 2nd largest city of Pakistan and is capital
@@ -194,7 +205,7 @@ function LahoreCity() {
             </p>
 
             <h4 className="text-dark">History</h4>
-            <p className="text-dark">
+            {/* <p className="text-dark">
               Legend has it that it was founded about 4,000 years ago by Loh,
               son of Rama, the hero of the Hindu epic, the Ramayana. Reminiscent
               of its hoary past are the remains of a subterranean temple
@@ -237,7 +248,7 @@ function LahoreCity() {
                 Lahore its most famous monuments: the Badshahi Masjid (Royal
                 Mosque) and the Alamgiri gateway to the fort.
               </span>
-            </p>
+            </p> */}
             <div className="d-flex justify-content-center">
               <button className="btnRead" onClick={() => readMore()} id="myBtn">
                 Read more
@@ -902,15 +913,15 @@ function LahoreCity() {
 
             {/* Start of package cards */}
             <div className="col-md-8">
-              {cards.map((card) => {
+              {packages && packages.map((data,index) => {
                 return (
-                  <div class="card mb-3 p-4">
+                  <div class="card mb-3 p-4" key={index}>
                     <div class="row g-0">
                       <div class="col-md-4 position-relative">
                         <img
-                          src={card.image}
+                          src={data.packageImage}
                           class="img-fluid rounded-start h-100"
-                          alt="..."
+                          alt="image"
                         />
                         <div className="heartIcon">
                           <i class="fa-regular fa-heart fs-4 d-flex justify-content-center"></i>
@@ -921,12 +932,12 @@ function LahoreCity() {
                           <div className="row">
                             <div className="col-8">
                               <h5 class="card-title text-dark">
-                                {card.pakage}
+                                {data.name}
                               </h5>
                             </div>
                             <div className="col-4 text-end">
                               <h5 class="card-title text-dark">
-                                ${card.price}
+                                {data.price} $
                               </h5>
                             </div>
                           </div>
@@ -951,18 +962,18 @@ function LahoreCity() {
                               style={{ color: "#EDAB56" }}
                               className="fa-solid fa-star"
                             ></i>
-                            <span className="ms-2">{card.review}</span>
+                            {/* <span className="ms-2">{card.review}</span> */}
                             <div className="mt-1">
-                              <small>{card.description}</small>
+                              <small>{data.description}</small>
                             </div>
                           </p>
                           <small class="text-dark">
                             <div>
                               <i class="fa-regular fa-clock me-2"></i>
-                              {card.time}
+                              {data.duration}
                             </div>
                             <i class="fa-solid fa-check me-2"></i>
-                            {card.cancel}
+                            {data.refundable}
                           </small>
                         </div>
                       </div>

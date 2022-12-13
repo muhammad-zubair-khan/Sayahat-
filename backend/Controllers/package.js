@@ -10,6 +10,7 @@ exports.createPackage = async(req, res, next) => {
     name,
     description,
     city,
+    price,
     duration,
     refundable,
     product
@@ -18,6 +19,7 @@ exports.createPackage = async(req, res, next) => {
   const package = await new Package({
     name: name,
     city: city,
+    price: price,
     slug: slugify(name),
     packageImage: process.env.IMG_API + `/public/` + req.file.filename,
     description: description,

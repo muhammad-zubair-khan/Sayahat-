@@ -61,12 +61,12 @@ const AllPackages = (props) => {
       minWidth: 300,
       flex: 1,
     },
-    // {
-    //   field: "category",
-    //   headerName: "Category",
-    //   minWidth: 300,
-    //   flex: 1,
-    // },
+    {
+      field: "price",
+      headerName: "Price",
+      minWidth: 300,
+      flex: 1,
+    },
     {
       field: "description",
       headerName: "Description",
@@ -121,6 +121,7 @@ const AllPackages = (props) => {
         id: item._id,
         packageImage: item.packageImage,
         name: item.name,
+        price: item.price,
         description: item.description,
         duration: item.duration,
         refundable: item.refundable,

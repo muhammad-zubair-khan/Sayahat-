@@ -63,9 +63,10 @@ const CitiesManagementScreen = (props) => {
   const [discount, setDiscount] = useState("");
   const [desc, setDesc] = useState("");
 
-  //Paclage States
+  //Package States
   const [packageName,setPackageName] = useState("");
   const [packageDescription,setPackageDescription] = useState("");
+  const [price,setPrice] = useState("");
   const [duration,setDuration] = useState("");
   const [refundable,setRefundable] = useState("");
   const [product,setProduct] = useState("");
@@ -252,6 +253,9 @@ const CitiesManagementScreen = (props) => {
 
     myForm.set("city", city);
     console.log(city);
+
+    myForm.set("price", price);
+    console.log(price);
 
     myForm.set("product", product);
     console.log(product);
@@ -740,6 +744,18 @@ const CitiesManagementScreen = (props) => {
                     label="Package Name"
                       value={packageName}
                       onChange={(e) => setPackageName(e.target.value)}
+                  />
+                </div>
+
+                <div>
+                  <TextField
+                    type="number"
+                    fullWidth
+                    required
+                    id="outlined-required"
+                    label="Price"
+                    value={price}
+                    onChange={(e) => setPrice(e.target.value)}
                   />
                 </div>
 
