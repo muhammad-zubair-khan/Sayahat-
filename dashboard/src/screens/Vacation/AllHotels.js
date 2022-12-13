@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
-import { getAllHotels } from "../../Redux/Actions/hotelAction";
+import { getAllHotels, getHotelBySlug } from "../../Redux/Actions/hotelAction";
 import { DataGrid } from "@mui/x-data-grid";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Button from "@mui/material/Button";
@@ -11,18 +11,20 @@ import Zoom from "react-medium-image-zoom";
 import "react-medium-image-zoom/dist/styles.css";
 import { deleteHotel } from "../../Redux/Actions/hotelAction";
 
-const AllHotels = ({ history }) => {
+const AllHotels = (props) => {
   const dispatch = useDispatch();
   const { hotels } = useSelector((state) => state.hotelReducer);
 
   const deleteHotelHandler = (id) => {
     dispatch(deleteHotel(id));
-    history.go(0);
+    // history.go(0);
   };
 
   useEffect(() => {
-    dispatch(getAllHotels());
-  }, []);
+    const { match } = props;
+  console.log(props);
+    dispatch(getHotelBySlug(match.params.slug));
+  }, [dispatch, props]);
 
   const columns = [
     {
@@ -59,6 +61,12 @@ const AllHotels = ({ history }) => {
       minWidth: 300,
       flex: 1,
     },
+    // {
+    //   field: "category",
+    //   headerName: "Category",
+    //   minWidth: 300,
+    //   flex: 1,
+    // },
     {
       field: "description",
       headerName: "Description",
@@ -124,7 +132,8 @@ const AllHotels = ({ history }) => {
         pool: item.pool,
         Breakfast: item.Breakfast,
         Hottub: item.Hottub,
-        city:item.city
+        city:item.city,
+        // category:item.category
       });
     });
   return (
