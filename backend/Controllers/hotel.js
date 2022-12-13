@@ -14,7 +14,7 @@ exports.createHotel = async(req, res, next) => {
     Breakfast,
     Hottub,
     FullyRefundable,
-    ReserveNow,
+    // ReserveNow,
     category
   } = req.body;
 
@@ -28,7 +28,7 @@ exports.createHotel = async(req, res, next) => {
     Breakfast: Breakfast,
     Hottub: Hottub,
     FullyRefundable: FullyRefundable,
-    ReserveNow: ReserveNow,
+    // ReserveNow: ReserveNow,
     category
     // createdBy: req.user._id,
   });

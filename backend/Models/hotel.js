@@ -23,17 +23,17 @@ const hotelSchema = new mongoose.Schema(
       type: String,
     },
     Breakfast: {
-      type: Boolean,
+      type: String,
     },
     Hottub: {
-      type: Boolean,
+      type: String,
     },
     FullyRefundable: {
-      type: Boolean,
+      type: String,
     },
-    ReserveNow: {
-      type: Boolean,
-    },
+    // ReserveNow: {
+    //   type: String,
+    // },
     description: {
       type: String,
       required: true,

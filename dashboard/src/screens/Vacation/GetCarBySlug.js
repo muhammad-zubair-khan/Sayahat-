@@ -2,36 +2,36 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
-import { getAllHotels, getHotelBySlug } from "../../Redux/Actions/hotelAction";
+import { getCarBySlug } from "../../Redux/Actions/carAction";
 import { DataGrid } from "@mui/x-data-grid";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Button from "@mui/material/Button";
 import "./GetHotelBySlug.css";
 import Zoom from "react-medium-image-zoom";
 import "react-medium-image-zoom/dist/styles.css";
-import { deleteHotel } from "../../Redux/Actions/hotelAction";
+import { deleteCar } from "../../Redux/Actions/carAction";
 import { useHistory } from "react-router-dom";
 
 const GetHotelBySlug = (props) => {
   const history = useHistory()
   const dispatch = useDispatch();
-  const { hotels } = useSelector((state) => state.hotelReducer);
-
-  const deleteHotelHandler = (id) => {
-    dispatch(deleteHotel(id));
+  const { cars } = useSelector((state) => state.carsReducer);
+console.log(cars)
+  const deleteCarHandler = (id) => {
+    dispatch(deleteCar(id));
     history.go(0);
   };
 
   useEffect(() => {
     const { match } = props;
   console.log(props);
-    dispatch(getHotelBySlug(match.params.slug));
+    dispatch(getCarBySlug(match.params.slug));
   }, [dispatch, props]);
 
   const columns = [
     {
-      field: "hotelImage",
-      headerName: "Hotel img",
+      field: "carImage",
+      headerName: "Car img",
       minWidth: 290,
       minHeight: 200,
       flex: 0.5,
@@ -41,7 +41,7 @@ const GetHotelBySlug = (props) => {
           <div style={{ textAlign: "center" }}>
             <Zoom>
               <img
-                src={params.row.hotelImage}
+                src={params.row.carImage}
                 style={{ width: "20%", margin: "10px 10px" }}
                 alt={params.row.name}
               />
@@ -58,8 +58,8 @@ const GetHotelBySlug = (props) => {
       flex: 1,
     },
     {
-      field: "city",
-      headerName: "City",
+      field: "type",
+      headerName: "Type",
       minWidth: 300,
       flex: 1,
     },
@@ -78,22 +78,22 @@ const GetHotelBySlug = (props) => {
     },
 
     {
-      field: "pool",
-      headerName: "Pool",
+      field: "fare",
+      headerName: "Fare",
       // type: "number",
       minWidth: 270,
       flex: 0.5,
     },
     {
-      field: "Breakfast",
-      headerName: "Breakfast",
+      field: "mileage",
+      headerName: "Mileage",
       // type: "number",
       minWidth: 270,
       flex: 0.5,
     },
     {
-      field: "Hottub",
-      headerName: "Hot tub",
+      field: "shuttle",
+      headerName: "Shuttle",
       // type: "number",
       minWidth: 270,
       flex: 0.5,
@@ -112,7 +112,7 @@ const GetHotelBySlug = (props) => {
               <MdModeEditOutline />
             </Link> */}
 
-            <Button onClick={() => deleteHotelHandler(params.id)}>
+            <Button onClick={() => deleteCarHandler(params.id)}>
               <DeleteIcon />
             </Button>
             {/* {console.log("ye wali>>>>>>>>>>>>>>>>>", params.id)} */}
@@ -124,17 +124,18 @@ const GetHotelBySlug = (props) => {
 
   const rows = [];
 
-  hotels &&
-    hotels.forEach((item) => {
+  cars &&
+    cars.forEach((item) => {
       rows.push({
         id: item._id,
-        hotelImage: item.hotelImage,
+        carImage: item.carImage,
         name: item.name,
+        type: item.type,
         description: item.description,
-        pool: item.pool,
-        Breakfast: item.Breakfast,
-        Hottub: item.Hottub,
-        city:item.city,
+        fare: item.fare,
+        mileage: item.mileage,
+        passenger: item.passenger,
+        shuttle:item.shuttle,
         // category:item.category
       });
     });
@@ -144,13 +145,13 @@ const GetHotelBySlug = (props) => {
         <Header />
         <div className="dashboard">
           <div className="productListContainer">
-            <h1 id="productListHeading">{`${props.match.params.slug} Hotels`}</h1>
+            <h1 id="productListHeading">{`${props.match.params.slug} Cars`}</h1>
             <DataGrid
               rows={rows}
               columns={columns}
               pageSize={10}
               disableSelectionOnClick
-              className="HotelListTable"
+              className="CarListTable"
               autoHeight
             />
           </div>

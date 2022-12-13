@@ -21,7 +21,7 @@ const AllHotels = (props) => {
   };
 
   useEffect(() => {
-    dispatch(getAllHotels);
+    dispatch(getAllHotels());
   }, []);
 
   const columns = [

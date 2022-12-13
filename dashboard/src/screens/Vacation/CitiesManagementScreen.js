@@ -28,6 +28,7 @@ import RadioGroup from "@mui/material/RadioGroup";
 // import FormControlLabel from '@mui/material/FormControlLabel';
 // import FormControl from '@mui/material/FormControl';
 import FormLabel from "@mui/material/FormLabel";
+import { addCar } from "../../Redux/Actions/carAction";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -38,11 +39,28 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 const CitiesManagementScreen = (props) => {
   const history = useHistory();
-  const [city, setCity] = useState("");
+  //Hotel States
+  let [city, setCity] = useState("");
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
   const [pool, setPool] = useState("");
+  const [breakfast, setBreakfast] = useState("");
+  const [hotTub, setHotTub] = useState("");
+  const [fullyRefundable, setFullyRefundable] = useState("");
+  // const [reserveNow, setReserveNow] = useState("");
+
+  //Car States
+  const [carName, setCarName] = useState("");
+  const [passenger, setPassenger] = useState("");
+  const [fare, setFare] = useState("");
+  const [type, setType] = useState("");
+  const [mileage, setMileage] = useState("");
+  const [payAt, setPayAt] = useState("");
+  const [shuttle, setShuttle] = useState("");
+  const [refund, setRefund] = useState("");
+  const [discount, setDiscount] = useState("");
+  const [desc, setDesc] = useState("");
 
   const dispatch = useDispatch();
   const { products } = useSelector((state) => state.vacationProduct);
@@ -98,6 +116,10 @@ const CitiesManagementScreen = (props) => {
   //   });
   // };
 
+  // }
+
+  //Hotel Functions
+
   const onChangeFile = (e) => {
     setHotelImages(e.target.files[0]);
   };
@@ -122,13 +144,84 @@ const CitiesManagementScreen = (props) => {
     myForm.set("pool", pool);
     console.log(pool);
 
+    myForm.set("Breakfast", breakfast);
+    console.log(breakfast);
+
+    myForm.set("Hottub", hotTub);
+    console.log(hotTub);
+
+    myForm.set("FullyRefundable", fullyRefundable);
+    console.log(fullyRefundable);
+
+    // myForm.set("ReserveNow", reserveNow);
+    // console.log(reserveNow);
+
     myForm.append("hotelImage", hotelImage);
     console.log(hotelImage);
 
     dispatch(createHotel(myForm));
     // console.log(createProduct(myForm));
-    history.push(`/all-hotels/${props.match.params.slug}`);
+    history.push(`/hotel/${props.match.params.slug}`);
   };
+  //car functions
+  const [carImage, setCarImage] = useState([]);
+  const [carimagesPreview, setCarImagesPreview] = useState([]);
+  const onChangeFileCar = (e) => {
+    setCarImage(e.target.files[0]);
+  };
+  const onValueChange = (event) => {
+    setPayAt(event.target.value);
+  };
+  const onValueChangeRefund = (event) => {
+    setRefund(event.target.value);
+  };
+
+  const createCarSubmitHandler = (e) => {
+    e.preventDefault();
+
+    const myForm = new FormData();
+
+    myForm.set("name", carName);
+    console.log(carName);
+
+    myForm.set("description", desc);
+    console.log(desc);
+
+    myForm.set("category", category);
+    console.log(category);
+
+    myForm.set("passenger", passenger);
+    console.log(passenger);
+
+    myForm.set("fare", fare);
+    console.log(fare);
+
+    myForm.set("type", type);
+    console.log(type);
+
+    myForm.set("mileage", mileage);
+    console.log(mileage);
+
+    myForm.set("refund", refund);
+    console.log(refund);
+
+    myForm.set("payAt", payAt);
+    console.log(payAt);
+
+    myForm.set("shuttle", shuttle);
+    console.log(shuttle);
+
+    myForm.set("discount", discount);
+    console.log(discount);
+
+    myForm.append("carImage", carImage);
+    console.log(carImage);
+
+    dispatch(addCar(myForm));
+    // console.log(createProduct(myForm));
+    history.push(`/car/${props.match.params.slug}`);
+  };
+
   return (
     <>
       <Sidebar>
@@ -179,7 +272,7 @@ const CitiesManagementScreen = (props) => {
                     required
                     id="outlined-required"
                     label="City"
-                    value={city}
+                    value={city = props.match.params.slug}
                     onChange={(e) => setCity(e.target.value)}
                     // disabled
                   />
@@ -216,7 +309,7 @@ const CitiesManagementScreen = (props) => {
                     </Select>
                   </FormControl>
                 </Box>
-                <div>
+                {/* <div>
                   <FormGroup>
                     <FormControlLabel
                       control={<Checkbox />}
@@ -238,7 +331,87 @@ const CitiesManagementScreen = (props) => {
                       label="Reserve Now, pay later"
                     />
                   </FormGroup>
+                </div> */}
+                <div style={{ display: "flex" }}>
+                  <span style={{marginRight: "81px"}}>Pool:</span>
+                  <input
+                    type="radio"
+                    value="Yes"
+                    checked={pool === "Yes"}
+                    onChange={(e) => setPool(e.target.value)}
+                    style={{ width: "auto", margin: "0px 13px" }}
+                  />
+                  Yes
+                  <input
+                    type="radio"
+                    value="No"
+                    checked={pool === "No"}
+                    onChange={(e) => setPool(e.target.value)}
+                    style={{ width: "auto", margin: "0px 13px" }}
+                  />
+                  No
                 </div>
+
+                <div style={{ display: "flex" }}>
+                  <span style={{marginRight: "47px"}}>Breakfast:</span>
+                  <input
+                    type="radio"
+                    value="Yes"
+                    checked={breakfast === "Yes"}
+                    onChange={(e) => setBreakfast(e.target.value)}
+                    style={{ width: "auto", margin: "0px 13px" }}
+                  />
+                  Yes
+                  <input
+                    type="radio"
+                    value="No"
+                    checked={breakfast === "No"}
+                    onChange={(e) => setBreakfast(e.target.value)}
+                    style={{ width: "auto", margin: "0px 13px" }}
+                  />
+                  No
+                </div>
+
+                <div style={{ display: "flex" }}>
+                  <span >FullyRefundable:</span>
+                  <input
+                    type="radio"
+                    value="Yes"
+                    checked={fullyRefundable === "Yes"}
+                    onChange={(e) => setFullyRefundable(e.target.value)}
+                    style={{ width: "auto", margin: "0px 13px" }}
+                  />
+                  Yes
+                  <input
+                    type="radio"
+                    value="No"
+                    checked={fullyRefundable === "No"}
+                    onChange={(e) => setFullyRefundable(e.target.value)}
+                    style={{ width: "auto", margin: "0px 13px" }}
+                  />
+                  No
+                </div>
+
+                <div style={{ display: "flex" }}>
+                  <span style={{marginRight: "59px"}}>HotTub:</span>
+                  <input
+                    type="radio"
+                    value="Yes"
+                    checked={hotTub === "Yes"}
+                    onChange={(e) => setHotTub(e.target.value)}
+                    style={{ width: "auto", margin: "0px 13px" }}
+                  />
+                  Yes
+                  <input
+                    type="radio"
+                    value="No"
+                    checked={hotTub === "No"}
+                    onChange={(e) => setHotTub(e.target.value)}
+                    style={{ width: "auto", margin: "0px 13px" }}
+                  />
+                  No
+                </div>
+
                 <div>
                   <TextareaAutosize
                     placeholder="Description here..."
@@ -290,11 +463,11 @@ const CitiesManagementScreen = (props) => {
               <form
                 className="createProductForm"
                 encType="multipart/form-data"
-                //   onSubmit={createProductSubmitHandler}
+                onSubmit={createCarSubmitHandler}
               >
                 {/* <h1>Add New Car</h1> */}
                 <div>
-                  <Link to={`/hotel/${props.match.params.slug}`}>
+                  <Link to={`/car/${props.match.params.slug}`}>
                     <Button variant="contained">View All Cars</Button>
                   </Link>
                   <h1 style={{ marginLeft: "20rem" }}>Add New Car</h1>
@@ -305,8 +478,8 @@ const CitiesManagementScreen = (props) => {
                     required
                     id="outlined-required"
                     label="Car Name"
-                    //   value={name}
-                    //   onChange={(e) => setName(e.target.value)}
+                    value={carName}
+                    onChange={(e) => setCarName(e.target.value)}
                   />
                 </div>
 
@@ -319,6 +492,8 @@ const CitiesManagementScreen = (props) => {
                     InputLabelProps={{
                       shrink: true,
                     }}
+                    value={passenger}
+                    onChange={(e) => setPassenger(e.target.value)}
                   />
                 </div>
 
@@ -328,8 +503,40 @@ const CitiesManagementScreen = (props) => {
                     required
                     id="outlined-required"
                     label="Fare"
-                    //   value={name}
-                    //   onChange={(e) => setName(e.target.value)}
+                    value={fare}
+                    onChange={(e) => setFare(e.target.value)}
+                  />
+                </div>
+                <Box sx={{ minWidth: 120 }}>
+                  <FormControl fullWidth>
+                    <InputLabel id="demo-simple-select-label">City</InputLabel>
+                    <Select
+                      labelId="demo-simple-select-label"
+                      id="demo-simple-select"
+                      value={category}
+                      label="City"
+                      onChange={(e) => setCategory(e.target.value)}
+                    >
+                      {products &&
+                        products.map((data, index) => {
+                          return (
+                            <MenuItem value={data._id} key={index}>
+                              {data.name}
+                            </MenuItem>
+                          );
+                        })}
+                    </Select>
+                  </FormControl>
+                </Box>
+
+                <div>
+                  <TextField
+                    fullWidth
+                    required
+                    id="outlined-required"
+                    label="Type"
+                    value={type}
+                    onChange={(e) => setType(e.target.value)}
                   />
                 </div>
 
@@ -339,12 +546,12 @@ const CitiesManagementScreen = (props) => {
                     required
                     id="outlined-required"
                     label="Mileage"
-                    //   value={name}
-                    //   onChange={(e) => setName(e.target.value)}
+                    value={mileage}
+                    onChange={(e) => setMileage(e.target.value)}
                   />
                 </div>
 
-                <FormControl>
+                {/* <FormControl>
                   <FormLabel id="demo-row-radio-buttons-group-label">
                     Pay at
                   </FormLabel>
@@ -357,6 +564,7 @@ const CitiesManagementScreen = (props) => {
                       value="Now"
                       control={<Radio />}
                       label="Now"
+                      
                     />
                     <FormControlLabel
                       value="Later"
@@ -364,49 +572,64 @@ const CitiesManagementScreen = (props) => {
                       label="Later"
                     />
                   </RadioGroup>
-                </FormControl>
-
+                </FormControl> */}
+                <div style={{ display: "flex" }}>
+                  <span>Pay at:</span>
+                  <input
+                    type="radio"
+                    value="Now"
+                    checked={payAt === "Now"}
+                    onChange={onValueChange}
+                    style={{ width: "auto", margin: "0px 13px" }}
+                  />
+                  Now
+                  <input
+                    type="radio"
+                    value="Later"
+                    checked={payAt === "Later"}
+                    onChange={onValueChange}
+                    style={{ width: "auto", margin: "0px 13px" }}
+                  />
+                  Later
+                </div>
                 <div>
                   <TextField
                     fullWidth
                     required
                     id="outlined-required"
                     label="Shuttle"
-                    //   value={name}
-                    //   onChange={(e) => setName(e.target.value)}
+                    value={shuttle}
+                    onChange={(e) => setShuttle(e.target.value)}
                   />
                 </div>
 
-                <FormControl>
-                  <FormLabel id="demo-row-radio-buttons-group-label">
-                    Refund
-                  </FormLabel>
-                  <RadioGroup
-                    row
-                    aria-labelledby="demo-row-radio-buttons-group-label"
-                    name="row-radio-buttons-group"
-                  >
-                    <FormControlLabel
-                      value="Non-refundable"
-                      control={<Radio />}
-                      label="Non-refundable"
-                    />
-                    <FormControlLabel
-                      value="Free cancellation"
-                      control={<Radio />}
-                      label="Free cancellation"
-                    />
-                  </RadioGroup>
-                </FormControl>
-
+                <div style={{ display: "flex" }}>
+                  <span>Refund:</span>
+                  <input
+                    type="radio"
+                    value="Non-refundable"
+                    checked={refund === "Non-refundable"}
+                    onChange={onValueChangeRefund}
+                    style={{ width: "auto", margin: "0px 13px" }}
+                  />
+                  Non-refundable
+                  <input
+                    type="radio"
+                    value="Free cancellation"
+                    checked={refund === "Free cancellation"}
+                    onChange={onValueChangeRefund}
+                    style={{ width: "auto", margin: "0px 13px" }}
+                  />
+                  Free cancellation
+                </div>
                 <div>
                   <TextField
                     fullWidth
                     required
                     id="outlined-required"
                     label="Discount"
-                    //   value={name}
-                    //   onChange={(e) => setName(e.target.value)}
+                    value={discount}
+                    onChange={(e) => setDiscount(e.target.value)}
                   />
                 </div>
 
@@ -418,19 +641,22 @@ const CitiesManagementScreen = (props) => {
                     id="outlined-required"
                     style={{ width: 1200, height: 100 }}
                     className="text-area"
-                    //   value={name}
-                    //   onChange={(e) => setName(e.target.value)}
+                    value={desc}
+                    onChange={(e) => setDesc(e.target.value)}
                   />
                 </div>
                 <div id="createProductFormFile">
-                  <input
+                  <TextField
+                    id="outlined-basic"
+                    required
+                    // label="Outlined"
+                    variant="outlined"
                     type="file"
-                    // name="productPictures"
-                    // name="products"
-                    // accept="image/*"
-                    accept="image/*"
-                    // onChange={createHotelImagesChange}
-                    multiple
+                    onChange={onChangeFileCar}
+                    name="carImage"
+                    inputProps={{
+                      multiple: false,
+                    }}
                   />
                 </div>
                 <div id="createProductFormImage">

@@ -18,7 +18,9 @@ import { getAllVacationsCategory } from "./Redux/Actions/vacationCategoryAction"
 import { getInitialData } from "./Redux/Actions/initialDataAction";
 import AllCities from "./screens/Vacation/AllCities";
 import AllHotels from "./screens/Vacation/AllHotels";
+import AllCars from "./screens/Vacation/AllCars";
 import GetHotelBySlug from "./screens/Vacation/GetHotelBySlug";
+import GetCarBySlug from "./screens/Vacation/GetCarBySlug";
 
 function App() {
   const dispatch = useDispatch();
@@ -51,7 +53,9 @@ function App() {
         />
         <PrivateRoute exact path="/all-cities" component={AllCities} />
         <PrivateRoute exact path="/hotel/:slug" component={GetHotelBySlug} />
+        <PrivateRoute exact path="/car/:slug" component={GetCarBySlug} />
         <PrivateRoute exact path="/all-hotels" component={AllHotels} />
+        <PrivateRoute exact path="/all-cars" component={AllCars} />
         <PrivateRoute exact path="/users" component={UserScreen} />
         <PrivateRoute exact path="/profile" component={ProfileScreen} />
         <Route exact path="/login" component={Signin} />

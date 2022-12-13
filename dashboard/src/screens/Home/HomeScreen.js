@@ -5,21 +5,25 @@ import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
 import CategoryIcon from "@mui/icons-material/Category";
 import HotelIcon from "@mui/icons-material/Hotel";
+import TimeToLeaveIcon from '@mui/icons-material/TimeToLeave';
 import { getAllVacationsCategory } from "../../Redux/Actions/vacationCategoryAction";
 import "./HomeScreen.css";
 import { Modal, Button } from "react-bootstrap";
 import { getAllHotels } from "../../Redux/Actions/hotelAction";
+import { getAllCars } from "../../Redux/Actions/carAction";
 
 const HomeScreen = () => {
   const dispatch = useDispatch();
   const {categories} = useSelector((state) => state.Vacationcategory);
   // console.log(vacation);
   const {hotels} = useSelector((state) => state.hotelReducer);
-  console.log(hotels)
+  // console.log(hotels)
+  const { cars } = useSelector((state) => state.carsReducer);
 
   useEffect(() => {
     dispatch(getAllHotels())
     dispatch(getAllVacationsCategory());
+    dispatch(getAllCars())
   }, [dispatch]);
 
   const [lgShow, setLgShow] = useState(false);
@@ -46,6 +50,16 @@ const HomeScreen = () => {
               <p>
                 {hotels &&
                   hotels.length}
+              </p>
+            </Link>
+          </div>
+          <div className="dashboardSummaryBox2">
+            <Link to='/all-cars'>
+              <TimeToLeaveIcon />
+              <p className="para">Cars</p>
+              <p>
+                {cars &&
+                  cars.length}
               </p>
             </Link>
           </div>

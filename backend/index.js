@@ -29,6 +29,9 @@ app.use("/api", vacationProductRoutes);
 const hotelRoutes = require("./Routes/hotel");
 app.use("/api", hotelRoutes);
 
+const carRoutes = require("./Routes/car");
+app.use("/api", carRoutes);
+
 const initialDataRoutes = require("./Routes/initialData");
 app.use("/api", initialDataRoutes);
 
