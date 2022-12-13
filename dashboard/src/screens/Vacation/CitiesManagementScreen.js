@@ -29,6 +29,7 @@ import RadioGroup from "@mui/material/RadioGroup";
 // import FormControl from '@mui/material/FormControl';
 import FormLabel from "@mui/material/FormLabel";
 import { addCar } from "../../Redux/Actions/carAction";
+import { createPackage } from "../../Redux/Actions/packageAction";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -61,6 +62,13 @@ const CitiesManagementScreen = (props) => {
   const [refund, setRefund] = useState("");
   const [discount, setDiscount] = useState("");
   const [desc, setDesc] = useState("");
+
+  //Paclage States
+  const [packageName,setPackageName] = useState("");
+  const [packageDescription,setPackageDescription] = useState("");
+  const [duration,setDuration] = useState("");
+  const [refundable,setRefundable] = useState("");
+  const [product,setProduct] = useState("");
 
   const dispatch = useDispatch();
   const { products } = useSelector((state) => state.vacationProduct);
@@ -222,6 +230,45 @@ const CitiesManagementScreen = (props) => {
     history.push(`/car/${props.match.params.slug}`);
   };
 
+  //Package Functions
+  const [packageImage, setPackageImages] = useState([]);
+  const [packageImagesPreview, setPackageImagesPreview] = useState([]);
+ 
+  //Hotel Functions
+  const onChangeFilePackage = (e) => {
+    setPackageImages(e.target.files[0]);
+  };
+
+  const createPackageSubmitHandler = (e) => {
+    e.preventDefault();
+
+    const myForm = new FormData();
+
+    myForm.set("name", packageName);
+    console.log(packageName);
+
+    myForm.set("description", packageDescription);
+    console.log(packageDescription);
+
+    myForm.set("city", city);
+    console.log(city);
+
+    myForm.set("product", product);
+    console.log(product);
+
+    myForm.set("duration", duration);
+    console.log(duration);
+
+    myForm.set("refundable", refundable);
+    console.log(refundable);
+
+    myForm.append("packageImage", packageImage);
+    console.log(packageImage);
+
+    dispatch(createPackage(myForm));
+    // console.log(createProduct(myForm));
+    history.push(`/package/${props.match.params.slug}`);
+  };
   return (
     <>
       <Sidebar>
@@ -309,29 +356,7 @@ const CitiesManagementScreen = (props) => {
                     </Select>
                   </FormControl>
                 </Box>
-                {/* <div>
-                  <FormGroup>
-                    <FormControlLabel
-                      control={<Checkbox />}
-                      label="Pool"
-                      value={pool}
-                      onChange={(e) => setPool(e.target.value)}
-                    />
-                    <FormControlLabel
-                      control={<Checkbox defaultChecked />}
-                      label="Breakfast"
-                    />
-                    <FormControlLabel control={<Checkbox />} label="Hot tub" />
-                    <FormControlLabel
-                      control={<Checkbox />}
-                      label="FullyRefundable"
-                    />
-                    <FormControlLabel
-                      control={<Checkbox />}
-                      label="Reserve Now, pay later"
-                    />
-                  </FormGroup>
-                </div> */}
+               
                 <div style={{ display: "flex" }}>
                   <span style={{marginRight: "81px"}}>Pool:</span>
                   <input
@@ -507,6 +532,7 @@ const CitiesManagementScreen = (props) => {
                     onChange={(e) => setFare(e.target.value)}
                   />
                 </div>
+
                 <Box sx={{ minWidth: 120 }}>
                   <FormControl fullWidth>
                     <InputLabel id="demo-simple-select-label">City</InputLabel>
@@ -685,10 +711,10 @@ const CitiesManagementScreen = (props) => {
               <form
                 className="createProductForm"
                 encType="multipart/form-data"
-                //   onSubmit={createProductSubmitHandler}
+                onSubmit={createPackageSubmitHandler}
               >
                 <div>
-                  <Link to={`/hotel/${props.match.params.slug}`}>
+                  <Link to={`/package/${props.match.params.slug}`}>
                     <Button variant="contained">View All Packages</Button>
                   </Link>
                   <h1 style={{ marginLeft: "20rem" }}>Add New Package</h1>
@@ -699,11 +725,67 @@ const CitiesManagementScreen = (props) => {
                     fullWidth
                     required
                     id="outlined-required"
-                    label="Package Name"
-                    //   value={name}
-                    //   onChange={(e) => setName(e.target.value)}
+                    label="City"
+                    value={city = props.match.params.slug}
+                    onChange={(e) => setCity(e.target.value)}
+                    // disabled
                   />
                 </div>
+
+                <div>
+                  <TextField
+                    fullWidth
+                    required
+                    id="outlined-required"
+                    label="Package Name"
+                      value={packageName}
+                      onChange={(e) => setPackageName(e.target.value)}
+                  />
+                </div>
+
+                <div>
+                  <TextField
+                    fullWidth
+                    required
+                    id="outlined-required"
+                    label="Duration"
+                    value={duration}
+                    onChange={(e) => setDuration(e.target.value)}
+                  />
+                </div>
+
+                <div>
+                  <TextField
+                    fullWidth
+                    required
+                    id="outlined-required"
+                    label="Refundable"
+                      value={refundable}
+                      onChange={(e) => setRefundable(e.target.value)}
+                  />
+                </div>
+
+                <Box sx={{ minWidth: 120 }}>
+                  <FormControl fullWidth>
+                    <InputLabel id="demo-simple-select-label">City</InputLabel>
+                    <Select
+                      labelId="demo-simple-select-label"
+                      id="demo-simple-select"
+                      value={product}
+                      label="City"
+                      onChange={(e) => setProduct(e.target.value)}
+                    >
+                      {products &&
+                        products.map((data, index) => {
+                          return (
+                            <MenuItem value={data._id} key={index}>
+                              {data.name}
+                            </MenuItem>
+                          );
+                        })}
+                    </Select>
+                  </FormControl>
+                </Box>
 
                 <div>
                   <TextareaAutosize
@@ -712,24 +794,27 @@ const CitiesManagementScreen = (props) => {
                     id="outlined-required"
                     style={{ width: 1200, height: 100 }}
                     className="text-area"
-                    //   value={name}
-                    //   onChange={(e) => setName(e.target.value)}
+                      value={packageDescription}
+                      onChange={(e) => setPackageDescription(e.target.value)}
                   />
                 </div>
                 <div id="createProductFormFile">
-                  <input
+                  <TextField
+                    id="outlined-basic"
+                    required
+                    // label="Outlined"
+                    variant="outlined"
                     type="file"
-                    // name="productPictures"
-                    // name="products"
-                    // accept="image/*"
-                    accept="image/*"
-                    // onChange={createHotelImagesChange}
-                    multiple
+                    onChange={onChangeFilePackage}
+                    name="packageImage"
+                    inputProps={{
+                      multiple: false,
+                    }}
                   />
                 </div>
                 <div id="createProductFormImage">
-                  {imagesPreview.map((image, index) => (
-                    <img key={index} src={image} alt="Product Preview" />
+                  {packageImagesPreview.map((image, index) => (
+                    <img key={index} src={image} alt="package Preview" />
                   ))}
                 </div>
 

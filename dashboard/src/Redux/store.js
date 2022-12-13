@@ -6,6 +6,7 @@ import { VacationCategoryReducer } from "./Reducers/vacationCategoryReducer";
 import { vacationProductReducer,addCitiesReducer,allCitiesReducer } from "./Reducers/VacationProductReducer";
 import { allHotelsReducer, hotelsReducer } from "./Reducers/hotelReducer";
 import { allCarsReducer, newCarReducer } from "./Reducers/carReducer";
+import { allPackagesReducer, newPackageReducer } from "./Reducers/packageReducer";
 
 const reducer = combineReducers({
   auth: authReducer,
@@ -17,6 +18,9 @@ const reducer = combineReducers({
   delhotelReducer: hotelsReducer,
   addCarReducer: newCarReducer,
   carsReducer: allCarsReducer,
+  addPackageReducer: newPackageReducer,
+  packagesReducer: allPackagesReducer,
+
   
   // allVacation: allCitiesReducer,
   // userLogin: userLoginReducer,

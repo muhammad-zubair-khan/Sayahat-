@@ -6,11 +6,13 @@ import Sidebar from "../../components/Sidebar";
 import CategoryIcon from "@mui/icons-material/Category";
 import HotelIcon from "@mui/icons-material/Hotel";
 import TimeToLeaveIcon from '@mui/icons-material/TimeToLeave';
+import TourIcon from '@mui/icons-material/Tour';
 import { getAllVacationsCategory } from "../../Redux/Actions/vacationCategoryAction";
 import "./HomeScreen.css";
 import { Modal, Button } from "react-bootstrap";
 import { getAllHotels } from "../../Redux/Actions/hotelAction";
 import { getAllCars } from "../../Redux/Actions/carAction";
+import { getAllPackages } from "../../Redux/Actions/packageAction";
 
 const HomeScreen = () => {
   const dispatch = useDispatch();
@@ -20,10 +22,13 @@ const HomeScreen = () => {
   // console.log(hotels)
   const { cars } = useSelector((state) => state.carsReducer);
 
+  const {packages} = useSelector((state)=> state.packagesReducer);
+
   useEffect(() => {
     dispatch(getAllHotels())
     dispatch(getAllVacationsCategory());
     dispatch(getAllCars())
+    dispatch(getAllPackages())
   }, [dispatch]);
 
   const [lgShow, setLgShow] = useState(false);
@@ -60,6 +65,16 @@ const HomeScreen = () => {
               <p>
                 {cars &&
                   cars.length}
+              </p>
+            </Link>
+          </div>
+          <div className="dashboardSummaryBox2">
+            <Link to='/all-packages'>
+              <TourIcon />
+              <p className="para">Packages</p>
+              <p>
+                {packages &&
+                  packages.length}
               </p>
             </Link>
           </div>

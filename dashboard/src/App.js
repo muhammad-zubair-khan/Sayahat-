@@ -21,6 +21,8 @@ import AllHotels from "./screens/Vacation/AllHotels";
 import AllCars from "./screens/Vacation/AllCars";
 import GetHotelBySlug from "./screens/Vacation/GetHotelBySlug";
 import GetCarBySlug from "./screens/Vacation/GetCarBySlug";
+import AllPackages from "./screens/Vacation/AllPackages";
+import GetPackageBySlug from "./screens/Vacation/GetPackageBySlug";
 
 function App() {
   const dispatch = useDispatch();
@@ -54,8 +56,14 @@ function App() {
         <PrivateRoute exact path="/all-cities" component={AllCities} />
         <PrivateRoute exact path="/hotel/:slug" component={GetHotelBySlug} />
         <PrivateRoute exact path="/car/:slug" component={GetCarBySlug} />
+        <PrivateRoute
+          exact
+          path="/package/:slug"
+          component={GetPackageBySlug}
+        />
         <PrivateRoute exact path="/all-hotels" component={AllHotels} />
         <PrivateRoute exact path="/all-cars" component={AllCars} />
+        <PrivateRoute exact path="/all-packages" component={AllPackages} />
         <PrivateRoute exact path="/users" component={UserScreen} />
         <PrivateRoute exact path="/profile" component={ProfileScreen} />
         <Route exact path="/login" component={Signin} />
