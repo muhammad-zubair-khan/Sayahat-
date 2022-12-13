@@ -19,31 +19,27 @@ import { useDispatch } from "react-redux";
 import { getAllVacationsCategory } from "./Redux/Actions/vacationCategoryAction";
 
 function App() {
-const dispatch = useDispatch();
-useEffect(() => {
-  dispatch(getAllVacationsCategory());
-}, []);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getAllVacationsCategory());
+  }, []);
 
   return (
-    
-        <BrowserRouter>
-          <Routes>
-            <Route exact path="/"  element={<Home/>}/>
-            <Route exact path="/lahore"  element={<LahoreCity/>}/>
-            <Route exact path="/hotels"  element={<Hotel/>}/>
-            <Route exact path="/hotel/:id" element={<HotelDetail/>}/>
-            <Route exact path="/cars" element={<Car/>}/>
-            <Route exact path="/car/:id" element={<CarDetail/>}/>
-            <Route exact path="/aboutus" element={<Aboutus/>}/>
-            <Route exact path="/contactus" element={<Contactus/>}/>
-            <Route exact path="/vacation/:slug/:slug" element={<City/>}/>
-          <Route path="/vacation/:slug" exact element={<Cities/>} />
-          </Routes>
-          {/* <Footer /> */}
-        </BrowserRouter>
-     
-
-
+    <BrowserRouter>
+      <Routes>
+        <Route exact path="/" element={<Home />} />
+        <Route exact path="/lahore" element={<LahoreCity />} />
+        <Route exact path="/hotels" element={<Hotel />} />
+        <Route exact path="/hotel/:id" element={<HotelDetail />} />
+        <Route exact path="/cars" element={<Car />} />
+        <Route exact path="/car/:id" element={<CarDetail />} />
+        <Route exact path="/aboutus" element={<Aboutus />} />
+        <Route exact path="/contactus" element={<Contactus />} />
+        <Route exact path="/vacation/:slug/:slug" element={<City />} />
+        <Route path="/vacation/:slug" exact element={<Cities />} />
+      </Routes>
+      {/* <Footer /> */}
+    </BrowserRouter>
   );
 }
 

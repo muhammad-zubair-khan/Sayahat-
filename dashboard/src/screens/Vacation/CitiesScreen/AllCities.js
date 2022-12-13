@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import Header from "../../components/Header";
-import Sidebar from "../../components/Sidebar";
-import { getAllVacationProduct } from "../../Redux/Actions/vacationProductAction";
+import Header from "../../../components/Header";
+import Sidebar from "../../../components/Sidebar";
+import { getAllVacationProduct } from "../../../Redux/Actions/vacationProductAction";
 
 const AllCities = () => {
   const dispatch = useDispatch();

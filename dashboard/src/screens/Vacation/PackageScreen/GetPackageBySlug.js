@@ -1,37 +1,37 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Header from "../../components/Header";
-import Sidebar from "../../components/Sidebar";
-import { getCarBySlug } from "../../Redux/Actions/carAction";
+import Header from "../../../components/Header";
+import Sidebar from "../../../components/Sidebar";
+import { getPackageBySlug } from "../../../Redux/Actions/packageAction";
 import { DataGrid } from "@mui/x-data-grid";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Button from "@mui/material/Button";
-import "./GetHotelBySlug.css";
+// import "./GetHotelBySlug.css";
 import Zoom from "react-medium-image-zoom";
 import "react-medium-image-zoom/dist/styles.css";
-import { deleteCar } from "../../Redux/Actions/carAction";
+import { deletePackage } from "../../../Redux/Actions/packageAction";
 import { useHistory } from "react-router-dom";
 
-const GetHotelBySlug = (props) => {
+const GetPackageBySlug = (props) => {
   const history = useHistory()
   const dispatch = useDispatch();
-  const { cars } = useSelector((state) => state.carsReducer);
-console.log(cars)
-  const deleteCarHandler = (id) => {
-    dispatch(deleteCar(id));
+  const { packages } = useSelector((state) => state.packagesReducer);
+
+  const deletePackageHandler = (id) => {
+    dispatch(deletePackage(id));
     history.go(0);
   };
 
   useEffect(() => {
     const { match } = props;
   console.log(props);
-    dispatch(getCarBySlug(match.params.slug));
+    dispatch(getPackageBySlug(match.params.slug));
   }, [dispatch, props]);
 
   const columns = [
     {
-      field: "carImage",
-      headerName: "Car img",
+      field: "packageImage",
+      headerName: "Package img",
       minWidth: 290,
       minHeight: 200,
       flex: 0.5,
@@ -41,7 +41,7 @@ console.log(cars)
           <div style={{ textAlign: "center" }}>
             <Zoom>
               <img
-                src={params.row.carImage}
+                src={params.row.packageImage}
                 style={{ width: "20%", margin: "10px 10px" }}
                 alt={params.row.name}
               />
@@ -58,8 +58,8 @@ console.log(cars)
       flex: 1,
     },
     {
-      field: "type",
-      headerName: "Type",
+      field: "city",
+      headerName: "City",
       minWidth: 300,
       flex: 1,
     },
@@ -78,22 +78,15 @@ console.log(cars)
     },
 
     {
-      field: "fare",
-      headerName: "Fare",
+      field: "duration",
+      headerName: "Duration",
       // type: "number",
       minWidth: 270,
       flex: 0.5,
     },
     {
-      field: "mileage",
-      headerName: "Mileage",
-      // type: "number",
-      minWidth: 270,
-      flex: 0.5,
-    },
-    {
-      field: "shuttle",
-      headerName: "Shuttle",
+      field: "refundable",
+      headerName: "Refundable",
       // type: "number",
       minWidth: 270,
       flex: 0.5,
@@ -112,7 +105,7 @@ console.log(cars)
               <MdModeEditOutline />
             </Link> */}
 
-            <Button onClick={() => deleteCarHandler(params.id)}>
+            <Button onClick={() => deletePackageHandler(params.id)}>
               <DeleteIcon />
             </Button>
             {/* {console.log("ye wali>>>>>>>>>>>>>>>>>", params.id)} */}
@@ -124,18 +117,16 @@ console.log(cars)
 
   const rows = [];
 
-  cars &&
-    cars.forEach((item) => {
+  packages &&
+    packages.forEach((item) => {
       rows.push({
         id: item._id,
-        carImage: item.carImage,
+        packageImage: item.packageImage,
         name: item.name,
-        type: item.type,
         description: item.description,
-        fare: item.fare,
-        mileage: item.mileage,
-        passenger: item.passenger,
-        shuttle:item.shuttle,
+        duration: item.duration,
+        refundable: item.refundable,
+        city: item.city,
         // category:item.category
       });
     });
@@ -145,13 +136,13 @@ console.log(cars)
         <Header />
         <div className="dashboard">
           <div className="productListContainer">
-            <h1 id="productListHeading">{`${props.match.params.slug} Cars`}</h1>
+            <h1 id="productListHeading">{`${props.match.params.slug} Packages`}</h1>
             <DataGrid
               rows={rows}
               columns={columns}
               pageSize={10}
               disableSelectionOnClick
-              className="CarListTable"
+              className="PackageListTable"
               autoHeight
             />
           </div>
@@ -161,4 +152,4 @@ console.log(cars)
   );
 };
 
-export default GetHotelBySlug;
+export default GetPackageBySlug;

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import Header from "../../components/Header";
-import Sidebar from "../../components/Sidebar";
+import Header from "../../../components/Header";
+import Sidebar from "../../../components/Sidebar";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import FormGroup from "@mui/material/FormGroup";
@@ -16,8 +16,8 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   getAllVacationProduct,
   getVacationProductsBySlug,
-} from "../../Redux/Actions/vacationProductAction";
-import { createHotel, getHotelBySlug } from "../../Redux/Actions/hotelAction";
+} from "../../../Redux/Actions/vacationProductAction";
+import { createHotel, getHotelBySlug } from "../../../Redux/Actions/hotelAction";
 import Box from "@mui/material/Box";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
@@ -28,8 +28,8 @@ import RadioGroup from "@mui/material/RadioGroup";
 // import FormControlLabel from '@mui/material/FormControlLabel';
 // import FormControl from '@mui/material/FormControl';
 import FormLabel from "@mui/material/FormLabel";
-import { addCar } from "../../Redux/Actions/carAction";
-import { createPackage } from "../../Redux/Actions/packageAction";
+import { addCar } from "../../../Redux/Actions/carAction";
+import { createPackage } from "../../../Redux/Actions/packageAction";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",

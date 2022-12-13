@@ -1,15 +1,14 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Header from "../../components/Header";
-import Sidebar from "../../components/Sidebar";
-import { getAllHotels, getHotelBySlug } from "../../Redux/Actions/hotelAction";
+import Header from "../../../components/Header";
+import Sidebar from "../../../components/Sidebar";
+import { getHotelBySlug } from "../../../Redux/Actions/hotelAction";
 import { DataGrid } from "@mui/x-data-grid";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Button from "@mui/material/Button";
-import "./GetHotelBySlug.css";
 import Zoom from "react-medium-image-zoom";
 import "react-medium-image-zoom/dist/styles.css";
-import { deleteHotel } from "../../Redux/Actions/hotelAction";
+import { deleteHotel } from "../../../Redux/Actions/hotelAction";
 import { useHistory } from "react-router-dom";
 
 const GetHotelBySlug = (props) => {

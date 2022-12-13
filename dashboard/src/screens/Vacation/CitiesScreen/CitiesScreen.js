@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import Header from "../../components/Header";
-import Sidebar from "../../components/Sidebar";
-import { getVacationProductsBySlug } from "../../Redux/Actions/vacationProductAction";
+import Header from "../../../components/Header";
+import Sidebar from "../../../components/Sidebar";
+import { getVacationProductsBySlug } from "../../../Redux/Actions/vacationProductAction";
 // import { ImageUrl } from "../../Redux/UrlConfig";
-import "./AllVacations.css";
+import "../VacationScreen/AllVacations.css";
 
 const CitiesScreen = (props) => {
   const dispatch = useDispatch();

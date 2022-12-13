@@ -1,32 +1,31 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Header from "../../components/Header";
-import Sidebar from "../../components/Sidebar";
-import { getAllCars } from "../../Redux/Actions/carAction";
+import Header from "../../../components/Header";
+import Sidebar from "../../../components/Sidebar";
+import { getAllHotels, getHotelBySlug } from "../../../Redux/Actions/hotelAction";
 import { DataGrid } from "@mui/x-data-grid";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Button from "@mui/material/Button";
-// import "./GetHotelBySlug.css";
 import Zoom from "react-medium-image-zoom";
 import "react-medium-image-zoom/dist/styles.css";
-import { deleteCar } from "../../Redux/Actions/carAction";
+import { deleteHotel } from "../../../Redux/Actions/hotelAction";
 
-const AllCars = (props) => {
+const AllHotels = (props) => {
   const dispatch = useDispatch();
-  const { cars } = useSelector((state) => state.carsReducer);
+  const { hotels } = useSelector((state) => state.hotelReducer);
 
-  const deleteCarHandler = (id) => {
-    dispatch(deleteCar(id));
+  const deleteHotelHandler = (id) => {
+    dispatch(deleteHotel(id));
     // history.go(0);
   };
 
   useEffect(() => {
-    dispatch(getAllCars());
+    dispatch(getAllHotels());
   }, []);
 
   const columns = [
     {
-      field: "carImage",
+      field: "hotelImage",
       headerName: "Hotel img",
       minWidth: 290,
       minHeight: 200,
@@ -37,7 +36,7 @@ const AllCars = (props) => {
           <div style={{ textAlign: "center" }}>
             <Zoom>
               <img
-                src={params.row.carImage}
+                src={params.row.hotelImage}
                 style={{ width: "20%", margin: "10px 10px" }}
                 alt={params.row.name}
               />
@@ -54,47 +53,46 @@ const AllCars = (props) => {
       flex: 1,
     },
     {
-        field: "type",
-        headerName: "Type",
-        minWidth: 300,
-        flex: 1,
-      },
-      // {
-      //   field: "category",
-      //   headerName: "Category",
-      //   minWidth: 300,
-      //   flex: 1,
-      // },
-      {
-        field: "description",
-        headerName: "Description",
-        // type: "number",
-        minWidth: 150,
-        flex: 0.3,
-      },
-  
-      {
-        field: "fare",
-        headerName: "Fare",
-        // type: "number",
-        minWidth: 270,
-        flex: 0.5,
-      },
-      {
-        field: "mileage",
-        headerName: "Mileage",
-        // type: "number",
-        minWidth: 270,
-        flex: 0.5,
-      },
-      {
-        field: "shuttle",
-        headerName: "Shuttle",
-        // type: "number",
-        minWidth: 270,
-        flex: 0.5,
-      },
-  
+      field: "city",
+      headerName: "City",
+      minWidth: 300,
+      flex: 1,
+    },
+    // {
+    //   field: "category",
+    //   headerName: "Category",
+    //   minWidth: 300,
+    //   flex: 1,
+    // },
+    {
+      field: "description",
+      headerName: "Description",
+      // type: "number",
+      minWidth: 150,
+      flex: 0.3,
+    },
+
+    {
+      field: "pool",
+      headerName: "Pool",
+      // type: "number",
+      minWidth: 270,
+      flex: 0.5,
+    },
+    {
+      field: "Breakfast",
+      headerName: "Breakfast",
+      // type: "number",
+      minWidth: 270,
+      flex: 0.5,
+    },
+    {
+      field: "Hottub",
+      headerName: "Hot tub",
+      // type: "number",
+      minWidth: 270,
+      flex: 0.5,
+    },
 
     {
       field: "action",
@@ -109,7 +107,7 @@ const AllCars = (props) => {
               <MdModeEditOutline />
             </Link> */}
 
-            <Button onClick={() => deleteCarHandler(params.id)}>
+            <Button onClick={() => deleteHotelHandler(params.id)}>
               <DeleteIcon />
             </Button>
             {/* {console.log("ye wali>>>>>>>>>>>>>>>>>", params.id)} */}
@@ -121,18 +119,17 @@ const AllCars = (props) => {
 
   const rows = [];
 
-  cars &&
-    cars.forEach((item) => {
+  hotels &&
+    hotels.forEach((item) => {
       rows.push({
         id: item._id,
-        carImage: item.carImage,
+        hotelImage: item.hotelImage,
         name: item.name,
-        type: item.type,
         description: item.description,
-        fare: item.fare,
-        mileage: item.mileage,
-        passenger: item.passenger,
-        shuttle:item.shuttle,
+        pool: item.pool,
+        Breakfast: item.Breakfast,
+        Hottub: item.Hottub,
+        city: item.city,
         // category:item.category
       });
     });
@@ -142,13 +139,13 @@ const AllCars = (props) => {
         <Header />
         <div className="dashboard">
           <div className="productListContainer">
-            <h1 id="productListHeading">ALL Cars</h1>
+            <h1 id="productListHeading">ALL Hotels</h1>
             <DataGrid
               rows={rows}
               columns={columns}
               pageSize={10}
               disableSelectionOnClick
-              className="CarListTable"
+              className="HotelListTable"
               autoHeight
             />
           </div>
@@ -158,4 +155,4 @@ const AllCars = (props) => {
   );
 };
 
-export default AllCars;
+export default AllHotels;

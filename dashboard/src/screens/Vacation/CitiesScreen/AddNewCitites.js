@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { createProduct } from "../../Redux/Actions/vacationProductAction";
+import { createProduct } from "../../../Redux/Actions/vacationProductAction";
 import Button from "@mui/material/Button";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
@@ -8,8 +8,9 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { useHistory } from "react-router-dom";
 import TextField from "@mui/material/TextField";
-import Sidebar from "../../components/Sidebar";
-import Header from "../../components/Header";
+import Sidebar from "../../../components/Sidebar";
+import Header from "../../../components/Header";
+import { TextareaAutosize } from "@mui/material";
 
 const AddNewCitites = () => {
   const dispatch = useDispatch();
@@ -17,6 +18,7 @@ const AddNewCitites = () => {
 
   const [name, setName] = useState("");
   const [categoryId, setCategoryId] = useState("");
+  const [description, setDescription] = useState("");
   const [productVacationPicture, setProductVacationPicture] = useState("");
   const category = useSelector((state) => state.Vacationcategory);
 
@@ -45,6 +47,9 @@ const AddNewCitites = () => {
     // console.log(name);
 
     myForm.set("category", categoryId);
+    // console.log(categoryId);
+
+    myForm.set("description", description);
     // console.log(categoryId);
 
     myForm.append("productVacationPicture", productVacationPicture);
@@ -102,6 +107,18 @@ const AddNewCitites = () => {
                   </Select>
                 </FormControl>
               </div>
+
+              <div>
+                  <TextareaAutosize
+                    placeholder="Description here..."
+                    required
+                    id="outlined-required"
+                    style={{ width: 1200, height: 100 }}
+                    className="text-area"
+                      value={description}
+                      onChange={(e) => setDescription(e.target.value)}
+                  />
+                </div>
 
               {/* {productPictures.length > 0
                 ? productPictures.map((pic, item) => (

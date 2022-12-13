@@ -13,12 +13,14 @@ exports.createVacationProduct = async(req, res, next) => {
 
   const {
     name,
+    description,
     category,
   } = req.body;
 
   const product = await new VacationProduct({
     name: name,
     slug: slugify(name),
+    description: description,
     productVacationPicture: process.env.IMG_API + `/public/` + req.file.filename,
     category,
     // createdBy: req.user._id,
