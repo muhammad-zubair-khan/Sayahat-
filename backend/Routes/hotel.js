@@ -7,6 +7,7 @@ const {
     createHotel,
     getAllHotels,
     deleteHotel,
+    getHotelsBySlug,
 } = require("../Controllers/hotel");
 
 const storage = multer.diskStorage({
@@ -26,6 +27,8 @@ router.post(
 );
 
 router.get("/hotels", getAllHotels);
+router.get("/hotels/:slug", getHotelsBySlug);
+
 router.post("/vacation/hotel/:id", deleteHotel);
 // router.post(
 //   "/vacation/category/update",

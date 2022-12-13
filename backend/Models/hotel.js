@@ -20,7 +20,7 @@ const hotelSchema = new mongoose.Schema(
       type: String,
     },
     pool: {
-      type: Boolean,
+      type: String,
     },
     Breakfast: {
       type: Boolean,
@@ -39,6 +39,7 @@ const hotelSchema = new mongoose.Schema(
       required: true,
       trim: true,
     },
+    category: { type: mongoose.Schema.Types.ObjectId, ref: 'Category', required: true },
     updatedAt: Date,
   },
   { timestamps: true }
