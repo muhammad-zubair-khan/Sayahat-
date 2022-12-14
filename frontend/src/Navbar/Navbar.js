@@ -9,6 +9,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAllVacationsCategory } from "../Redux/Actions/vacationCategoryAction";
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
+import PermIdentityIcon from '@mui/icons-material/PermIdentity';
+import PhoneIcon from '@mui/icons-material/Phone';
+import HouseboatIcon from '@mui/icons-material/Houseboat';
+import HotelIcon from '@mui/icons-material/Hotel';
+import TipsAndUpdatesIcon from '@mui/icons-material/TipsAndUpdates';
+import DirectionsCarIcon from '@mui/icons-material/DirectionsCar';
 
 function ChangeColorOnScroll(props) {
   const { children, window } = props;
@@ -66,13 +72,13 @@ const Navbar = (props) => {
           {category.parentId ? (
             <>
               <Link to={`/vacation/${category.slug}`} className="menues">
-                {category.name}
+               {category.name}
               </Link>
             </>
           ) : (
             <>
-              <label htmlFor="show-features">{category.name}</label>
-              {!isMatch && <Link to="#">{category.name}</Link>}
+              <label htmlFor="show-features"><HouseboatIcon style={{width: '18px',height: '15px',}}/> {category.name}</label>
+              {!isMatch && <Link to="#"><HouseboatIcon style={{width: '18px', height: '15px'}}/> {category.name}</Link>}
               <input type="checkbox" id="show-features" />
               {/* <Link>
               {category.name}
@@ -109,9 +115,9 @@ const Navbar = (props) => {
                 </Link>
               </div>
               <ul className="links">
-                <li>
+                {/* <li>
                   <Link to="/">Home</Link>
-                </li>
+                </li> */}
                 {vacationCategory.categories.length > 0
                   ? displayCategories(vacationCategory.categories)
                   : null}
@@ -143,25 +149,22 @@ const Navbar = (props) => {
                 </li> */}
 
                 <li>
-                  <Link to="/hotels">Hotels</Link>
+                  <Link to="/hotels"><HotelIcon style={{width: '18px', height: '15px'}}/> Hotels</Link>
                 </li>
                 <li>
-                  <Link to="/cars">Cars</Link>
-                </li>
-                {/* <li>
-                  <Link to="/lahore">Lahore</Link>
+                  <Link to="/car-rentals"><DirectionsCarIcon style={{width: '18px', height: '15px'}}/> Cars</Link>
                 </li>
                 <li>
-                  <Link to='/tours'>
-                    Tours
-                  </Link>
-                </li> */}
-                <li>
-                  <Link to="/aboutus">About us</Link>
+                  <Link to="/aboutus"><TipsAndUpdatesIcon style={{width: '18px', height: '15px'}}/> About us</Link>
                 </li>
                 <li>
-                  <Link to="/contactus">Contact Us</Link>
+                  <Link to="/contactus"><PhoneIcon style={{width: '18px', height: '15px'}}/> Contact Us</Link>
                 </li>
+                <li>
+                  <Link to="/account"><PermIdentityIcon style={{width: '18px', height: '15px'}}/> Account</Link>
+                </li>
+               
+               
               </ul>
             </div>
           </nav>

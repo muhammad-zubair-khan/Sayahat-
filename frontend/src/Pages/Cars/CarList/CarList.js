@@ -62,7 +62,7 @@ const CarList = () => {
           <Typography variant="h5" style={{color:'black',fontWeight:'bolder'}}>68$</Typography>
           <h6 paragraph>per day</h6>
           <h6 paragraph>$95 total</h6>
-          <Button  variant="contained"><Link to='/car/:id' style={{color:'white'}}>Continue</Link></Button>
+          <Button  variant="contained"><Link to={`/car/${'193AKS820jS'}`} style={{color:'white'}}>Continue</Link></Button>
 
         </Grid>
       </Grid>

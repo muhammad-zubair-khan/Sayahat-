@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import Header from "../../../../components/Header";
-import Sidebar from "../../../../components/Sidebar";
+import Header from "../../../components/Header";
+import Sidebar from "../../../components/Sidebar";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -20,11 +20,11 @@ import {
   createVacationCategory,
   getAllVacationsCategory,
   updateVacationCategories,
-} from "../../../../Redux/Actions/vacationCategoryAction";
-import AddCategoryModal from "../../../../components/Modal/AddVacationCategoryModal";
-import ReusableModel from "../../../../components/Modal/ResuableModel";
-import { deleteCategories as deleteCategoriesAction } from "../../../../Redux/Actions/vacationCategoryAction";
-import UpdateVacationCategoryModal from "../../../../components/Modal/UpdateVacationCategoryModal";
+} from "../../../Redux/Actions/vacationCategoryAction";
+import AddCategoryModal from "../../../components/Modal/AddVacationCategoryModal";
+import ReusableModel from "../../../components/Modal/ResuableModel";
+import { deleteCategories as deleteCategoriesAction } from "../../../Redux/Actions/vacationCategoryAction";
+import UpdateVacationCategoryModal from "../../../components/Modal/UpdateVacationCategoryModal";
 
 const VacationScreen = () => {
   const [categoryName, setCategoryName] = useState("");

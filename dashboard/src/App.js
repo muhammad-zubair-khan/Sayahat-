@@ -10,7 +10,7 @@ import HomeScreen from "./screens/Home/HomeScreen";
 import UserScreen from "./screens/User/UserScreen";
 import ProfileScreen from "./screens/Profile/ProfileScreen";
 import { isUserLoggedIn } from "./Redux/Actions/userActions";
-import VacationScreen from "./screens/Vacation/CitiesScreen/VacationScreen/VacationScreen";
+import VacationScreen from "./screens/Vacation/VacationScreen/VacationScreen";
 import AddNewCitites from "./screens/Vacation/CitiesScreen/AddNewCitites";
 import CitiesScreen from "./screens/Vacation/CitiesScreen/CitiesScreen";
 import CitiesManagementScreen from "./screens/Vacation/CitiesScreen/CitiesManagementScreen";

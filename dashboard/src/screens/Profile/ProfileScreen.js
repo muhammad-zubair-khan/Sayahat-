@@ -29,8 +29,8 @@ const ProfileScreen = () => {
                   <div className="col-sm-6 col-md-6">
                     <h4 style={{fontVariant:'small-caps'}}>{user.fullName}</h4>
                     <small>
-                      <cite title="San Francisco, USA">
-                        Islamabad, PAK{" "}
+                      <cite>
+                        Lahore, PAK{" "}
                         <i className="glyphicon glyphicon-map-marker"></i>
                       </cite>
                     </small>

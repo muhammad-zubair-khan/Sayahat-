@@ -6,7 +6,7 @@ const MyCard = () => {
   const cardData = [
     {
       image: "http://zwin.io/html/viaje/assets/img/destination-list/1.png",
-      country: "Greece",
+      country: "Lahore",
       description: "Atmosphere of the sunny country",
       date: "8 Oct",
       days: 4,
@@ -16,7 +16,7 @@ const MyCard = () => {
     },
     {
       image: "http://zwin.io/html/viaje/assets/img/destination-list/1.png",
-      country: "Greece",
+      country: "Lahore",
       description: "Atmosphere of the sunny country",
       date: "8 Oct",
       days: 4,
@@ -26,7 +26,7 @@ const MyCard = () => {
     },
     {
       image: "http://zwin.io/html/viaje/assets/img/destination-list/1.png",
-      country: "Greece",
+      country: "Lahore",
       description: "Atmosphere of the sunny country",
       date: "8 Oct",
       days: 4,
@@ -39,7 +39,7 @@ const MyCard = () => {
   const cardDataTwo = [
     {
       image: "http://zwin.io/html/viaje/assets/img/destination-list/2.png",
-      country: "Greece",
+      country: "Lahore",
       description: "Atmosphere of the sunny country",
       date: "8 Oct",
       days: 4,
@@ -49,7 +49,7 @@ const MyCard = () => {
     },
     {
       image: "http://zwin.io/html/viaje/assets/img/destination-list/2.png",
-      country: "Greece",
+      country: "Lahore",
       description: "Atmosphere of the sunny country",
       date: "8 Oct",
       days: 4,
@@ -59,7 +59,7 @@ const MyCard = () => {
     },
     {
       image: "http://zwin.io/html/viaje/assets/img/destination-list/2.png",
-      country: "Greece",
+      country: "Lahore",
       description: "Atmosphere of the sunny country",
       date: "8 Oct",
       days: 4,
@@ -72,7 +72,7 @@ const MyCard = () => {
   const cardDataThree = [
     {
       image: "http://zwin.io/html/viaje/assets/img/destination-list/3.png",
-      country: "Greece",
+      country: "Lahore",
       description: "Atmosphere of the sunny country",
       date: "8 Oct",
       days: 4,
@@ -82,7 +82,7 @@ const MyCard = () => {
     },
     {
       image: "http://zwin.io/html/viaje/assets/img/destination-list/3.png",
-      country: "Greece",
+      country: "Lahore",
       description: "Atmosphere of the sunny country",
       date: "8 Oct",
       days: 4,
@@ -92,7 +92,7 @@ const MyCard = () => {
     },
     {
       image: "http://zwin.io/html/viaje/assets/img/destination-list/3.png",
-      country: "Greece",
+      country: "Lahore",
       description: "Atmosphere of the sunny country",
       date: "8 Oct",
       days: 4,
@@ -104,14 +104,14 @@ const MyCard = () => {
 
   let [count, setcount] = useState(1);
 
-  let [progress, setprogress] = useState(34);
+  let [progress, setprogress] = useState(27);
 
   // const [isDisabled, setDisabled] = useState(false);
 
   let countIncrement = () => {
-    if (count < 3) {
+    if (count < 4) {
       setcount(count + 1);
-      setprogress(progress + 34);
+      setprogress(progress + 27);
     } else {
       // document.getElementById("nextBtn").style.display = 'none';
       // setDisabled(true);
@@ -123,7 +123,7 @@ const MyCard = () => {
   const countDecrement = () => {
     if (count > 1) {
       setcount(count - 1);
-      setprogress(progress - 34);
+      setprogress(progress - 27);
       document.getElementById("nextBtn").style.display = 'block';
 
     }
