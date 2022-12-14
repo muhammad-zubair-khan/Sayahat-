@@ -8,7 +8,7 @@ import {
   ALL_USER_REQUEST,
   ALL_USER_SUCCESS,
   ALL_USER_FAIL,
-} from "../Constants/UserConstants";
+} from "../Constants/userConstants";
 
 const initialState = {
   token: null,
@@ -16,7 +16,6 @@ const initialState = {
     firstName: "",
     lastName: "",
     email: "",
-    phone: "",
   },
   authenticate: false,
   authenticating: false,
@@ -51,7 +50,7 @@ const initialState = {
 //     }
 // };
 
-export const authReducer = (state = initialState, action) => {
+export const userAuthReducer = (state = initialState, action) => {
   // eslint-disable-next-line default-case
   switch (action.type) {
     case USER_LOGIN_REQUEST:

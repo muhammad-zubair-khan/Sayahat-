@@ -1,35 +1,37 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Header from "../../components/Header";
-import Sidebar from "../../components/Sidebar";
-import { getAllHotels, getHotelBySlug } from "../../Redux/Actions/hotelAction";
+import Header from "../../../components/Header";
+import Sidebar from "../../../components/Sidebar";
+import { getPackageBySlug } from "../../../Redux/Actions/packageAction";
 import { DataGrid } from "@mui/x-data-grid";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Button from "@mui/material/Button";
-import "./AllHotel.css";
+// import "./GetHotelBySlug.css";
 import Zoom from "react-medium-image-zoom";
 import "react-medium-image-zoom/dist/styles.css";
-import { deleteHotel } from "../../Redux/Actions/hotelAction";
+import { deletePackage } from "../../../Redux/Actions/packageAction";
+import { useHistory } from "react-router-dom";
 
-const AllHotels = (props) => {
+const GetPackageBySlug = (props) => {
+  const history = useHistory()
   const dispatch = useDispatch();
-  const { hotels } = useSelector((state) => state.hotelReducer);
+  const { packages } = useSelector((state) => state.packagesReducer);
 
-  const deleteHotelHandler = (id) => {
-    dispatch(deleteHotel(id));
-    // history.go(0);
+  const deletePackageHandler = (id) => {
+    dispatch(deletePackage(id));
+    history.go(0);
   };
 
   useEffect(() => {
     const { match } = props;
   console.log(props);
-    dispatch(getHotelBySlug(match.params.slug));
+    dispatch(getPackageBySlug(match.params.slug));
   }, [dispatch, props]);
 
   const columns = [
     {
-      field: "hotelImage",
-      headerName: "Hotel img",
+      field: "packageImage",
+      headerName: "Package img",
       minWidth: 290,
       minHeight: 200,
       flex: 0.5,
@@ -39,7 +41,7 @@ const AllHotels = (props) => {
           <div style={{ textAlign: "center" }}>
             <Zoom>
               <img
-                src={params.row.hotelImage}
+                src={params.row.packageImage}
                 style={{ width: "20%", margin: "10px 10px" }}
                 alt={params.row.name}
               />
@@ -76,22 +78,15 @@ const AllHotels = (props) => {
     },
 
     {
-      field: "pool",
-      headerName: "Pool",
+      field: "duration",
+      headerName: "Duration",
       // type: "number",
       minWidth: 270,
       flex: 0.5,
     },
     {
-      field: "Breakfast",
-      headerName: "Breakfast",
-      // type: "number",
-      minWidth: 270,
-      flex: 0.5,
-    },
-    {
-      field: "Hottub",
-      headerName: "Hot tub",
+      field: "refundable",
+      headerName: "Refundable",
       // type: "number",
       minWidth: 270,
       flex: 0.5,
@@ -110,7 +105,7 @@ const AllHotels = (props) => {
               <MdModeEditOutline />
             </Link> */}
 
-            <Button onClick={() => deleteHotelHandler(params.id)}>
+            <Button onClick={() => deletePackageHandler(params.id)}>
               <DeleteIcon />
             </Button>
             {/* {console.log("ye wali>>>>>>>>>>>>>>>>>", params.id)} */}
@@ -122,17 +117,16 @@ const AllHotels = (props) => {
 
   const rows = [];
 
-  hotels &&
-    hotels.forEach((item) => {
+  packages &&
+    packages.forEach((item) => {
       rows.push({
         id: item._id,
-        hotelImage: item.hotelImage,
+        packageImage: item.packageImage,
         name: item.name,
         description: item.description,
-        pool: item.pool,
-        Breakfast: item.Breakfast,
-        Hottub: item.Hottub,
-        city:item.city,
+        duration: item.duration,
+        refundable: item.refundable,
+        city: item.city,
         // category:item.category
       });
     });
@@ -142,13 +136,13 @@ const AllHotels = (props) => {
         <Header />
         <div className="dashboard">
           <div className="productListContainer">
-            <h1 id="productListHeading">ALL Hotels</h1>
+            <h1 id="productListHeading">{`${props.match.params.slug} Packages`}</h1>
             <DataGrid
               rows={rows}
               columns={columns}
               pageSize={10}
               disableSelectionOnClick
-              className="HotelListTable"
+              className="PackageListTable"
               autoHeight
             />
           </div>
@@ -158,4 +152,4 @@ const AllHotels = (props) => {
   );
 };
 
-export default AllHotels;
+export default GetPackageBySlug;

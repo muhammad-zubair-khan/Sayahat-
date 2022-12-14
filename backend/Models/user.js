@@ -28,12 +28,8 @@ const userSchema = new mongoose.Schema(
         type: String,
         required: true,
       },
-    phone: {
-      type: String,
-    },
-    isAdmin: {
+    isUser: {
       type: Boolean,
-      // enum: ["user", "admin"],
       required: true,
       default: true,
     },

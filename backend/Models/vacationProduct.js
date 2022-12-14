@@ -12,7 +12,11 @@ const productSchema = new mongoose.Schema(
       unique: true,
       trim: true,
     },
-  
+    description:{
+      type: String,
+      required: true,
+      trim: true,
+    },
     productVacationPicture: {
         type: String, 
         required:true

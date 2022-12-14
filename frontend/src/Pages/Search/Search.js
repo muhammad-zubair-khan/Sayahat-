@@ -7,12 +7,12 @@ import { format } from "date-fns";
 const Search = () => {
   const location = useLocation();
   const [startdestination, setStartDestination] = useState(
-    location.state.startdestination
+    location.state.state.startdestination
   );
   const [endDestination, setEndDestination] = useState(
-    location.state.endDestination
+    location.state.state.endDestination
   );
-  console.log('location1111111>>>',location.state.startdestination)
+  // console.log('location1111111>>>',location.state.state.startdestination)
   const [openDate, setOpenDate] = useState(false); //Car
 
   //Car
@@ -55,10 +55,15 @@ const Search = () => {
                   }}
                   onClick={() => setOpenDate(!openDate)}
                 >
-                  {`${format(date[0].startDate, "MM/dd/yyyy")} to ${format(
+                  {/* {`${format(date[0].startDate, "MM/dd/yyyy")} to ${format(
                     date[0].endDate,
                     "MM/dd/yyyy"
+                  )}`} */}
+                  {`${format(location.state.state.date[0].startDate, "MM/dd/yyyy")} to ${format(
+                    location.state.state.date[0].endDate,
+                    "MM/dd/yyyy"
                   )}`}
+                {/* {console.log("aaaaaaa",location.state.state.date[0].startDate)} */}
                 </span>
                 {openDate && (
                   <DateRangePicker

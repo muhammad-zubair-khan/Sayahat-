@@ -7,7 +7,8 @@ import "./Car.css";
 import { Container, Grid } from "@mui/material";
 const Car = () => {
   return (
-    <>
+    <div style={{background:' rgb(0 0 0)',
+    height: '75px'}}>
       <Navbar />
       <Container>
         <Grid container style={{padding: '0px 15px',paddingTop:'150px'}}>
@@ -20,7 +21,7 @@ const Car = () => {
         </Grid>
       </Container>
       <Footer />
-    </>
+    </div>
   );
 };
 

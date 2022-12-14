@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import "react-multi-carousel/lib/styles.css";
 import "./Landing.css";
 import MyCard from "../MyCard";
@@ -18,12 +18,12 @@ import { DateRangePicker } from "react-date-range";
 import { format } from "date-fns";
 import "react-date-range/dist/styles.css"; // main style file
 import "react-date-range/dist/theme/default.css"; // theme css file
-import { useNavigate } from "react-router-dom";
+// import { useHistory } from "react-router-dom";
 const Landing = () => {
   const [startdestination, setStartDestination] = useState("");
   const [endDestination, setEndDestination] = useState("");
   const [openDate, setOpenDate] = useState(false); //Car
-  const navigate = useNavigate();
+  const history = useHistory();
 
   //Car
   const [date, setDate] = useState([
@@ -88,7 +88,7 @@ const Landing = () => {
     });
   };
   const handleSearch = () => {
-    navigate("/cars", { state: { startdestination, endDestination, date } });
+    history.push("/cars", { state: { startdestination, endDestination, date } });
   };
 
   return (

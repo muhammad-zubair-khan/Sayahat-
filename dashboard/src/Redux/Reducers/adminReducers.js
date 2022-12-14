@@ -1,18 +1,18 @@
 import {
-  USER_LOGIN_FAIL,
-  USER_LOGIN_REQUEST,
-  USER_LOGIN_SUCCESS,
-  USER_LOGOUT_REQUEST,
-  USER_LOGOUT_SUCCESS,
-  USER_LOGOUT_FAIL,
-  ALL_USER_REQUEST,
-  ALL_USER_SUCCESS,
-  ALL_USER_FAIL,
-} from "../Constants/UserConstants";
+  ADMIN_LOGIN_FAIL,
+  ADMIN_LOGIN_REQUEST,
+  ADMIN_LOGIN_SUCCESS,
+  ADMIN_LOGOUT_REQUEST,
+  ADMIN_LOGOUT_SUCCESS,
+  ADMIN_LOGOUT_FAIL,
+  ALL_ADMIN_REQUEST,
+  ALL_ADMIN_SUCCESS,
+  ALL_ADMIN_FAIL,
+} from "../Constants/adminConstants";
 
 const initialState = {
   token: null,
-  user: {
+  admin: {
     firstName: "",
     lastName: "",
     email: "",
@@ -24,9 +24,9 @@ const initialState = {
   error: null,
   message: "",
 };
-// export const userLoginReducer = (state = initialState, action) => {
+// export const ADMINLoginReducer = (state = initialState, action) => {
 //     switch(action.type) {
-//         case USER_LOGIN_REQUEST:
+//         case ADMIN_LOGIN_REQUEST:
 //             // state = {
 //             //     ...state,
 //             //     authenticating: true,
@@ -34,18 +34,18 @@ const initialState = {
 //             //   break;
 //             return {loading:true};
 //         //    break;
-//         case USER_LOGIN_SUCCESS:
-//             return {loading:false, userInfo: action.payload};
+//         case ADMIN_LOGIN_SUCCESS:
+//             return {loading:false, ADMINInfo: action.payload};
 //         //    break;
-//         case USER_LOGIN_FAIL:
+//         case ADMIN_LOGIN_FAIL:
 //             return {loading:false, error: action.payload};
 //         //    break;
-//         case USER_LOGOUT:
+//         case ADMIN_LOGOUT:
 //             return {};
-//         case ALL_USER_REQUEST:
+//         case ALL_ADMIN_REQUEST:
 //             return {loading:true};
-//         case ALL_USER_SUCCESS:
-//             return {loading:false, userInfo: action.payload}
+//         case ALL_ADMIN_SUCCESS:
+//             return {loading:false, adminInfo: action.payload}
 //         default:
 //             return state;
 //     }
@@ -54,40 +54,40 @@ const initialState = {
 export const authReducer = (state = initialState, action) => {
   // eslint-disable-next-line default-case
   switch (action.type) {
-    case USER_LOGIN_REQUEST:
+    case ADMIN_LOGIN_REQUEST:
       state = {
         ...state,
         authenticating: true,
       };
       break;
-    case USER_LOGIN_SUCCESS:
+    case ADMIN_LOGIN_SUCCESS:
       state = {
         ...state,
-        user: action.payload.user,
+        admin: action.payload.admin,
         token: action.payload.token,
         authenticate: true,
         authenticating: false,
       };
       break;
-    case USER_LOGIN_FAIL:
+    case ADMIN_LOGIN_FAIL:
       state = {
         ...state,
         error: action.payload.error,
         loading: false,
       };
       break;
-    case USER_LOGOUT_REQUEST:
+    case ADMIN_LOGOUT_REQUEST:
       state = {
         ...state,
         loading: true,
       };
       break;
-    case USER_LOGOUT_SUCCESS:
+    case ADMIN_LOGOUT_SUCCESS:
       state = {
         ...initialState,
       };
       break;
-    case USER_LOGOUT_FAIL:
+    case ADMIN_LOGOUT_FAIL:
       state = {
         ...state,
         error: action.payload.error,
@@ -99,15 +99,15 @@ export const authReducer = (state = initialState, action) => {
   return state;
 };
 
-export const allUsersReducer = (state = { users: [] }, action) => {
+export const allAdminsReducer = (state = { admins: [] }, action) => {
   switch (action.type) {
-    case ALL_USER_REQUEST:
-      return { loading: true, users: [] };
-    case ALL_USER_SUCCESS:
+    case ALL_ADMIN_REQUEST:
+      return { loading: true, admins: [] };
+    case ALL_ADMIN_SUCCESS:
       // console.log("acojaikjd",action.payload)
-      return { loading: false, users: action.payload };
-    case ALL_USER_FAIL:
-      return { loading: false, error: action.payload };
+      return { loading: false, admins: action.payload };
+    case ALL_ADMIN_FAIL:
+      return { loading: false, admins: action.payload };
     default:
       return state;
   }

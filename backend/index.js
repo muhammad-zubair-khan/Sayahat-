@@ -17,7 +17,7 @@ process.on("uncaughtException", (err) => {
   process.exit(1);
 });
 
-const adminRoutes = require("./Routes/user");
+const adminRoutes = require("./Routes/admin");
 app.use("/api", adminRoutes);
 
 const vacationCategoryRoutes = require("./Routes/vacationCategory");
@@ -28,6 +28,12 @@ app.use("/api", vacationProductRoutes);
 
 const hotelRoutes = require("./Routes/hotel");
 app.use("/api", hotelRoutes);
+
+const carRoutes = require("./Routes/car");
+app.use("/api", carRoutes);
+
+const packageRoutes = require("./Routes/package");
+app.use("/api", packageRoutes);
 
 const initialDataRoutes = require("./Routes/initialData");
 app.use("/api", initialDataRoutes);

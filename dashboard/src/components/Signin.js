@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { login } from "../Redux/Actions/userActions";
+import { login } from "../Redux/Actions/adminActions";
 import { Redirect } from "react-router-dom";
 import { Row, Col } from "react-bootstrap";
 import { Form } from "react-bootstrap";
@@ -17,15 +17,15 @@ const Signin = () => {
   const [password, setPassword] = useState("");
   const auth = useSelector((state) => state.auth);
 
-  const userLogin = (e) => {
+  const adminLogin = (e) => {
     e.preventDefault();
 
-    const user = {
+    const admin = {
       email,
       password,
     };
 
-    dispatch(login(user));
+    dispatch(login(admin));
   };
 
   if (auth.authenticate) {
@@ -51,7 +51,7 @@ const Signin = () => {
             Login to Access Dashboard
           </Typography>
           <hr />
-          <Form onSubmit={userLogin}>
+          <Form onSubmit={adminLogin}>
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Email address</Form.Label>
               <Form.Control

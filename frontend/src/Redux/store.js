@@ -1,16 +1,30 @@
 import { createStore, combineReducers, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
-import { authReducer, allUsersReducer } from "./Reducers/userReducers";
+import { authReducer, allAdminsReducer } from "./Reducers/adminReducers";
 import { VacationCategoryReducer } from "./Reducers/vacationCategoryReducer";
 import { vacationProductReducer,addCitiesReducer,allCitiesReducer } from "./Reducers/VacationProductReducer";
+import { allHotelsReducer, hotelsReducer } from "./Reducers/hotelReducer";
+import { allCarsReducer, newCarReducer } from "./Reducers/carReducer";
+import { allPackagesReducer, newPackageReducer } from "./Reducers/packageReducer";
+import { allUsersReducer, userAuthReducer } from "./Reducers/userReducers";
 
 const reducer = combineReducers({
-  auth: authReducer,
-  allUsers: allUsersReducer,
+  // auth: authReducer,
+  // allAdmins: allAdminsReducer,
   Vacationcategory: VacationCategoryReducer,
   vacationProduct: vacationProductReducer,
   newVacation: addCitiesReducer,
+  hotelReducer: allHotelsReducer,
+  delhotelReducer: hotelsReducer,
+  addCarReducer: newCarReducer,
+  carsReducer: allCarsReducer,
+  addPackageReducer: newPackageReducer,
+  packagesReducer: allPackagesReducer,
+  userAuth: userAuthReducer,
+  allUsers: allUsersReducer,
+
+  
   // allVacation: allCitiesReducer,
   // userLogin: userLoginReducer,
   // userLogin: userLoginReducer,

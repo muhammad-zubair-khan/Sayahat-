@@ -26,7 +26,8 @@ const Cities = ({ props, history }) => {
               return (
                 <>
                   <div className="col-md-4 my-3">
-                    <Link to={`${data.slug}`}>
+                    <Link to={`/vacation/${slug}/${data.slug}`}>
+                      {console.log(data)}
                       <div className="wrapper-cards">
                         <img
                           src={data.productVacationPicture}

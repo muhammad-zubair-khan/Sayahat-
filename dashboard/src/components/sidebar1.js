@@ -130,7 +130,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import SidebarMenu from "./SidebarMenu";
 import logo from "../assets/logo/logo-no-background.png";
 import { useDispatch, useSelector } from "react-redux";
-import { logout } from "../Redux/Actions/userActions";
+import { logout } from "../Redux/Actions/adminActions";
 const routes = [
   {
     path: "/",
@@ -206,8 +206,8 @@ const routes = [
 ];
 const Sidebar = ({ children, history }) => {
   const dispatch = useDispatch();
-  const userLogin = useSelector((state) => state.userLogin);
-  const { userInfo } = userLogin;
+  const adminLogin = useSelector((state) => state.adminLogin);
+  const { adminInfo } = adminLogin;
   const logoutt = () => {
     dispatch(logout());
   };
@@ -292,8 +292,8 @@ const Sidebar = ({ children, history }) => {
                   marginBottom: "10px",
                 }}
               />
-              <h5>{userInfo.firstName}</h5>
-              <span>{userInfo.email}</span>
+              <h5>{adminInfo.firstName}</h5>
+              <span>{adminInfo.email}</span>
               <span
                 style={{
                   color: "#2874f0",

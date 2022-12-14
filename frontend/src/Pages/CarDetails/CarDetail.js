@@ -1,11 +1,18 @@
 import { Container, Grid } from "@mui/material";
 import React from "react";
+import { useSelector } from "react-redux";
+import { Redirect } from "react-router-dom";
 import Footer from "../../Footer/Footer";
 import Navbar from "../../Navbar/Navbar";
 
 const CarDetail = () => {
+  const user = useSelector((state) => state.userAuth);
+  if (user.authenticate) {
+    return <Redirect to={`/account`} />;
+  }
   return (
-    <>
+    <div style={{background:' rgb(0 0 0)',
+    height: '75px'}}>
       <Navbar />
       <Container>
         <Grid container style={{padding: '0px 15px',paddingTop:'150px'}}>
@@ -18,7 +25,7 @@ const CarDetail = () => {
         </Grid>
       </Container>
       <Footer />
-    </>
+    </div>
   );
 };
 

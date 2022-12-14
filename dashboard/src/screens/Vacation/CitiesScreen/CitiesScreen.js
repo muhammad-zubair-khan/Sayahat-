@@ -1,29 +1,37 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import Header from "../../components/Header";
-import Sidebar from "../../components/Sidebar";
-import { getAllVacationProduct } from "../../Redux/Actions/vacationProductAction";
+import Header from "../../../components/Header";
+import Sidebar from "../../../components/Sidebar";
+import { getVacationProductsBySlug } from "../../../Redux/Actions/vacationProductAction";
+// import { ImageUrl } from "../../Redux/UrlConfig";
+import "../VacationScreen/AllVacations.css";
 
-const AllCities = () => {
+const CitiesScreen = (props) => {
   const dispatch = useDispatch();
   const { products } = useSelector((state) => state.vacationProduct);
-  console.log(products);
+  console.log("products", products);
   useEffect(() => {
-    dispatch(getAllVacationProduct());
-  }, []);
+    const { match } = props;
+    console.log(props);
+    dispatch(getVacationProductsBySlug(match.params.slug));
+  }, [dispatch, props]);
   return (
     <>
       <Sidebar>
         <Header />
-
-        <div className="row container-fluid d-flex">
+      
+        
+          <div className="row container-fluid d-flex">
           {products &&
             products.map((data, index) => {
+              //  ImageUrl(p.productPictures[0].img)
               return (
                 <>
-                  <div className="col-md-4 my-3" key={index}>
-                    <Link to={`/vacations/${data.slug}/add`}>
+                  {/* {ImageUrl(data.productVacationPicture)} */}
+                  {/* file:///C:/Users/HAIER/Documents/GitHub/Sayahat-/backend/uploads/xMQaPHknf-Lahore.jpg */}
+                  <div className="col-md-4 my-3">
+                    <Link to={`${data.slug}/add`}>
                       <div className="wrapper">
                         <img
                           src={data.productVacationPicture}
@@ -49,4 +57,4 @@ const AllCities = () => {
   );
 };
 
-export default AllCities;
+export default CitiesScreen;

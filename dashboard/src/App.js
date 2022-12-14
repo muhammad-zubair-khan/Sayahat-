@@ -9,15 +9,20 @@ import PrivateRoute from "./components/Private/PrivateRoute";
 import HomeScreen from "./screens/Home/HomeScreen";
 import UserScreen from "./screens/User/UserScreen";
 import ProfileScreen from "./screens/Profile/ProfileScreen";
-import { isUserLoggedIn } from "./Redux/Actions/userActions";
-import VacationScreen from "./screens/Vacation/VacationScreen";
-import AddNewCitites from "./screens/Vacation/AddNewCitites";
-import CitiesScreen from "./screens/Vacation/CitiesScreen";
-import CitiesManagementScreen from "./screens/Vacation/CitiesManagementScreen";
+import { isAdminLoggedIn } from "./Redux/Actions/adminActions";
+import VacationScreen from "./screens/Vacation/VacationScreen/VacationScreen";
+import AddNewCitites from "./screens/Vacation/CitiesScreen/AddNewCitites";
+import CitiesScreen from "./screens/Vacation/CitiesScreen/CitiesScreen";
+import CitiesManagementScreen from "./screens/Vacation/CitiesScreen/CitiesManagementScreen";
 import { getAllVacationsCategory } from "./Redux/Actions/vacationCategoryAction";
 import { getInitialData } from "./Redux/Actions/initialDataAction";
-import AllCities from "./screens/Vacation/AllCities";
-import AllHotels from "./screens/Vacation/AllHotels";
+import AllCities from "./screens/Vacation/CitiesScreen/AllCities";
+import AllHotels from "./screens/Vacation/HotelScreens/AllHotels";
+import AllCars from "./screens/Vacation/CarScreen/AllCars";
+import GetHotelBySlug from "./screens/Vacation/HotelScreens/GetHotelBySlug";
+import GetCarBySlug from "./screens/Vacation/CarScreen/GetCarBySlug";
+import AllPackages from "./screens/Vacation/PackageScreen/AllPackages";
+import GetPackageBySlug from "./screens/Vacation/PackageScreen/GetPackageBySlug";
 
 function App() {
   const dispatch = useDispatch();
@@ -25,7 +30,7 @@ function App() {
 
   useEffect(() => {
     if (!auth.authenticate) {
-      dispatch(isUserLoggedIn());
+      dispatch(isAdminLoggedIn());
     }
     if (auth.authenticate) {
       dispatch(getInitialData());
@@ -49,7 +54,16 @@ function App() {
           component={AddNewCitites}
         />
         <PrivateRoute exact path="/all-cities" component={AllCities} />
-        <PrivateRoute exact path="/all-hotels/:slug" component={AllHotels} />
+        <PrivateRoute exact path="/hotel/:slug" component={GetHotelBySlug} />
+        <PrivateRoute exact path="/car/:slug" component={GetCarBySlug} />
+        <PrivateRoute
+          exact
+          path="/package/:slug"
+          component={GetPackageBySlug}
+        />
+        <PrivateRoute exact path="/all-hotels" component={AllHotels} />
+        <PrivateRoute exact path="/all-cars" component={AllCars} />
+        <PrivateRoute exact path="/all-packages" component={AllPackages} />
         <PrivateRoute exact path="/users" component={UserScreen} />
         <PrivateRoute exact path="/profile" component={ProfileScreen} />
         <Route exact path="/login" component={Signin} />

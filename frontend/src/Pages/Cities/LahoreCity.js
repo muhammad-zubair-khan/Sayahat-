@@ -1,14 +1,30 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
 import Navbar from "../../Navbar/Navbar";
 import "./StyleCity.css";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
-import { useState } from "react";
 import Offcanvas from "react-bootstrap/Offcanvas";
 import Footer from "../../Footer/Footer";
+import { useDispatch, useSelector } from "react-redux";
+import { getPackageBySlug } from "../../Redux/Actions/packageAction";
+import { getVacationProductsBySlug } from "../../Redux/Actions/vacationProductAction";
 
-function LahoreCity() {
+const LahoreCity = (props) => {
+  const params = useParams();
+  let { slug } = useParams();
+
+  const dispatch = useDispatch();
+  const { packages } = useSelector((state) => state.packagesReducer);
+  // console.log(packages)
+  const { products } = useSelector((state) => state.vacationProduct);
+  console.log("products>>>", products);
+
+  useEffect(() => {
+    dispatch(getPackageBySlug(params.slug));
+    dispatch(getVacationProductsBySlug);
+  }, [dispatch,params.slug]);
+
   let readMore = () => {
     var dots = document.getElementById("dots");
     var moreText = document.getElementById("more");
@@ -184,17 +200,20 @@ function LahoreCity() {
         {/* Start of introduction of city */}
         <div className="row ms-4 mt-5">
           <div className="col-10 ms-5">
-            <h1 className="lhrH1">Lahore</h1>
-            <p className="lhrIntro mt-5">
-              Lahore is the city of wonders with a rich history of over a
-              millennium. Lahore the 2nd largest city of Pakistan and is capital
-              of province Punjab. Lahore is referred to as cultural heart of
-              Pakistan as it hosts most of the arts, cuisine, festivals, music,
-              film-making, gardening and intelligentsia of the country.
-            </p>
+            <h1 className="lhrH1">{params.slug}</h1>
+            {products &&
+              products.map((data, index) => {
+                return (
+                  <div key={index}>
+                  <p className="lhrIntro mt-5">
+                    {data.description}
+                  </p>
+                  </div>
+                );
+              })}
 
             <h4 className="text-dark">History</h4>
-            <p className="text-dark">
+            {/* <p className="text-dark">
               Legend has it that it was founded about 4,000 years ago by Loh,
               son of Rama, the hero of the Hindu epic, the Ramayana. Reminiscent
               of its hoary past are the remains of a subterranean temple
@@ -237,7 +256,7 @@ function LahoreCity() {
                 Lahore its most famous monuments: the Badshahi Masjid (Royal
                 Mosque) and the Alamgiri gateway to the fort.
               </span>
-            </p>
+            </p> */}
             <div className="d-flex justify-content-center">
               <button className="btnRead" onClick={() => readMore()} id="myBtn">
                 Read more
@@ -902,6 +921,7 @@ function LahoreCity() {
 
             {/* Start of package cards */}
             <div className="col-md-8">
+<<<<<<< HEAD
               {cards.map((card) => {
                 return (
                   <Link to="/package">
@@ -930,50 +950,92 @@ function LahoreCity() {
                                 ${card.price}
                               </h5>
                             </div>
+=======
+              {packages &&
+                packages.map((data, index) => {
+                  return (
+                    <div class="card mb-3 p-4" key={index}>
+                      <div class="row g-0">
+                        <div class="col-md-4 position-relative">
+                          <img
+                            src={data.packageImage}
+                            class="img-fluid rounded-start h-100"
+                            alt="image"
+                          />
+                          <div className="heartIcon">
+                            <i class="fa-regular fa-heart fs-4 d-flex justify-content-center"></i>
+>>>>>>> 24591bb3615dbed0ad8dbaa3966afe9e7cff26f6
                           </div>
-                          <p class="card-text">
-                            <i
-                              style={{ color: "#EDAB56" }}
-                              className="fa-solid fa-star"
-                            ></i>
-                            <i
-                              style={{ color: "#EDAB56" }}
-                              className="fa-solid fa-star"
-                            ></i>
-                            <i
-                              style={{ color: "#EDAB56" }}
-                              className="fa-solid fa-star"
-                            ></i>
-                            <i
-                              style={{ color: "#EDAB56" }}
-                              className="fa-solid fa-star"
-                            ></i>
-                            <i
-                              style={{ color: "#EDAB56" }}
-                              className="fa-solid fa-star"
-                            ></i>
-                            <span className="ms-2">{card.review}</span>
-                            <div className="mt-1">
-                              <small>{card.description}</small>
+                        </div>
+                        <div class="col-md-8">
+                          <div class="card-body">
+                            <div className="row">
+                              <div className="col-8">
+                                <h5 class="card-title text-dark">
+                                  {data.name}
+                                </h5>
+                              </div>
+                              <div className="col-4 text-end">
+                                <h5 class="card-title text-dark">
+                                  {data.price} $
+                                </h5>
+                              </div>
                             </div>
-                          </p>
-                          <small class="text-dark">
-                            <div>
-                              <i class="fa-regular fa-clock me-2"></i>
-                              {card.time}
-                            </div>
-                            <i class="fa-solid fa-check me-2"></i>
-                            {card.cancel}
-                          </small>
+                            <p class="card-text">
+                              <i
+                                style={{ color: "#EDAB56" }}
+                                className="fa-solid fa-star"
+                              ></i>
+                              <i
+                                style={{ color: "#EDAB56" }}
+                                className="fa-solid fa-star"
+                              ></i>
+                              <i
+                                style={{ color: "#EDAB56" }}
+                                className="fa-solid fa-star"
+                              ></i>
+                              <i
+                                style={{ color: "#EDAB56" }}
+                                className="fa-solid fa-star"
+                              ></i>
+                              <i
+                                style={{ color: "#EDAB56" }}
+                                className="fa-solid fa-star"
+                              ></i>
+                              {/* <span className="ms-2">{card.review}</span> */}
+                              <div className="mt-1">
+                                <small>{data.description}</small>
+                              </div>
+                            </p>
+                            <small class="text-dark">
+                              <div>
+                                <i class="fa-regular fa-clock me-2"></i>
+                                {data.duration}
+                              </div>
+                              <i class="fa-solid fa-check me-2"></i>
+                              {data.refundable}
+                            </small>
+                            <Button
+                              variant="contained"
+                              style={{ float: "right" }}
+                            >
+                              Reserve
+                            </Button>
+                          </div>
                         </div>
                       </div>
                     </div>
+<<<<<<< HEAD
                   </div>
                   </Link>
                 );
               })}
+=======
+                  );
+                })}
+>>>>>>> 24591bb3615dbed0ad8dbaa3966afe9e7cff26f6
 
-              <nav aria-label="Page navigation example">
+              {/* <nav aria-label="Page navigation example">
                 <ul class="pagination d-flex justify-content-center">
                   <li class="page-item">
                     <a class="page-link" href="#">
@@ -1001,15 +1063,15 @@ function LahoreCity() {
                     </a>
                   </li>
                 </ul>
-              </nav>
+              </nav> */}
             </div>
             {/* End of package cards */}
           </div>
         </div>
-        <Footer/>
+        <Footer />
       </div>
     </>
   );
-}
+};
 
 export default LahoreCity;

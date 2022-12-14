@@ -8,7 +8,7 @@ import {
     ALL_USER_REQUEST,
     ALL_USER_SUCCESS,
     ALL_USER_FAIL,
-} from "../Constants/UserConstants";
+} from "../Constants/userConstants";
 import axios from "../helpers/axios";
 
 // export const login = (email,password) => async (dispatch) => {
