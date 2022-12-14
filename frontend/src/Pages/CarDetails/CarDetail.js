@@ -6,8 +6,8 @@ import Footer from "../../Footer/Footer";
 import Navbar from "../../Navbar/Navbar";
 
 const CarDetail = () => {
-  const auth = useSelector((state) => state.auth);
-  if (auth.authenticate) {
+  const user = useSelector((state) => state.userAuth);
+  if (user.authenticate) {
     return <Redirect to={`/account`} />;
   }
   return (

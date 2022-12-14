@@ -27,10 +27,12 @@
     text-align: center;
     text-decoration: none;
     /* padding: 1.5rem; */
-    padding: 4rem;
     /* width: 10vmax;
     height: 10vmax; */
-    margin: 2rem;
+    padding: 3rem;
+    margin: 1rem;
+    /* padding: 4rem;
+    margin: 2rem; */
     /* border-radius: 100%; */
     display: flex;
     justify-content: center;

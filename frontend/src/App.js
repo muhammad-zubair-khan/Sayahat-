@@ -24,23 +24,25 @@ import { getInitialData } from "../src/Redux/Actions/initialDataAction";
 
 function App() {
   const dispatch = useDispatch();
-  const auth = useSelector((state) => state.auth);
+  const user = useSelector((state) => state.userAuth);
 
   useEffect(() => {
-    if (!auth.authenticate) {
+    if (!user.authenticate) {
       dispatch(isUserLoggedIn());
     }
-    if (auth.authenticate) {
+    if (user.authenticate) {
       dispatch(getInitialData());
       dispatch(getAllVacationsCategory());
     }
-  }, [dispatch, auth.authenticate]);
+  }, [dispatch, user.authenticate]);
  
 
   return (
     <Router>
       <Switch>
         <Route exact path="/" component={Home} />
+        <Route exact path="/vacation/:slug/:slug" component={City} />
+        <Route exact path="/vacation/:slug"  component={Cities} />
         <Route exact path="/lahore" component={LahoreCity} />
         <Route exact path="/hotels" component={Hotel} />
         <Route exact path="/hotel/:id" component={HotelDetail} />
@@ -49,8 +51,6 @@ function App() {
         <Route exact path="/aboutus" component={Aboutus} />
         <Route exact path="/car-rentals" component={CarRental} />
         <Route exact path="/contactus" component={Contactus} />
-        <Route exact path="/vacation/:slug/:slug" component={City} />
-        <Route exact path="/vacation/:slug"  component={Cities} />
         <Route exact path="/account" component={Account} />
       </Switch>
       {/* <Footer /> */}

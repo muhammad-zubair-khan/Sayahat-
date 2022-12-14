@@ -7,8 +7,8 @@ import EditIcon from '@mui/icons-material/Edit';
 
 const ProfileScreen = () => {
   const dispatch = useDispatch();
-  const { user } = useSelector((state) => state.auth);
-  console.log(user);
+  const { admin } = useSelector((state) => state.auth);
+  console.log(admin);
   return (
     <>
       <Sidebar>
@@ -27,7 +27,7 @@ const ProfileScreen = () => {
                     />
                   </div>
                   <div className="col-sm-6 col-md-6">
-                    <h4 style={{fontVariant:'small-caps'}}>{user.fullName}</h4>
+                    <h4 style={{fontVariant:'small-caps'}}>{admin.fullName}</h4>
                     <small>
                       <cite>
                         Lahore, PAK{" "}
@@ -36,7 +36,7 @@ const ProfileScreen = () => {
                     </small>
                     <p>
                       <i className="glyphicon glyphicon-envelope"></i>
-                      {user.email}
+                      {admin.email}
                     
                       <br />
                       <i className="glyphicon glyphicon-gift"></i>June 02, 1998

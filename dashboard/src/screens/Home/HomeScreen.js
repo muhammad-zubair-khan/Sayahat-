@@ -13,6 +13,7 @@ import { Modal, Button } from "react-bootstrap";
 import { getAllHotels } from "../../Redux/Actions/hotelAction";
 import { getAllCars } from "../../Redux/Actions/carAction";
 import { getAllPackages } from "../../Redux/Actions/packageAction";
+import { Grid } from "@mui/material";
 
 const HomeScreen = () => {
   const dispatch = useDispatch();
@@ -37,6 +38,7 @@ const HomeScreen = () => {
     <>
       <Sidebar>
         <Header />
+        
         <div className="dashboardSummary">
           <div className="dashboardSummaryBox2">
             <Link to="/vacations/add">

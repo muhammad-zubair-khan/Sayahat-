@@ -1,7 +1,7 @@
 import { createStore, combineReducers, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
-import { authReducer, allUsersReducer } from "./Reducers/userReducers";
+import { authReducer, allAdminsReducer } from "./Reducers/adminReducers";
 import { VacationCategoryReducer } from "./Reducers/vacationCategoryReducer";
 import { vacationProductReducer,addCitiesReducer,allCitiesReducer } from "./Reducers/VacationProductReducer";
 import { allHotelsReducer, hotelsReducer } from "./Reducers/hotelReducer";
@@ -10,7 +10,7 @@ import { allPackagesReducer, newPackageReducer } from "./Reducers/packageReducer
 
 const reducer = combineReducers({
   auth: authReducer,
-  allUsers: allUsersReducer,
+  allAdmins: allAdminsReducer,
   Vacationcategory: VacationCategoryReducer,
   vacationProduct: vacationProductReducer,
   newVacation: addCitiesReducer,

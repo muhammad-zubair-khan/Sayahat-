@@ -9,7 +9,7 @@ import PrivateRoute from "./components/Private/PrivateRoute";
 import HomeScreen from "./screens/Home/HomeScreen";
 import UserScreen from "./screens/User/UserScreen";
 import ProfileScreen from "./screens/Profile/ProfileScreen";
-import { isUserLoggedIn } from "./Redux/Actions/userActions";
+import { isAdminLoggedIn } from "./Redux/Actions/adminActions";
 import VacationScreen from "./screens/Vacation/VacationScreen/VacationScreen";
 import AddNewCitites from "./screens/Vacation/CitiesScreen/AddNewCitites";
 import CitiesScreen from "./screens/Vacation/CitiesScreen/CitiesScreen";
@@ -30,7 +30,7 @@ function App() {
 
   useEffect(() => {
     if (!auth.authenticate) {
-      dispatch(isUserLoggedIn());
+      dispatch(isAdminLoggedIn());
     }
     if (auth.authenticate) {
       dispatch(getInitialData());

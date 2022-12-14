@@ -17,7 +17,7 @@ process.on("uncaughtException", (err) => {
   process.exit(1);
 });
 
-const adminRoutes = require("./Routes/user");
+const adminRoutes = require("./Routes/admin");
 app.use("/api", adminRoutes);
 
 const vacationCategoryRoutes = require("./Routes/vacationCategory");

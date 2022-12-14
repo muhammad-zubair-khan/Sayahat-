@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
 
-const userSchema = new mongoose.Schema(
+const adminSchema = new mongoose.Schema(
   {
     firstName: {
       type: String,
@@ -28,26 +28,30 @@ const userSchema = new mongoose.Schema(
         type: String,
         required: true,
       },
-    isUser: {
+    phone: {
+      type: String,
+    },
+    isAdmin: {
       type: Boolean,
+      // enum: ["user", "admin"],
       required: true,
       default: true,
     },
   },
   { timestamps: true }
 );
-userSchema.virtual('password').set(function (password) {
+adminSchema.virtual('password').set(function (password) {
     this.hash_password = bcrypt.hashSync(password, saltRounds)
   });
   
-  userSchema.virtual('fullName').get(function (params) {
+  adminSchema.virtual('fullName').get(function (params) {
     return `${this.firstName} ${this.lastName}`;
   });
   
-  userSchema.methods = {
+  adminSchema.methods = {
     authenticate: async function(password){
       return await bcrypt.compare(password,this.hash_password)
     },
   };
 
-module.exports = mongoose.model("User", userSchema);
+module.exports = mongoose.model("Admin", adminSchema);

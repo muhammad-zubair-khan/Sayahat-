@@ -17,7 +17,7 @@
   color: #fff;
   /* margin-top: 100px;  */
   position: relative;
-    top: 179px;
+    top: 99px;
 }
   .cont > header {
     font-size: 1.3rem;
@@ -82,9 +82,13 @@ color: white; }
   overflow: hidden;
   transition: all 0.4s cubic-bezier(0.785, 0.135, 0.15, 0.86); }
   .account-form-fields.sign-in {
-    max-height: 123px; }
+    /* max-height: 123px; */
+    max-height: 173px;
+   }
   .account-form-fields.sign-up {
-    max-height: 250px; }
+    /* max-height: 250px; */
+    max-height: 450px;
+   }
   .account-form-fields.forgot {
     max-height: 61px; }
   .account-form-fields > input {

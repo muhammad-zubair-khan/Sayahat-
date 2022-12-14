@@ -1,71 +1,71 @@
-const adminModel = require("../Models/admin");
+const userModel = require("../Models/user");
 const jwt = require("jsonwebtoken");
 const bcrypt = require('bcrypt');
 const asyncHandler = require('express-async-handler')
 
-exports.registerAdmin = async(req, res) => {
-  adminModel.findOne({ email: req.body.email }).exec((err, admin) => {
-    if (admin) {
+exports.registerUser = async(req, res) => {
+  userModel.findOne({ email: req.body.email }).exec((err, user) => {
+    if (user) {
       return res.status(400).json({
-        message: "Admin Already Registered",
+        message: "User Already Registered",
       });
     }
   });
-  const { firstName, lastName, email, password,isAdmin } = req.body;
+  const { firstName, lastName, email, password,isUser } = req.body;
   const hash_password =  await bcrypt.hash(password, 10);
-  const _admin = new adminModel({
+  const _user = new userModel({
     firstName,
     lastName,
     email,
     hash_password,
-    isAdmin,
+    isUser,
   });
-  _admin.save((err, admin) => {
+  _user.save((err, user) => {
     if (err) {
       return res.status(400).json({
         success: false,
         message: err,
       });
     }
-    if (admin) {
+    if (user) {
       return res.status(201).json({
-        message: "Admin created successfully",
+        message: "User created successfully",
       });
     }
   });
 };
 
-exports.getAllAdmins = async(req,res) =>{
-  const admins = await adminModel.find();
+exports.getAllUsers = async(req,res) =>{
+  const users = await userModel.find();
   res.status(200).json({
     success: true,
-    admins,
+    users,
   });
 }
 
 exports.login = (req, res) => {
-  adminModel.findOne({ email: req.body.email }).exec(async (err, admin) => {
+  userModel.findOne({ email: req.body.email }).exec(async (err, user) => {
     if (err) {
       return res.status(400).json({ err });
     }
-    if (admin) {
-      const isPassword = await admin.authenticate(req.body.password);
-      if (isPassword && admin.isAdmin === true) {
+    if (user) {
+      const isPassword = await user.authenticate(req.body.password);
+      if (isPassword && user.isUser === true) {
         const token = jwt.sign(
-          { _id: admin._id, isAdmin: admin.isAdmin },
+          { _id: user._id, isUser: user.isUser },
           process.env.JWT_SECRET,
           { expiresIn: "1000" }
         );
-        const { _id, firstName, lastName, email, isAdmin, fullName } = admin;
+        const { _id, firstName, lastName, email, isUser, fullName } = user;
         res.cookie("token", token, { expiresIn: "1000" });
         res.json({
           token,
-          admin: { _id, firstName, lastName, email, isAdmin, fullName,token },
+          user: { _id, firstName, lastName, email, isUser, fullName,token },
           // _id: user._id,
           // firstName: user.firstName,
           // lastName: user.lastName,
           // email: user.email,
-          // isAdmin: user.isAdmin,
+          // isUser: user.isUser,
           // phone: user.phone,
           // token: token,
           // createdAt: user.createdAt
@@ -83,17 +83,17 @@ exports.login = (req, res) => {
   });
 };
 
-exports.adminProfile = asyncHandler(async (req,res)=>{
-  const admin = await adminModel.findById(req.admin._id);
-  if(admin){
+exports.userProfile = asyncHandler(async (req,res)=>{
+  const user = await userModel.findById(req.user._id);
+  if(user){
     res.json({
-      _id: admin._id,
-      firstName: admin.firstName,
-      lastName: admin.lastName,
-      email: admin.email,
-      isAdmin: admin.isAdmin,
-      phone: admin.phone,
-      createdAt: admin.createdAt
+      _id: user._id,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+      isUser: user.isUser,
+      phone: user.phone,
+      createdAt: user.createdAt
     });
   }else{
     return res.status(404).json({

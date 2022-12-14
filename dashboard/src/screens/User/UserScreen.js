@@ -5,23 +5,22 @@ import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Button from "@mui/material/Button";
-import { getAllUsers } from "../../Redux/Actions/userActions";
+import { getAllAdmins } from "../../Redux/Actions/adminActions";
 import EditIcon from "@mui/icons-material/Edit";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { DataGrid } from "@mui/x-data-grid";
 
 const UserScreen = () => {
   const dispatch = useDispatch();
-  const { users } = useSelector((state) => state.allUsers);
-  // const {user} = useSelector((state) => state.allUsers)
-// console.log(user)
+  const { admins } = useSelector((state) => state.allAdmins);
+  // const {admins} = useSelector((state) => state.allAdmins)
+// console.log(admins)
 useEffect(() => {
-  dispatch(getAllUsers());
-
+  dispatch(getAllAdmins());
 }, [])
 
-  //   dispatch(getAllUsers())
-  //   console.log(users)
+  //   dispatch(getAllAdmins())
+  //   console.log(admins)
   const columns = [
     // { field: "id", headerName: "User ID", minWidth: 200, flex: 0.5 },
 
@@ -83,8 +82,8 @@ useEffect(() => {
 
   const rows = [];
 
-  users &&
-  users.forEach((item) => {
+  admins &&
+  admins.forEach((item) => {
       rows.push({
         id: item._id,
         firstName: item.firstName,

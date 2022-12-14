@@ -1,7 +1,7 @@
 import axios from 'axios';
 import {api} from '../UrlConfig';
 import store from '../store';
-import {USER_LOGOUT_SUCCESS} from '../Constants/UserConstants';
+import {USER_LOGOUT_SUCCESS} from '../Constants/adminConstants';
 
 const token = window.localStorage.getItem('token');
 
