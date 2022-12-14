@@ -17,6 +17,7 @@ import Cities from "./Pages/Citites/Cities";
 import City from "./Pages/Cities/LahoreCity";
 import { useDispatch } from "react-redux";
 import { getAllVacationsCategory } from "./Redux/Actions/vacationCategoryAction";
+import PackageDetail from "./Pages/PackageDetails/PackageDetail";
 
 function App() {
 const dispatch = useDispatch();
@@ -36,6 +37,7 @@ useEffect(() => {
             <Route exact path="/car/:id" element={<CarDetail/>}/>
             <Route exact path="/aboutus" element={<Aboutus/>}/>
             <Route exact path="/contactus" element={<Contactus/>}/>
+            <Route exact path="/package"  element={<PackageDetail/>}/>
             <Route exact path="/vacation/:slug/:slug" element={<City/>}/>
           <Route path="/vacation/:slug" exact element={<Cities/>} />
           </Routes>

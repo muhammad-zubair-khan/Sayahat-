@@ -904,6 +904,7 @@ function LahoreCity() {
             <div className="col-md-8">
               {cards.map((card) => {
                 return (
+                  <Link to="/package">
                   <div class="card mb-3 p-4">
                     <div class="row g-0">
                       <div class="col-md-4 position-relative">
@@ -968,6 +969,7 @@ function LahoreCity() {
                       </div>
                     </div>
                   </div>
+                  </Link>
                 );
               })}
 

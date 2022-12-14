@@ -1,0 +1,26 @@
+.BgPackage {
+    background-color: #F5F5F5;
+}
+
+.bgPackage {
+    position: absolute !important;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 10vh;
+    right: 0;
+    z-index: 1;
+    background-image: url("https://media.tacdn.com/media/attractions-splice-spp-674x446/0c/e1/df/02.jpg");
+    /* background-color: red; */
+    filter: brightness(0.6);
+    background-attachment: fixed;
+    background-size: cover;
+}
+
+.aboutPackage {
+    z-index: 2;
+    position: relative;
+    top: 15vh;
+    margin-bottom: 10%;
+}
