@@ -17,14 +17,11 @@ import Tours from "./Pages/Tours/Tours";
 import Account from "./Pages/Account/Account.js";
 import Cities from "./Pages/Citites/Cities";
 import City from "./Pages/Cities/LahoreCity";
+import PackageDetail from "./Pages/PackageDetails/PackageDetail";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllVacationsCategory } from "./Redux/Actions/vacationCategoryAction";
-<<<<<<< HEAD
-import PackageDetail from "./Pages/PackageDetails/PackageDetail";
-=======
 import { isUserLoggedIn } from "../src/Redux/Actions/userActions";
 import { getInitialData } from "../src/Redux/Actions/initialDataAction";
->>>>>>> 24591bb3615dbed0ad8dbaa3966afe9e7cff26f6
 
 function App() {
   const dispatch = useDispatch();
@@ -42,28 +39,6 @@ function App() {
  
 
   return (
-<<<<<<< HEAD
-    
-        <BrowserRouter>
-          <Routes>
-            <Route exact path="/"  element={<Home/>}/>
-            <Route exact path="/lahore"  element={<LahoreCity/>}/>
-            <Route exact path="/hotels"  element={<Hotel/>}/>
-            <Route exact path="/hotel/:id" element={<HotelDetail/>}/>
-            <Route exact path="/cars" element={<Car/>}/>
-            <Route exact path="/car/:id" element={<CarDetail/>}/>
-            <Route exact path="/aboutus" element={<Aboutus/>}/>
-            <Route exact path="/contactus" element={<Contactus/>}/>
-            <Route exact path="/package"  element={<PackageDetail/>}/>
-            <Route exact path="/vacation/:slug/:slug" element={<City/>}/>
-          <Route path="/vacation/:slug" exact element={<Cities/>} />
-          </Routes>
-          {/* <Footer /> */}
-        </BrowserRouter>
-     
-
-
-=======
     <Router>
       <Switch>
         <Route exact path="/" component={Home} />
@@ -76,12 +51,12 @@ function App() {
         <PrivateRoute exact path="/car/:id" component={CarDetail} />
         <Route exact path="/aboutus" component={Aboutus} />
         <Route exact path="/car-rentals" component={CarRental} />
+        <Route exact path="/package"  component={PackageDetail}/>
         <Route exact path="/contactus" component={Contactus} />
         <Route exact path="/account" component={Account} />
       </Switch>
       {/* <Footer /> */}
     </Router>
->>>>>>> 24591bb3615dbed0ad8dbaa3966afe9e7cff26f6
   );
 }
 

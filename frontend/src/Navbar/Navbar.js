@@ -31,6 +31,7 @@ function ChangeColorOnScroll(props) {
 
 const Navbar = (props) => {
   const vacationCategory = useSelector((state) => state.Vacationcategory);
+  console.log(vacationCategory)
 
   const dispatch = useDispatch();
   useEffect(() => {

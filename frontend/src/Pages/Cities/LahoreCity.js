@@ -921,36 +921,6 @@ const LahoreCity = (props) => {
 
             {/* Start of package cards */}
             <div className="col-md-8">
-<<<<<<< HEAD
-              {cards.map((card) => {
-                return (
-                  <Link to="/package">
-                  <div class="card mb-3 p-4">
-                    <div class="row g-0">
-                      <div class="col-md-4 position-relative">
-                        <img
-                          src={card.image}
-                          class="img-fluid rounded-start h-100"
-                          alt="..."
-                        />
-                        <div className="heartIcon">
-                          <i class="fa-regular fa-heart fs-4 d-flex justify-content-center"></i>
-                        </div>
-                      </div>
-                      <div class="col-md-8">
-                        <div class="card-body">
-                          <div className="row">
-                            <div className="col-8">
-                              <h5 class="card-title text-dark">
-                                {card.pakage}
-                              </h5>
-                            </div>
-                            <div className="col-4 text-end">
-                              <h5 class="card-title text-dark">
-                                ${card.price}
-                              </h5>
-                            </div>
-=======
               {packages &&
                 packages.map((data, index) => {
                   return (
@@ -964,7 +934,6 @@ const LahoreCity = (props) => {
                           />
                           <div className="heartIcon">
                             <i class="fa-regular fa-heart fs-4 d-flex justify-content-center"></i>
->>>>>>> 24591bb3615dbed0ad8dbaa3966afe9e7cff26f6
                           </div>
                         </div>
                         <div class="col-md-8">
@@ -1025,15 +994,8 @@ const LahoreCity = (props) => {
                         </div>
                       </div>
                     </div>
-<<<<<<< HEAD
-                  </div>
-                  </Link>
-                );
-              })}
-=======
                   );
                 })}
->>>>>>> 24591bb3615dbed0ad8dbaa3966afe9e7cff26f6
 
               {/* <nav aria-label="Page navigation example">
                 <ul class="pagination d-flex justify-content-center">
