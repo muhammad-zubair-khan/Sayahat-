@@ -35,6 +35,9 @@ app.use("/api", carRoutes);
 const packageRoutes = require("./Routes/package");
 app.use("/api", packageRoutes);
 
+const userRoutes = require("./Routes/user");
+app.use("/api", userRoutes);
+
 const initialDataRoutes = require("./Routes/initialData");
 app.use("/api", initialDataRoutes);
 

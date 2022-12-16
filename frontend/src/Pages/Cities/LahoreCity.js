@@ -23,7 +23,7 @@ const LahoreCity = (props) => {
   useEffect(() => {
     dispatch(getPackageBySlug(params.slug));
     dispatch(getVacationProductsBySlug);
-  }, [dispatch,params.slug]);
+  }, [dispatch, params.slug]);
 
   let readMore = () => {
     var dots = document.getElementById("dots");
@@ -205,9 +205,7 @@ const LahoreCity = (props) => {
               products.map((data, index) => {
                 return (
                   <div key={index}>
-                  <p className="lhrIntro mt-5">
-                    {data.description}
-                  </p>
+                    <p className="lhrIntro mt-5">{data.description}</p>
                   </div>
                 );
               })}
@@ -984,12 +982,14 @@ const LahoreCity = (props) => {
                               <i class="fa-solid fa-check me-2"></i>
                               {data.refundable}
                             </small>
-                            <Button
-                              variant="contained"
-                              style={{ float: "right" }}
-                            >
-                              Reserve
-                            </Button>
+                            <Link to={`${params.slug}/${data._id}/detail`}>
+                              <Button
+                                variant="contained"
+                                style={{ float: "right" }}
+                              >
+                                Reserve
+                              </Button>
+                            </Link>
                           </div>
                         </div>
                       </div>

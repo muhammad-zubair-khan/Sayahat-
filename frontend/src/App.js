@@ -26,17 +26,22 @@ import { getInitialData } from "../src/Redux/Actions/initialDataAction";
 function App() {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.userAuth);
+  console.log(user)
 
   useEffect(() => {
     if (!user.authenticate) {
       dispatch(isUserLoggedIn());
     }
-    if (user.authenticate) {
-      dispatch(getInitialData());
-      dispatch(getAllVacationsCategory());
-    }
+    // if (user.authenticate) {
+    //   dispatch(getInitialData());
+    //   dispatch(getAllVacationsCategory());
+    // }
   }, [dispatch, user.authenticate]);
- 
+
+  // useEffect(() => {
+  //   // 👇️ scroll to top on page load
+  //   window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
+  // }, []);
 
   return (
     <Router>
@@ -44,14 +49,14 @@ function App() {
         <Route exact path="/" component={Home} />
         <Route exact path="/vacation/:slug/:slug" component={City} />
         <Route exact path="/vacation/:slug"  component={Cities} />
-        <Route exact path="/lahore" component={LahoreCity} />
+        {/* <Route exact path="/lahore" component={LahoreCity} /> */}
         <Route exact path="/hotels" component={Hotel} />
         <Route exact path="/hotel/:id" component={HotelDetail} />
         <Route exact path="/cars" component={Car} />
         <PrivateRoute exact path="/car/:id" component={CarDetail} />
         <Route exact path="/aboutus" component={Aboutus} />
         <Route exact path="/car-rentals" component={CarRental} />
-        <Route exact path="/package"  component={PackageDetail}/>
+        <Route exact path="/vacation/:slug/:slug/:id/detail"  component={PackageDetail}/>
         <Route exact path="/contactus" component={Contactus} />
         <Route exact path="/account" component={Account} />
       </Switch>

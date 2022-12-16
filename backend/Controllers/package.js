@@ -3,6 +3,7 @@ const Package = require("../models/package");
 const product = require("../models/vacationProduct");
 const slugify = require('slugify');
 const path = require("path");
+const { truncate } = require("fs/promises");
 
 // Create Package -- Admin
 exports.createPackage = async(req, res, next) => {
@@ -91,6 +92,31 @@ exports.getPackageBySlug = (req, res) => {
     });
 };
 
+//get package Details by Id
+exports.getPackageDetailsById = async(req, res) => {
+  const id = req.params.id;
+//  console.log(id)
+//  res.send(id)
+try {
+  const package = await Package.findById(id)
+  // const package = await Package.findById({ _id: id})
+  // if(!package){
+  //   return res.status(400).json({
+  //     success:false,
+  //     message:"No Package Found"
+  //   })
+  // }
+  if(package){
+    return res.status(200).json({
+      success:true,
+      package
+    })
+    
+  }
+} catch (error) {
+  console.log(error.message)
+}
+};
 // Delete Package
 exports.deletePackage = async(req, res, next) => {
   const package = await Package.findById(req.params.id);

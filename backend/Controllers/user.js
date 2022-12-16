@@ -92,7 +92,6 @@ exports.userProfile = asyncHandler(async (req,res)=>{
       lastName: user.lastName,
       email: user.email,
       isUser: user.isUser,
-      phone: user.phone,
       createdAt: user.createdAt
     });
   }else{

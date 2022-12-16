@@ -12,10 +12,20 @@ const axiosInstance = axios.create({
     }
 });
 
+//auth
+// axiosInstance.interceptors.request.use((req)=>{
+//     const {auth} = store.getState();
+// console.log(auth)
+//     if(auth.token){
+//         req.headers.Authorization = `Bearer ${auth.token}`;
+//     }
+//     return req;
+// });
+
 axiosInstance.interceptors.request.use((req)=>{
-    const {auth} = store.getState();
-    if(auth.token){
-        req.headers.Authorization = `Bearer ${auth.token}`;
+    const {userAuth} = store.getState();
+    if(userAuth.token){
+        req.headers.Authorization = `Bearer ${userAuth.token}`;
     }
     return req;
 });

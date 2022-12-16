@@ -8,6 +8,7 @@ const {
     getAllPackages,
     deletePackage,
     getPackageBySlug,
+    getPackageDetailsById
 } = require("../Controllers/package");
 
 const storage = multer.diskStorage({
@@ -25,10 +26,10 @@ router.post(
   upload.single("packageImage"),
   createPackage
 );
-
+// http://localhost:5000/api/package/Lahore/Lahore Sightseeing 2Days Tour
 router.get("/packages", getAllPackages);
 router.get("/package/:slug", getPackageBySlug);
-
+router.get('/package-detail/:id',getPackageDetailsById)
 router.post("/deletepackage/:id", deletePackage);
 // router.post(
 //   "/vacation/category/update",

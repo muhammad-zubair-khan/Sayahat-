@@ -12,6 +12,8 @@ import { allUsersReducer, userAuthReducer } from "./Reducers/userReducers";
 const reducer = combineReducers({
   // auth: authReducer,
   // allAdmins: allAdminsReducer,
+  userAuth: userAuthReducer,
+  allUsers: allUsersReducer,
   Vacationcategory: VacationCategoryReducer,
   vacationProduct: vacationProductReducer,
   newVacation: addCitiesReducer,
@@ -21,8 +23,8 @@ const reducer = combineReducers({
   carsReducer: allCarsReducer,
   addPackageReducer: newPackageReducer,
   packagesReducer: allPackagesReducer,
-  userAuth: userAuthReducer,
-  allUsers: allUsersReducer,
+  // userAuth: userAuthReducer,
+  // allUsers: allUsersReducer,
 
   
   // allVacation: allCitiesReducer,

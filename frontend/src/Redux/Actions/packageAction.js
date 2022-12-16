@@ -2,6 +2,9 @@ import {
     GET_PACKAGE_BY_SLUG_REQUEST,
     GET_PACKAGE_BY_SLUG_SUCCESS,
     GET_PACKAGE_BY_SLUG_FAIL,
+    GET_PACKAGE_DETAIL_BY_ID_REQUEST,
+    GET_PACKAGE_DETAIL_BY_ID_SUCCESS,
+    GET_PACKAGE_DETAIL_BY_ID_FAIL,
     CREATE_NEW_PACKAGE_REQUEST,
     CREATE_NEW_PACKAGE_SUCCESS,
     CREATE_NEW_PACKAGE_FAIL,
@@ -79,7 +82,23 @@ export const getPackageBySlug = (slug) => async (dispatch) => {
   }
 };
 
-
+// Get Package detail By Id
+export const getPackageDetailById = (id) => async (dispatch) => {
+  try {
+    dispatch({ type: GET_PACKAGE_DETAIL_BY_ID_REQUEST });
+    const { data } = await axios.get(`/package-detail/${id}`);
+    console.log(data);
+    dispatch({
+      type: GET_PACKAGE_DETAIL_BY_ID_SUCCESS,
+      payload: data.package,
+    });
+  } catch (error) {
+    dispatch({
+      type: GET_PACKAGE_DETAIL_BY_ID_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
  // Delete Package
  export const deletePackage = (id) => async (dispatch) => {
   try {
