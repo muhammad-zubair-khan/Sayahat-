@@ -160,30 +160,43 @@ function PackageDetail() {
                 placeholder="Adults"
               ></input>
             </div> */}
-            <div className=" col-xxs-12 col-xs-6 mt">
+            <div
+              className=" col-xxs-12 col-xs-6 mt"
+              style={{ textAlign: "center" }}
+            >
               <section>
                 <span
                   style={{
                     color: "#0000000",
-
                     fontSize: "14px",
                     cursor: "pointer",
                   }}
                   onClick={() => setOpenOptions(!openOptions)}
-                >{`${options.adult} Adult - ${options.children} Children`}</span>
+                >
+                  <input
+                    type="text"
+                    className="form-control mt-2"
+                    disabled
+                    style={{ cursor: "pointer" }}
+                    placeholder={`${options.adult} Adult - ${options.children} Children`}
+                  />
+                </span>
                 {openOptions && (
                   <div
                     className="options"
                     style={{
                       position: "absolute",
-                      top: "253px",
-                      width: "16%",
+                      // top: "253px",
+                      top: "275px",
+                      // width: "16%",
+                      width: "31%",
                       zIndex: "1000000",
                       backgroundColor: "white",
                       boxShadow: "0px 0px 10px #848484",
                       padding: "7px 10px",
                     }}
                   >
+                    <span>You can select up to 15 travelers in total.</span>
                     <div className="optionItems">
                       <span
                         style={{
@@ -213,6 +226,7 @@ function PackageDetail() {
                           className="optionbtn"
                           style={{ marginRight: "1px" }}
                           onClick={() => handleOption("adult", "increament")}
+                          disabled={options.adult >=15}
                         >
                           +
                         </button>
@@ -230,7 +244,7 @@ function PackageDetail() {
                       <div className="optionButton">
                         <button
                           className="optionbtn"
-                          disabled={options.children <= 0}
+                          disabled={options.children <= 0 }
                           onClick={() => handleOption("children", "decreament")}
                         >
                           -
@@ -246,6 +260,7 @@ function PackageDetail() {
                         <button
                           className="optionbtn"
                           onClick={() => handleOption("children", "increament")}
+                          disabled={options.children >=15 && options.adult >=15 }
                         >
                           +
                         </button>
