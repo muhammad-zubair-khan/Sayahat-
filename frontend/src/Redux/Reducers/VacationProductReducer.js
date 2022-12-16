@@ -11,7 +11,10 @@ import {
   NEW_VACATION_PRODUCT_RESET,
   GET_ALL_VACATIONS_REQUEST,
   GET_ALL_VACATIONS_SUCCESS,
-  GET_ALL_VACATIONS_FAIL
+  GET_ALL_VACATIONS_FAIL,
+  GET_PRODUCT_DETAIL_BY_ID_REQUEST,
+  GET_PRODUCT_DETAIL_BY_ID_SUCCESS,
+  GET_PRODUCT_DETAIL_BY_ID_FAIL,
 } from "../Constants/vacationProductConstants";
 
 export const vacationProductReducer = (state = { products: [] }, action) => {
@@ -100,16 +103,19 @@ export const vacationProductReducer = (state = { products: [] }, action) => {
 // };
 
 const initialStateVacationProduct = {
-  product:{},
-  loading:false
-}
+  product: {},
+  loading: false,
+};
 
-export const addCitiesReducer = (state = initialStateVacationProduct, action) => {
+export const addCitiesReducer = (
+  state = initialStateVacationProduct,
+  action
+) => {
   switch (action.type) {
     case NEW_VACATION_PRODUCT_REQUEST:
       return {
         // ...state,
-        product:{},
+        product: {},
         loading: false,
       };
     case NEW_VACATION_PRODUCT_SUCCESS:
@@ -130,7 +136,21 @@ export const addCitiesReducer = (state = initialStateVacationProduct, action) =>
         product: {},
         success: false,
       };
-
+    case GET_PRODUCT_DETAIL_BY_ID_REQUEST:
+      return {
+        loading: true,
+        product: {},
+      };
+    case GET_PRODUCT_DETAIL_BY_ID_SUCCESS:
+      return {
+        loading: false,
+        product: action.payload,
+      };
+    case GET_PRODUCT_DETAIL_BY_ID_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
     default:
       return state;
   }

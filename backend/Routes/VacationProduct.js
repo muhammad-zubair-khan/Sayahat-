@@ -2,7 +2,8 @@ const express = require("express");
 const {
   createVacationProduct,
   getAllVacationsProducts,
-  getProductsBySlug
+  getProductsBySlug,
+  getProductDetailById,
 } = require("../Controllers/VacationProduct");
 
 
@@ -29,6 +30,7 @@ router.route("/view-all-vacations").get(getAllVacationsProducts);
 
 router.route("/vacations/:slug").get(getProductsBySlug);
 
+router.route("/vacation-detail/:id").get(getProductDetailById);
 
 
 module.exports = router;

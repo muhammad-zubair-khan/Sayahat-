@@ -10,8 +10,12 @@ import { Container } from "@mui/material";
 
 const Cities = ({ props, history }) => {
   let { slug } = useParams();
+  let params = useParams();
+
+  console.log(params)
   const dispatch = useDispatch();
   const { products } = useSelector((state) => state.vacationProduct);
+  console.log(products)
   useEffect(() => {
     dispatch(getVacationProductsBySlug(slug));
   }, [dispatch, slug]);
@@ -26,7 +30,7 @@ const Cities = ({ props, history }) => {
               return (
                 <>
                   <div className="col-md-4 my-3">
-                    <Link to={`/vacation/${slug}/${data.slug}`}>
+                    <Link to={`/vacation/${slug}/${data.slug}/${data._id}`}>
                       {console.log(data)}
                       <div className="wrapper-cards">
                         <img

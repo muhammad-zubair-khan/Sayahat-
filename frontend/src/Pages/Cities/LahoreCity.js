@@ -8,22 +8,23 @@ import Offcanvas from "react-bootstrap/Offcanvas";
 import Footer from "../../Footer/Footer";
 import { useDispatch, useSelector } from "react-redux";
 import { getPackageBySlug } from "../../Redux/Actions/packageAction";
-import { getVacationProductsBySlug } from "../../Redux/Actions/vacationProductAction";
+import { getProductDetailById } from "../../Redux/Actions/vacationProductAction";
+import { ImageUrl } from "../../Redux/UrlConfig";
 
 const LahoreCity = (props) => {
   const params = useParams();
-  let { slug } = useParams();
+  // console.log(params)
+  let { id } = useParams();
 
   const dispatch = useDispatch();
-  const { packages } = useSelector((state) => state.packagesReducer);
-  // console.log(packages)
-  const { products } = useSelector((state) => state.vacationProduct);
-  console.log("products>>>", products);
-
+  const {packages} = useSelector((state) => state.packagesReducer);
+  console.log(packages)
+  const {product} = useSelector((state) => state.newVacation);
+  // console.log("products>>>", product);
   useEffect(() => {
     dispatch(getPackageBySlug(params.slug));
-    dispatch(getVacationProductsBySlug);
-  }, [dispatch, params.slug]);
+    dispatch(getProductDetailById(id));
+  }, [dispatch, params.slug,id]);
 
   let readMore = () => {
     var dots = document.getElementById("dots");
@@ -201,14 +202,15 @@ const LahoreCity = (props) => {
         <div className="row ms-4 mt-5">
           <div className="col-10 ms-5">
             <h1 className="lhrH1">{params.slug}</h1>
-            {products &&
+            <p className="lhrIntro mt-5">{product.description}</p>
+
+            {/* {products &&
               products.map((data, index) => {
                 return (
                   <div key={index}>
-                    <p className="lhrIntro mt-5">{data.description}</p>
                   </div>
                 );
-              })}
+              })} */}
 
             <h4 className="text-dark">History</h4>
             {/* <p className="text-dark">
@@ -926,7 +928,7 @@ const LahoreCity = (props) => {
                       <div class="row g-0">
                         <div class="col-md-4 position-relative">
                           <img
-                            src={data.packageImage}
+                            src={ImageUrl(data.packageImage[0].img)}
                             class="img-fluid rounded-start h-100"
                             alt="image"
                           />
@@ -944,7 +946,7 @@ const LahoreCity = (props) => {
                               </div>
                               <div className="col-4 text-end">
                                 <h5 class="card-title text-dark">
-                                  {data.price} $
+                                  ${data.price} 
                                 </h5>
                               </div>
                             </div>
@@ -982,7 +984,7 @@ const LahoreCity = (props) => {
                               <i class="fa-solid fa-check me-2"></i>
                               {data.refundable}
                             </small>
-                            <Link to={`${params.slug}/${data._id}/detail`}>
+                            <Link to={`${data._id}/detail`}>
                               <Button
                                 variant="contained"
                                 style={{ float: "right" }}

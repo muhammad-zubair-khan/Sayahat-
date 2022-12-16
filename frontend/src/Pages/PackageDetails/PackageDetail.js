@@ -8,16 +8,40 @@ import {
   getPackageDetailById,
 } from "../../Redux/Actions/packageAction";
 import { useParams } from "react-router-dom";
+import { ImageUrl } from "../../Redux/UrlConfig";
+import { useState } from "react";
 
 function PackageDetail() {
+  const [openOptions, setOpenOptions] = useState(false);
+  const [options, setOptions] = useState({
+    adult: 1,
+    children: 0,
+  });
+  const handleOption = (name, operation) => {
+    setOptions((prev) => {
+      return {
+        ...prev,
+        [name]:
+          operation === "increament" ? options[name] + 1 : options[name] - 1,
+      };
+    });
+  };
+
   const params = useParams();
-//   console.log(params);
+  //   console.log(params);
+  let { id } = useParams();
+
   const dispatch = useDispatch();
   const packages = useSelector((state) => state.addPackageReducer);
-//   console.log(packages.package);
+  console.log("pack", packages.package.packageImage);
+  // console.log("picc>>>>>>>>",packages.package.packageImage)
   useEffect(() => {
-    dispatch(getPackageDetailById(params.id));
-  }, [dispatch]);
+    dispatch(getPackageDetailById(id));
+  }, [dispatch, id]);
+  // const {packages} = useSelector((state) => state.packagesReducer);
+  // console.log(packages)
+  // const {product} = useSelector((state) => state.newVacation);
+  // console.log("products>>>", product);
 
   let pictures = [
     {
@@ -79,6 +103,9 @@ function PackageDetail() {
         "It was interesting at first but then went a bit downhill. The biggest issue was it was simply too long. They tried to stretch a 60-minute tour into 90+ minutes.",
     },
   ];
+  if (Object.keys(packages.package).length === 0) {
+    return null;
+  }
   return (
     <>
       <Navbar />
@@ -87,33 +114,32 @@ function PackageDetail() {
       <div className="container aboutPackage">
         {/* start of package images and price */}
         <div className="row">
-          <h3 className="text-black">
-           {packages.package.name}
-          </h3>
+          <h3 className="text-black">{packages.package.name}</h3>
           <div class="col-2">
-            {pictures.map((pic) => {
-              return (
-                <img
-                  src={pic.image}
-                  alt="Girl in a jacket"
-                  className="p-1"
-                  width="80%"
-                  height="16%"
-                />
-              );
-            })}
+            {packages.package.packageImage &&
+              packages.package.packageImage.map((pic, index) => {
+                return (
+                  <img
+                    src={ImageUrl(pic.img)}
+                    alt="Girl in a jacket"
+                    className="p-1"
+                    width="80%"
+                    height="16%"
+                  />
+                );
+              })}
           </div>
           <div className="col-6">
             <img
-              src="https://media.tacdn.com/media/attractions-splice-spp-674x446/0c/e1/ed/7d.jpg"
-              alt="Girl in a jacket"
+              src={ImageUrl(packages.package.packageImage[0].img)}
               className=""
               width="100%"
               height=""
+              alt=""
             />
           </div>
           <div className="col-4 BgPackage p-3 h-100">
-            <h4 className="text-black">From $69.99</h4>
+            <h4 className="text-black">From ${packages.package.price}</h4>
             <span style={{ color: "#1874A2" }}>Lowest Price Guarantee</span>
             <hr />
             <h4 className="text-black">Select Date and Travelers</h4>
@@ -123,7 +149,7 @@ function PackageDetail() {
               placeholder=".form-control-lg"
               aria-label=".form-control-lg example"
             ></input>
-            <div className="input-group mt-3">
+            {/* <div className="input-group mt-3">
               <span className="input-group-text">
                 <i class="fa-regular fa-user"></i>
               </span>
@@ -133,7 +159,141 @@ function PackageDetail() {
                 aria-label="Dollar amount (with dot and two decimal places)"
                 placeholder="Adults"
               ></input>
+            </div> */}
+            <div className=" col-xxs-12 col-xs-6 mt">
+              <section>
+                <span
+                  style={{
+                    color: "#0000000",
+
+                    fontSize: "14px",
+                    cursor: "pointer",
+                  }}
+                  onClick={() => setOpenOptions(!openOptions)}
+                >{`${options.adult} Adult - ${options.children} Children`}</span>
+                {openOptions && (
+                  <div
+                    className="options"
+                    style={{
+                      position: "absolute",
+                      top: "253px",
+                      width: "16%",
+                      zIndex: "1000000",
+                      backgroundColor: "white",
+                      boxShadow: "0px 0px 10px #848484",
+                      padding: "7px 10px",
+                    }}
+                  >
+                    <div className="optionItems">
+                      <span
+                        style={{
+                          color: "black",
+                          fontSize: "14px",
+                        }}
+                      >
+                        Adult
+                      </span>
+                      <div className="optionButton">
+                        <button
+                          className="optionbtn"
+                          disabled={options.adult <= 1}
+                          onClick={() => handleOption("adult", "decreament")}
+                        >
+                          -
+                        </button>
+                        <span
+                          style={{
+                            color: "black",
+                            fontSize: "14px",
+                          }}
+                        >
+                          {options.adult}
+                        </span>
+                        <button
+                          className="optionbtn"
+                          style={{ marginRight: "1px" }}
+                          onClick={() => handleOption("adult", "increament")}
+                        >
+                          +
+                        </button>
+                      </div>
+                    </div>
+                    <div className="optionItems">
+                      <span
+                        style={{
+                          color: "black",
+                          fontSize: "14px",
+                        }}
+                      >
+                        Children
+                      </span>
+                      <div className="optionButton">
+                        <button
+                          className="optionbtn"
+                          disabled={options.children <= 0}
+                          onClick={() => handleOption("children", "decreament")}
+                        >
+                          -
+                        </button>
+                        <span
+                          style={{
+                            color: "black",
+                            fontSize: "14px",
+                          }}
+                        >
+                          {options.children}
+                        </span>
+                        <button
+                          className="optionbtn"
+                          onClick={() => handleOption("children", "increament")}
+                        >
+                          +
+                        </button>
+                      </div>
+                    </div>
+                    {/* <div className="optionItems">
+                                    <span
+                                      style={{
+                                        color: "black",
+                                        fontSize: "14px",
+                                      }}
+                                    >
+                                      Room
+                                    </span>
+                                    <div className="optionButton">
+                                      <button
+                                        className="optionbtn"
+                                        style={{ marginRight: "3px" }}
+                                        disabled={options.room <= 1}
+                                        onClick={() =>
+                                          handleOption("room", "decreament")
+                                        }
+                                      >
+                                        -
+                                      </button>
+                                      <span
+                                        style={{
+                                          color: "black",
+                                          fontSize: "14px",
+                                        }}
+                                      >
+                                        {options.room}
+                                      </span>
+                                      <button
+                                        className="optionbtn"
+                                        onClick={() =>
+                                          handleOption("room", "increament")
+                                        }
+                                      >
+                                        +
+                                      </button>
+                                    </div>
+                                  </div> */}
+                  </div>
+                )}
+              </section>
             </div>
+
             <button
               type="button"
               className="btn btn-danger w-100 mt-4 p-2 mb-4"
@@ -144,9 +304,9 @@ function PackageDetail() {
             <br />
             <small>Secure your spot while staying flexible</small>
             <br />
-            <small className="fw-bold">Free cancellation</small>
+            <small className="fw-bold">{packages.package.refundable}</small>
             <br />
-            <small>Up to 24 hours in advance.Learn more</small>
+            {/* <small>Up to 24 hours in advance.Learn more</small> */}
           </div>
         </div>
         {/* end of package images and price */}
@@ -154,15 +314,8 @@ function PackageDetail() {
         <div className="row">
           {/* start of detials about package */}
           <h3 className="text-black fw-bold">Overview</h3>
-          <p className="text-black">
-            Many Las Vegas Strip tours take you around during the day, which
-            means you miss out on the time the city is most alive. This Viator
-            Exclusive Las Vegas Late-Night Open-Top Bus Tour shows you the
-            vibrant Strip during late-night hours, including top attractions
-            such as the Bellagio Fountain, High Roller, and MGM Grand Garden
-            Arena all lit up. Plus, you still be able to make plans afterward.
-          </p>
-          <ul className="text-black ms-5">
+          <p className="text-black">{packages.package.description}</p>
+          {/* <ul className="text-black ms-5">
             <li>
               Viator Exclusive Las Vegas late-night tour isnt available anywhere
               else
@@ -178,17 +331,23 @@ function PackageDetail() {
             <li className="mt-3">
               Stop at the Welcome to Fabulous Las Vegas Sign for fun photo ops
             </li>
-          </ul>
+          </ul> */}
           <hr />
           <h3 className="text-black fw-bold my-4">What's Included</h3>
           <div className="row">
-            <div className="col-6">
+            <div className="col-4">
+              <span>
+                <i class="fa-solid fa-check"></i>
+                {packages.package.duration}
+              </span>
+            </div>
+            <div className="col-4">
               <span>
                 <i class="fa-solid fa-check"></i> 1 Route - Las Vegas Viator
                 Late Night Tour
               </span>
             </div>
-            <div className="col-6">
+            <div className="col-4">
               <span>
                 <i class="fa-solid fa-xmark"></i> Hotel pickup and drop-off
               </span>

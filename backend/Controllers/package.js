@@ -3,7 +3,7 @@ const Package = require("../models/package");
 const product = require("../models/vacationProduct");
 const slugify = require('slugify');
 const path = require("path");
-const { truncate } = require("fs/promises");
+
 
 // Create Package -- Admin
 exports.createPackage = async(req, res, next) => {

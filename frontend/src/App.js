@@ -47,7 +47,7 @@ function App() {
     <Router>
       <Switch>
         <Route exact path="/" component={Home} />
-        <Route exact path="/vacation/:slug/:slug" component={City} />
+        <Route exact path="/vacation/:slug/:slug/:id" component={City} />
         <Route exact path="/vacation/:slug"  component={Cities} />
         {/* <Route exact path="/lahore" component={LahoreCity} /> */}
         <Route exact path="/hotels" component={Hotel} />

@@ -10,6 +10,9 @@ import {
   NEW_VACATION_PRODUCT_REQUEST,
   NEW_VACATION_PRODUCT_SUCCESS,
   NEW_VACATION_PRODUCT_FAIL,
+  GET_PRODUCT_DETAIL_BY_ID_REQUEST,
+  GET_PRODUCT_DETAIL_BY_ID_SUCCESS,
+  GET_PRODUCT_DETAIL_BY_ID_FAIL,
 } from "../Constants/vacationProductConstants";
 
 // Create Product
@@ -95,6 +98,24 @@ export const getVacationProductsBySlug = (slug) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: GET_VACATION_PRODUCTS_BY_SLUG_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+// Get product detail By Id
+export const getProductDetailById = (id) => async (dispatch) => {
+  try {
+    dispatch({ type: GET_PRODUCT_DETAIL_BY_ID_REQUEST });
+    const { data } = await axios.get(`/vacation-detail/${id}`);
+    console.log(data);
+    dispatch({
+      type: GET_PRODUCT_DETAIL_BY_ID_SUCCESS,
+      payload: data.product,
+    });
+  } catch (error) {
+    dispatch({
+      type: GET_PRODUCT_DETAIL_BY_ID_FAIL,
       payload: error.response.data.message,
     });
   }

@@ -11,6 +11,7 @@ import Zoom from "react-medium-image-zoom";
 import "react-medium-image-zoom/dist/styles.css";
 import { deletePackage } from "../../../Redux/Actions/packageAction";
 import { useHistory } from "react-router-dom";
+import { ImageUrl } from "../../../Redux/UrlConfig";
 
 const GetPackageBySlug = (props) => {
   const history = useHistory()
@@ -36,12 +37,15 @@ const GetPackageBySlug = (props) => {
       minHeight: 200,
       flex: 0.5,
       renderCell: (params) => {
-        console.log("params>>>", params);
+        // console.log("params>>>", params.row.packageImage[0].img);
+        // if(Object.keys(packages.package).length === 0){
+        //   return null;
+        // }
         return (
           <div style={{ textAlign: "center" }}>
             <Zoom>
               <img
-                src={params.row.packageImage}
+                src={ImageUrl(params.row.packageImage[0].img)}
                 style={{ width: "20%", margin: "10px 10px" }}
                 alt={params.row.name}
               />
@@ -119,6 +123,7 @@ const GetPackageBySlug = (props) => {
 
   packages &&
     packages.forEach((item) => {
+      console.log(item)
       rows.push({
         id: item._id,
         packageImage: item.packageImage,

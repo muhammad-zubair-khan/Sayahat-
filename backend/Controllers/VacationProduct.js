@@ -88,3 +88,34 @@ exports.getProductsBySlug = (req, res) => {
       }
     });
 };
+
+//get product Details by Id
+exports.getProductDetailById = async(req, res) => {
+  const id = req.params.id;
+//  console.log(id)
+//  res.send(id)
+try {
+  const product = await VacationProduct.findById(id)
+
+  if(product){
+    return res.status(200).json({
+      success:true,
+      product
+    })
+    
+  }
+} catch (error) {
+  console.log(error.message)
+}
+};
+// exports.getProductDetailById = async(req, res, next) => {
+//   const { productId } = req.params;
+//   const product = await VacationProduct.findOne({_id: productId});
+//   if (!product) {
+//     return res.status(400).json({success:false, message:"Product Not Found"});
+//   }
+//   res.status(200).json({
+//     success: true,
+//     product,
+//   });
+// };
