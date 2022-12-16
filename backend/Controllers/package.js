@@ -17,12 +17,19 @@ exports.createPackage = async(req, res, next) => {
     product
   } = req.body;
 
+  let packageImage = []
+  if (req.files.length > 0) {
+    packageImage = req.files.map((file) => {
+      return { img: file.filename };
+    });
+  }
+
   const package = await new Package({
     name: name,
     city: city,
     price: price,
     slug: slugify(name),
-    packageImage: process.env.IMG_API + `/public/` + req.file.filename,
+    packageImage,
     description: description,
     duration: duration,
     refundable: refundable,
@@ -39,6 +46,7 @@ exports.createPackage = async(req, res, next) => {
     if (data) {
       return res.status(201).json({
         package,
+        file: req.files,
         // file: req.files,
       });
     }

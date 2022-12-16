@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 
-const packageSchema = new mongoose.Schema(
-  {
+const packageSchema = new mongoose.Schema({
    name:{
     type: String,
     required: true,
@@ -26,10 +25,14 @@ const packageSchema = new mongoose.Schema(
    refundable:{
     type:String,
    },
-   packageImage:{
-    type:String,
-    required:true
-   },
+   packageImage:[
+    { 
+      img: {
+         type: String,
+          required:true
+        }
+    }
+  ],
    product: { type: mongoose.Schema.Types.ObjectId, ref: 'Product', required: true },
     updatedAt: Date,
   },

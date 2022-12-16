@@ -23,10 +23,9 @@ const upload = multer({ storage });
 
 router.post(
   "/package/create",
-  upload.single("packageImage"),
+  upload.array("packageImage"),
   createPackage
 );
-// http://localhost:5000/api/package/Lahore/Lahore Sightseeing 2Days Tour
 router.get("/packages", getAllPackages);
 router.get("/package/:slug", getPackageBySlug);
 router.get('/package-detail/:id',getPackageDetailsById)
