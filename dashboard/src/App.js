@@ -61,7 +61,11 @@ function App() {
           component={CreateTopDestinations}
         />
         <PrivateRoute exact path="/all-cities" component={AllCities} />
-        <PrivateRoute exact path="/all-top-destinations" component={AllDestinations} />
+        <PrivateRoute
+          exact
+          path="/all-top-destinations"
+          component={AllDestinations}
+        />
         <PrivateRoute exact path="/hotel/:slug" component={GetHotelBySlug} />
         <PrivateRoute exact path="/car/:slug" component={GetCarBySlug} />
         <PrivateRoute
