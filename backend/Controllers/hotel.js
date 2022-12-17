@@ -67,7 +67,7 @@ exports.getHotelsBySlug = (req, res) => {
   
   const { slug } = req.params;
   category.findOne({ slug: slug })
-  topDest.findOne({ slug: slug })
+  //  topDest.findOne({ slug: slug })
   .select("_id")
   .exec((err, category) => {
     if (err) {
@@ -96,6 +96,41 @@ exports.getHotelsBySlug = (req, res) => {
       }
     });
 };
+
+//get Top Des hotel by slug
+exports.getTopDesHotelsBySlug = (req, res) => {
+  const { slug } = req.params;
+  // category.findOne({ slug: slug })
+   topDest.findOne({ slug: slug })
+  .select("_id")
+  .exec((err, category) => {
+    if (err) {
+      return res.status(400).json({err});
+    }
+    if(!category){
+      return res.status(400).json({
+        success:false,
+        message:"No Hotel Found"
+      })
+    }
+    if (category) {
+      Hotel.find({ category: category._id }).exec((error, hotel) => {
+          if (error) {
+            return res.status(400).json({
+              error,
+            });
+          } else {
+            res.status(200).json({
+              success:true,
+              hotel,
+              // productsCount,
+            });
+          }
+        });
+      }
+    });
+};
+
 
 // Delete Hotel
 exports.deleteHotel = async(req, res, next) => {

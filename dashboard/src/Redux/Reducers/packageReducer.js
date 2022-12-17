@@ -15,7 +15,10 @@ import {
     DELETE_PACKAGE_REQUEST,
     DELETE_PACKAGE_SUCCESS,
     DELETE_PACKAGE_FAIL,
-    DELETE_PACKAGE_RESET
+    DELETE_PACKAGE_RESET,
+    GET_TOP_DES_PACKAGE_BY_SLUG_REQUEST,
+    GET_TOP_DES_PACKAGE_BY_SLUG_SUCCESS,
+    GET_TOP_DES_PACKAGE_BY_SLUG_FAIL,
   } from "../Constants/packageConstants";
 
   const initialStatePackage = {
@@ -88,6 +91,22 @@ import {
           loading: false,
           error: action.payload,
         };
+      
+        case GET_TOP_DES_PACKAGE_BY_SLUG_REQUEST:
+          return {
+            loading: true,
+            packages: [],
+          };
+        case GET_TOP_DES_PACKAGE_BY_SLUG_SUCCESS:
+          return {
+            loading: false,
+            packages: [...action.payload],
+          };
+        case GET_TOP_DES_PACKAGE_BY_SLUG_FAIL:
+          return {
+            loading: false,
+            error: action.payload,
+          };
       // case CLEAR_ERRORS:
       //   return {
       //     ...state,

@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Header from "../../../components/Header";
 import Sidebar from "../../../components/Sidebar";
-import { getPackageBySlug } from "../../../Redux/Actions/packageAction";
+import { getPackageBySlug, getTopDesPackageBySlug } from "../../../Redux/Actions/packageAction";
 import { DataGrid } from "@mui/x-data-grid";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Button from "@mui/material/Button";
@@ -27,6 +27,7 @@ const GetPackageBySlug = (props) => {
     const { match } = props;
   console.log(props);
     dispatch(getPackageBySlug(match.params.slug));
+    dispatch(getTopDesPackageBySlug(match.params.slug));
   }, [dispatch, props]);
 
   const columns = [

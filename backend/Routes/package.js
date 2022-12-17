@@ -8,7 +8,8 @@ const {
     getAllPackages,
     deletePackage,
     getPackageBySlug,
-    getPackageDetailsById
+    getTopDesPackageBySlug,
+    getPackageDetailsById,
 } = require("../Controllers/package");
 
 const storage = multer.diskStorage({
@@ -28,6 +29,7 @@ router.post(
 );
 router.get("/packages", getAllPackages);
 router.get("/package/:slug", getPackageBySlug);
+router.get("/top-des-package/:slug", getTopDesPackageBySlug);
 router.get('/package-detail/:id',getPackageDetailsById)
 router.post("/deletepackage/:id", deletePackage);
 // router.post(

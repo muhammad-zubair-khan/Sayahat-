@@ -12,6 +12,9 @@ import {
     DELETE_PACKAGE_REQUEST,
     DELETE_PACKAGE_SUCCESS,
     DELETE_PACKAGE_FAIL,
+    GET_TOP_DES_PACKAGE_BY_SLUG_REQUEST,
+    GET_TOP_DES_PACKAGE_BY_SLUG_SUCCESS,
+    GET_TOP_DES_PACKAGE_BY_SLUG_FAIL,
   } from "../Constants/packageConstants";
   import axios from "../helpers/axios";
 
@@ -79,6 +82,23 @@ export const getPackageBySlug = (slug) => async (dispatch) => {
   }
 };
 
+//get Top Des Package by Slug
+export const getTopDesPackageBySlug = (slug) => async (dispatch) => {
+  try {
+    dispatch({ type: GET_TOP_DES_PACKAGE_BY_SLUG_REQUEST });
+    const { data } = await axios.get(`/top-des-package/${slug}`);
+    console.log(data);
+    dispatch({
+      type: GET_TOP_DES_PACKAGE_BY_SLUG_SUCCESS,
+      payload: data.package,
+    });
+  } catch (error) {
+    dispatch({
+      type: GET_TOP_DES_PACKAGE_BY_SLUG_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
 
  // Delete Package
  export const deletePackage = (id) => async (dispatch) => {

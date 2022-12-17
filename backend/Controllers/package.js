@@ -72,6 +72,38 @@ exports.getPackageBySlug = (req, res) => {
   
   const { slug } = req.params;
   product.findOne({ slug: slug })
+  .select("_id")
+  .exec((err, product) => {
+    if (err) {
+      return res.status(400).json({err});
+    }
+    if(!product){
+      return res.status(400).json({
+        success:false,
+        message:"No Package Found"
+      })
+    }
+    if (product) {
+      Package.find({ product: product._id }).exec((error, package) => {
+          if (error) {
+            return res.status(400).json({
+              error,
+            });
+          } else {
+            res.status(200).json({
+              success:true,
+              package,
+              // productsCount,
+            });
+          }
+        });
+      }
+    });
+};
+
+//get top des package by slug
+exports.getTopDesPackageBySlug = (req, res) => {
+  const { slug } = req.params;
   Topdes.findOne({ slug: slug })
   .select("_id")
   .exec((err, product) => {

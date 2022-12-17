@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Header from "../../../components/Header";
 import Sidebar from "../../../components/Sidebar";
-import { getHotelBySlug } from "../../../Redux/Actions/hotelAction";
+import { getHotelBySlug, getTopDesHotelBySlug } from "../../../Redux/Actions/hotelAction";
 import { DataGrid } from "@mui/x-data-grid";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Button from "@mui/material/Button";
@@ -25,6 +25,7 @@ const GetHotelBySlug = (props) => {
     const { match } = props;
     console.log(props);
     dispatch(getHotelBySlug(match.params.slug));
+    dispatch(getTopDesHotelBySlug(match.params.slug));
   }, [dispatch, props]);
 
   const columns = [

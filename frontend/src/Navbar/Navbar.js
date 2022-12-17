@@ -162,7 +162,7 @@ const Navbar = (props) => {
                   <Link to="/contactus"><PhoneIcon style={{width: '18px', height: '15px'}}/> Contact Us</Link>
                 </li>
                 <li>
-                  <Link to="/account"><PermIdentityIcon style={{width: '18px', height: '15px'}}/> Account</Link>
+                  <Link to="/login"><PermIdentityIcon style={{width: '18px', height: '15px'}}/> Account</Link>
                 </li>
                
                

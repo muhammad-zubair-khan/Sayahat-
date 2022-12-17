@@ -14,7 +14,9 @@ import Aboutus from "./Pages/About/Aboutus";
 import Contactus from "./Pages/Contact/Contactus.js";
 import LahoreCity from "./Pages/Cities/LahoreCity";
 import Tours from "./Pages/Tours/Tours";
-import Account from "./Pages/Account/Account.js";
+import Login from "./Pages/Account/Login";
+import SignUp from "./Pages/Account/SignUp";
+import Forgot from "./Pages/Account/Forgot";
 import Cities from "./Pages/Citites/Cities";
 import City from "./Pages/Cities/LahoreCity";
 import TopDestination from "./Pages/Destination/TopDestination";
@@ -60,7 +62,9 @@ function App() {
         <Route exact path="/car-rentals" component={CarRental} />
         <Route exact path="/vacation/:slug/:slug/:id/detail"  component={PackageDetail}/>
         <Route exact path="/contactus" component={Contactus} />
-        <Route exact path="/account" component={Account} />
+        <Route path="/login" component={Login} />
+        <Route path="/register" component={SignUp} />
+        <Route path="/forgot-password" component={Forgot} />
       </Switch>
       {/* <Footer /> */}
     </Router>

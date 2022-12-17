@@ -12,6 +12,9 @@ import {
     DELETE_HOTEL_REQUEST,
     DELETE_HOTEL_SUCCESS,
     DELETE_HOTEL_FAIL,
+    GET_TOP_DES_HOTEL_BY_SLUG_REQUEST,
+    GET_TOP_DES_HOTEL_BY_SLUG_SUCCESS,
+    GET_TOP_DES_HOTEL_BY_SLUG_FAIL,
   } from "../Constants/hotelConstants";
   import axios from "../helpers/axios";
 
@@ -61,7 +64,7 @@ export const getAllHotels = () => async (dispatch) => {
   }
 };
 
-//get Product by Slug
+//get Hotel by Slug
 export const getHotelBySlug = (slug) => async (dispatch) => {
   try {
     dispatch({ type: GET_HOTEL_BY_SLUG_REQUEST });
@@ -79,8 +82,25 @@ export const getHotelBySlug = (slug) => async (dispatch) => {
   }
 };
 
+//get Top Des Hotel by Slug
+export const getTopDesHotelBySlug = (slug) => async (dispatch) => {
+  try {
+    dispatch({ type: GET_TOP_DES_HOTEL_BY_SLUG_REQUEST });
+    const { data } = await axios.get(`/top-des-hotels/${slug}`);
+    console.log(data);
+    dispatch({
+      type: GET_TOP_DES_HOTEL_BY_SLUG_SUCCESS,
+      payload: data.hotel,
+    });
+  } catch (error) {
+    dispatch({
+      type: GET_TOP_DES_HOTEL_BY_SLUG_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
 
- // Delete Product
+ // Delete Hotel
  export const deleteHotel = (id) => async (dispatch) => {
   try {
     dispatch({ type: DELETE_HOTEL_REQUEST });
