@@ -11,6 +11,9 @@ import {
   NEW_DESTINATION_SUCCESS,
   NEW_DESTINATION_FAIL,
   NEW_DESTINATION_RESET,
+  GET_DESTINATION_DETAIL_BY_ID_REQUEST,
+  GET_DESTINATION_DETAIL_BY_ID_SUCCESS,
+  GET_DESTINATION_DETAIL_BY_ID_FAIL,
 } from "../Constants/topDestionationsConstant";
 
 // Create Product
@@ -96,6 +99,24 @@ export const getDestinationBySlug = (slug) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: GET_DESTINATION_BY_SLUG_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+// Get Destination detail By Id
+export const getDestinationDetailById = (id) => async (dispatch) => {
+  try {
+    dispatch({ type: GET_DESTINATION_DETAIL_BY_ID_REQUEST });
+    const { data } = await axios.get(`/destination-detail/${id}`);
+    console.log(data);
+    dispatch({
+      type: GET_DESTINATION_DETAIL_BY_ID_SUCCESS,
+      payload: data.destination,
+    });
+  } catch (error) {
+    dispatch({
+      type: GET_DESTINATION_DETAIL_BY_ID_FAIL,
       payload: error.response.data.message,
     });
   }

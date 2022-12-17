@@ -9,6 +9,9 @@ import {
     NEW_DESTINATION_SUCCESS,
     NEW_DESTINATION_FAIL,
     NEW_DESTINATION_RESET,
+    GET_DESTINATION_DETAIL_BY_ID_REQUEST,
+    GET_DESTINATION_DETAIL_BY_ID_SUCCESS,
+    GET_DESTINATION_DETAIL_BY_ID_FAIL,
   } from "../Constants/topDestionationsConstant";
   
   export const destinationReducer = (state = { destinations: [] }, action) => {
@@ -127,7 +130,21 @@ import {
             destination: {},
           success: false,
         };
-  
+        case GET_DESTINATION_DETAIL_BY_ID_REQUEST:
+          return {
+            loading: true,
+            destination: {},
+          };
+        case GET_DESTINATION_DETAIL_BY_ID_SUCCESS:
+          return {
+            loading: false,
+            destination: action.payload,
+          };
+        case GET_DESTINATION_DETAIL_BY_ID_FAIL:
+          return {
+            loading: false,
+            error: action.payload,
+          };
       default:
         return state;
     }
