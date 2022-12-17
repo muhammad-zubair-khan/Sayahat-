@@ -1,6 +1,7 @@
 // createVacationProduct
 const Package = require("../models/package");
 const product = require("../models/vacationProduct");
+const Topdes = require("../Models/destination");
 const slugify = require('slugify');
 const path = require("path");
 
@@ -71,6 +72,7 @@ exports.getPackageBySlug = (req, res) => {
   
   const { slug } = req.params;
   product.findOne({ slug: slug })
+  Topdes.findOne({ slug: slug })
   .select("_id")
   .exec((err, product) => {
     if (err) {

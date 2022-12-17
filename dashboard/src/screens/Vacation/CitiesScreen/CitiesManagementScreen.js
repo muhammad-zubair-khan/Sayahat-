@@ -30,6 +30,7 @@ import RadioGroup from "@mui/material/RadioGroup";
 import FormLabel from "@mui/material/FormLabel";
 import { addCar } from "../../../Redux/Actions/carAction";
 import { createPackage } from "../../../Redux/Actions/packageAction";
+import { getAllDestinations } from "../../../Redux/Actions/topDestinationAction";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -74,6 +75,7 @@ const CitiesManagementScreen = (props) => {
   const dispatch = useDispatch();
   const { products } = useSelector((state) => state.vacationProduct);
   console.log(products);
+  const {destinations} = useSelector((state) => state.allDestinationReducer);
   //   useEffect(() => {
   //     const { match } = props;
   //   console.log(props);
@@ -82,6 +84,7 @@ const CitiesManagementScreen = (props) => {
     const { match } = props;
     console.log(props);
     dispatch(getAllVacationProduct());
+    dispatch(getAllDestinations())
     dispatch(getHotelBySlug(match.params.slug));
   }, [dispatch, props]);
 
@@ -357,6 +360,14 @@ const CitiesManagementScreen = (props) => {
                             </MenuItem>
                           );
                         })}
+                        {destinations &&
+                        destinations.map((data, index) => {
+                          return (
+                            <MenuItem value={data._id} key={index}>
+                              {data.name}
+                            </MenuItem>
+                          );
+                        })}
                     </Select>
                   </FormControl>
                 </Box>
@@ -549,6 +560,14 @@ const CitiesManagementScreen = (props) => {
                     >
                       {products &&
                         products.map((data, index) => {
+                          return (
+                            <MenuItem value={data._id} key={index}>
+                              {data.name}
+                            </MenuItem>
+                          );
+                        })}
+                        {destinations &&
+                        destinations.map((data, index) => {
                           return (
                             <MenuItem value={data._id} key={index}>
                               {data.name}
@@ -799,6 +818,14 @@ const CitiesManagementScreen = (props) => {
                             </MenuItem>
                           );
                         })}
+                        {destinations &&
+                        destinations.map((data, index) => {
+                          return (
+                            <MenuItem value={data._id} key={index}>
+                              {data.name}
+                            </MenuItem>
+                          );
+                        })}
                     </Select>
                   </FormControl>
                 </Box>
@@ -822,9 +849,10 @@ const CitiesManagementScreen = (props) => {
                     variant="outlined"
                     type="file"
                     onChange={onChangeFilePackage}
+                    // multiple
                     name="packageImage"
                     inputProps={{
-                      multiple: false,
+                      multiple: true,
                     }}
                   />
                 </div>

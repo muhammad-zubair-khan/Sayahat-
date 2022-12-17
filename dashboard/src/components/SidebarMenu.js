@@ -102,6 +102,10 @@ const SidebarMenu = ({ route, showAnimation, isOpen, setIsOpen }) => {
               <div className="icon"></div>
               <motion.div className="link_text">Add New Cities</motion.div>
             </NavLink>
+            <NavLink to="/create-top-destinations" className="link">
+              <div className="icon"></div>
+              <motion.div className="link_text">Add Top Destinations</motion.div>
+            </NavLink>
             <NavLink to="/all-cities" className="link">
               <div className="icon"></div>
               <motion.div className="link_text">All Cities</motion.div>

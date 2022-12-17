@@ -17,6 +17,7 @@ import Tours from "./Pages/Tours/Tours";
 import Account from "./Pages/Account/Account.js";
 import Cities from "./Pages/Citites/Cities";
 import City from "./Pages/Cities/LahoreCity";
+import TopDestination from "./Pages/Destination/TopDestination";
 import PackageDetail from "./Pages/PackageDetails/PackageDetail";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllVacationsCategory } from "./Redux/Actions/vacationCategoryAction";
@@ -46,9 +47,10 @@ function App() {
   return (
     <Router>
       <Switch>
-        <Route exact path="/" component={Home} />
+        <Route exact path="/"  component={Home} />
         <Route exact path="/vacation/:slug/:slug/:id" component={City} />
         <Route exact path="/vacation/:slug"  component={Cities} />
+        <Route exact path="/top-destination/:slug/:id"  component={TopDestination} />
         {/* <Route exact path="/lahore" component={LahoreCity} /> */}
         <Route exact path="/hotels" component={Hotel} />
         <Route exact path="/hotel/:id" component={HotelDetail} />

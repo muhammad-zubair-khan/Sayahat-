@@ -3,18 +3,22 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import Header from "../../../components/Header";
 import Sidebar from "../../../components/Sidebar";
+import { getDestinationBySlug } from "../../../Redux/Actions/topDestinationAction";
 import { getVacationProductsBySlug } from "../../../Redux/Actions/vacationProductAction";
 // import { ImageUrl } from "../../Redux/UrlConfig";
 import "../VacationScreen/AllVacations.css";
 
 const CitiesScreen = (props) => {
   const dispatch = useDispatch();
-  const { products } = useSelector((state) => state.vacationProduct);
+  const { products } = useSelector((state) => state.vacationProduct); 
   console.log("products", products);
+  const { destinations } = useSelector((state) => state.allDestinationReducer);
+  console.log("destinations", destinations);
   useEffect(() => {
     const { match } = props;
     console.log(props);
     dispatch(getVacationProductsBySlug(match.params.slug));
+    dispatch(getDestinationBySlug(match.params.slug))
   }, [dispatch, props]);
   return (
     <>
@@ -33,6 +37,34 @@ const CitiesScreen = (props) => {
                       <div className="wrapper">
                         <img
                           src={data.productVacationPicture}
+                          style={{
+                            width: "100%",
+                            height: "300px",
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                          }}
+                          alt=""
+                        />
+                        <h3 className="wrapper-text">{data.name}</h3>
+                      </div>
+                    </Link>
+                  </div>
+                </>
+              );
+            })}
+          {destinations &&
+            destinations.map((data, index) => {
+              //  ImageUrl(p.productPictures[0].img)
+              return (
+                <>
+                  {/* {ImageUrl(data.productVacationPicture)} */}
+                  {/* file:///C:/Users/HAIER/Documents/GitHub/Sayahat-/backend/uploads/xMQaPHknf-Lahore.jpg */}
+                  <div className="col-md-4 my-3">
+                    <Link to={`${data.slug}/add`}>
+                      <div className="wrapper">
+                        <img
+                          src={data.destinationPicture}
                           style={{
                             width: "100%",
                             height: "300px",

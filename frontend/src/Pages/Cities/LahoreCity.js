@@ -9,6 +9,7 @@ import Footer from "../../Footer/Footer";
 import { useDispatch, useSelector } from "react-redux";
 import { getPackageBySlug } from "../../Redux/Actions/packageAction";
 import { getProductDetailById } from "../../Redux/Actions/vacationProductAction";
+import { getDestinationDetailById } from "../../Redux/Actions/topDestinationAction";
 import { ImageUrl } from "../../Redux/UrlConfig";
 
 const LahoreCity = (props) => {
@@ -18,12 +19,15 @@ const LahoreCity = (props) => {
 
   const dispatch = useDispatch();
   const {packages} = useSelector((state) => state.packagesReducer);
-  console.log(packages)
+  // console.log(packages)
   const {product} = useSelector((state) => state.newVacation);
   // console.log("products>>>", product);
+  const { destination } = useSelector((state) => state.newDestination);
+
   useEffect(() => {
     dispatch(getPackageBySlug(params.slug));
     dispatch(getProductDetailById(id));
+    dispatch(getDestinationDetailById(id))
   }, [dispatch, params.slug,id]);
 
   let readMore = () => {
@@ -202,7 +206,7 @@ const LahoreCity = (props) => {
         <div className="row ms-4 mt-5">
           <div className="col-10 ms-5">
             <h1 className="lhrH1">{params.slug}</h1>
-            <p className="lhrIntro mt-5">{product.description}</p>
+            <p className="lhrIntro mt-5">{product.description || destination.description}</p>
 
             {/* {products &&
               products.map((data, index) => {

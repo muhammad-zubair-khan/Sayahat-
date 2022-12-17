@@ -1,5 +1,6 @@
 // createVacationProduct
 const VacationProduct = require("../models/vacationProduct");
+// const desModel = require("../Models/destination");
 const vacationCategoryModel = require("../Models/vacationCategory");
 // const ErrorHander = require("../utils/errorhander");
 // const catchAsyncErrors = require("../middleware/catchAsyncErrors.js");
@@ -49,10 +50,12 @@ exports.createVacationProduct = async(req, res, next) => {
 // Get All Product (Admin)
 exports.getAllVacationsProducts = async (req, res, next) => {
     const products = await VacationProduct.find();
+    // const destinations = await desModel.find()
   
     res.status(200).json({
       success: true,
       products,
+      // destinations
     });
   };
 

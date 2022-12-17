@@ -7,6 +7,7 @@ import { getVacationProductsBySlug } from "../../Redux/Actions/vacationProductAc
 import "./Cities.css";
 import SecNav from "../../Navbar/SecNav";
 import { Container } from "@mui/material";
+import { getDestinationBySlug } from "../../Redux/Actions/topDestinationAction";
 
 const Cities = ({ props, history }) => {
   let { slug } = useParams();
@@ -15,9 +16,12 @@ const Cities = ({ props, history }) => {
   console.log(params)
   const dispatch = useDispatch();
   const { products } = useSelector((state) => state.vacationProduct);
-  console.log(products)
+  // console.log(products)
+  const { destinations } = useSelector((state) => state.allDestinationReducer);
+  
   useEffect(() => {
     dispatch(getVacationProductsBySlug(slug));
+    dispatch(getDestinationBySlug(slug));
   }, [dispatch, slug]);
   return (
     <>
@@ -35,6 +39,32 @@ const Cities = ({ props, history }) => {
                       <div className="wrapper-cards">
                         <img
                           src={data.productVacationPicture}
+                          style={{
+                            width: "100%",
+                            height: "300px",
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                          }}
+                          alt=""
+                        />
+                        <h3 className="wrapper-text">{data.name}</h3>
+                      </div>
+                    </Link>
+                  </div>
+                </>
+              );
+            })}
+          {destinations &&
+            destinations.map((data, index) => {
+              return (
+                <>
+                  <div className="col-md-4 my-3">
+                    <Link to={`/vacation/${slug}/${data.slug}/${data._id}`}>
+                      {console.log(data)}
+                      <div className="wrapper-cards">
+                        <img
+                          src={data.destinationPicture}
                           style={{
                             width: "100%",
                             height: "300px",

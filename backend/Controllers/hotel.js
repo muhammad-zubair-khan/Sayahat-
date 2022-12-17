@@ -1,6 +1,7 @@
 // createVacationProduct
 const Hotel = require("../models/hotel");
 const category = require("../models/vacationProduct");
+const topDest = require("../Models/destination")
 const slugify = require('slugify');
 const path = require("path");
 
@@ -66,6 +67,7 @@ exports.getHotelsBySlug = (req, res) => {
   
   const { slug } = req.params;
   category.findOne({ slug: slug })
+  topDest.findOne({ slug: slug })
   .select("_id")
   .exec((err, category) => {
     if (err) {

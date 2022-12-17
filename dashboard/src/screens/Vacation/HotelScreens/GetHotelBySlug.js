@@ -12,7 +12,7 @@ import { deleteHotel } from "../../../Redux/Actions/hotelAction";
 import { useHistory } from "react-router-dom";
 
 const GetHotelBySlug = (props) => {
-  const history = useHistory()
+  const history = useHistory();
   const dispatch = useDispatch();
   const { hotels } = useSelector((state) => state.hotelReducer);
 
@@ -23,7 +23,7 @@ const GetHotelBySlug = (props) => {
 
   useEffect(() => {
     const { match } = props;
-  console.log(props);
+    console.log(props);
     dispatch(getHotelBySlug(match.params.slug));
   }, [dispatch, props]);
 
@@ -133,7 +133,7 @@ const GetHotelBySlug = (props) => {
         pool: item.pool,
         Breakfast: item.Breakfast,
         Hottub: item.Hottub,
-        city:item.city,
+        city: item.city,
         // category:item.category
       });
     });
