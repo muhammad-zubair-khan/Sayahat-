@@ -50,7 +50,14 @@ const CitiesManagementScreen = (props) => {
   const [breakfast, setBreakfast] = useState("");
   const [hotTub, setHotTub] = useState("");
   const [fullyRefundable, setFullyRefundable] = useState("");
-  // const [reserveNow, setReserveNow] = useState("");
+  const [hotelType, setHotelType] = useState("");
+  const [hotelTitle, setHotelTitle] = useState("");
+  const [address, setAddress] = useState("");
+  const [distance, setDistance] = useState("");
+  const [cheapestPrice, setCheapestPrice] = useState("");
+  const [featured, setFeatured] = useState("");
+  const [hotelImages, setHotelImages] = useState([]);
+  const [hotelImagesPreview, setHotelImagesPreview] = useState([]);
 
   //Car States
   const [carName, setCarName] = useState("");
@@ -106,8 +113,8 @@ const CitiesManagementScreen = (props) => {
     setHotelHidden(false);
     setCarHidden(false);
   };
-  const [hotelImage, setHotelImages] = useState([]);
-  const [imagesPreview, setImagesPreview] = useState([]);
+  // const [hotelImage, setHotelImages] = useState([]);
+  // const [imagesPreview, setImagesPreview] = useState([]);
   // const createHotelImagesChange = (e) => {
   //   const files = Array.from(e.target.files);
 
@@ -132,9 +139,9 @@ const CitiesManagementScreen = (props) => {
 
   //Hotel Functions
 
-  const onChangeFile = (e) => {
-    setHotelImages(e.target.files[0]);
-  };
+  // const onChangeFile = (e) => {
+  //   setHotelImages(e.target.files[0]);
+  // };
 
   const createHotelSubmitHandler = (e) => {
     e.preventDefault();
@@ -149,6 +156,21 @@ const CitiesManagementScreen = (props) => {
 
     myForm.set("city", city);
     console.log(city);
+
+    myForm.set("type", hotelType);
+    console.log(hotelType);
+
+    myForm.set("distance", distance);
+    console.log(distance);
+
+    myForm.set("address", address);
+    console.log(address);
+
+    myForm.set("title", hotelTitle);
+    console.log(hotelTitle);
+
+    myForm.set("cheapestPrice", cheapestPrice);
+    console.log(cheapestPrice);
 
     myForm.set("category", category);
     console.log(category);
@@ -165,11 +187,12 @@ const CitiesManagementScreen = (props) => {
     myForm.set("FullyRefundable", fullyRefundable);
     console.log(fullyRefundable);
 
-    // myForm.set("ReserveNow", reserveNow);
-    // console.log(reserveNow);
-
-    myForm.append("hotelImage", hotelImage);
-    console.log(hotelImage);
+    hotelImages.forEach((image) => {
+      myForm.append("hotelImage", image);
+      console.log("hotelImage>>>",hotelImages)
+    });
+    // myForm.append("hotelImage", hotelImage);
+    // console.log(hotelImage);
 
     dispatch(createHotel(myForm));
     // console.log(createProduct(myForm));
@@ -276,6 +299,43 @@ const CitiesManagementScreen = (props) => {
     // console.log(createProduct(myForm));
     history.push(`/package/${props.match.params.slug}`);
   };
+  const createHotelImagesChange = (e) => {
+    //   setProductPictures([...productPictures, e.target.files[0]]);
+    // };
+    const files = Array.from(e.target.files);
+    // setProductPictures([]);
+    // setImagesPreview([]);
+  
+    // files.forEach((file) => {
+    //   const reader = new FileReader();
+  
+    //   reader.onload = () => {
+    //     if (reader.readyState === 2) {
+    //       setImagesPreview((old) => [...old, reader.result]);
+    //       setProductPictures((old)=>[...old,reader.result]);
+    //     }
+    //   };
+    //   reader.readAsDataURL(file);
+    // });
+  
+    // setProductPictures([]);
+    setHotelImages([]);
+    setHotelImagesPreview([]);
+  
+    files.forEach((file) => {
+      const reader = new FileReader();
+  
+      reader.onload = () => {
+        if (reader.readyState === 2) {
+          setHotelImagesPreview((old) => [...old, reader.result]);
+          // setProductPictures((old) => [...old, reader.result]);
+          setHotelImages((old) => [...old, reader.result]);
+        }
+      };
+  
+      reader.readAsDataURL(file);
+    });
+    };
   return (
     <>
       <Sidebar>
@@ -339,6 +399,62 @@ const CitiesManagementScreen = (props) => {
                     label="Hotel Name"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
+                  />
+                </div>
+
+                <div>
+                  <TextField
+                    fullWidth
+                    required
+                    id="outlined-required"
+                    label="Hotel Title"
+                    value={hotelTitle}
+                    onChange={(e) => setHotelTitle(e.target.value)}
+                  />
+                </div>
+
+                
+                <div>
+                  <TextField
+                    fullWidth
+                    required
+                    id="outlined-required"
+                    label="Type"
+                    value={hotelType}
+                    onChange={(e) => setHotelType(e.target.value)}
+                  />
+                </div>
+
+                <div>
+                  <TextField
+                    fullWidth
+                    required
+                    id="outlined-required"
+                    label="Price"
+                    value={cheapestPrice}
+                    onChange={(e) => setCheapestPrice(e.target.value)}
+                  />
+                </div>
+
+                <div>
+                  <TextField
+                    fullWidth
+                    required
+                    id="outlined-required"
+                    label="Distance From Center"
+                    value={distance}
+                    onChange={(e) => setDistance(e.target.value)}
+                  />
+                </div>
+
+                <div>
+                  <TextField
+                    fullWidth
+                    required
+                    id="outlined-required"
+                    label="Address"
+                    value={address}
+                    onChange={(e) => setAddress(e.target.value)}
                   />
                 </div>
 
@@ -463,25 +579,35 @@ const CitiesManagementScreen = (props) => {
                     onChange={(e) => setDescription(e.target.value)}
                   />
                 </div>
-                <div id="createProductFormFile">
-                  <TextField
+                {/* <div id="createProductFormFile">
+                  <input
                     id="outlined-basic"
                     required
-                    // label="Outlined"
                     variant="outlined"
                     type="file"
                     onChange={onChangeFile}
                     name="hotelImage"
                     inputProps={{
-                      multiple: false,
+                      multiple: true,
                     }}
                   />
-                </div>
-                <div id="createProductFormImage">
-                  {imagesPreview.map((image, index) => (
-                    <img key={index} src={image} alt="Product Preview" />
-                  ))}
-                </div>
+                </div> */}
+                <div id="createProductFormFile">
+                <input
+                  type="file"
+                  // name="hotelImage"
+                  // name="products"
+                  // accept="image/*"
+                  accept="image/*"
+                  onChange={createHotelImagesChange}
+                  multiple
+                />
+              </div>
+              <div id="createProductFormImage">
+              {hotelImagesPreview.map((image, index) => (
+                <img key={index} src={image} alt="Product Preview" />
+              ))}
+            </div>
 
                 <Button
                   id="createProductBtn"
@@ -708,11 +834,11 @@ const CitiesManagementScreen = (props) => {
                     }}
                   />
                 </div>
-                <div id="createProductFormImage">
+                {/* <div id="createProductFormImage">
                   {imagesPreview.map((image, index) => (
                     <img key={index} src={image} alt="Product Preview" />
                   ))}
-                </div>
+                </div> */}
 
                 <Button
                   id="createProductBtn"

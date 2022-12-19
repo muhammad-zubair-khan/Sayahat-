@@ -10,6 +10,7 @@ import Zoom from "react-medium-image-zoom";
 import "react-medium-image-zoom/dist/styles.css";
 import { deleteHotel } from "../../../Redux/Actions/hotelAction";
 import { useHistory } from "react-router-dom";
+import { ImageUrl } from "../../../Redux/UrlConfig";
 
 const GetHotelBySlug = (props) => {
   const history = useHistory();
@@ -25,12 +26,12 @@ const GetHotelBySlug = (props) => {
     const { match } = props;
     console.log(props);
     dispatch(getHotelBySlug(match.params.slug));
-    dispatch(getTopDesHotelBySlug(match.params.slug));
+    // dispatch(getTopDesHotelBySlug(match.params.slug));
   }, [dispatch, props]);
 
   const columns = [
     {
-      field: "hotelImage",
+      field: "hotelImages",
       headerName: "Hotel img",
       minWidth: 290,
       minHeight: 200,
@@ -41,7 +42,7 @@ const GetHotelBySlug = (props) => {
           <div style={{ textAlign: "center" }}>
             <Zoom>
               <img
-                src={params.row.hotelImage}
+                src={ImageUrl(params.row.hotelImages)}
                 style={{ width: "20%", margin: "10px 10px" }}
                 alt={params.row.name}
               />
@@ -128,7 +129,7 @@ const GetHotelBySlug = (props) => {
     hotels.forEach((item) => {
       rows.push({
         id: item._id,
-        hotelImage: item.hotelImage,
+        hotelImages: item.hotelImages[0].img,
         name: item.name,
         description: item.description,
         pool: item.pool,

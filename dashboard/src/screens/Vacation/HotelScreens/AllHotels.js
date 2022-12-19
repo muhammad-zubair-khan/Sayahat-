@@ -9,11 +9,12 @@ import Button from "@mui/material/Button";
 import Zoom from "react-medium-image-zoom";
 import "react-medium-image-zoom/dist/styles.css";
 import { deleteHotel } from "../../../Redux/Actions/hotelAction";
+import { ImageUrl } from "../../../Redux/UrlConfig";
 
 const AllHotels = (props) => {
   const dispatch = useDispatch();
-  const { hotels } = useSelector((state) => state.hotelReducer);
-
+  const { hotels} = useSelector((state) => state.hotelReducer);
+console.log(hotels)
   const deleteHotelHandler = (id) => {
     dispatch(deleteHotel(id));
     // history.go(0);
@@ -25,7 +26,7 @@ const AllHotels = (props) => {
 
   const columns = [
     {
-      field: "hotelImage",
+      field: "hotelImages",
       headerName: "Hotel img",
       minWidth: 290,
       minHeight: 200,
@@ -36,7 +37,7 @@ const AllHotels = (props) => {
           <div style={{ textAlign: "center" }}>
             <Zoom>
               <img
-                src={params.row.hotelImage}
+                src={ImageUrl(params.row.hotelImages[0].img)}
                 style={{ width: "20%", margin: "10px 10px" }}
                 alt={params.row.name}
               />
@@ -123,7 +124,7 @@ const AllHotels = (props) => {
     hotels.forEach((item) => {
       rows.push({
         id: item._id,
-        hotelImage: item.hotelImage,
+        hotelImages: item.hotelImages,
         name: item.name,
         description: item.description,
         pool: item.pool,

@@ -5,12 +5,15 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { Provider } from "react-redux";
 import store from "./Redux/store";
+import { SearchContextProvider } from "./Context/SearchContext";
 
 
 ReactDOM.render(
   <Provider store={store}>
     <React.StrictMode>
+    <SearchContextProvider>
       <App />
+    </SearchContextProvider>
     </React.StrictMode>
   </Provider>,
   document.getElementById("root")

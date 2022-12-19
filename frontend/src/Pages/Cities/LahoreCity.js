@@ -22,12 +22,12 @@ const LahoreCity = (props) => {
   // console.log(packages)
   const {product} = useSelector((state) => state.newVacation);
   // console.log("products>>>", product);
-  const { destination } = useSelector((state) => state.newDestination);
+  // const { destination } = useSelector((state) => state.newDestination);
 
   useEffect(() => {
     dispatch(getPackageBySlug(params.slug));
     dispatch(getProductDetailById(id));
-    dispatch(getDestinationDetailById(id))
+    // dispatch(getDestinationDetailById(id))
   }, [dispatch, params.slug,id]);
 
   let readMore = () => {
@@ -206,7 +206,7 @@ const LahoreCity = (props) => {
         <div className="row ms-4 mt-5">
           <div className="col-10 ms-5">
             <h1 className="lhrH1">{params.slug}</h1>
-            <p className="lhrIntro mt-5">{product.description || destination.description}</p>
+            <p className="lhrIntro mt-5">{product.description}</p>
 
             {/* {products &&
               products.map((data, index) => {

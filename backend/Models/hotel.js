@@ -11,14 +11,35 @@ const hotelSchema = new mongoose.Schema(
       type:String,
       required:true
     },
+    type:{
+      type:String,
+      required:true
+    },
     slug: {
       type: String,
       required: true,
       unique: true,
     },
-    hotelImage: {
-      type: String,
+    title:{
+      type:String,
+      required:true
     },
+    address:{
+        type: String,
+        required:true
+    },
+    distance:{
+      type: String,
+      required:true
+    },
+    hotelImages: [
+      { 
+        img: {
+           type: String,
+            required:true
+          }
+      }
+    ],
     pool: {
       type: String,
     },
@@ -31,13 +52,26 @@ const hotelSchema = new mongoose.Schema(
     FullyRefundable: {
       type: String,
     },
-    // ReserveNow: {
-    //   type: String,
-    // },
+    rating: {
+      type: String,
+      min: 0,
+      max: 5
+    },
+    rooms:{
+      type: [String]
+    },
     description: {
       type: String,
       required: true,
       trim: true,
+    },
+    cheapestPrice:{
+      type: Number,
+      required: true
+    },
+    featured:{
+      type: Boolean,
+      default: false
     },
     category: { type: mongoose.Schema.Types.ObjectId, ref: 'Category', required: true },
     updatedAt: Date,

@@ -50,7 +50,7 @@ export const getAllHotels = () => async (dispatch) => {
   try {
     dispatch({ type: GET_ALL_HOTELS_REQUEST });
 
-    const { data } = await axios.get("/hotels");
+    const { data } = await axios.get("/admin/hotels");
 
     dispatch({
       type: GET_ALL_HOTELS_SUCCESS,
@@ -72,7 +72,7 @@ export const getHotelBySlug = (slug) => async (dispatch) => {
     console.log(data);
     dispatch({
       type: GET_HOTEL_BY_SLUG_SUCCESS,
-      payload: data.hotel,
+      payload: data.hotels,
     });
   } catch (error) {
     dispatch({
@@ -83,22 +83,22 @@ export const getHotelBySlug = (slug) => async (dispatch) => {
 };
 
 //get Top Des Hotel by Slug
-export const getTopDesHotelBySlug = (slug) => async (dispatch) => {
-  try {
-    dispatch({ type: GET_TOP_DES_HOTEL_BY_SLUG_REQUEST });
-    const { data } = await axios.get(`/top-des-hotels/${slug}`);
-    console.log(data);
-    dispatch({
-      type: GET_TOP_DES_HOTEL_BY_SLUG_SUCCESS,
-      payload: data.hotel,
-    });
-  } catch (error) {
-    dispatch({
-      type: GET_TOP_DES_HOTEL_BY_SLUG_FAIL,
-      payload: error.response.data.message,
-    });
-  }
-};
+// export const getTopDesHotelBySlug = (slug) => async (dispatch) => {
+//   try {
+//     dispatch({ type: GET_TOP_DES_HOTEL_BY_SLUG_REQUEST });
+//     const { data } = await axios.get(`/top-des-hotels/${slug}`);
+//     console.log(data);
+//     dispatch({
+//       type: GET_TOP_DES_HOTEL_BY_SLUG_SUCCESS,
+//       payload: data.hotel,
+//     });
+//   } catch (error) {
+//     dispatch({
+//       type: GET_TOP_DES_HOTEL_BY_SLUG_FAIL,
+//       payload: error.response.data.message,
+//     });
+//   }
+// };
 
  // Delete Hotel
  export const deleteHotel = (id) => async (dispatch) => {

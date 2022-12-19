@@ -29,6 +29,9 @@ app.use("/api", vacationProductRoutes);
 const hotelRoutes = require("./Routes/hotel");
 app.use("/api", hotelRoutes);
 
+// const romRoutes = require("./Routes/room");
+// app.use("/api", romRoutes);
+
 const carRoutes = require("./Routes/car");
 app.use("/api", carRoutes);
 
@@ -38,8 +41,8 @@ app.use("/api", packageRoutes);
 const userRoutes = require("./Routes/user");
 app.use("/api", userRoutes);
 
-const destinationRoutes = require("./Routes/destination");
-app.use("/api", destinationRoutes);
+// const destinationRoutes = require("./Routes/destination");
+// app.use("/api", destinationRoutes);
 
 const initialDataRoutes = require("./Routes/initialData");
 app.use("/api", initialDataRoutes);

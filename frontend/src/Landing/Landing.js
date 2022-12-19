@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Link, useHistory } from "react-router-dom";
+import React, { useState, useContext } from "react";
+import { Link, Redirect, useHistory, useParams } from "react-router-dom";
 import "react-multi-carousel/lib/styles.css";
 import "./Landing.css";
 import MyCard from "../MyCard";
@@ -18,11 +18,27 @@ import { DateRangePicker } from "react-date-range";
 import { format } from "date-fns";
 import "react-date-range/dist/styles.css"; // main style file
 import "react-date-range/dist/theme/default.css"; // theme css file
+import { useDispatch, useSelector } from "react-redux";
 // import { useHistory } from "react-router-dom";
-const Landing = () => {
-  const [startdestination, setStartDestination] = useState("");
-  const [endDestination, setEndDestination] = useState("");
-  const [openDate, setOpenDate] = useState(false); //Car
+import { getAllHotels } from "../Redux/Actions/hotelAction";
+import { SearchContext } from "../Context/SearchContext";
+import { ReactSearchAutocomplete } from "react-search-autocomplete";
+import { useEffect } from "react";
+import { getAllVacationProduct } from "../Redux/Actions/vacationProductAction";
+const Landing = ({ type }) => {
+  // const dispatch = useDispatch()
+  // const {slug}= useParams()
+  // const [endDestination, setEndDestination] = useState("");
+  const [destination, setDestination] = useState("");
+  const [openDate, setOpenDate] = useState(false);
+  const [dates, setDates] = useState([
+    {
+      startDate: new Date(),
+      endDate: new Date(),
+      key: "selection",
+    },
+  ]);
+  //Car
   const history = useHistory();
 
   //Car
@@ -87,8 +103,72 @@ const Landing = () => {
       };
     });
   };
+  const { dispatch } = useContext(SearchContext);
+
   const handleSearch = () => {
-    history.push("/cars", { state: { startdestination, endDestination, date } });
+    dispatch({ type: "NEW_SEARCH", payload: { destination, dates, options } });
+    history.push("/hotels", { state: { destination, dates, options } });
+  };
+  const { products } = useSelector((state) => state.vacationProduct);
+  console.log(products);
+  useEffect(() => {
+    dispatch(getAllVacationProduct());
+  }, []);
+
+  // const items = [
+  //   {
+  //     id: 0,
+  //     name: 'Cobol'
+  //   },
+  //   {
+  //     id: 1,
+  //     name: 'JavaScript'
+  //   },
+  //   {
+  //     id: 2,
+  //     name: 'Basic'
+  //   },
+  //   {
+  //     id: 3,
+  //     name: 'PHP'
+  //   },
+  //   {
+  //     id: 4,
+  //     name: 'Java'
+  //   }
+  // ]
+  // const handleOnSearch = (string, results) => {
+  //   // onSearch will have as the first callback parameter
+  //   // the string searched and for the second the results.
+  //   console.log(string, results)
+  // }
+
+  const handleOnHover = (result) => {
+    // the item hovered
+    console.log(result);
+  };
+
+  const handleOnSelect = (product) => {
+    // the item selected
+    setDestination(product.name);
+    console.log(product);
+  };
+
+  const handleOnFocus = () => {
+    console.log("Focused");
+  };
+
+  const formatResult = (product) => {
+    return (
+      <>
+        <span style={{ textAlign: "left", display: "none" }}>
+          id: {product._id}
+        </span>
+        <span style={{ display: "block", textAlign: "left" }}>
+          {product.name}
+        </span>
+      </>
+    );
   };
 
   return (
@@ -120,8 +200,7 @@ const Landing = () => {
                           aria-controls="stays"
                           role="tab"
                           data-toggle="tab"
-                        className="tab-menu"
-
+                          className="tab-menu"
                         >
                           Stays
                         </a>
@@ -132,8 +211,7 @@ const Landing = () => {
                           aria-controls="packages"
                           role="tab"
                           data-toggle="tab"
-                        className="tab-menu"
-
+                          className="tab-menu"
                         >
                           Packages
                         </a>
@@ -156,9 +234,9 @@ const Landing = () => {
                                 className="form-control"
                                 id="from-place"
                                 placeholder="Lahore, PK"
-                                onChange={(e) =>
-                                  setStartDestination(e.target.value)
-                                }
+                                // onChange={(e) =>
+                                //   setStartDestination(e.target.value)
+                                // }
                               />
                             </div>
                           </div>
@@ -170,9 +248,9 @@ const Landing = () => {
                                 className="form-control"
                                 id="to-place"
                                 placeholder="Islamabad, PK"
-                                onChange={(e) =>
-                                  setEndDestination(e.target.value)
-                                }
+                                // onChange={(e) =>
+                                //   setEndDestination(e.target.value)
+                                // }
                               />
                             </div>
                           </div>
@@ -220,12 +298,28 @@ const Landing = () => {
                           <div className="col-xxs-12 col-xs-12 mt">
                             <div className="input-field">
                               <label for="from">City:</label>
-                              <input
+                              <div style={{ width: 400 }}>
+                                <ReactSearchAutocomplete
+                                  items={products}
+                                  // onSearch={handleOnSearch}
+                                  onHover={handleOnHover}
+                                  onSelect={handleOnSelect}
+                                  // onFocus={handleOnFocus}
+                                  autoFocus
+                                  formatResult={formatResult}
+                                  onChange={(e) =>
+                                    setDestination(e.target.value)
+                                  }
+                                  placeholder="Lahore, PK"
+                                />
+                              </div>
+                              {/* <input
                                 type="text"
                                 className="form-control"
                                 id="from-place"
                                 placeholder="Lahore, PK"
-                              />
+                                onChange={(e) => setDestination(e.target.value)}
+                              /> */}
                             </div>
                           </div>
 
@@ -235,28 +329,29 @@ const Landing = () => {
                               <span
                                 style={{
                                   color: "rgba(255, 255, 255, 0.8)",
-                                  
+
                                   fontSize: "14px",
                                 }}
-                                onClick={() => setOpenHotelDate(!openHotelDate)}
+                                onClick={() => setOpenDate(!openDate)}
                               >
                                 {`${format(
-                                  hotelDate[0].startDate,
+                                  dates[0].startDate,
                                   "MM/dd/yyyy"
                                 )} to ${format(
-                                  hotelDate[0].endDate,
+                                  dates[0].endDate,
                                   "MM/dd/yyyy"
                                 )}`}
                               </span>
-                              {openHotelDate && (
+                              {openDate && (
                                 <DateRangePicker
                                   editableDateInputs={true}
-                                  ranges={hotelDate}
-                                  moveRangeOnFirstSelection={false}
                                   onChange={(item) =>
-                                    setHotelDate([item.selection])
+                                    setDates([item.selection])
                                   }
+                                  moveRangeOnFirstSelection={false}
+                                  ranges={dates}
                                   className="date"
+                                  minDate={new Date()}
                                 />
                               )}
                             </div>
@@ -271,7 +366,7 @@ const Landing = () => {
                                   cursor: "pointer",
                                 }}
                                 onClick={() => setOpenOptions(!openOptions)}
-                              >{`${options.adult} Adult - ${options.children} Children - ${options.room} Room`}</span>
+                              >{`${options.adult} adult · ${options.children} children · ${options.room} room`}</span>
                               {openOptions && (
                                 <div className="options">
                                   <div className="optionItems">
@@ -393,16 +488,18 @@ const Landing = () => {
                           </div>
 
                           <div className="col-xs-12 mt">
-                            <input
-                              type="submit"
+                            <button
+                              onClick={handleSearch}
                               className="btn btn-primary btn-block"
                               value="Search Hotel"
-                            />
+                            >
+                              Search
+                            </button>
                           </div>
                         </div>
                       </div>
-
-                      <div role="tabpanel" className="tab-pane" id="packages">
+                      {/* /////////////////////////////////////////////////////////////// */}
+                      {/* <div role="tabpanel" className="tab-pane" id="packages">
                         <div className="row">
                           <div className="col-xxs-12 col-xs-6 mt">
                             <div className="input-field">
@@ -604,16 +701,21 @@ const Landing = () => {
                             />
                           </div>
                         </div>
-                      </div>
+                      </div> */}
                     </div>
                   </div>
                 </div>
                 <div className="desc2 animate-box col-md-7 col-sm-12 col-lg-7">
-								<div>
-									<h2>Be a Traveler not a <br/> Tourist</h2>
-									<span style={{color:'#c3bfbf'}}>Travel to the any corner of the world, without going around in circles</span>
-								</div>
-							</div>
+                  <div>
+                    <h2>
+                      Be a Traveler not a <br /> Tourist
+                    </h2>
+                    <span style={{ color: "#c3bfbf" }}>
+                      Travel to the any corner of the world, without going
+                      around in circles
+                    </span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

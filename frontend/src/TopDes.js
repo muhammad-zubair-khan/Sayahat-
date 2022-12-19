@@ -29,12 +29,12 @@ export const TopDes = (props) => {
   const dispatch = useDispatch();
   
   const { products } = useSelector((state) => state.vacationProduct);
-  const { destinations } = useSelector((state) => state.allDestinationReducer);
-  console.log(destinations);
+  // const { destinations } = useSelector((state) => state.allDestinationReducer);
+  // console.log(destinations);
 
   useEffect(() => {
     dispatch(getAllVacationProduct());
-    dispatch(getAllDestinations());
+    // dispatch(getAllDestinations());
   }, []);
 
   return (
@@ -60,20 +60,18 @@ export const TopDes = (props) => {
         // dotListClass="custom-dot-list-style"
         // itemClass="carousel-item-padding-40-px"
       >
-        {destinations &&
-          destinations.map((data, index) => {
+        {products &&
+          products.map((data, index) => {
             return (
               <div key={index}>
                 <Link to={`/top-destination/${data.slug}/${data._id}`}>
                   <div className="mur">
-                    {/* <div className="murree"></div> */}
                     <img
                       src={data.destinationPicture}
                       className="murree"
                       alt=""
                     />
                     <h2 className="titles">{data.name}</h2>
-                    {/* </img> */}
                   </div>
                 </Link>
               </div>

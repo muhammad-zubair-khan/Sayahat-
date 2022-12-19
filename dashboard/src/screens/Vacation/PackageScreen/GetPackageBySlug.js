@@ -27,7 +27,7 @@ const GetPackageBySlug = (props) => {
     const { match } = props;
   console.log(props);
     dispatch(getPackageBySlug(match.params.slug));
-    dispatch(getTopDesPackageBySlug(match.params.slug));
+    // dispatch(getTopDesPackageBySlug(match.params.slug));
   }, [dispatch, props]);
 
   const columns = [

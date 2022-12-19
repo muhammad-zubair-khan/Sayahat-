@@ -12,9 +12,9 @@ const Car = () => {
       <Navbar />
       <Container>
         <Grid container style={{padding: '0px 15px',paddingTop:'150px'}}>
-          <Grid xs={12} md={3} lg={3} >
+          {/* <Grid xs={12} md={3} lg={3} >
             <Search />
-          </Grid>
+          </Grid> */}
           <Grid xs={12} md={9} lg={9}>
             <CarList />
           </Grid>

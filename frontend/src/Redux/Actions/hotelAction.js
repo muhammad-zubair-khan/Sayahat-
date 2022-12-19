@@ -69,12 +69,12 @@ export const getHotelBySlug = (slug) => async (dispatch) => {
     console.log(data);
     dispatch({
       type: GET_HOTEL_BY_SLUG_SUCCESS,
-      payload: data.hotel,
+      payload: data.hotels,
     });
   } catch (error) {
     dispatch({
       type: GET_HOTEL_BY_SLUG_FAIL,
-      payload: error.response.data.message,
+      // payload: error.response.data.message,
     });
   }
 };
