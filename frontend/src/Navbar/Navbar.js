@@ -150,7 +150,7 @@ const Navbar = (props) => {
                 </li> */}
 
                 <li>
-                  <Link to="/hotels"><HotelIcon style={{width: '18px', height: '15px'}}/> Hotels</Link>
+                  <Link to="/hotels-list"><HotelIcon style={{width: '18px', height: '15px'}}/> Hotels</Link>
                 </li>
                 <li>
                   <Link to="/car-rentals"><DirectionsCarIcon style={{width: '18px', height: '15px'}}/> Cars</Link>

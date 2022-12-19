@@ -20,11 +20,13 @@ import Forgot from "./Pages/Account/Forgot";
 import Cities from "./Pages/Citites/Cities";
 import City from "./Pages/Cities/LahoreCity";
 import TopDestination from "./Pages/Destination/TopDestination";
+import TopDestinationDetail from "./Pages/Destination/TopDestinationDetail";
 import PackageDetail from "./Pages/PackageDetails/PackageDetail";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllVacationsCategory } from "./Redux/Actions/vacationCategoryAction";
 import { isUserLoggedIn } from "../src/Redux/Actions/userActions";
 import { getInitialData } from "../src/Redux/Actions/initialDataAction";
+import HotelList from "./Pages/NavHotel/HotelList";
 
 function App() {
   const dispatch = useDispatch();
@@ -53,6 +55,7 @@ function App() {
         <Route exact path="/vacation/:slug/:slug/:id" component={City} />
         <Route exact path="/vacation/:slug"  component={Cities} />
         <Route exact path="/top-destination/:slug/:id"  component={TopDestination} />
+        <Route exact path="/top-destination/:slug/:id/detail"  component={TopDestinationDetail} />
         {/* <Route exact path="/lahore" component={LahoreCity} /> */}
         <Route exact path="/hotels" component={Hotel} />
         <Route exact path="/hotel/:id" component={HotelDetail} />
@@ -62,6 +65,7 @@ function App() {
         <Route exact path="/car-rentals" component={CarRental} />
         <Route exact path="/vacation/:slug/:slug/:id/detail"  component={PackageDetail}/>
         <Route exact path="/contactus" component={Contactus} />
+        <Route exact path="/hotels-list" component={HotelList} />
         <Route path="/login" component={Login} />
         <Route path="/register" component={SignUp} />
         <Route path="/forgot-password" component={Forgot} />

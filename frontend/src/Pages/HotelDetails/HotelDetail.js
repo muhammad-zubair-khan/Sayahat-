@@ -171,8 +171,8 @@ const HotelDetail = () => {
                 <span>
                   this property has an excellent location score of 9.8!
                 </span>
-                <h5>
-                  <b>${days * data.hotel.cheapestPrice * options.room}</b> (
+                <h6>
+                  <b>PKR{days * data.hotel.cheapestPrice * options.room}</b> (
                   {days} nights)
                 <Tooltip
                   title={`${data.hotel.cheapestPrice} x ${days} and ${options.adult} Adults - ${options.children} Childrens - ${options.room} Rooms` }
@@ -182,7 +182,7 @@ const HotelDetail = () => {
                     <i className="text-dark fs-5 fa-solid fa-circle-info"></i>
                   </Button>
                 </Tooltip>
-                </h5>
+                </h6>
                 <button onClick={handleClick}>Reserve or Book Now!</button>
               </div>
             </div>

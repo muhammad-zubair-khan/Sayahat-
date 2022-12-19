@@ -67,7 +67,7 @@ export const TopDes = (props) => {
                 <Link to={`/top-destination/${data.slug}/${data._id}`}>
                   <div className="mur">
                     <img
-                      src={data.destinationPicture}
+                      src={data.productVacationPicture}
                       className="murree"
                       alt=""
                     />

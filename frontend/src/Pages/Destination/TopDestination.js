@@ -11,6 +11,8 @@ import { useDispatch, useSelector } from "react-redux";
 // import { getProductDetailById } from "../../Redux/Actions/vacationProductAction";
 import { getDestinationDetailById } from "../../Redux/Actions/topDestinationAction";
 import { ImageUrl } from "../../Redux/UrlConfig";
+import { getPackageBySlug } from "../../Redux/Actions/packageAction";
+import { getProductDetailById } from "../../Redux/Actions/vacationProductAction";
 
 const TopDestination = (props) => {
   const params = useParams();
@@ -22,12 +24,12 @@ const TopDestination = (props) => {
   // console.log(packages)
   const { product } = useSelector((state) => state.newVacation);
   // console.log("products>>>", product);
-  const { destination } = useSelector((state) => state.newDestination);
+  // const { destination } = useSelector((state) => state.newDestination);
 
   useEffect(() => {
-    // dispatch(getPackageBySlug(params.slug));
-    // dispatch(getProductDetailById(id));
-    dispatch(getDestinationDetailById(id));
+    dispatch(getPackageBySlug(params.slug));
+    dispatch(getProductDetailById(id));
+    // dispatch(getDestinationDetailById(id));
   }, [dispatch, params.slug, id]);
 
   let readMore = () => {
@@ -207,7 +209,7 @@ const TopDestination = (props) => {
           <div className="col-10 ms-5">
             <h1 className="lhrH1">{params.slug}</h1>
             <p className="lhrIntro mt-5">
-              {product.description || destination.description}
+              {product.description}
             </p>
           </div>
         </div>
