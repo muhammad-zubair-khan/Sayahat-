@@ -123,7 +123,7 @@ const CarSearchItem = ({ item }) => {
           <h6 paragraph>per day</h6>
           <h6 paragraph>{`PKR total`}</h6>
           <Button variant="contained">
-            <Link to={`/car/${item._id}`} style={{ color: "white" }}>
+            <Link onClick={handleSearch} style={{ color: "white" }}>
               Continue
             </Link>
           </Button>

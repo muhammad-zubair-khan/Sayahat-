@@ -30,7 +30,15 @@ const CarDetail = () => {
   const [slideNumber, setSlideNumber] = useState(0);
   const [open, setOpen] = useState(false);
   const [openModal, setOpenModal] = useState(false);
-  // const [dates, setDates] = useState(location.state.state.dates);
+  const [startDestination, setStartDestination] = useState(
+    location.state.state.startDestination
+  );
+  const [endDestination, setEndDestination] = useState(
+    location.state.state.endDestination
+  );
+  const [dates, setDates] = useState(location.state.state.dates);
+  const [pickupTime, setPickupTime] = useState(location.state.state.pickupTime);
+  const [dropoffTime, setDropoffTime] = useState(location.state.state.dropoffTime);
   // const [options, setOptions] = useState(location.state.state.options);
   const { data, loading, error } = useFetch(
     `http://localhost:5000/api/car-detail/${id}`
@@ -39,7 +47,7 @@ const CarDetail = () => {
   const { user } = useSelector((state) => state.userAuth);
   // const { user } = useContext(AuthContext);
   // const { date } = useContext(SearchContext);
-// console.log(date)
+  // console.log(date)
   const MILLISECONDS_PER_DAY = 1000 * 60 * 60 * 24;
   function dayDifference(date1, date2) {
     const timeDiff = Math.abs(date2.getTime() - date1.getTime());
@@ -47,8 +55,8 @@ const CarDetail = () => {
     return diffDays;
   }
 
-  // const days = dayDifference(dates[0].endDate, dates[0].startDate);
-  console.log("location-detail",location)
+  const days = dayDifference(dates[0].endDate, dates[0].startDate);
+  console.log("location-detail", location);
 
   const handleOpen = (i) => {
     setSlideNumber(i);
@@ -127,12 +135,9 @@ const CarDetail = () => {
               <FontAwesomeIcon icon={faLocationDot} />
               <span>{data.car.mileage}</span>
             </div>
-            <span className="hotelDistance">
-              {data.car.title}
-            </span>
+            <span className="hotelDistance">{data.car.title}</span>
             <span className="hotelPriceHighlight">
-              Book a stay over ${data.car.fare} at this property and
-              get a free airport taxi
+              Fare: ${data.car.fare}
             </span>
             <div className="hotelImages">
               {data.car.carImage?.map((photo, i) => (
@@ -154,22 +159,22 @@ const CarDetail = () => {
                 <p className="hotelDesc">{data.car.description}</p>
               </div>
               <div className="hotelDetailsPrice">
-                {/* <h1>Perfect for a {days} - day ride</h1> */}
+                <h1>Perfect for a {days} - day ride</h1>
                 <span>
                   this property has an excellent location score of 9.8!
                 </span>
-                {/* <h6>
-                  <b>PKR{days * data.car.fare}</b> (
-                  {days} days)
-                <Tooltip
-                  title={`${data.car.fare} x ${days}` }
-                  placement="top"
-                >
-                  <Button>
-                    <i className="text-dark fs-5 fa-solid fa-circle-info"></i>
-                  </Button>
-                </Tooltip>
-                </h6> */}
+                <h6>
+                  <b>PKR{days * data.car.fare}</b> ({days} days)
+                  <Tooltip title={`${data.car.fare} x ${days}`} placement="top">
+                    <Button>
+                      <i className="text-dark fs-5 fa-solid fa-circle-info"></i>
+                    </Button>
+                  </Tooltip>
+                  <b className="my-2">From:</b> {startDestination}<br/>
+                  <b className="my-2">To: </b> {endDestination}<br/>
+                  <b className="my-2">pick-up Time</b> {pickupTime}<br/>
+                  <b className="my-2">drop-off Time</b> {dropoffTime}<br/>
+                </h6>
                 <button onClick={handleClick}>Book Now!</button>
               </div>
             </div>

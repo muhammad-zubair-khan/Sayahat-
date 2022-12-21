@@ -47,6 +47,11 @@ const CarList = () => {
   const handleClick = () => {
     reFetch();
   };
+  console.log("startDestination>>",startDestination)
+  console.log("endDestination>>",endDestination)
+  console.log("dates>>",dates)
+  console.log("pickupTime>>",pickupTime)
+  console.log("dropoffTime>>",dropoffTime)
   return (
     <>
       {/* <Grid container spacing={2}>
