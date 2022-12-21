@@ -10,6 +10,7 @@ const {
     getPackageBySlug,
     getTopDesPackageBySlug,
     getPackageDetailsById,
+    getAllAdminPackages,
 } = require("../Controllers/package");
 
 const storage = multer.diskStorage({
@@ -27,9 +28,10 @@ router.post(
   upload.array("packageImage"),
   createPackage
 );
-router.get("/packages", getAllPackages);
+router.get("/all-packages", getAllPackages);
+// router.get("/admin/packages", getAllAdminPackages);
 router.get("/package/:slug", getPackageBySlug);
-router.get("/top-des-package/:slug", getTopDesPackageBySlug);
+// router.get("/top-des-package/:slug", getTopDesPackageBySlug);
 router.get('/package-detail/:id',getPackageDetailsById)
 router.post("/deletepackage/:id", deletePackage);
 // router.post(

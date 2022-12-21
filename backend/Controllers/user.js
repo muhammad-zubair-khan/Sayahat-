@@ -2,8 +2,10 @@ const userModel = require("../Models/user");
 const jwt = require("jsonwebtoken");
 const bcrypt = require('bcrypt');
 const asyncHandler = require('express-async-handler')
+const ErrorHandler = require("../utils/errorhandler");
+const catchAsyncErrors = require("../utils/catchAsyncErrors");
 
-exports.registerUser = async(req, res) => {
+exports.registerUser = catchAsyncErrors(async(req, res) => {
   userModel.findOne({ email: req.body.email }).exec((err, user) => {
     if (user) {
       return res.status(400).json({
@@ -33,15 +35,18 @@ exports.registerUser = async(req, res) => {
       });
     }
   });
-};
+});
 
-exports.getAllUsers = async(req,res) =>{
+exports.getAllUsers = catchAsyncErrors(async(req,res) =>{
   const users = await userModel.find();
+  if (!users) {
+    return next(new ErrorHandler("Users not found", 404));
+  }
   res.status(200).json({
     success: true,
     users,
   });
-}
+});
 
 exports.login = (req, res) => {
   userModel.findOne({ email: req.body.email }).exec(async (err, user) => {

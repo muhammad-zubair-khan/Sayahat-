@@ -15,7 +15,7 @@ const Car = () => {
           {/* <Grid xs={12} md={3} lg={3} >
             <Search />
           </Grid> */}
-          <Grid xs={12} md={9} lg={9}>
+          <Grid xs={12} md={9} lg={12}>
             <CarList />
           </Grid>
         </Grid>

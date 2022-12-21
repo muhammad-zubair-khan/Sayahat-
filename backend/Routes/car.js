@@ -5,9 +5,11 @@ const path = require("path");
 const multer = require("multer");
 const {
     addCar,
-    getAllCars,
+    getAllAdminCars,
     deleteCar,
     getCarBySlug,
+    getAllCars,
+    GetCarById,
 } = require("../Controllers/car");
 
 const storage = multer.diskStorage({
@@ -22,12 +24,15 @@ const upload = multer({ storage });
 
 router.post(
   "/car/add",
-  upload.single("carImage"),
+  upload.array("carImage"),
   addCar
 );
 
-router.get("/cars", getAllCars);
+router.get("/cars",getAllCars);
+
+router.get("/admin/cars", getAllAdminCars);
 router.get("/car/:slug", getCarBySlug);
+router.get("/car-detail/:id", GetCarById);
 
 router.post("/deletecar/:id", deleteCar);
 // router.post(

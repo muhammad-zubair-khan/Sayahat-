@@ -47,7 +47,7 @@ const history = useHistory()
     dispatch({ type: "NEW_SEARCH", payload: { destination, dates, options } });
     history.push(`/hotel/${item._id}`, {state: { destination, dates , options }});
   };
-console.log(item)
+// console.log(item)
   return (
     <div className="searchItem">
       <img src={ImageUrl(item.hotelImages[0].img)} alt="" className="siImg" />

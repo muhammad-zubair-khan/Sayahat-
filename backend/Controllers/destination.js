@@ -1,13 +1,13 @@
 const Destination = require("../Models/destination");
 const vacationCategoryModel = require("../Models/vacationCategory");
-// const ErrorHander = require("../utils/errorhander");
-// const catchAsyncErrors = require("../middleware/catchAsyncErrors.js");
+const ErrorHandler = require("../utils/errorhandler");
+const catchAsyncErrors = require("../utils/catchAsyncErrors");
 // const ApiFeatures = require("../utils/apifeatures");
 const slugify = require("slugify");
 const path = require("path");
 
 // Create Destination -- Admin
-exports.createDestination = async (req, res, next) => {
+exports.createDestination = catchAsyncErrors(async(req, res, next) => {
   const { name, description, category } = req.body;
 
   const destination = await new Destination({
@@ -33,17 +33,17 @@ exports.createDestination = async (req, res, next) => {
       });
     }
   });
-};
+});
 
 // Get All Destinatons (Admin)
-exports.getAllDestinations = async (req, res, next) => {
+exports.getAllDestinations = catchAsyncErrors(async(req, res, next) => {
   const destinations = await Destination.find();
 
   res.status(200).json({
     success: true,
     destinations,
   });
-};
+});
 
 //get destination by slug
 exports.getDestinationBySlug = (req, res) => {
@@ -81,23 +81,21 @@ exports.getDestinationBySlug = (req, res) => {
 };
 
 //get destination Detail by Id
-exports.getDestinationDetailById = async (req, res) => {
+exports.getDestinationDetailById = catchAsyncErrors(async(req, res) => {
   const id = req.params.id;
   //  console.log(id)
   //  res.send(id)
-  try {
     const destination = await Destination.findById(id);
 
-    if (destination) {
-      return res.status(200).json({
-        success: true,
-        destination,
-      });
+    if (!destination) {
+      return next(new ErrorHandler("Destination not found", 404));
+
     }
-  } catch (error) {
-    console.log(error.message);
-  }
-};
+    res.status(200).json({
+      success: true,
+      destination,
+    });
+});
 // exports.getProductDetailById = async(req, res, next) => {
 //   const { productId } = req.params;
 //   const product = await VacationProduct.findOne({_id: productId});

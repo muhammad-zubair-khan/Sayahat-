@@ -2,15 +2,15 @@
 const VacationProduct = require("../models/vacationProduct");
 // const desModel = require("../Models/destination");
 const vacationCategoryModel = require("../Models/vacationCategory");
-// const ErrorHander = require("../utils/errorhander");
-// const catchAsyncErrors = require("../middleware/catchAsyncErrors.js");
+const ErrorHandler = require("../utils/errorhandler");
+const catchAsyncErrors = require("../utils/catchAsyncErrors");
 // const ApiFeatures = require("../utils/apifeatures");
 const slugify = require('slugify');
 const path = require("path");
 const fs = require('fs');
 
 // Create VacationProduct -- Admin
-exports.createVacationProduct = async(req, res, next) => {
+exports.createVacationProduct = catchAsyncErrors(async(req, res, next) => {
 
   const {
     name,
@@ -44,20 +44,18 @@ exports.createVacationProduct = async(req, res, next) => {
       });
     }
   });
-};
+});
 
 
 // Get All Product (Admin)
-exports.getAllVacationsProducts = async (req, res, next) => {
+exports.getAllVacationsProducts = catchAsyncErrors(async(req, res, next) => {
     const products = await VacationProduct.find();
-    // const destinations = await desModel.find()
-  
+
     res.status(200).json({
       success: true,
       products,
-      // destinations
     });
-  };
+  });
 
 
 //get product by slug
@@ -97,19 +95,16 @@ exports.getProductDetailById = async(req, res) => {
   const id = req.params.id;
 //  console.log(id)
 //  res.send(id)
-try {
+
   const product = await VacationProduct.findById(id)
 
-  if(product){
-    return res.status(200).json({
-      success:true,
-      product
-    })
-    
-  }
-} catch (error) {
-  console.log(error.message)
-}
+  // if (!product) {
+  //   return next(new ErrorHandler("Product not found", 404));
+  // }
+  res.status(200).json({
+    success: true,
+    product,
+  });
 };
 // exports.getProductDetailById = async(req, res, next) => {
 //   const { productId } = req.params;

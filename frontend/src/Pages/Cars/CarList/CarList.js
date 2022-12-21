@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import "./CarList.css";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import { Col, Row } from "react-bootstrap";
 import {
   Button,
   Grid,
@@ -15,17 +16,48 @@ import PersonIcon from "@mui/icons-material/Person";
 import SpeedIcon from "@mui/icons-material/Speed";
 import AutoAwesomeIcon from "@mui/icons-material/AutoAwesome";
 import AirplaneTicketIcon from "@mui/icons-material/AirplaneTicket";
+import useFetch from "../../../hook/useFetch";
+import { format } from "date-fns";
+import { DateRange, DateRangePicker } from "react-date-range";
+import CarSearchItem from "../../../Components/CarSearchItem/CarSearchItem.js";
+
 const CarList = () => {
+  const location = useLocation();
+  const [startDestination, setStartDestination] = useState(
+    location.state.state.startDestination
+  );
+  const [endDestination, setEndDestination] = useState(
+    location.state.state.endDestination
+  );
+  const [openCarDate, setOpenCarDate] = useState(false);
+  const [date, setDate] = useState(location.state.state.date);
+  const [pickupTime, setPickupTime] = useState(location.state.state.pickupTime);
+  const [dropoffTime, setDropoffTime] = useState(
+    location.state.state.dropoffTime
+  );
+  const [min, setMin] = useState(undefined);
+  const [max, setMax] = useState(undefined);
+  const { data, loading, error, reFetch } = useFetch(
+    `http://localhost:5000/api/cars?city=${startDestination}`
+  );
+  console.log("carsByFare", data);
+  const handleClick = () => {
+    reFetch();
+  };
   return (
     <>
-      <Grid container spacing={2}>
-        <Grid item xs={12} lg={4} style={{ textAlign: 'center',
-    margin: 'auto'}}>
-            <img
-              className="img-fluid"
-              src="https://mediaim.expedia.com/cars/19/7b8cf277-4ee5-46f4-b8fe-ac19c0f41d69.jpg?impolicy=resizecrop&ra=fit&rh=165&rw=165"
-              alt="SUV "
-            ></img>
+      {/* <Grid container spacing={2}>
+        <Grid
+          item
+          xs={12}
+          lg={4}
+          style={{ textAlign: "center", margin: "auto" }}
+        >
+          <img
+            className="img-fluid"
+            src="https://mediaim.expedia.com/cars/19/7b8cf277-4ee5-46f4-b8fe-ac19c0f41d69.jpg?impolicy=resizecrop&ra=fit&rh=165&rw=165"
+            alt="SUV "
+          ></img>
         </Grid>
         <Grid item xs={12} lg={4}>
           <Typography variant="h6">Midsize SUV</Typography>
@@ -57,14 +89,123 @@ const CarList = () => {
             </ListItem>
           </List>
         </Grid>
-       
-        <Grid item xs={12} lg={4} style={{textAlign:'end'}}>
-          <Typography variant="h5" style={{color:'black',fontWeight:'bolder'}}>68$</Typography>
+
+        <Grid item xs={12} lg={4} style={{ textAlign: "end" }}>
+          <Typography
+            variant="h5"
+            style={{ color: "black", fontWeight: "bolder" }}
+          >
+            68$
+          </Typography>
           <h6 paragraph>per day</h6>
           <h6 paragraph>$95 total</h6>
-          <Button  variant="contained"><Link to={`/car/${'193AKS820jS'}`} style={{color:'white'}}>Continue</Link></Button>
-
+          <Button variant="contained">
+            <Link to="/car/:id" style={{ color: "white" }}>
+              Continue
+            </Link>
+          </Button>
         </Grid>
+      </Grid> */}
+      <Grid container>
+        <Grid item xs={12} lg={3}>
+          <div className="listSearch">
+            {/* <h1 className="lsTitle">Search</h1> */}
+            <div className="lsItem">
+              <label>From</label>
+              <input
+                placeholder={location.state.state.startDestination}
+                onChange={(e) => setStartDestination(e.target.value)}
+                type="text"
+              />
+            </div>
+            <div className="lsItem">
+              <label>To</label>
+              <input
+                placeholder={location.state.state.endDestination}
+                onChange={(e) => setEndDestination(e.target.value)}
+                type="text"
+              />
+            </div>
+            <div className="lsItem">
+              <label for="from">Pick-up Time</label>
+              <input
+                type="time"
+                className="form-control"
+                value={pickupTime}
+                onChange={(e) => setPickupTime(e.target.value)}
+              />
+            </div>
+            <div className="lsItem">
+              <label for="from">Drop-off Time</label>
+              <input
+                type="time"
+                className="form-control"
+                value={dropoffTime}
+                onChange={(e) => setDropoffTime(e.target.value)}
+              />
+            </div>
+            <div className="lsItem">
+              <label>Check-in Date</label>
+              <span onClick={() => setOpenCarDate(!openCarDate)}>{`${format(
+                date[0].startDate,
+                "MM/dd/yyyy"
+              )} to ${format(date[0].endDate, "MM/dd/yyyy")}`}</span>
+              {openCarDate && (
+                <DateRange
+                  onChange={(item) => setDate([item.selection])}
+                  minDate={new Date()}
+                  ranges={date}
+                />
+              )}
+            </div>
+
+            <div className="lsItem">
+              <label>Options</label>
+              <div className="lsOptions">
+
+                <div className="lsOptionItem">
+                  <span className="lsOptionText">car under 1k</span>
+                  <input
+                    type="checkbox"
+                    // onChange={(e) => setMax(e.target.value)}
+                    className="lsOptionInput"
+                  />
+                </div>
+
+                {/* {data && data.map((item,index)=>{
+              return(
+                <>
+                <span style={{color:'white'}}>{item.type} </span><input type="checkbox" /><span style={{color:'white',float:'right'}}>
+                {item.type.length}
+                  </span>
+                  <br/>
+
+                </>
+              )
+             })} */}
+                {/* <span style={{color:'white'}}>Appartments </span><input type="checkbox" /> */}
+              </div>
+              <button onClick={handleClick}>Search</button>
+            </div>
+          </div>
+        </Grid>
+
+        {/* <div className="listResult"> */}
+        {loading ? (
+          "loading"
+        ) : (
+          <Grid container
+          lg={9}
+          style={{
+            height: "fit-content",
+            border: "1px solid #f1e1e1",
+            padding: "18px 18px",
+          }}>
+            {data.cars &&
+              data.cars.map((item, i) => <CarSearchItem item={item} key={i} />)}
+          </Grid>
+        )}
+        {/* </div> */}
       </Grid>
     </>
   );

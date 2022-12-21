@@ -1,5 +1,11 @@
 import React, { useState, useContext } from "react";
-import { Link, Redirect, useHistory, useParams } from "react-router-dom";
+import {
+  Link,
+  Redirect,
+  useHistory,
+  useLocation,
+  useParams,
+} from "react-router-dom";
 import "react-multi-carousel/lib/styles.css";
 import "./Landing.css";
 import MyCard from "../MyCard";
@@ -25,10 +31,19 @@ import { SearchContext } from "../Context/SearchContext";
 import { ReactSearchAutocomplete } from "react-search-autocomplete";
 import { useEffect } from "react";
 import { getAllVacationProduct } from "../Redux/Actions/vacationProductAction";
+import TextField from "@mui/material/TextField";
+// import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+// import { LocalizationProvider } from '@mui/x-date-pickers';
+// import { TimePicker } from '@mui/x-date-pickers';
+// import { TimePicker } from "@mui/x-date-pickers/TimePicker";
+// import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider/LocalizationProvider";
+// import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 const Landing = ({ type }) => {
+  const history = useHistory();
   // const dispatch = useDispatch()
   // const {slug}= useParams()
   // const [endDestination, setEndDestination] = useState("");
+  //Stays
   const [destination, setDestination] = useState("");
   const [openDate, setOpenDate] = useState(false);
   const [dates, setDates] = useState([
@@ -38,10 +53,22 @@ const Landing = ({ type }) => {
       key: "selection",
     },
   ]);
-  //Car
-  const history = useHistory();
+  const [openOptions, setOpenOptions] = useState(false);
+  const [options, setOptions] = useState({
+    adult: 1,
+    children: 0,
+    room: 1,
+  });
 
   //Car
+
+  const [startDestination, setStartDestination] = useState("");
+  const [endDestination, setEndDestination] = useState("");
+  // const [pickupTime,setPickupTime] = useState("");
+  // const [dropoffTime,setDropoffTime] = useState("");
+  const [openCarDate, setOpenCarDate] = useState(false);
+  const [pickupTime, setPickupTime] = useState(null);
+  const [dropoffTime, setDropoffTime] = useState(null);
   const [date, setDate] = useState([
     {
       startDate: new Date(),
@@ -49,22 +76,21 @@ const Landing = ({ type }) => {
       key: "selection",
     },
   ]);
-  //Hotel
-  const [openHotelDate, setOpenHotelDate] = useState(false); //Hotel
-  const [hotelDate, setHotelDate] = useState([
-    {
-      startDate: new Date(),
-      endDate: new Date(),
-      key: "selection",
-    },
-  ]);
-
-  const [openOptions, setOpenOptions] = useState(false);
-  const [options, setOptions] = useState({
+  const [options3, setOptions3] = useState({
     adult: 1,
     children: 0,
     room: 1,
   });
+  //Hotel
+  // const [openHotelDate, setOpenHotelDate] = useState(false); //Hotel
+  // const [hotelDate, setHotelDate] = useState([
+  //   {
+  //     startDate: new Date(),
+  //     endDate: new Date(),
+  //     key: "selection",
+  //   },
+  // ]);
+
   //Hotel
   const handleOption = (name, operation) => {
     setOptions((prev) => {
@@ -86,14 +112,15 @@ const Landing = ({ type }) => {
     },
   ]);
 
-  //package options
+  //package
+  const [packageDestination, setPackageDestination] = useState("");
   const [openOptions2, setOpenOptions2] = useState(false);
   const [options2, setOptions2] = useState({
     adult: 1,
     children: 0,
     room: 1,
   });
-  //Hotel
+  //Package
   const handleOption2 = (name, operation) => {
     setOptions2((prev) => {
       return {
@@ -108,6 +135,18 @@ const Landing = ({ type }) => {
   const handleSearch = () => {
     dispatch({ type: "NEW_SEARCH", payload: { destination, dates, options } });
     history.push("/hotels", { state: { destination, dates, options } });
+  };
+  const handlePackageSearch = () => {
+    dispatch({ type: "NEW_SEARCH", payload: { destination, dates, options } });
+    history.push(`/package/${destination}`, {
+      state: { destination, dates, options },
+    });
+  };
+  const handleCarSearch = () => {
+    dispatch({ type: "NEW_SEARCH", payload: { startDestination, endDestination, pickupTime, dropoffTime, date,options } });
+    history.push(`/cars?from=${startDestination}&to=${endDestination}&pickup-Time=${pickupTime}&dropoff-time=${dropoffTime}`, {
+      state: { startDestination, endDestination, pickupTime, dropoffTime, date  },
+    });
   };
   const { products } = useSelector((state) => state.vacationProduct);
   console.log(products);
@@ -234,9 +273,9 @@ const Landing = ({ type }) => {
                                 className="form-control"
                                 id="from-place"
                                 placeholder="Lahore, PK"
-                                // onChange={(e) =>
-                                //   setStartDestination(e.target.value)
-                                // }
+                                onChange={(e) =>
+                                  setStartDestination(e.target.value)
+                                }
                               />
                             </div>
                           </div>
@@ -248,9 +287,33 @@ const Landing = ({ type }) => {
                                 className="form-control"
                                 id="to-place"
                                 placeholder="Islamabad, PK"
-                                // onChange={(e) =>
-                                //   setEndDestination(e.target.value)
-                                // }
+                                onChange={(e) =>
+                                  setEndDestination(e.target.value)
+                                }
+                              />
+                            </div>
+                          </div>
+                          <div className="col-xxs-12 col-xs-6 mt">
+                            <div className="input-field">
+                              <label for="from">Pick-up Time</label>
+                              <input
+                                type="time"
+                                className="form-control"
+                                onChange={(e) =>
+                                  setPickupTime(e.target.value)
+                                }
+                              />
+                            </div>
+                          </div>
+                          <div className="col-xxs-12 col-xs-6 mt">
+                            <div className="input-field">
+                              <label for="from">Drop-off Time</label>
+                              <input
+                                type="time"
+                                className="form-control"
+                                onChange={(e) =>
+                                  setDropoffTime(e.target.value)
+                                }
                               />
                             </div>
                           </div>
@@ -262,14 +325,14 @@ const Landing = ({ type }) => {
                                   color: "rgba(255, 255, 255, 0.8)",
                                   fontSize: "14px",
                                 }}
-                                onClick={() => setOpenDate(!openDate)}
+                                onClick={() => setOpenCarDate(!openCarDate)}
                               >
                                 {`${format(
                                   date[0].startDate,
                                   "MM/dd/yyyy"
                                 )} to ${format(date[0].endDate, "MM/dd/yyyy")}`}
                               </span>
-                              {openDate && (
+                              {openCarDate && (
                                 <DateRangePicker
                                   editableDateInputs={true}
                                   ranges={date}
@@ -284,10 +347,9 @@ const Landing = ({ type }) => {
 
                           <div className="col-xs-12">
                             <input
-                              type="submit"
                               className="btn btn-primary btn-block"
                               value="Search Car"
-                              onClick={handleSearch}
+                              onClick={handleCarSearch}
                             />
                           </div>
                         </div>
@@ -491,7 +553,7 @@ const Landing = ({ type }) => {
                             <button
                               onClick={handleSearch}
                               className="btn btn-primary btn-block"
-                              value="Search Hotel"
+                              value="Search Hotels"
                             >
                               Search
                             </button>
@@ -499,20 +561,38 @@ const Landing = ({ type }) => {
                         </div>
                       </div>
                       {/* /////////////////////////////////////////////////////////////// */}
-                      {/* <div role="tabpanel" className="tab-pane" id="packages">
+                      <div role="tabpanel" className="tab-pane" id="packages">
                         <div className="row">
                           <div className="col-xxs-12 col-xs-6 mt">
                             <div className="input-field">
                               <label for="from">City:</label>
-                              <input
+                              {/* <input
                                 type="text"
                                 className="form-control"
                                 id="from-place"
                                 placeholder="Lahore, PK"
-                              />
+                              /> */}
+                              <div style={{ width: 400 }}>
+                                <ReactSearchAutocomplete
+                                  items={products}
+                                  // // onSearch={handleOnSearch}
+                                  // onHover={handleOnHover}
+                                  onSelect={handleOnSelect}
+                                  // // onFocus={handleOnFocus}
+                                  // autoFocus
+                                  // formatResult={formatResult}
+                                  // onChange={(e) =>
+                                  //   setPackageDestination(e.target.value)
+                                  // }
+                                  onChange={(e) =>
+                                    setDestination(e.target.value)
+                                  }
+                                  placeholder="Lahore, PK"
+                                />
+                              </div>
                             </div>
                           </div>
-                          <div className="col-xxs-12 col-xs-6 mt">
+                          {/* <div className="col-xxs-12 col-xs-6 mt">
                             <div className="input-field">
                               <label for="from">Destination:</label>
                               <input
@@ -522,7 +602,7 @@ const Landing = ({ type }) => {
                                 placeholder="Islamabad, PK"
                               />
                             </div>
-                          </div>
+                          </div> */}
                           <div className="col-xxs-12 col-xs-6 mt alternate">
                             <div className="input-field search-item">
                               <CalendarMonthIcon style={{ color: "white" }} />
@@ -695,13 +775,13 @@ const Landing = ({ type }) => {
                           </div>
                           <div className="col-xs-12">
                             <input
-                              type="submit"
+                              onClick={handlePackageSearch}
                               className="btn btn-primary btn-block"
                               value="Search Packages"
                             />
                           </div>
                         </div>
-                      </div> */}
+                      </div>
                     </div>
                   </div>
                 </div>

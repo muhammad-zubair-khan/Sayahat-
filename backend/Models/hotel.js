@@ -74,6 +74,8 @@ const hotelSchema = new mongoose.Schema(
       default: false
     },
     category: { type: mongoose.Schema.Types.ObjectId, ref: 'Category', required: true },
+    // room: { type: mongoose.Schema.Types.ObjectId, ref: 'Room', required: true },
+
     updatedAt: Date,
   },
   { timestamps: true }

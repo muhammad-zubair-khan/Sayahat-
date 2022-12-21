@@ -63,7 +63,7 @@ export const TopDes = (props) => {
         {products &&
           products.map((data, index) => {
             return (
-              <div key={index}>
+              <div key={index._id}>
                 <Link to={`/top-destination/${data.slug}/${data._id}`}>
                   <div className="mur">
                     <img

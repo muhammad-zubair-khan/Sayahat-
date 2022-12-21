@@ -1,4 +1,6 @@
 const VacationCategoryModel = require('../Models/vacationCategory')
+const ErrorHandler = require("../utils/errorhandler");
+const catchAsyncErrors = require("../utils/catchAsyncErrors");
 
 const createVacationCategories = (categories, parentId = null) => {
   const VacationCategoryList = []
@@ -22,12 +24,13 @@ const createVacationCategories = (categories, parentId = null) => {
   return VacationCategoryList
 }
 
-exports.initialData = async (req, res) => {
+exports.initialData = catchAsyncErrors(async(req, res) => {
   const categories = await VacationCategoryModel.find({}).exec()
 
+  if (!categories) {
+    return next(new ErrorHandler("Categories not found", 404));
+  }
   res.status(200).json({
     categories: createVacationCategories(categories),
-    // products,
-    //   orders,
   })
-}
+});

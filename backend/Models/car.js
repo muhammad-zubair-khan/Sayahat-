@@ -12,18 +12,32 @@ const carSchema = new mongoose.Schema({
         required:true,
         unique:true
     },
+    title:{
+        type:String,
+        required:true,
+    },
     passenger:{
         type: Number,
         required: true,
     },
+    gear:{
+        type:String,
+    },
+    city:{
+        type:String,
+        required:true,
+    },
     fare:{
         type: String,
+        required:true,
     },
     mileage:{
         type: String,
+        required:true,
     },
     payAt:{
         type: String,
+        required:true,
     },
     shuttle:{
         type: String,
@@ -36,10 +50,16 @@ const carSchema = new mongoose.Schema({
     },
     description:{
         type: String,
+        required:true,
     },
-    carImage:{
-        type:String
-    },
+    carImage:[
+        { 
+          img: {
+             type: String,
+              required:true
+            }
+        }
+      ],
     type:{
         type:String,
         required: true,

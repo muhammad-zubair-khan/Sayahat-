@@ -6,9 +6,11 @@ const topDest = require("../Models/destination");
 const slugify = require("slugify");
 const path = require("path");
 const ApiFeatures = require("../utils/apifeatures");
+const ErrorHandler = require("../utils/errorhandler");
+const catchAsyncErrors = require("../utils/catchAsyncErrors");
 
 // Create Hotel -- Admin
-exports.createHotel = async (req, res, next) => {
+exports.createHotel = catchAsyncErrors(async (req, res, next) => {
   const {
     name,
     city,
@@ -64,7 +66,7 @@ exports.createHotel = async (req, res, next) => {
       });
     }
   });
-};
+});
 
 // exports.getAllHotels = async(req, res) => {
 //   const resultPerPage = 8;
@@ -89,34 +91,38 @@ exports.createHotel = async (req, res, next) => {
 //   });
 // };
 
-// Get All Hotel (Admin)
+// Get All Hotel
 exports.getAllHotels = async (req, res) => {
   // const hotels = await Hotel.find();
   const { min, max, ...others } = req.query;
   // const hotelsCount = await Hotel.countDocuments();
 
-  try {
-    const hotels = await Hotel.find({
-      ...others,
-      cheapestPrice: { $gt: min | 1, $lt: max || 99999 },
-    });
-    res.status(200).json(hotels);
-  } catch (error) {
-    next(error);
-  }
-};
+  const hotels = await Hotel.find({
+    ...others,
+    cheapestPrice: { $gt: min | 1, $lt: max || 99999 },
+  });
+  // if(!hotels){
+  // return next(new ErrorHandler("Hotel not found", 404));
 
-exports.getAllHotelsAdmin = async(req, res) => {
-
-  const hotels = await Hotel.find();
+  // }
   res.status(200).json({
-    success: true,
     hotels,
   });
 };
 
+exports.getAllHotelsAdmin = catchAsyncErrors(async (req, res) => {
+  const hotels = await Hotel.find();
+  if (!hotels) {
+    return next(new ErrorHandler("Hotels not found", 404));
+  }
+  res.status(200).json({
+    success: true,
+    hotels,
+  });
+});
+
 //get hotel by slug
-exports.getHotelsBySlug = async(req, res) => {
+exports.getHotelsBySlug = (req, res) => {
   // return next(new ErrorHander("this is my temp alert error",500))
 
   // const resultPerPage = 8;
@@ -179,85 +185,88 @@ exports.getHotelsBySlug = async(req, res) => {
 };
 
 //get Top Des hotel by slug
-exports.getTopDesHotelsBySlug = (req, res) => {
-  const { slug } = req.params;
-  // category.findOne({ slug: slug })
-  topDest
-    .findOne({ slug: slug })
-    .select("_id")
-    .exec((err, category) => {
-      if (err) {
-        return res.status(400).json({ err });
-      }
-      if (!category) {
-        return res.status(400).json({
-          success: false,
-          message: "No Hotel Found",
-        });
-      }
-      if (category) {
-        Hotel.find({ category: category._id }).exec((error, hotel) => {
-          if (error) {
-            return res.status(400).json({
-              error,
-            });
-          } else {
-            res.status(200).json({
-              success: true,
-              hotel,
-              // productsCount,
-            });
-          }
-        });
-      }
-    });
-};
+// exports.getTopDesHotelsBySlug = (req, res) => {
+//   const { slug } = req.params;
+//   // category.findOne({ slug: slug })
+//   topDest
+//     .findOne({ slug: slug })
+//     .select("_id")
+//     .exec((err, category) => {
+//       if (err) {
+//         return res.status(400).json({ err });
+//       }
+//       if (!category) {
+//         return res.status(400).json({
+//           success: false,
+//           message: "No Hotel Found",
+//         });
+//       }
+//       if (category) {
+//         Hotel.find({ category: category._id }).exec((error, hotel) => {
+//           if (error) {
+//             return res.status(400).json({
+//               error,
+//             });
+//           } else {
+//             res.status(200).json({
+//               success: true,
+//               hotel,
+//               // productsCount,
+//             });
+//           }
+//         });
+//       }
+//     });
+// };
 
 // Delete Hotel
-exports.deleteHotel = async (req, res, next) => {
+exports.deleteHotel = catchAsyncErrors(async (req, res) => {
   const hotel = await Hotel.findById(req.params.id);
   // console.log(">>>>>",hotel)
-
+  if (!hotel) {
+    return next(new ErrorHandler("Hotel not found", 404));
+  }
   await hotel.remove();
 
   res.status(201).json({
     success: true,
     message: "Hotel Delete Successfully",
   });
-};
+});
 
 //get hotel Detail by Id
-exports.GetHotelById = async (req, res) => {
+exports.GetHotelById = catchAsyncErrors(async (req, res) => {
   const id = req.params.id;
   //  console.log(id)
   //  res.send(id)
-  try {
-    const hotel = await Hotel.findById(id);
 
-    if (hotel) {
-      return res.status(200).json({
-        success: true,
-        hotel,
-      });
-    }
-  } catch (error) {
-    console.log(error.message);
-  }
-};
+  const hotel = await Hotel.findById(id);
 
-exports.getHotelRooms = async (req, res, next) => {
-  try {
-    const hotel = await Hotel.findById(req.params.id);
-    const list = await Promise.all(
-      hotel.rooms.map((room) => {
-        return Room.findById(room);
-      })
-    );
-    res.status(200).json(list);
-  } catch (err) {
-    next(err);
+  if (!hotel) {
+    return next(new ErrorHandler("Hotel not found", 404));
   }
-};
+  res.status(200).json({
+    success: true,
+    hotel,
+  });
+});
+
+exports.getHotelRooms = catchAsyncErrors(async (req, res) => {
+  const hotel = await Hotel.findById(req.params.id);
+  if (!hotel) {
+    return next(new ErrorHandler("Hotel not found", 404));
+  }
+  const list = await Promise.all(
+    hotel.rooms.map((room) => {
+      return Room.findById(room);
+    })
+  );
+  res.status(200).json({
+    success: true,
+    list,
+  });
+  // res.status(200).json(list);
+});
 
 // exports.countByType = async (req, res, next) => {
 //   try {

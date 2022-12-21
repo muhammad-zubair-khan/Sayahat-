@@ -8,7 +8,7 @@ import useFetch from "../../../hook/useFetch";
 import "./HotelList.css";
 import {
   getAllHotels,
-  getHotelBySlug,
+  // getHotelBySlug,
 } from "../../../Redux/Actions/hotelAction";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
@@ -26,11 +26,11 @@ const HotelList = () => {
   const [max, setMax] = useState(undefined);
 
   const { data, loading, error, reFetch } = useFetch(
-    `http://localhost:5000/api/hotels?city=${destination}&min=${min || 0}&max=${
+    `http://localhost:5000/api/all-hotels?city=${destination}&min=${min || 0}&max=${
       max || 99999
     }`
   );
-
+console.log(data)
   const handleClick = () => {
     reFetch();
   };
@@ -59,8 +59,9 @@ const HotelList = () => {
               {openDate && (
                 <DateRange
                   onChange={(item) => setDates([item.selection])}
-                  minDate={new Date()}
                   ranges={dates}
+                  minDate={new Date()}
+                  disabledDates={true}
                 />
               )}
             </div>
@@ -115,7 +116,7 @@ const HotelList = () => {
                     placeholder={location.state.state.options.room}
                   />
                 </div>
-             {data && data.map((item,index)=>{
+             {/* {data && data.map((item,index)=>{
             
               return(
                 <>
@@ -126,7 +127,7 @@ const HotelList = () => {
 
                 </>
               )
-             })}
+             })} */}
                 {/* <span style={{color:'white'}}>Appartments </span><input type="checkbox" /> */}
               </div>
               <button onClick={handleClick}>Search</button>
@@ -139,7 +140,8 @@ const HotelList = () => {
             "loading"
           ) : (
             <>
-              {data.map((item) => (
+           { console.log(data)}
+              {data.hotels && data.hotels.map((item) => (
                 <SearchItem item={item} key={item._id} />
               ))}
             </>

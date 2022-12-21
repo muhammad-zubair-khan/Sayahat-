@@ -47,7 +47,7 @@ export const getAllHotels = () => async (dispatch) => {
   try {
     dispatch({ type: GET_ALL_HOTELS_REQUEST });
 
-    const { data } = await axios.get("/hotels");
+    const { data } = await axios.get("/all-hotels");
 
     dispatch({
       type: GET_ALL_HOTELS_SUCCESS,

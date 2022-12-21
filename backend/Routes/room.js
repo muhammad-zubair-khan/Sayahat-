@@ -11,15 +11,16 @@ const {
 
 const router = express.Router();
 //CREATE
-router.post("/:hotelid", createRoom);
+router.post("/create/:hotelid", createRoom);
 
 //UPDATE
-router.put("/availability/:id", updateRoomAvailability);
+router.put("/rooms/availability/:id", updateRoomAvailability);
 router.put("/:id", updateRoom);
+
 //DELETE
 router.delete("/:id/:hotelid", deleteRoom);
-//GET
 
+//GET
 router.get("/:id", getRoom);
 //GET ALL
 
