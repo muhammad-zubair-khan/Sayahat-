@@ -30,15 +30,16 @@ const CarDetail = () => {
   const [slideNumber, setSlideNumber] = useState(0);
   const [open, setOpen] = useState(false);
   const [openModal, setOpenModal] = useState(false);
-
+  // const [dates, setDates] = useState(location.state.state.dates);
+  // const [options, setOptions] = useState(location.state.state.options);
   const { data, loading, error } = useFetch(
     `http://localhost:5000/api/car-detail/${id}`
   );
-  console.log(data)
+  // console.log(data)
   const { user } = useSelector((state) => state.userAuth);
   // const { user } = useContext(AuthContext);
-  const { date } = useContext(SearchContext);
-console.log(date)
+  // const { date } = useContext(SearchContext);
+// console.log(date)
   const MILLISECONDS_PER_DAY = 1000 * 60 * 60 * 24;
   function dayDifference(date1, date2) {
     const timeDiff = Math.abs(date2.getTime() - date1.getTime());
@@ -46,8 +47,8 @@ console.log(date)
     return diffDays;
   }
 
-  const days = dayDifference(date[0].endDate, date[0].startDate);
-  // console.log(options)
+  // const days = dayDifference(dates[0].endDate, dates[0].startDate);
+  console.log("location-detail",location)
 
   const handleOpen = (i) => {
     setSlideNumber(i);
@@ -73,7 +74,7 @@ console.log(date)
       history.push("/login");
     }
   };
-  console.log(data);
+  // console.log(data);
   if (Object.keys(data).length === 0) {
     return null;
   }
@@ -119,7 +120,7 @@ console.log(date)
           )}
           <div className="hotelWrapper">
             <button className="bookNow" onClick={handleClick}>
-              Reserve or Book Now!
+              Book Now!
             </button>
             <h1 className="hotelTitle">{data.car.name}</h1>
             <div className="hotelAddress">
@@ -153,11 +154,11 @@ console.log(date)
                 <p className="hotelDesc">{data.car.description}</p>
               </div>
               <div className="hotelDetailsPrice">
-                <h1>Perfect for a {days} - day ride</h1>
+                {/* <h1>Perfect for a {days} - day ride</h1> */}
                 <span>
                   this property has an excellent location score of 9.8!
                 </span>
-                <h6>
+                {/* <h6>
                   <b>PKR{days * data.car.fare}</b> (
                   {days} days)
                 <Tooltip
@@ -168,8 +169,8 @@ console.log(date)
                     <i className="text-dark fs-5 fa-solid fa-circle-info"></i>
                   </Button>
                 </Tooltip>
-                </h6>
-                <button onClick={handleClick}>Reserve or Book Now!</button>
+                </h6> */}
+                <button onClick={handleClick}>Book Now!</button>
               </div>
             </div>
           </div>

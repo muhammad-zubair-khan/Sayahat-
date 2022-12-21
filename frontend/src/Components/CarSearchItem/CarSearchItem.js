@@ -45,7 +45,7 @@ const CarSearchItem = ({ item }) => {
     location.state.state.endDestination
   );
   // console.log(location.state.state.destination)
-  const [date, setDate] = useState(location.state.state.date);
+  const [dates, setDates] = useState(location.state.state.dates);
   const [openDate, setOpenDate] = useState(false);
   const [pickupTime, setPickupTime] = useState(location.state.state.pickupTime);
   const [dropoffTime, setDropoffTime] = useState(location.state.state.dropoffTime);
@@ -59,9 +59,9 @@ const CarSearchItem = ({ item }) => {
     //   console.log("item>>>",data.carsByFare.under5k.length);
 
   const handleSearch = () => {
-    dispatch({ type: "NEW_SEARCH", payload: { startDestination,endDestination,pickupTime,dropoffTime, date } });
+    dispatch({ type: "NEW_SEARCH", payload: { startDestination,endDestination,pickupTime,dropoffTime, dates } });
     history.push(`/car/${item._id}`, {
-      state: { startDestination,endDestination,pickupTime,dropoffTime, date },
+      state: { startDestination,endDestination,pickupTime,dropoffTime, dates },
     });
   };
   return (

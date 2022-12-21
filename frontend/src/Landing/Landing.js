@@ -143,9 +143,9 @@ const Landing = ({ type }) => {
     });
   };
   const handleCarSearch = () => {
-    dispatch({ type: "NEW_SEARCH", payload: { startDestination, endDestination, pickupTime, dropoffTime, date,options } });
+    dispatch({ type: "NEW_SEARCH", payload: { startDestination, endDestination, pickupTime, dropoffTime, dates,options } });
     history.push(`/cars?from=${startDestination}&to=${endDestination}&pickup-Time=${pickupTime}&dropoff-time=${dropoffTime}`, {
-      state: { startDestination, endDestination, pickupTime, dropoffTime, date  },
+      state: { startDestination, endDestination, pickupTime, dropoffTime, dates  },
     });
   };
   const { products } = useSelector((state) => state.vacationProduct);
@@ -328,16 +328,16 @@ const Landing = ({ type }) => {
                                 onClick={() => setOpenCarDate(!openCarDate)}
                               >
                                 {`${format(
-                                  date[0].startDate,
+                                  dates[0].startDate,
                                   "MM/dd/yyyy"
-                                )} to ${format(date[0].endDate, "MM/dd/yyyy")}`}
+                                )} to ${format(dates[0].endDate, "MM/dd/yyyy")}`}
                               </span>
                               {openCarDate && (
                                 <DateRangePicker
                                   editableDateInputs={true}
-                                  ranges={date}
+                                  ranges={dates}
                                   moveRangeOnFirstSelection={false}
-                                  onChange={(item) => setDate([item.selection])}
+                                  onChange={(item) => setDates([item.selection])}
                                   className="date"
                                   minDate={new Date()}
                                 />

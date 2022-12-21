@@ -68,24 +68,27 @@ exports.addCar = catchAsyncErrors(async (req, res) => {
 });
 
 // Get All Hotel (Admin)
-exports.getAllCars = catchAsyncErrors(async (req, res) => {
+exports.getAllCars = async (req, res) => {
   // const hotels = await Hotel.find();
-  // const { min, max, ...others } = req.query;
+  const { min, max, ...others } = req.query;
   // // const hotelsCount = await Hotel.countDocuments();
 
   //   const cars = await Car.find({
   //     ...others,
   //     fare: { $gt: min | 1, $lt: max || 99999 },
   //   });
-  const apiFeature = new ApiFeatures(Car.find(), req.query)
+  const apiFeature = new ApiFeatures(
+    Car.find(),
+    req.query
+  )
     // .search()
     .filter();
 
   let cars = await apiFeature.query;
   // console.log(cars)
-  if (!cars) {
-    return next(new ErrorHandler("Cars not found", 404));
-  }
+  // if (!cars) {
+  //   return next(new ErrorHandler("Cars not found", 404));
+  // }
   res.status(200).json({
     success: true,
     cars,
@@ -109,7 +112,7 @@ exports.getAllCars = catchAsyncErrors(async (req, res) => {
       under21k: cars.filter((car) => car.fare > 20000 && car.fare <= 21000),
     },
   });
-});
+};
 
 // Get All Cars (Admin)
 exports.getAllAdminCars = catchAsyncErrors(async (req, res) => {

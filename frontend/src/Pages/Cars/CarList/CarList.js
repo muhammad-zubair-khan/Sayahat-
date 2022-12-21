@@ -30,7 +30,7 @@ const CarList = () => {
     location.state.state.endDestination
   );
   const [openCarDate, setOpenCarDate] = useState(false);
-  const [date, setDate] = useState(location.state.state.date);
+  const [dates, setDates] = useState(location.state.state.dates);
   const [pickupTime, setPickupTime] = useState(location.state.state.pickupTime);
   const [dropoffTime, setDropoffTime] = useState(
     location.state.state.dropoffTime
@@ -38,9 +38,12 @@ const CarList = () => {
   const [min, setMin] = useState(undefined);
   const [max, setMax] = useState(undefined);
   const { data, loading, error, reFetch } = useFetch(
-    `http://localhost:5000/api/cars?city=${startDestination}`
+    `http://localhost:5000/api/cars?city=${startDestination}&min=${min || 0}&max=${
+      max || 99999
+    }`
   );
   console.log("carsByFare", data);
+  console.log("location.....", location);
   const handleClick = () => {
     reFetch();
   };
@@ -147,46 +150,41 @@ const CarList = () => {
             <div className="lsItem">
               <label>Check-in Date</label>
               <span onClick={() => setOpenCarDate(!openCarDate)}>{`${format(
-                date[0].startDate,
+                dates[0].startDate,
                 "MM/dd/yyyy"
-              )} to ${format(date[0].endDate, "MM/dd/yyyy")}`}</span>
+              )} to ${format(dates[0].endDate, "MM/dd/yyyy")}`}</span>
               {openCarDate && (
                 <DateRange
-                  onChange={(item) => setDate([item.selection])}
+                  onChange={(item) => setDates([item.selection])}
                   minDate={new Date()}
-                  ranges={date}
+                  ranges={dates}
                 />
               )}
             </div>
 
-            <div className="lsItem">
+            {/* <div className="lsItem">
               <label>Options</label>
               <div className="lsOptions">
-
                 <div className="lsOptionItem">
-                  <span className="lsOptionText">car under 1k</span>
+                  <span className="lsOptionText">Min price</span>
                   <input
-                    type="checkbox"
-                    // onChange={(e) => setMax(e.target.value)}
+                    type="number"
+                    onChange={(e) => setMin(e.target.value)}
+                    className="lsOptionInput"
+                  />
+                </div>
+                <div className="lsOptionItem">
+                  <span className="lsOptionText">Max price</span>
+                  <input
+                    type="number"
+                    onChange={(e) => setMax(e.target.value)}
                     className="lsOptionInput"
                   />
                 </div>
 
-                {/* {data && data.map((item,index)=>{
-              return(
-                <>
-                <span style={{color:'white'}}>{item.type} </span><input type="checkbox" /><span style={{color:'white',float:'right'}}>
-                {item.type.length}
-                  </span>
-                  <br/>
-
-                </>
-              )
-             })} */}
-                {/* <span style={{color:'white'}}>Appartments </span><input type="checkbox" /> */}
               </div>
               <button onClick={handleClick}>Search</button>
-            </div>
+            </div> */}
           </div>
         </Grid>
 
@@ -202,7 +200,7 @@ const CarList = () => {
             padding: "18px 18px",
           }}>
             {data.cars &&
-              data.cars.map((item, i) => <CarSearchItem item={item} key={i} />)}
+              data.cars.map((item) => <CarSearchItem item={item} key={item._id} />)}
           </Grid>
         )}
         {/* </div> */}
