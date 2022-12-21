@@ -23,6 +23,7 @@ import "react-medium-image-zoom/dist/styles.css";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MailList from "../../Components/MailList/MailList";
+
 const CarDetail = () => {
   const history = useHistory();
   const location = useLocation();
@@ -77,7 +78,7 @@ const CarDetail = () => {
 
   const handleClick = () => {
     if (!user) {
-      setOpenModal(true);
+      history.push("/checkout")
     } else {
       history.push("/login");
     }
@@ -137,7 +138,7 @@ const CarDetail = () => {
             </div>
             <span className="hotelDistance">{data.car.title}</span>
             <span className="hotelPriceHighlight">
-              Fare: ${data.car.fare}
+              Fare: PKR{data.car.fare}
             </span>
             <div className="hotelImages">
               {data.car.carImage?.map((photo, i) => (
@@ -183,7 +184,6 @@ const CarDetail = () => {
           {/* <Footer /> */}
         </div>
       )}
-      {/* {openModal && <Reserve setOpen={setOpenModal} carId={id} />} */}
       <Footer />
     </>
   );

@@ -29,6 +29,7 @@ import { getAllVacationsCategory } from "./Redux/Actions/vacationCategoryAction"
 import { isUserLoggedIn } from "../src/Redux/Actions/userActions";
 import { getInitialData } from "../src/Redux/Actions/initialDataAction";
 import HotelList from "./Pages/NavHotel/HotelList";
+import Checkout from "./Pages/Checkout/Checkout";
 
 function App() {
   const dispatch = useDispatch();
@@ -69,6 +70,7 @@ function App() {
         <Route exact path="/package/:slug/:id/detail" component={SearchedPackageDetail} />
         <Route exact path="/vacation/:slug/:slug/:id/detail"  component={PackageDetail}/>
         <Route exact path="/contactus" component={Contactus} />
+        <Route exact path="/checkout" component={Checkout} />
         <Route exact path="/hotels-list" component={HotelList} />
         <Route path="/login" component={Login} />
         <Route path="/register" component={SignUp} />

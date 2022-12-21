@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useHistory, useLocation, useParams } from "react-router-dom";
 import Navbar from "../../Navbar/Navbar";
 // import "./StyleCity.css";
 import Button from "@mui/material/Button";
@@ -13,12 +13,25 @@ import { getDestinationDetailById } from "../../Redux/Actions/topDestinationActi
 import { ImageUrl } from "../../Redux/UrlConfig";
 import { getPackageBySlug } from "../../Redux/Actions/packageAction";
 import { getProductDetailById } from "../../Redux/Actions/vacationProductAction";
+import { format } from "date-fns";
+import { DateRange, DateRangePicker } from "react-date-range";
 
 const Package = (props) => {
   const params = useParams();
-  console.log(params);
-  let { id } = useParams();
+  const {slug} = params
+  const location = useLocation();
+  const history = useHistory();
+  // console.log(params);
+  const [packageDestination, setPackageDestination] = useState(
+    slug
+  );
+  const [dates, setDates] = useState(location.state.state.dates);
+  const [options, setOptions] = useState(location.state.state.options);
+  const [openPackageDate, setOpenPackageDate] = useState(false);
 
+  let { id } = useParams();
+  console.log(params)
+  console.log("location", location);
   const dispatch = useDispatch();
   const { packages } = useSelector((state) => state.packagesReducer);
   // console.log(packages)
@@ -199,6 +212,10 @@ const Package = (props) => {
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+  const handleSearch = () => {
+   
+  };
   return (
     <>
       <Navbar />
@@ -208,9 +225,7 @@ const Package = (props) => {
         <div className="row ms-4 mt-5">
           <div className="col-10 ms-5">
             <h1 className="lhrH1">{params.slug}</h1>
-            <p className="lhrIntro mt-5">
-              {product.description}
-            </p>
+            <p className="lhrIntro mt-5">{product.description}</p>
           </div>
         </div>
         {/* End of introduction of city */}
@@ -305,14 +320,30 @@ const Package = (props) => {
                 </Offcanvas.Header>
                 <Offcanvas.Body>
                   <div className="col-12">
-                    <div style={{ backgroundColor: "#186B6D" }} className="p-4">
+                    <div
+                      style={{ backgroundColor: "#186B6D" }}
+                      className="p-4 lsItem"
+                    >
                       <p style={{ color: "white" }}>When are you traveling?</p>
-                      <input
+                      {/* <input
                         className="form-control form-control-lg"
                         type="date"
                         placeholder=".form-control-lg"
                         aria-label=".form-control-lg example"
-                      ></input>
+                      ></input> */}
+                      <span
+                        onClick={() => setOpenPackageDate(!openPackageDate)}
+                      >{`${format(
+                        dates[0].startDate,
+                        "MM/dd/yyyy"
+                      )} to ${format(dates[0].endDate, "MM/dd/yyyy")}`}</span>
+                      {openPackageDate && (
+                        <DateRange
+                          onChange={(item) => setDates([item.selection])}
+                          minDate={new Date()}
+                          ranges={dates}
+                        />
+                      )}
                     </div>
 
                     <div className="p-4">
@@ -933,14 +964,25 @@ const Package = (props) => {
                               <i class="fa-solid fa-check me-2"></i>
                               {data.refundable}
                             </small>
-                            <Link to={`${params.slug}/${data._id}/detail`}>
+                            {/* <Link
+                              to={`/${data._id}`}
+                            > */}
                               <Button
+                              onClick={function() {
+                                dispatch({
+                                  type: "NEW_SEARCH",
+                                  payload: { packageDestination, dates, options },
+                                });
+                                history.push(`${params.slug}/${data._id}/detail`,{
+                                  state: { packageDestination, dates, options },
+                                });
+                              }}
                                 variant="contained"
                                 style={{ float: "right" }}
                               >
                                 Reserve
                               </Button>
-                            </Link>
+                            {/* </Link> */}
                           </div>
                         </div>
                       </div>

@@ -137,9 +137,9 @@ const Landing = ({ type }) => {
     history.push("/hotels", { state: { destination, dates, options } });
   };
   const handlePackageSearch = () => {
-    dispatch({ type: "NEW_SEARCH", payload: { destination, dates, options } });
+    dispatch({ type: "NEW_SEARCH", payload: { packageDestination, dates, options } });
     history.push(`/package/${destination}`, {
-      state: { destination, dates, options },
+      state: { packageDestination, dates, options },
     });
   };
   const handleCarSearch = () => {
@@ -584,8 +584,9 @@ const Landing = ({ type }) => {
                                   // onChange={(e) =>
                                   //   setPackageDestination(e.target.value)
                                   // }
+                                  value={packageDestination}
                                   onChange={(e) =>
-                                    setDestination(e.target.value)
+                                    setPackageDestination(e.target.value)
                                   }
                                   placeholder="Lahore, PK"
                                 />
@@ -617,20 +618,20 @@ const Landing = ({ type }) => {
                                 }
                               >
                                 {`${format(
-                                  packageDate[0].startDate,
+                                  dates[0].startDate,
                                   "MM/dd/yyyy"
                                 )} to ${format(
-                                  packageDate[0].endDate,
+                                  dates[0].endDate,
                                   "MM/dd/yyyy"
                                 )}`}
                               </span>
                               {openPackageDate && (
                                 <DateRangePicker
                                   editableDateInputs={true}
-                                  ranges={packageDate}
+                                  ranges={dates}
                                   moveRangeOnFirstSelection={false}
                                   onChange={(item) =>
-                                    setPackageDate([item.selection])
+                                    setDates([item.selection])
                                   }
                                   className="date"
                                 />
@@ -646,9 +647,9 @@ const Landing = ({ type }) => {
                                   fontSize: "14px",
                                   cursor: "pointer",
                                 }}
-                                onClick={() => setOpenOptions2(!openOptions2)}
-                              >{`${options2.adult} Adult - ${options2.children} Children - ${options2.room} Room`}</span>
-                              {openOptions2 && (
+                                onClick={() => setOpenOptions(!openOptions)}
+                              >{`${options.adult} Adult - ${options.children} Children`}</span>
+                              {openOptions && (
                                 <div className="options2">
                                   <div className="optionItems">
                                     <span
@@ -662,9 +663,9 @@ const Landing = ({ type }) => {
                                     <div className="optionButton">
                                       <button
                                         className="optionbtn"
-                                        disabled={options2.adult <= 1}
+                                        disabled={options.adult <= 1}
                                         onClick={() =>
-                                          handleOption2("adult", "decreament")
+                                          handleOption("adult", "decreament")
                                         }
                                       >
                                         -
@@ -675,13 +676,13 @@ const Landing = ({ type }) => {
                                           fontSize: "14px",
                                         }}
                                       >
-                                        {options2.adult}
+                                        {options.adult}
                                       </span>
                                       <button
                                         className="optionbtn"
                                         style={{ marginRight: "1px" }}
                                         onClick={() =>
-                                          handleOption2("adult", "increament")
+                                          handleOption("adult", "increament")
                                         }
                                       >
                                         +
@@ -700,9 +701,9 @@ const Landing = ({ type }) => {
                                     <div className="optionButton">
                                       <button
                                         className="optionbtn"
-                                        disabled={options2.children <= 0}
+                                        disabled={options.children <= 0}
                                         onClick={() =>
-                                          handleOption2(
+                                          handleOption(
                                             "children",
                                             "decreament"
                                           )
@@ -716,12 +717,12 @@ const Landing = ({ type }) => {
                                           fontSize: "14px",
                                         }}
                                       >
-                                        {options2.children}
+                                        {options.children}
                                       </span>
                                       <button
                                         className="optionbtn"
                                         onClick={() =>
-                                          handleOption2(
+                                          handleOption(
                                             "children",
                                             "increament"
                                           )
@@ -731,7 +732,7 @@ const Landing = ({ type }) => {
                                       </button>
                                     </div>
                                   </div>
-                                  <div className="optionItems">
+                                  {/* <div className="optionItems">
                                     <span
                                       style={{
                                         color: "black",
@@ -744,9 +745,9 @@ const Landing = ({ type }) => {
                                       <button
                                         className="optionbtn"
                                         style={{ marginRight: "3px" }}
-                                        disabled={options2.room <= 1}
+                                        disabled={options.room <= 1}
                                         onClick={() =>
-                                          handleOption2("room", "decreament")
+                                          handleOption("room", "decreament")
                                         }
                                       >
                                         -
@@ -757,18 +758,18 @@ const Landing = ({ type }) => {
                                           fontSize: "14px",
                                         }}
                                       >
-                                        {options2.room}
+                                        {options.room}
                                       </span>
                                       <button
                                         className="optionbtn"
                                         onClick={() =>
-                                          handleOption2("room", "increament")
+                                          handleOption("room", "increament")
                                         }
                                       >
                                         +
                                       </button>
                                     </div>
-                                  </div>
+                                  </div> */}
                                 </div>
                               )}
                             </section>

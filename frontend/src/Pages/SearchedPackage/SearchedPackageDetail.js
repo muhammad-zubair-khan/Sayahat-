@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Footer from "../../Footer/Footer";
 import Navbar from "../../Navbar/Navbar";
@@ -7,16 +7,20 @@ import {
   getPackageBySlug,
   getPackageDetailById,
 } from "../../Redux/Actions/packageAction";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { ImageUrl } from "../../Redux/UrlConfig";
-import { useState } from "react";
-
+import { format } from "date-fns";
+import { DateRange, DateRangePicker } from "react-date-range";
 function SearchedPackageDetail() {
+  const location = useLocation();
+  console.log(location);
+  const [packageDestination, setPackageDestination] = useState(
+    location.state.state.packageDestination
+  );
+  const [openPackageDate, setOpenPackageDate] = useState(false);
+  const [dates, setDates] = useState(location.state.state.dates);
   const [openOptions, setOpenOptions] = useState(false);
-  const [options, setOptions] = useState({
-    adult: 1,
-    children: 0,
-  });
+  const [options, setOptions] = useState(location.state.state.options);
   const handleOption = (name, operation) => {
     setOptions((prev) => {
       return {
@@ -143,12 +147,28 @@ function SearchedPackageDetail() {
             <span style={{ color: "#1874A2" }}>Lowest Price Guarantee</span>
             <hr />
             <h4 className="text-black">Select Date and Travelers</h4>
-            <input
+            <div className="p-4 lsItem">
+              <span
+                onClick={() => setOpenPackageDate(!openPackageDate)}
+              >{`${format(dates[0].startDate, "MM/dd/yyyy")} to ${format(
+                dates[0].endDate,
+                "MM/dd/yyyy"
+              )}`}</span>
+              {openPackageDate && (
+                <DateRange
+                  onChange={(item) => setDates([item.selection])}
+                  minDate={new Date()}
+                  ranges={dates}
+                />
+              )}
+            </div>
+
+            {/* <input
               className="form-control form-control"
               type="date"
               placeholder=".form-control-lg"
               aria-label=".form-control-lg example"
-            ></input>
+            ></input> */}
             {/* <div className="input-group mt-3">
               <span className="input-group-text">
                 <i class="fa-regular fa-user"></i>
@@ -226,7 +246,7 @@ function SearchedPackageDetail() {
                           className="optionbtn"
                           style={{ marginRight: "1px" }}
                           onClick={() => handleOption("adult", "increament")}
-                          disabled={options.adult >=15}
+                          disabled={options.adult >= 15}
                         >
                           +
                         </button>
@@ -244,7 +264,7 @@ function SearchedPackageDetail() {
                       <div className="optionButton">
                         <button
                           className="optionbtn"
-                          disabled={options.children <= 0 }
+                          disabled={options.children <= 0}
                           onClick={() => handleOption("children", "decreament")}
                         >
                           -
@@ -260,7 +280,9 @@ function SearchedPackageDetail() {
                         <button
                           className="optionbtn"
                           onClick={() => handleOption("children", "increament")}
-                          disabled={options.children >=15 && options.adult >=15 }
+                          disabled={
+                            options.children >= 15 && options.adult >= 15
+                          }
                         >
                           +
                         </button>
