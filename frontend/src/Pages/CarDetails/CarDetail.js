@@ -14,7 +14,7 @@ import { useHistory, useLocation, useParams } from "react-router-dom";
 import { SearchContext } from "../../Context/SearchContext";
 import Navbar from "../../Navbar/Navbar";
 import Footer from "../../Footer/Footer";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 // import { AuthContext } from "../../context/AuthContext";
 import Reserve from "../../Components/Reserve/Reserve";
 import { ImageUrl } from "../../Redux/UrlConfig";
@@ -25,6 +25,7 @@ import Tooltip from "@mui/material/Tooltip";
 import MailList from "../../Components/MailList/MailList";
 
 const CarDetail = () => {
+  const dispatch = useDispatch()
   const history = useHistory();
   const location = useLocation();
   const id = location.pathname.split("/")[2];
@@ -77,8 +78,12 @@ const CarDetail = () => {
   };
 
   const handleClick = () => {
+    
     if (!user) {
-      history.push("/checkout")
+      dispatch({ type: "NEW_SEARCH", payload: { startDestination,endDestination,pickupTime,dropoffTime, dates } });
+      history.push(`/car/${id}/checkout`,{
+        state: { startDestination,endDestination,pickupTime,dropoffTime, dates },
+      })
     } else {
       history.push("/login");
     }

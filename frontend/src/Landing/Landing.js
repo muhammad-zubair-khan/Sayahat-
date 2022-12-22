@@ -297,6 +297,7 @@ const Landing = ({ type }) => {
                             <div className="input-field">
                               <label for="from">Pick-up Time</label>
                               <input
+                              style={{backgroundColor:"#d3d4d6"}}
                                 type="time"
                                 className="form-control"
                                 onChange={(e) =>
@@ -309,11 +310,13 @@ const Landing = ({ type }) => {
                             <div className="input-field">
                               <label for="from">Drop-off Time</label>
                               <input
+                              style={{backgroundColor:"#d3d4d6"}}
                                 type="time"
                                 className="form-control"
                                 onChange={(e) =>
                                   setDropoffTime(e.target.value)
                                 }
+                                placeholder="select pickup time"
                               />
                             </div>
                           </div>
@@ -348,7 +351,7 @@ const Landing = ({ type }) => {
                           <div className="col-xs-12">
                             <input
                               className="btn btn-primary btn-block"
-                              value="Search Car"
+                              value="Search Cars"
                               onClick={handleCarSearch}
                             />
                           </div>
@@ -360,7 +363,7 @@ const Landing = ({ type }) => {
                           <div className="col-xxs-12 col-xs-12 mt">
                             <div className="input-field">
                               <label for="from">City:</label>
-                              <div style={{ width: 400 }}>
+                              <div >
                                 <ReactSearchAutocomplete
                                   items={products}
                                   // onSearch={handleOnSearch}
@@ -385,7 +388,7 @@ const Landing = ({ type }) => {
                             </div>
                           </div>
 
-                          <div className="col-xxs-12 col-xs-6 mt alternate">
+                          <div className="col-xxs-12 col-xs-12 mt alternate">
                             <div className="input-field search-item">
                               <CalendarMonthIcon style={{ color: "white" }} />
                               <span
@@ -555,7 +558,7 @@ const Landing = ({ type }) => {
                               className="btn btn-primary btn-block"
                               value="Search Hotels"
                             >
-                              Search
+                              Search Hotels
                             </button>
                           </div>
                         </div>
@@ -563,7 +566,7 @@ const Landing = ({ type }) => {
                       {/* /////////////////////////////////////////////////////////////// */}
                       <div role="tabpanel" className="tab-pane" id="packages">
                         <div className="row">
-                          <div className="col-xxs-12 col-xs-6 mt">
+                          <div className="col-xxs-12 col-xs-12 mt">
                             <div className="input-field">
                               <label for="from">City:</label>
                               {/* <input

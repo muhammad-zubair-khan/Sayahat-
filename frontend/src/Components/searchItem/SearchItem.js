@@ -35,7 +35,7 @@ const SearchItem = ({ item }) => {
 
   const { dispatch } = useContext(SearchContext);
 const history = useHistory()
-  console.log(item)
+  // console.log(item)
 
   const { data, loading, error, reFetch } = useFetch(
     `http://localhost:5000/api/hotels?city=${destination}&min=${min || 0}&max=${

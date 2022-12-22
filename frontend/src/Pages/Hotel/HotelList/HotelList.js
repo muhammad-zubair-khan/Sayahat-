@@ -30,7 +30,7 @@ const HotelList = () => {
       max || 99999
     }`
   );
-console.log(data)
+// console.log(data)
   const handleClick = () => {
     reFetch();
   };
@@ -61,9 +61,9 @@ console.log(data)
                   onChange={(item) => setDates([item.selection])}
                   ranges={dates}
                   minDate={new Date()}
-                  disabledDates={true}
-                />
-              )}
+                  />
+                  )}
+                {/* {console.log(setDates)} */}
             </div>
 
             <div className="lsItem">

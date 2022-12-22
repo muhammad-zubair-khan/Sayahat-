@@ -70,7 +70,7 @@ function App() {
         <Route exact path="/package/:slug/:id/detail" component={SearchedPackageDetail} />
         <Route exact path="/vacation/:slug/:slug/:id/detail"  component={PackageDetail}/>
         <Route exact path="/contactus" component={Contactus} />
-        <Route exact path="/checkout" component={Checkout} />
+        <Route exact path="/car/:id/checkout" component={Checkout} />
         <Route exact path="/hotels-list" component={HotelList} />
         <Route path="/login" component={Login} />
         <Route path="/register" component={SignUp} />
