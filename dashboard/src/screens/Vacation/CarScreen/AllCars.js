@@ -10,6 +10,7 @@ import Button from "@mui/material/Button";
 import Zoom from "react-medium-image-zoom";
 import "react-medium-image-zoom/dist/styles.css";
 import { deleteCar } from "../../../Redux/Actions/carAction";
+import { ImageUrl } from "../../../Redux/UrlConfig";
 
 const AllCars = (props) => {
   const dispatch = useDispatch();
@@ -26,8 +27,8 @@ const AllCars = (props) => {
 
   const columns = [
     {
-      field: "carImage",
-      headerName: "Hotel img",
+      field: "carImages",
+      headerName: "Car img",
       minWidth: 290,
       minHeight: 200,
       flex: 0.5,
@@ -37,7 +38,7 @@ const AllCars = (props) => {
           <div style={{ textAlign: "center" }}>
             <Zoom>
               <img
-                src={params.row.carImage}
+                src={ImageUrl(params.row.carImages[0].img)}
                 style={{ width: "20%", margin: "10px 10px" }}
                 alt={params.row.name}
               />
@@ -125,7 +126,7 @@ const AllCars = (props) => {
     cars.forEach((item) => {
       rows.push({
         id: item._id,
-        carImage: item.carImage,
+        carImages: item.carImages,
         name: item.name,
         type: item.type,
         description: item.description,

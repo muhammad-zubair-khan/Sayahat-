@@ -33,6 +33,7 @@ const HotelDetail = () => {
   const [open, setOpen] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const [dates, setDates] = useState(location.state.state.dates);
+  const [destination, setDestination] = useState(location.state.state.destination);
   const [options, setOptions] = useState(location.state.state.options);
 
   const { data, loading, error } = useFetch(
@@ -42,6 +43,8 @@ const HotelDetail = () => {
   // const { user } = useContext(AuthContext);
   // const { dates, options } = useContext(SearchContext);
   console.log(dates);
+  console.log(options);
+  console.log(destination);
   const MILLISECONDS_PER_DAY = 1000 * 60 * 60 * 24;
   function dayDifference(date1, date2) {
     const timeDiff = Math.abs(date2.getTime() - date1.getTime());

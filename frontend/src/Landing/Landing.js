@@ -154,34 +154,49 @@ const Landing = ({ type }) => {
     dispatch(getAllVacationProduct());
   }, []);
 
-  // const items = [
-  //   {
-  //     id: 0,
-  //     name: 'Cobol'
-  //   },
-  //   {
-  //     id: 1,
-  //     name: 'JavaScript'
-  //   },
-  //   {
-  //     id: 2,
-  //     name: 'Basic'
-  //   },
-  //   {
-  //     id: 3,
-  //     name: 'PHP'
-  //   },
-  //   {
-  //     id: 4,
-  //     name: 'Java'
-  //   }
-  // ]
+
   // const handleOnSearch = (string, results) => {
   //   // onSearch will have as the first callback parameter
   //   // the string searched and for the second the results.
   //   console.log(string, results)
   // }
 
+  //Car Functions
+  const CarhandleOnHover = (result) => {
+    // the item hovered
+    console.log(result);
+  };
+
+  const CarhandleOnSelect = (product) => {
+    // the item selected
+    setStartDestination(product.name);
+    console.log(product);
+  };
+  const CarEndhandleOnSelect = (product) => {
+    // the item selected
+    setEndDestination(product.name);
+    console.log(product);
+  };
+
+  const CarhandleOnFocus = () => {
+    console.log("Focused");
+  };
+
+  const CarformatResult = (product) => {
+    return (
+      <>
+        <span style={{ textAlign: "left", display: "none" }}>
+          id: {product._id}
+        </span>
+        <span style={{ display: "block", textAlign: "left" }}>
+          {product.name}
+        </span>
+      </>
+    );
+  };
+
+
+  //Package Functions
   const handleOnHover = (result) => {
     // the item hovered
     console.log(result);
@@ -268,7 +283,7 @@ const Landing = ({ type }) => {
                           <div className="col-xxs-12 col-xs-6 mt">
                             <div className="input-field">
                               <label for="from">From:</label>
-                              <input
+                              {/* <input
                                 type="text"
                                 className="form-control"
                                 id="from-place"
@@ -276,13 +291,28 @@ const Landing = ({ type }) => {
                                 onChange={(e) =>
                                   setStartDestination(e.target.value)
                                 }
-                              />
+                              /> */}
+                              <ReactSearchAutocomplete
+                                  items={products}
+                                  // onSearch={handleOnSearch}
+                                  onHover={CarhandleOnHover}
+                                  onSelect={CarhandleOnSelect}
+                                  // onFocus={handleOnFocus}
+                                  autoFocus
+                                  formatResult={CarformatResult}
+                                  value={startDestination}
+
+                                  onChange={(e) =>
+                                    setStartDestination(e.target.value)
+                                  }
+                                  placeholder="Lahore, PK"
+                                />
                             </div>
                           </div>
                           <div className="col-xxs-12 col-xs-6 mt">
                             <div className="input-field">
                               <label for="from">To:</label>
-                              <input
+                              {/* <input
                                 type="text"
                                 className="form-control"
                                 id="to-place"
@@ -290,7 +320,22 @@ const Landing = ({ type }) => {
                                 onChange={(e) =>
                                   setEndDestination(e.target.value)
                                 }
-                              />
+                              /> */}
+                              <ReactSearchAutocomplete
+                                  items={products}
+                                  // onSearch={handleOnSearch}
+                                  onHover={CarhandleOnHover}
+                                  onSelect={CarEndhandleOnSelect}
+                                  // onFocus={handleOnFocus}
+                                  autoFocus
+                                  formatResult={CarformatResult}
+                                  value={endDestination}
+                                  onChange={(e) =>
+                                    setEndDestination(e.target.value)
+                                  }
+                                  placeholder="Islamabad, PK"
+                                  
+                                />
                             </div>
                           </div>
                           <div className="col-xxs-12 col-xs-6 mt">
@@ -303,6 +348,7 @@ const Landing = ({ type }) => {
                                 onChange={(e) =>
                                   setPickupTime(e.target.value)
                                 }
+                                required
                               />
                             </div>
                           </div>
@@ -317,6 +363,7 @@ const Landing = ({ type }) => {
                                   setDropoffTime(e.target.value)
                                 }
                                 placeholder="select pickup time"
+                                required
                               />
                             </div>
                           </div>
@@ -363,7 +410,7 @@ const Landing = ({ type }) => {
                           <div className="col-xxs-12 col-xs-12 mt">
                             <div className="input-field">
                               <label for="from">City:</label>
-                              <div >
+                              <div>
                                 <ReactSearchAutocomplete
                                   items={products}
                                   // onSearch={handleOnSearch}

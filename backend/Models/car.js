@@ -52,11 +52,11 @@ const carSchema = new mongoose.Schema({
         type: String,
         required:true,
     },
-    carImage:[
+    carImages:[
         { 
           img: {
              type: String,
-              required:true
+             required:true
             }
         }
       ],

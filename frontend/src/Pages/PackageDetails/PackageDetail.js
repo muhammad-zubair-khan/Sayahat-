@@ -33,7 +33,6 @@ function PackageDetail() {
 
   const dispatch = useDispatch();
   const packages = useSelector((state) => state.addPackageReducer);
-  console.log("pack", packages.package.packageImage);
   // console.log("picc>>>>>>>>",packages.package.packageImage)
   useEffect(() => {
     dispatch(getPackageDetailById(id));
@@ -116,8 +115,8 @@ function PackageDetail() {
         <div className="row">
           <h3 className="text-black">{packages.package.name}</h3>
           <div class="col-2">
-            {packages.package.packageImage &&
-              packages.package.packageImage.map((pic, index) => {
+            {packages.package.packageImages &&
+              packages.package.packageImages.map((pic, index) => {
                 return (
                   <img
                     src={ImageUrl(pic.img)}
@@ -131,7 +130,7 @@ function PackageDetail() {
           </div>
           <div className="col-6">
             <img
-              src={ImageUrl(packages.package.packageImage[0].img)}
+              src={ImageUrl(packages.package.packageImages[0].img)}
               className=""
               width="100%"
               height=""

@@ -104,14 +104,15 @@ const MyCard = () => {
 
   let [count, setcount] = useState(1);
 
-  let [progress, setprogress] = useState(27);
+  // let [progress, setprogress] = useState(27);
+  let [progress, setprogress] = useState(30);
 
   // const [isDisabled, setDisabled] = useState(false);
 
   let countIncrement = () => {
-    if (count < 4) {
+    if (count < 3) {
       setcount(count + 1);
-      setprogress(progress + 27);
+      setprogress(progress + 35);
     } else {
       // document.getElementById("nextBtn").style.display = 'none';
       // setDisabled(true);
@@ -123,8 +124,8 @@ const MyCard = () => {
   const countDecrement = () => {
     if (count > 1) {
       setcount(count - 1);
-      setprogress(progress - 27);
-      document.getElementById("nextBtn").style.display = 'block';
+      setprogress(progress - 30);
+      // document.getElementById("nextBtn").style.display = 'block';
 
     }
   };
@@ -139,7 +140,6 @@ const MyCard = () => {
               type="button"
               data-bs-target="#carouselExampleIndicators"
               data-bs-slide="prev"
-              
             >
               <span
                 className="carousel-control-prev-icon"

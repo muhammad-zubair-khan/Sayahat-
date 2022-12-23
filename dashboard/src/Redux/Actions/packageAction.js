@@ -50,7 +50,7 @@ export const getAllPackages = () => async (dispatch) => {
   try {
     dispatch({ type: GET_ALL_PACKAGES_REQUEST });
 
-    const { data } = await axios.get("/packages");
+    const { data } = await axios.get("/all-packages");
 
     dispatch({
       type: GET_ALL_PACKAGES_SUCCESS,

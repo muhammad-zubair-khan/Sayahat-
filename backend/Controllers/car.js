@@ -25,9 +25,9 @@ exports.addCar = catchAsyncErrors(async (req, res) => {
     city,
   } = req.body;
 
-  let carImage = [];
+  let carImages = [];
   if (req.files.length > 0) {
-    carImage = req.files.map((file) => {
+    carImages = req.files.map((file) => {
       return { img: file.filename };
     });
   }
@@ -35,19 +35,19 @@ exports.addCar = catchAsyncErrors(async (req, res) => {
   const car = await new Car({
     name: name,
     slug: slugify(name),
-    passenger: passenger,
-    carImage,
-    fare: fare,
-    description: description,
-    mileage: mileage,
-    payAt: payAt,
-    shuttle: shuttle,
-    refund: refund,
-    discount: discount,
-    type: type,
-    gear: gear,
-    city: city,
-    title: title,
+    passenger,
+    carImages,
+    fare,
+    description,
+    mileage,
+    payAt,
+    shuttle,
+    refund,
+    discount,
+    type,
+    gear,
+    city,
+    title,
     category,
     // createdBy: req.user._id,
   });

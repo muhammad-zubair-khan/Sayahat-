@@ -19,31 +19,61 @@ import {
   import axios from "../helpers/axios";
 
 // Create New Hotel
-export const createHotel = (form) => {
-  return async dispatch => {
-    dispatch({ type:  CREATE_NEW_HOTEL_REQUEST });
-    try {
-      const res = await axios.post("/vacation/Hotel/add", form);
-      console.log("res......",res)
-      if (res.status === 201) {
-        dispatch({
-          type: CREATE_NEW_HOTEL_SUCCESS,
-          payload: res.data.hotel,
-        });
-      } else {
-        dispatch({
-          type: CREATE_NEW_HOTEL_FAIL,
-          payload: res.data.error,
-        });
-      }
-    } catch (error) {
-      console.log(error.message);
-    //   if(e instance of BSONTypeError){
-    //  }
-    }
+// export const createHotel = (form) => {
+//   return async dispatch => {
+//     try {
+//     dispatch({ type:  CREATE_NEW_HOTEL_REQUEST });
+//     const config = {
+//       headers: { "Content-Type": "application/json" },
+//     };
+//     const { data } = await axios.post(
+//       `/vacation/Hotel/add`,
+//       form,
+//       config
+//     );
+//       // const res = await axios.post("/vacation/Hotel/add", form);
+//       // console.log("res......",res)
+//       // if (res.status === 201) {
+//         dispatch({
+//           type: CREATE_NEW_HOTEL_SUCCESS,
+//           payload: data,
+//         });
+//       } 
+//       catch(error){
+//         dispatch({
+//           type: CREATE_NEW_HOTEL_FAIL,
+//           payload:  error.response.data.message,
+//         });
+//       }
+//     } 
+//   };
+export const createHotel = (hotelData) => async (dispatch) => {
+  try {
+    dispatch({ type: CREATE_NEW_HOTEL_REQUEST });
 
-  };
+    // const config = {
+    //   headers: { "Content-Type": "application/json" },
+    // };
+
+    const { data } = await axios.post(
+      `/vacation/Hotel/add`,
+      hotelData,
+      // config
+    );
+
+    console.log(data)
+    dispatch({
+      type: CREATE_NEW_HOTEL_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: CREATE_NEW_HOTEL_FAIL,
+      payload: error.response.data.message,
+    });
+  }
 };
+
 
 // Get All Hotels For Admin
 export const getAllHotels = () => async (dispatch) => {

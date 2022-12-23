@@ -17,7 +17,10 @@ import {
   getAllVacationProduct,
   getVacationProductsBySlug,
 } from "../../../Redux/Actions/vacationProductAction";
-import { createHotel, getHotelBySlug } from "../../../Redux/Actions/hotelAction";
+import {
+  createHotel,
+  getHotelBySlug,
+} from "../../../Redux/Actions/hotelAction";
 import Box from "@mui/material/Box";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
@@ -57,9 +60,10 @@ const CitiesManagementScreen = (props) => {
   const [cheapestPrice, setCheapestPrice] = useState("");
   const [featured, setFeatured] = useState("");
   const [hotelImages, setHotelImages] = useState([]);
-  const [hotelImagesPreview, setHotelImagesPreview] = useState([]);
-
+  // const [hotelImagesPreview, setHotelImagesPreview] = useState([]);
+  
   //Car States
+  let [carCity, setCarCity] = useState("");
   const [carName, setCarName] = useState("");
   const [passenger, setPassenger] = useState("");
   const [fare, setFare] = useState("");
@@ -70,19 +74,25 @@ const CitiesManagementScreen = (props) => {
   const [refund, setRefund] = useState("");
   const [discount, setDiscount] = useState("");
   const [desc, setDesc] = useState("");
+  const [gear, setGear] = useState("");
+  const [carTitle, setCarTitle] = useState("");
+  const [carImages, setCarImages] = useState([]);
+  // const [carImagesPreview, setCarImagesPreview] = useState([]);
 
   //Package States
-  const [packageName,setPackageName] = useState("");
-  const [packageDescription,setPackageDescription] = useState("");
-  const [price,setPrice] = useState("");
-  const [duration,setDuration] = useState("");
-  const [refundable,setRefundable] = useState("");
-  const [product,setProduct] = useState("");
+  let [packageCity,setPackageCity] = useState("");
+  const [packageName, setPackageName] = useState("");
+  const [packageDescription, setPackageDescription] = useState("");
+  const [price, setPrice] = useState("");
+  const [duration, setDuration] = useState("");
+  const [refundable, setRefundable] = useState("");
+  const [product, setProduct] = useState("");
+  const [packageImages,setPackageImages] = useState([]);
 
   const dispatch = useDispatch();
   const { products } = useSelector((state) => state.vacationProduct);
   console.log(products);
-  const {destinations} = useSelector((state) => state.allDestinationReducer);
+  const { destinations } = useSelector((state) => state.allDestinationReducer);
   //   useEffect(() => {
   //     const { match } = props;
   //   console.log(props);
@@ -91,7 +101,7 @@ const CitiesManagementScreen = (props) => {
     const { match } = props;
     console.log(props);
     dispatch(getAllVacationProduct());
-    dispatch(getAllDestinations())
+    dispatch(getAllDestinations());
     dispatch(getHotelBySlug(match.params.slug));
   }, [dispatch, props]);
 
@@ -113,35 +123,6 @@ const CitiesManagementScreen = (props) => {
     setHotelHidden(false);
     setCarHidden(false);
   };
-  // const [hotelImage, setHotelImages] = useState([]);
-  // const [imagesPreview, setImagesPreview] = useState([]);
-  // const createHotelImagesChange = (e) => {
-  //   const files = Array.from(e.target.files);
-
-  //   setHotelImages([]);
-  //   setImagesPreview([]);
-
-  //   files.forEach((file) => {
-  //     const reader = new FileReader();
-
-  //     reader.onload = () => {
-  //       if (reader.readyState === 2) {
-  //         setImagesPreview((old) => [...old, reader.result]);
-  //         setHotelImages((old) => [...old, reader.result]);
-  //       }
-  //     };
-
-  //     reader.readAsDataURL(file);
-  //   });
-  // };
-
-  // }
-
-  //Hotel Functions
-
-  // const onChangeFile = (e) => {
-  //   setHotelImages(e.target.files[0]);
-  // };
 
   const createHotelSubmitHandler = (e) => {
     e.preventDefault();
@@ -187,23 +168,23 @@ const CitiesManagementScreen = (props) => {
     myForm.set("FullyRefundable", fullyRefundable);
     console.log(fullyRefundable);
 
-    hotelImages.forEach((image) => {
-      myForm.append("hotelImage", image);
-      console.log("hotelImage>>>",hotelImages)
+    // hotelImages.forEach((image) => {
+    //   myForm.append("images", image);
+    //   console.log("images>>>",image)
+    // });
+    Array.from(hotelImages).forEach((item) => {
+      myForm.append("hotelImages", item);
     });
-    // myForm.append("hotelImage", hotelImage);
-    // console.log(hotelImage);
 
     dispatch(createHotel(myForm));
     // console.log(createProduct(myForm));
     history.push(`/hotel/${props.match.params.slug}`);
   };
-  //car functions
-  const [carImage, setCarImage] = useState([]);
-  const [carimagesPreview, setCarImagesPreview] = useState([]);
-  const onChangeFileCar = (e) => {
-    setCarImage(e.target.files[0]);
-  };
+
+ 
+  // const onChangeFileCar = (e) => {
+  //   setCarImage(e.target.files[0]);
+  // };
   const onValueChange = (event) => {
     setPayAt(event.target.value);
   };
@@ -249,22 +230,26 @@ const CitiesManagementScreen = (props) => {
     myForm.set("discount", discount);
     console.log(discount);
 
-    myForm.append("carImage", carImage);
-    console.log(carImage);
+    myForm.set("title", carTitle);
+    console.log(carTitle);
+
+    myForm.set("city", carCity);
+    console.log(carCity);
+
+    myForm.set("gear", gear);
+    console.log(gear);
+
+    // myForm.append("carImage", carImage);
+    // console.log(carImage);
+    Array.from(carImages).forEach((item) => {
+      myForm.append("carImages", item);
+    });
 
     dispatch(addCar(myForm));
     // console.log(createProduct(myForm));
     history.push(`/car/${props.match.params.slug}`);
   };
 
-  //Package Functions
-  const [packageImage, setPackageImages] = useState([]);
-  const [packageImagesPreview, setPackageImagesPreview] = useState([]);
- 
-  //Hotel Functions
-  const onChangeFilePackage = (e) => {
-    setPackageImages(e.target.files[0]);
-  };
 
   const createPackageSubmitHandler = (e) => {
     e.preventDefault();
@@ -277,8 +262,8 @@ const CitiesManagementScreen = (props) => {
     myForm.set("description", packageDescription);
     console.log(packageDescription);
 
-    myForm.set("city", city);
-    console.log(city);
+    myForm.set("city", packageCity);
+    console.log(packageCity);
 
     myForm.set("price", price);
     console.log(price);
@@ -292,50 +277,15 @@ const CitiesManagementScreen = (props) => {
     myForm.set("refundable", refundable);
     console.log(refundable);
 
-    myForm.append("packageImage", packageImage);
-    console.log(packageImage);
+    Array.from(packageImages).forEach((item) => {
+      myForm.append("packageImages", item);
+    });
 
     dispatch(createPackage(myForm));
     // console.log(createProduct(myForm));
     history.push(`/package/${props.match.params.slug}`);
   };
-  const createHotelImagesChange = (e) => {
-    //   setProductPictures([...productPictures, e.target.files[0]]);
-    // };
-    const files = Array.from(e.target.files);
-    // setProductPictures([]);
-    // setImagesPreview([]);
-  
-    // files.forEach((file) => {
-    //   const reader = new FileReader();
-  
-    //   reader.onload = () => {
-    //     if (reader.readyState === 2) {
-    //       setImagesPreview((old) => [...old, reader.result]);
-    //       setProductPictures((old)=>[...old,reader.result]);
-    //     }
-    //   };
-    //   reader.readAsDataURL(file);
-    // });
-  
-    // setProductPictures([]);
-    setHotelImages([]);
-    setHotelImagesPreview([]);
-  
-    files.forEach((file) => {
-      const reader = new FileReader();
-  
-      reader.onload = () => {
-        if (reader.readyState === 2) {
-          setHotelImagesPreview((old) => [...old, reader.result]);
-          // setProductPictures((old) => [...old, reader.result]);
-          setHotelImages((old) => [...old, reader.result]);
-        }
-      };
-  
-      reader.readAsDataURL(file);
-    });
-    };
+
   return (
     <>
       <Sidebar>
@@ -386,7 +336,7 @@ const CitiesManagementScreen = (props) => {
                     required
                     id="outlined-required"
                     label="City"
-                    value={city = props.match.params.slug}
+                    value={(city = props.match.params.slug)}
                     onChange={(e) => setCity(e.target.value)}
                     // disabled
                   />
@@ -413,7 +363,6 @@ const CitiesManagementScreen = (props) => {
                   />
                 </div>
 
-                
                 <div>
                   <TextField
                     fullWidth
@@ -476,7 +425,7 @@ const CitiesManagementScreen = (props) => {
                             </MenuItem>
                           );
                         })}
-                        {destinations &&
+                      {destinations &&
                         destinations.map((data, index) => {
                           return (
                             <MenuItem value={data._id} key={index}>
@@ -487,9 +436,9 @@ const CitiesManagementScreen = (props) => {
                     </Select>
                   </FormControl>
                 </Box>
-               
+
                 <div style={{ display: "flex" }}>
-                  <span style={{marginRight: "81px"}}>Pool:</span>
+                  <span style={{ marginRight: "81px" }}>Pool:</span>
                   <input
                     type="radio"
                     value="Yes"
@@ -509,7 +458,7 @@ const CitiesManagementScreen = (props) => {
                 </div>
 
                 <div style={{ display: "flex" }}>
-                  <span style={{marginRight: "47px"}}>Breakfast:</span>
+                  <span style={{ marginRight: "47px" }}>Breakfast:</span>
                   <input
                     type="radio"
                     value="Yes"
@@ -529,7 +478,7 @@ const CitiesManagementScreen = (props) => {
                 </div>
 
                 <div style={{ display: "flex" }}>
-                  <span >FullyRefundable:</span>
+                  <span>FullyRefundable:</span>
                   <input
                     type="radio"
                     value="Yes"
@@ -549,7 +498,7 @@ const CitiesManagementScreen = (props) => {
                 </div>
 
                 <div style={{ display: "flex" }}>
-                  <span style={{marginRight: "59px"}}>HotTub:</span>
+                  <span style={{ marginRight: "59px" }}>HotTub:</span>
                   <input
                     type="radio"
                     value="Yes"
@@ -593,21 +542,25 @@ const CitiesManagementScreen = (props) => {
                   />
                 </div> */}
                 <div id="createProductFormFile">
-                <input
-                  type="file"
-                  // name="hotelImage"
-                  // name="products"
-                  // accept="image/*"
-                  accept="image/*"
-                  onChange={createHotelImagesChange}
-                  multiple
-                />
-              </div>
-              <div id="createProductFormImage">
-              {hotelImagesPreview.map((image, index) => (
-                <img key={index} src={image} alt="Product Preview" />
-              ))}
-            </div>
+                  <input
+                    type="file"
+                    // name="hotelImage"
+                    // accept="image/*"
+                    accept=".jpeg, .png, .jpg"
+                    onChange={(e) => setHotelImages(e.target.files)}
+                    multiple
+                  />
+                </div>
+                <div id="createProductFormImage">
+                  {Array.from(hotelImages).map((item) => {
+                    return (
+                      <img
+                        src={item ? URL.createObjectURL(item) : null}
+                        alt="Hotel Preview"
+                      />
+                    );
+                  })}
+                </div>
 
                 <Button
                   id="createProductBtn"
@@ -637,6 +590,17 @@ const CitiesManagementScreen = (props) => {
                     <Button variant="contained">View All Cars</Button>
                   </Link>
                   <h1 style={{ marginLeft: "20rem" }}>Add New Car</h1>
+                </div>
+                <div>
+                  <TextField
+                    fullWidth
+                    required
+                    id="outlined-required"
+                    label="City"
+                    value={(carCity = props.match.params.slug)}
+                    onChange={(e) => setCarCity(e.target.value)}
+                    // disabled
+                  />
                 </div>
                 <div>
                   <TextField
@@ -673,6 +637,27 @@ const CitiesManagementScreen = (props) => {
                     onChange={(e) => setFare(e.target.value)}
                   />
                 </div>
+                <div>
+                  <TextField
+                    fullWidth
+                    required
+                    id="outlined-required"
+                    label="Title"
+                    value={carTitle}
+                    onChange={(e) => setCarTitle(e.target.value)}
+                  />
+                </div>
+
+                <div>
+                  <TextField
+                    fullWidth
+                    required
+                    id="outlined-required"
+                    label="Gear"
+                    value={gear}
+                    onChange={(e) => setGear(e.target.value)}
+                  />
+                </div>
 
                 <Box sx={{ minWidth: 120 }}>
                   <FormControl fullWidth>
@@ -692,7 +677,7 @@ const CitiesManagementScreen = (props) => {
                             </MenuItem>
                           );
                         })}
-                        {destinations &&
+                      {destinations &&
                         destinations.map((data, index) => {
                           return (
                             <MenuItem value={data._id} key={index}>
@@ -821,24 +806,24 @@ const CitiesManagementScreen = (props) => {
                   />
                 </div>
                 <div id="createProductFormFile">
-                  <TextField
+                  <input
                     id="outlined-basic"
                     required
-                    // label="Outlined"
-                    variant="outlined"
                     type="file"
-                    onChange={onChangeFileCar}
-                    name="carImage"
-                    inputProps={{
-                      multiple: false,
-                    }}
+                    onChange={(e) => setCarImages(e.target.files)}
+                    multiple
                   />
                 </div>
-                {/* <div id="createProductFormImage">
-                  {imagesPreview.map((image, index) => (
-                    <img key={index} src={image} alt="Product Preview" />
-                  ))}
-                </div> */}
+                <div id="createProductFormImage">
+                {Array.from(carImages).map((item) => {
+                    return (
+                      <img
+                        src={item ? URL.createObjectURL(item) : null}
+                        alt="Car Preview"
+                      />
+                    );
+                  })}
+                </div>
 
                 <Button
                   id="createProductBtn"
@@ -875,8 +860,8 @@ const CitiesManagementScreen = (props) => {
                     required
                     id="outlined-required"
                     label="City"
-                    value={city = props.match.params.slug}
-                    onChange={(e) => setCity(e.target.value)}
+                    value={(packageCity = props.match.params.slug)}
+                    onChange={(e) => setPackageCity(e.target.value)}
                     // disabled
                   />
                 </div>
@@ -887,8 +872,8 @@ const CitiesManagementScreen = (props) => {
                     required
                     id="outlined-required"
                     label="Package Name"
-                      value={packageName}
-                      onChange={(e) => setPackageName(e.target.value)}
+                    value={packageName}
+                    onChange={(e) => setPackageName(e.target.value)}
                   />
                 </div>
 
@@ -921,8 +906,8 @@ const CitiesManagementScreen = (props) => {
                     required
                     id="outlined-required"
                     label="Refundable"
-                      value={refundable}
-                      onChange={(e) => setRefundable(e.target.value)}
+                    value={refundable}
+                    onChange={(e) => setRefundable(e.target.value)}
                   />
                 </div>
 
@@ -944,7 +929,7 @@ const CitiesManagementScreen = (props) => {
                             </MenuItem>
                           );
                         })}
-                        {destinations &&
+                      {destinations &&
                         destinations.map((data, index) => {
                           return (
                             <MenuItem value={data._id} key={index}>
@@ -963,29 +948,27 @@ const CitiesManagementScreen = (props) => {
                     id="outlined-required"
                     style={{ width: 1200, height: 100 }}
                     className="text-area"
-                      value={packageDescription}
-                      onChange={(e) => setPackageDescription(e.target.value)}
+                    value={packageDescription}
+                    onChange={(e) => setPackageDescription(e.target.value)}
                   />
                 </div>
                 <div id="createProductFormFile">
-                  <TextField
-                    id="outlined-basic"
+                  <input
                     required
-                    // label="Outlined"
-                    variant="outlined"
                     type="file"
-                    onChange={onChangeFilePackage}
-                    // multiple
-                    name="packageImage"
-                    inputProps={{
-                      multiple: true,
-                    }}
+                    onChange={(e) => setPackageImages(e.target.files)}
+                    multiple   
                   />
                 </div>
                 <div id="createProductFormImage">
-                  {packageImagesPreview.map((image, index) => (
-                    <img key={index} src={image} alt="package Preview" />
-                  ))}
+                {Array.from(packageImages).map((item) => {
+                    return (
+                      <img
+                        src={item ? URL.createObjectURL(item) : null}
+                        alt="Package Preview"
+                      />
+                    );
+                  })}
                 </div>
 
                 <Button

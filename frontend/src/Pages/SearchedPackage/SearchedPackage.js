@@ -908,7 +908,7 @@ const Package = (props) => {
                       <div class="row g-0">
                         <div class="col-md-4 position-relative">
                           <img
-                            src={ImageUrl(data.packageImage[0].img)}
+                            src={ImageUrl(data.packageImages[0].img)}
                             class="img-fluid rounded-start h-100"
                             alt="pic"
                           />

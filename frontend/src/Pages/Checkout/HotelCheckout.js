@@ -19,25 +19,20 @@ import { ImageUrl } from "../../Redux/UrlConfig";
 import Navbar from "../../Navbar/Navbar";
 import logo from "../../Assets/logo/logo-black.png";
 import Footer from "../../Footer/Footer";
-const Checkout = () => {
+const HotelCheckout = () => {
   const location = useLocation();
-  const [startDestination, setStartDestination] = useState(
-    location.state.state.startDestination
-  );
-  const [endDestination, setEndDestination] = useState(
-    location.state.state.endDestination
+  const [destination, setDestination] = useState(
+    location.state.state.destination
   );
   const [dates, setDates] = useState(location.state.state.dates);
-  const [pickupTime, setPickupTime] = useState(location.state.state.pickupTime);
-  const [dropoffTime, setDropoffTime] = useState(
-    location.state.state.dropoffTime
-  );
+  const [options, setOptions] = useState(location.state.state.options);
+
   const { id } = useParams();
   const { data, loading, error } = useFetch(
-    `http://localhost:5000/api/car-detail/${id}`
+    `http://localhost:5000/api/hotel/${id}`
   );
   console.log(data);
-  console.log(startDestination);
+  console.log(destination);
   const history = useHistory();
   const [show, setShow] = useState(false);
 
@@ -134,7 +129,7 @@ const Checkout = () => {
       <AppBar style={{ background: "white" }}>
         <Toolbar>
           <Link to="/">
-          <img src={logo} style={{ width: "18%" }} alt="logo" />
+            <img src={logo} style={{ width: "18%" }} alt="logo" />
           </Link>
         </Toolbar>
       </AppBar>
@@ -220,8 +215,8 @@ const Checkout = () => {
                       />
                     </div>
                     {/* {active !== 1 && (
-              <Button onClick={() => setActive(active - 1)}>Previous</Button>
-            )} */}
+                <Button onClick={() => setActive(active - 1)}>Previous</Button>
+              )} */}
                     {active !== 3 && (
                       <Button
                         variant="contained"
@@ -240,34 +235,40 @@ const Checkout = () => {
                 </div>
               </Step>
               <Step label="Activity details">
-              <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}
-          >
-            <span>
-              <img src={ImageUrl(data.car.carImages[0].img)} alt="" />
-              <b>{data.car.name}</b>
-            </span>
-            <span>
-              <b>PKR {data.car.fare}</b>
-            </span>
-              </div>
-                <div style={{display:'flex',flexDirection:"column",margin:"14px 19px"}}>
-                  <span>Pick-up Time: {pickupTime}</span>
-                  <span>Drop-off Time: {dropoffTime}</span>
-                  <span className="siTaxiOp mb-1">{data.car.payAt}</span>
-                  <span className="siTaxiOp">{data.car.refund}</span>
-                
-                  <p style={{marginTop:"10px"}}>
-                    Total Price: <span>PKR {data.car.fare}</span>{" "}
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                  }}
+                >
+                  <span>
+                    <img src={ImageUrl(data.hotel.hotelImages[0].img)} alt="" />
+                    <b>{data.hotel.name}</b>
+                  </span>
+                  <span>
+                    <b>PKR {data.hotel.cheapestPrice}</b>
+                  </span>
+                </div>
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    margin: "14px 19px",
+                  }}
+                >
+                  {/* <span>Pick-up Time: {pickupTime}</span>
+                    <span>Drop-off Time: {dropoffTime}</span> */}
+                  <span className="siTaxiOp mb-1">{data.hotel.address}</span>
+                  <span className="siTaxiOp">{data.hotel.title}</span>
+
+                  <p style={{ marginTop: "10px" }}>
+                    Total Price: <span>PKR {data.hotel.cheapestPrice}</span>{" "}
                   </p>
                 </div>
-               
+
                 <div className="container mt-2">
-                  {/* <b>Adult 1</b> */}
+                  <b>Adult 1</b>
                   <form
                     encType="multipart/form-data"
                     onSubmit={createForm2SubmitHandler}
@@ -297,24 +298,80 @@ const Checkout = () => {
                       />
                     </div>
 
+                    {options.adult >= 2 && (
+                      <>
+                        Adult 2
+                        <div className="my-3 inputField">
+                          <TextField
+                            autoComplete="off"
+                            fullWidth
+                            required
+                            id="outlined-required"
+                            label="First Name"
+                            value={firstName}
+                            onChange={(e) => setFirstName(e.target.value)}
+                          />
+                        </div>
+                        <div className="my-3 inputField">
+                          <TextField
+                            autoComplete="off"
+                            fullWidth
+                            required
+                            id="outlined-required"
+                            label="Last Name"
+                            value={lastName}
+                            onChange={(e) => setLastName(e.target.value)}
+                          />
+                        </div>
+                      </>
+                    )}
+                    {console.log(options)}
+                    {options.adult >= 3 && (
+                      <>
+                        Adult 3
+                        <div className="my-3 inputField">
+                          <TextField
+                            autoComplete="off"
+                            fullWidth
+                            required
+                            id="outlined-required"
+                            label="First Name"
+                            value={firstName}
+                            onChange={(e) => setFirstName(e.target.value)}
+                          />
+                        </div>
+                        <div className="my-3 inputField">
+                          <TextField
+                            autoComplete="off"
+                            fullWidth
+                            required
+                            id="outlined-required"
+                            label="Last Name"
+                            value={lastName}
+                            onChange={(e) => setLastName(e.target.value)}
+                          />
+                        </div>
+                      </>
+                    )}
+
                     {/* <Button
-                      id="createProductBtn"
-                      type="submit"
-                      variant="contained"
-                      color="primary"
-                      disabled={!firstName || !lastName}
-                      className="send-button"
-                    >
-                      <div class="alt-send-button">
-                        <i class="fa fa-paper-plane"></i>
-                        <span class="send-text">SEND</span>
-                      </div>
-                    </Button> */}
+                        id="createProductBtn"
+                        type="submit"
+                        variant="contained"
+                        color="primary"
+                        disabled={!firstName || !lastName}
+                        className="send-button"
+                      >
+                        <div class="alt-send-button">
+                          <i class="fa fa-paper-plane"></i>
+                          <span class="send-text">SEND</span>
+                        </div>
+                      </Button> */}
                     {active !== 1 && (
                       <Button
                         variant="contained"
                         onClick={() => setActive(active - 1)}
-                        style={{float:"left"}}
+                        style={{ float: "left" }}
                       >
                         Previous
                       </Button>
@@ -371,7 +428,7 @@ const Checkout = () => {
                         <Button
                           variant="contained"
                           onClick={() => setActive(active - 1)}
-                        style={{float:"left"}}
+                          style={{ float: "left" }}
                         >
                           Previous
                         </Button>
@@ -411,11 +468,15 @@ const Checkout = () => {
             }}
           >
             <span>
-              <img src={ImageUrl(data.car.carImages[0].img)} alt="" />
-              <b>{data.car.name}</b>
+              <img
+                src={ImageUrl(data.hotel.hotelImages[0].img)}
+                style={{ width: "30%" }}
+                alt=""
+              />
+              <b>{data.hotel.name}</b>
             </span>
             <span>
-              <b>PKR {data.car.fare}</b>
+              <b>PKR {data.hotel.cheapestPrice}</b>
             </span>
           </div>
           <div
@@ -424,14 +485,14 @@ const Checkout = () => {
               marginBottom: "30px",
               marginTop: "15px",
               color: "#929292",
-              display:'flex',
-              flexDirection:"column"
+              display: "flex",
+              flexDirection: "column",
             }}
           >
-            <span>Pick-up Time: <span className="siTaxiOp">{pickupTime}</span></span>
-            <span>Drop-off Time: <span className="siTaxiOp">{dropoffTime}</span></span>
-            <span>{data.car.payAt}</span>
-            <span>{data.car.refund}</span>
+            {/* <span>Pick-up Time: <span className="siTaxiOp">{pickupTime}</span></span>
+              <span>Drop-off Time: <span className="siTaxiOp">{dropoffTime}</span></span> */}
+            <span>{data.hotel.address}</span>
+            <span>{data.hotel.title}</span>
             <hr />
           </div>
           <div
@@ -442,7 +503,7 @@ const Checkout = () => {
             }}
           >
             <b>Total Price</b>
-            <b>PKR {data.car.fare}</b>
+            <b>PKR {data.hotel.cheapestPrice}</b>
           </div>
         </Grid>
       </Grid>
@@ -452,4 +513,4 @@ const Checkout = () => {
   );
 };
 
-export default Checkout;
+export default HotelCheckout;

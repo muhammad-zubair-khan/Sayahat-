@@ -146,7 +146,7 @@ const CarDetail = () => {
               Fare: PKR{data.car.fare}
             </span>
             <div className="hotelImages">
-              {data.car.carImage?.map((photo, i) => (
+              {data.car.carImages?.map((photo, i) => (
                 <div className="hotelImgWrapper" key={i}>
                   <Zoom>
                     <img

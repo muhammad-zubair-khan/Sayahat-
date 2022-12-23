@@ -10,7 +10,10 @@ import { useHistory, useLocation } from "react-router-dom";
 const Reserve = ({ setOpen, hotelId }) => {
     const location = useLocation()
     console.log(location)
+  const id = location.pathname.split("/")[2];
     const [dates, setDates] = useState(location.state.state.dates);
+  const [options, setOptions] = useState(location.state.state.options);
+  const [destination, setDestination] = useState(location.state.state.destination);
     // const [options, setOptions] = useState(location.state.state.options);
   const [selectedRooms, setSelectedRooms] = useState([]);
   const { data, loading, error } = useFetch(`http://localhost:5000/api/room/${hotelId}`);
@@ -65,7 +68,9 @@ const Reserve = ({ setOpen, hotelId }) => {
         })
       );
       setOpen(false);
-      history.push("/");
+      history.push(`/hotel/${id}/checkout`,{
+        state: { destination,dates,options },
+      });
     } catch (err) {}
   };
   return (
@@ -102,7 +107,8 @@ const Reserve = ({ setOpen, hotelId }) => {
             </div>
           </div>
         ))}
-        <button onClick={handleClick} className="rButton">
+       
+        <button onClick={handleClick}  className="rButton">
           Reserve Now!
         </button>
       </div>

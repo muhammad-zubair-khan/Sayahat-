@@ -19,22 +19,22 @@ exports.createPackage =catchAsyncErrors(async(req, res) => {
     product
   } = req.body;
 
-  let packageImage = []
+  let packageImages = []
   if (req.files.length > 0) {
-    packageImage = req.files.map((file) => {
+    packageImages = req.files.map((file) => {
       return { img: file.filename };
     });
   }
 
   const package = await new Package({
     name: name,
-    city: city,
-    price: price,
+    city,
+    price,
     slug: slugify(name),
-    packageImage,
-    description: description,
-    duration: duration,
-    refundable: refundable,
+    packageImages,
+    description,
+    duration,
+    refundable,
     product
     // createdBy: req.user._id,
   });

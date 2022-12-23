@@ -78,7 +78,7 @@ const CarSearchItem = ({ item }) => {
           <Zoom>
             <img
               className="img-fluid"
-              src={ImageUrl(item.carImage[0].img)}
+              src={ImageUrl(item.carImages[0].img)}
               alt="SUV "
             />
           </Zoom>

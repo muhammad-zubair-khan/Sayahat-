@@ -24,7 +24,7 @@ const upload = multer({ storage });
 
 router.post(
   "/car/add",
-  upload.array("carImage"),
+  upload.array("carImages"),
   addCar
 );
 

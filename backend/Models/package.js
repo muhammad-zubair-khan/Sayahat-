@@ -25,7 +25,7 @@ const packageSchema = new mongoose.Schema({
    refundable:{
     type:String,
    },
-   packageImage:[
+   packageImages:[
     { 
       img: {
          type: String,

@@ -10,6 +10,7 @@ import Zoom from "react-medium-image-zoom";
 import "react-medium-image-zoom/dist/styles.css";
 import { deleteCar } from "../../../Redux/Actions/carAction";
 import { useHistory } from "react-router-dom";
+import { ImageUrl } from "../../../Redux/UrlConfig";
 
 const GetHotelBySlug = (props) => {
   const history = useHistory()
@@ -29,7 +30,7 @@ console.log(cars)
 
   const columns = [
     {
-      field: "carImage",
+      field: "carImages",
       headerName: "Car img",
       minWidth: 290,
       minHeight: 200,
@@ -40,7 +41,7 @@ console.log(cars)
           <div style={{ textAlign: "center" }}>
             <Zoom>
               <img
-                src={params.row.carImage}
+                src={ImageUrl(params.row.carImages[0].img)}
                 style={{ width: "20%", margin: "10px 10px" }}
                 alt={params.row.name}
               />
@@ -127,7 +128,7 @@ console.log(cars)
     cars.forEach((item) => {
       rows.push({
         id: item._id,
-        carImage: item.carImage,
+        carImages: item.carImages,
         name: item.name,
         type: item.type,
         description: item.description,

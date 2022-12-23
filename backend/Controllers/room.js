@@ -2,9 +2,12 @@ const Room = require("../Models/room");
 const Hotel = require("../models/hotel");
 
 exports.createRoom = async(req, res, next) => {
-    const hotelId = req.params.hotelId;
+    // const hotelId = req.params.hotelId;
+    // const hotelId = req.params.id;
+  const hotelId = req.params.hotelid
+
     const newRoom = new Room(req.body);
-  
+  console.log(hotelId)
     try {
       const savedRoom = await newRoom.save();
       try {
@@ -60,6 +63,7 @@ exports.createRoom = async(req, res, next) => {
       } catch (err) {
         next(err);
       }
+      // await Room.remove();
       res.status(200).json("Room has been deleted.");
     } catch (err) {
       next(err);
