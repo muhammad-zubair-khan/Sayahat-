@@ -124,7 +124,7 @@ const CitiesManagementScreen = (props) => {
   const [packageImages, setPackageImages] = useState([]);
   const [tagValue, setTagValue] = useState("");
   const [tags, setTags] = useState([]);
-
+console.log(tags)
   const addTags = (e) => {
     if (e.keyCode === 13 && tagValue) {
       setTags([...tags, tagValue]);
@@ -348,10 +348,11 @@ const CitiesManagementScreen = (props) => {
     myForm.set("carPickupDetails", carPickupDetails);
     console.log(carPickupDetails);
 
-  Array.from(tagValue).forEach((item)=>{
-    myForm.append("startTime",item)
-    console.log(item)
-  })
+    Array.from(tags).forEach((item) => {
+      myForm.append("startTime", item);
+      console.log(item)
+    });
+
     Array.from(packageImages).forEach((item) => {
       myForm.append("packageImages", item);
     });
@@ -986,13 +987,12 @@ const CitiesManagementScreen = (props) => {
                   />
                 </div>
 
-                <div>
                   <div className="tagInput">
-                    <ul>
+                    
                       {tags.map((item, index) => {
-                        return <li key={index}>{item}</li>;
+                        return <button key={index}>{item}</button>;
                       })}
-                    </ul>
+                    
 
                     <input
                       type="text"
@@ -1002,7 +1002,7 @@ const CitiesManagementScreen = (props) => {
                       value={tagValue}
                     />
                   </div>
-                </div>
+
 
                 <div>
                   <TextareaAutosize

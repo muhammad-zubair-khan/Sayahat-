@@ -48,3 +48,51 @@
 .text-area:hover{
   border: 1px solid black;
 }
+
+
+.main{
+  /* width: 100%; */
+  /* height: 100vh; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.content {
+  width: 40%;
+  height: 30vh;
+  padding: 10px;
+}
+
+.tagInput {
+  width: auto;
+  height: auto;
+  border: 2px solid rgba(211, 39, 39, 0.933);
+  padding: 16px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.tagInput:focus-within{
+  border: 1px solid blue;
+}
+
+.tagInput input{
+  background-color: gold;
+  border: none;
+  outline: none;
+  width:100%;
+  color: rgb(0, 0, 0);
+}
+.tagInput button{
+  color: rgb(0, 0, 0);
+  background-color: #585858;
+  outline: none;
+  border: none;
+  margin: 5px;
+}
+
+.tagInput button span{
+  margin-left: 10px;
+  color: red;
+  padding: 5px;
+}
