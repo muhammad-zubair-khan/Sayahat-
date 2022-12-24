@@ -41,7 +41,7 @@ import { getPackageDetailById } from "../../Redux/Actions/packageAction";
     useEffect(() => {
         dispatch(getPackageDetailById(id));
       }, [dispatch, id]);
-    console.log(destination);
+    console.log(dates);
     const history = useHistory();
     const [show, setShow] = useState(false);
   

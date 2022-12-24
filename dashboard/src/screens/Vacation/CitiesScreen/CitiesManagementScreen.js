@@ -124,12 +124,16 @@ const CitiesManagementScreen = (props) => {
   const [packageImages, setPackageImages] = useState([]);
   const [tagValue, setTagValue] = useState("");
   const [tags, setTags] = useState([]);
-console.log(tags)
+  console.log(tags);
   const addTags = (e) => {
-    if (e.keyCode === 13 && tagValue) {
+    if (e.key === "Enter" && tagValue) {
       setTags([...tags, tagValue]);
-      setTagValue("")
+      setTagValue("");
     }
+  };
+  const deleteTags = (val) => {
+    let remainTag = tags.filter((t) => t !== val);
+    setTags(remainTag);
   };
 
   // const [timeLists, setTimeLists] = useState([
@@ -350,7 +354,7 @@ console.log(tags)
 
     Array.from(tags).forEach((item) => {
       myForm.append("startTime", item);
-      console.log(item)
+      console.log(item);
     });
 
     Array.from(packageImages).forEach((item) => {
@@ -988,21 +992,25 @@ console.log(tags)
                 </div>
 
                   <div className="tagInput">
-                    
-                      {tags.map((item, index) => {
-                        return <button key={index}>{item}</button>;
-                      })}
-                    
+                    {tags.map((item, index) => {
+                      return (
+                        <button key={index}>
+                          {item}
+                          <span onClick={() => deleteTags(item)}>X</span>
+                        </button>
+                      );
+                    })}
 
-                    <input
-                      type="text"
-                      placeholder="select"
+                    <TextField
+                    autoComplete="off"
+                    fullWidth
+                    id="outlined-required"
+                      placeholder="select Time"
                       onChange={(e) => setTagValue(e.target.value)}
                       onKeyDown={addTags}
                       value={tagValue}
                     />
-                  </div>
-
+                </div>
 
                 <div>
                   <TextareaAutosize
