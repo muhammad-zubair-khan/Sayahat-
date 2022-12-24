@@ -7,11 +7,41 @@ import {
   getPackageBySlug,
   getPackageDetailById,
 } from "../../Redux/Actions/packageAction";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { ImageUrl } from "../../Redux/UrlConfig";
 import { useState } from "react";
 
 function PackageDetail() {
+  const location = useLocation()
+  const [showResults, setShowResults] = useState(false);
+  const [dates,setDates] = useState(location.state.state.dates);
+  const [time, setTime] = useState("");
+  console.log("time", time);
+  const onClickHandle = () => {
+    setShowResults(true);
+    console.log("Clicked");
+  };
+  const Results = () => (
+    <div id="results" className="search-results">
+      {packages.package.startTime.map((item, index) => {
+        return (
+          <div>
+            <input
+              key={index}
+              type="radio"
+              value={item}
+              onChange={(e) => setTime(e.target.value)}
+              name={time}
+              />
+            {item}
+              <p>{packages.package.name}</p>
+              <p>{packages.package.description}</p>
+              <p>Free Cancellation Untill{dates}</p>
+          </div>
+        );
+      })}
+    </div>
+  );
   const [openOptions, setOpenOptions] = useState(false);
   const [options, setOptions] = useState({
     adult: 1,
@@ -225,7 +255,7 @@ function PackageDetail() {
                           className="optionbtn"
                           style={{ marginRight: "1px" }}
                           onClick={() => handleOption("adult", "increament")}
-                          disabled={options.adult >=15}
+                          disabled={options.adult >= 15}
                         >
                           +
                         </button>
@@ -243,7 +273,7 @@ function PackageDetail() {
                       <div className="optionButton">
                         <button
                           className="optionbtn"
-                          disabled={options.children <= 0 }
+                          disabled={options.children <= 0}
                           onClick={() => handleOption("children", "decreament")}
                         >
                           -
@@ -259,7 +289,9 @@ function PackageDetail() {
                         <button
                           className="optionbtn"
                           onClick={() => handleOption("children", "increament")}
-                          disabled={options.children >=15 && options.adult >=15 }
+                          disabled={
+                            options.children >= 15 && options.adult >= 15
+                          }
                         >
                           +
                         </button>
@@ -311,9 +343,11 @@ function PackageDetail() {
             <button
               type="button"
               className="btn btn-danger w-100 mt-4 p-2 mb-4"
+              onClick={onClickHandle}
             >
               Check Availability
             </button>
+
             <small className="fw-bold">Reserve Now & Pay Later</small>
             <br />
             <small>Secure your spot while staying flexible</small>
@@ -323,8 +357,8 @@ function PackageDetail() {
             {/* <small>Up to 24 hours in advance.Learn more</small> */}
           </div>
         </div>
+        <div>{showResults ? <Results /> : null}</div>
         {/* end of package images and price */}
-
         <div className="row">
           {/* start of detials about package */}
           <h3 className="text-black fw-bold">Overview</h3>

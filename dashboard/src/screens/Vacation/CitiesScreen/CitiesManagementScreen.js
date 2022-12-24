@@ -34,7 +34,40 @@ import FormLabel from "@mui/material/FormLabel";
 import { addCar } from "../../../Redux/Actions/carAction";
 import { createPackage } from "../../../Redux/Actions/packageAction";
 import { getAllDestinations } from "../../../Redux/Actions/topDestinationAction";
+import Autocomplete from "@mui/material/Autocomplete";
+import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
+import CheckBoxIcon from "@mui/icons-material/CheckBox";
 
+const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
+const checkedIcon = <CheckBoxIcon fontSize="small" />;
+
+// const timeLists = [
+//   { time: "12PM" },
+//   { time: "1PM" },
+//   { time: "2PM" },
+//   { time: "3PM" },
+//   { time: "4PM" },
+//   { time: "5PM" },
+//   { time: "6PM" },
+//   { time: "7PM" },
+//   { time: "8PM" },
+//   { time: "9PM" },
+//   { time: "10PM" },
+//   { time: "11PM" },
+//   { time: "12AM" },
+//   { time: "1AM" },
+//   { time: "2AM" },
+//   { time: "3AM" },
+//   { time: "4AM" },
+//   { time: "5AM" },
+//   { time: "6AM" },
+//   { time: "7AM" },
+//   { time: "8AM" },
+//   { time: "9AM" },
+//   { time: "10AM" },
+//   { time: "11AM" },
+//   { time: "12AM" },
+// ];
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
   ...theme.typography.body2,
@@ -61,7 +94,7 @@ const CitiesManagementScreen = (props) => {
   const [featured, setFeatured] = useState("");
   const [hotelImages, setHotelImages] = useState([]);
   // const [hotelImagesPreview, setHotelImagesPreview] = useState([]);
-  
+
   //Car States
   let [carCity, setCarCity] = useState("");
   const [carName, setCarName] = useState("");
@@ -80,15 +113,52 @@ const CitiesManagementScreen = (props) => {
   // const [carImagesPreview, setCarImagesPreview] = useState([]);
 
   //Package States
-  let [packageCity,setPackageCity] = useState("");
+  let [packageCity, setPackageCity] = useState("");
   const [packageName, setPackageName] = useState("");
   const [packageDescription, setPackageDescription] = useState("");
   const [price, setPrice] = useState("");
   const [duration, setDuration] = useState("");
   const [refundable, setRefundable] = useState("");
   const [product, setProduct] = useState("");
-  const [packageImages,setPackageImages] = useState([]);
+  const [carPickupDetails, setCarPickupDetails] = useState("");
+  const [packageImages, setPackageImages] = useState([]);
+  const [tagValue, setTagValue] = useState("");
+  const [tags, setTags] = useState([]);
 
+  const addTags = (e) => {
+    if (e.keyCode === 13 && tagValue) {
+      setTags([...tags, tagValue]);
+      setTagValue("")
+    }
+  };
+
+  // const [timeLists, setTimeLists] = useState([
+  //   { time: "12PM" },
+  //   { time: "1PM" },
+  //   { time: "2PM" },
+  //   { time: "3PM" },
+  //   { time: "4PM" },
+  //   { time: "5PM" },
+  //   { time: "6PM" },
+  //   { time: "7PM" },
+  //   { time: "8PM" },
+  //   { time: "9PM" },
+  //   { time: "10PM" },
+  //   { time: "11PM" },
+  //   { time: "12AM" },
+  //   { time: "1AM" },
+  //   { time: "2AM" },
+  //   { time: "3AM" },
+  //   { time: "4AM" },
+  //   { time: "5AM" },
+  //   { time: "6AM" },
+  //   { time: "7AM" },
+  //   { time: "8AM" },
+  //   { time: "9AM" },
+  //   { time: "10AM" },
+  //   { time: "11AM" },
+  //   { time: "12AM" },
+  // ]);
   const dispatch = useDispatch();
   const { products } = useSelector((state) => state.vacationProduct);
   console.log(products);
@@ -181,7 +251,6 @@ const CitiesManagementScreen = (props) => {
     history.push(`/hotel/${props.match.params.slug}`);
   };
 
- 
   // const onChangeFileCar = (e) => {
   //   setCarImage(e.target.files[0]);
   // };
@@ -250,7 +319,6 @@ const CitiesManagementScreen = (props) => {
     history.push(`/car/${props.match.params.slug}`);
   };
 
-
   const createPackageSubmitHandler = (e) => {
     e.preventDefault();
 
@@ -277,6 +345,13 @@ const CitiesManagementScreen = (props) => {
     myForm.set("refundable", refundable);
     console.log(refundable);
 
+    myForm.set("carPickupDetails", carPickupDetails);
+    console.log(carPickupDetails);
+
+  Array.from(tagValue).forEach((item)=>{
+    myForm.append("startTime",item)
+    console.log(item)
+  })
     Array.from(packageImages).forEach((item) => {
       myForm.append("packageImages", item);
     });
@@ -815,7 +890,7 @@ const CitiesManagementScreen = (props) => {
                   />
                 </div>
                 <div id="createProductFormImage">
-                {Array.from(carImages).map((item) => {
+                  {Array.from(carImages).map((item) => {
                     return (
                       <img
                         src={item ? URL.createObjectURL(item) : null}
@@ -911,6 +986,66 @@ const CitiesManagementScreen = (props) => {
                   />
                 </div>
 
+                <div>
+                  <div className="tagInput">
+                    <ul>
+                      {tags.map((item, index) => {
+                        return <li key={index}>{item}</li>;
+                      })}
+                    </ul>
+
+                    <input
+                      type="text"
+                      placeholder="select"
+                      onChange={(e) => setTagValue(e.target.value)}
+                      onKeyDown={addTags}
+                      value={tagValue}
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <TextareaAutosize
+                    placeholder="Car Pickup description..."
+                    required
+                    id="outlined-required"
+                    style={{ width: 1200, height: 100 }}
+                    className="text-area"
+                    value={carPickupDetails}
+                    onChange={(e) => setCarPickupDetails(e.target.value)}
+                  />
+                </div>
+
+                {/* <div>
+                  <Autocomplete
+                    multiple
+                    id="checkboxes-tags-demo"
+                    options={timeLists}
+                    // onChange={(e)=> setTimeLists(e.target.value)}
+                    disableCloseOnSelect
+                    getOptionLabel={(option) => option.time}
+                    renderOption={(props, option, { selected }) => (
+                      <li {...props}>
+                        <Checkbox
+                          icon={icon}
+                          checkedIcon={checkedIcon}
+                          style={{ marginRight: 8 }}
+                          checked={selected}
+                        />
+                        {option.time}
+                      </li>
+                    )}
+                    style={{ width: 500 }}
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        label="startTime"
+                        placeholder="select"
+                        onChange={(e)=> console.log(e.target.value)}
+                      />
+                    )}
+                  />
+                </div> */}
                 <Box sx={{ minWidth: 120 }}>
                   <FormControl fullWidth>
                     <InputLabel id="demo-simple-select-label">City</InputLabel>
@@ -957,11 +1092,11 @@ const CitiesManagementScreen = (props) => {
                     required
                     type="file"
                     onChange={(e) => setPackageImages(e.target.files)}
-                    multiple   
+                    multiple
                   />
                 </div>
                 <div id="createProductFormImage">
-                {Array.from(packageImages).map((item) => {
+                  {Array.from(packageImages).map((item) => {
                     return (
                       <img
                         src={item ? URL.createObjectURL(item) : null}

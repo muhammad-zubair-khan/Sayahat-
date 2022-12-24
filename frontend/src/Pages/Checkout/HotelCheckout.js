@@ -26,7 +26,8 @@ const HotelCheckout = () => {
   );
   const [dates, setDates] = useState(location.state.state.dates);
   const [options, setOptions] = useState(location.state.state.options);
-
+// const [selectedRooms, setSelectedRooms] = useState(location.state.state.selectedRooms)
+// console.log(selectedRooms)
   const { id } = useParams();
   const { data, loading, error } = useFetch(
     `http://localhost:5000/api/hotel/${id}`
@@ -243,7 +244,7 @@ const HotelCheckout = () => {
                   }}
                 >
                   <span>
-                    <img src={ImageUrl(data.hotel.hotelImages[0].img)} alt="" />
+                    <img src={ImageUrl(data.hotel.hotelImages[0].img)}  alt="" />
                     <b>{data.hotel.name}</b>
                   </span>
                   <span>
@@ -493,6 +494,8 @@ const HotelCheckout = () => {
               <span>Drop-off Time: <span className="siTaxiOp">{dropoffTime}</span></span> */}
             <span>{data.hotel.address}</span>
             <span>{data.hotel.title}</span>
+            <span >Room no: <span className="siTaxiOp"></span></span>
+
             <hr />
           </div>
           <div

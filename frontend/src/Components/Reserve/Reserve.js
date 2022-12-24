@@ -69,7 +69,7 @@ const Reserve = ({ setOpen, hotelId }) => {
       );
       setOpen(false);
       history.push(`/hotel/${id}/checkout`,{
-        state: { destination,dates,options },
+        state: { destination,dates,options,selectedRooms },
       });
     } catch (err) {}
   };

@@ -7,18 +7,29 @@ import {
   getPackageBySlug,
   getPackageDetailById,
 } from "../../Redux/Actions/packageAction";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation, useParams,useHistory } from "react-router-dom";
 import { ImageUrl } from "../../Redux/UrlConfig";
+import { Button } from "@mui/material";
 import { format } from "date-fns";
 import { DateRange, DateRangePicker } from "react-date-range";
 function SearchedPackageDetail() {
+  const history= useHistory();
+  const [show, setShow] = useState(false);
   const location = useLocation();
-  console.log(location);
+  const [showResults, setShowResults] = useState(false);
+  const [time, setTime] = useState("");
+  const [buttonText, setButtonText] = useState('Check Availability');
+  console.log("time", time);
+  const onClickHandle = () => {
+    setShowResults(true);
+    setButtonText('Update Dates');
+  };
   const [packageDestination, setPackageDestination] = useState(
     location.state.state.packageDestination
   );
   const [openPackageDate, setOpenPackageDate] = useState(false);
   const [dates, setDates] = useState(location.state.state.dates);
+  console.log(dates);
   const [openOptions, setOpenOptions] = useState(false);
   const [options, setOptions] = useState(location.state.state.options);
   const handleOption = (name, operation) => {
@@ -30,7 +41,72 @@ function SearchedPackageDetail() {
       };
     });
   };
+  const { user } = useSelector((state) => state.userAuth);
+  // const id = location.pathname.split("/")[2];
 
+  const bookPackage = () =>{
+    if (!user) {
+      dispatch({ type: "NEW_SEARCH", payload: { packageDestination, dates,options } });
+      history.push(`/package/${id}/checkout`,{
+        state: { packageDestination, dates,time,options },
+      })
+    } else {
+      history.push("/login");
+    }
+  }
+
+  const Results = () => (
+    <div id="results" className="search-results" style={{border:" 1px solid black",
+      backgroundColor: "aliceblue",
+      padding: "17px 31px"}}>
+      <div className="mt-5">
+      {packages.package.name}
+      </div>
+      <div className="my-2">
+      {packages.package.description}
+      </div>
+      <div>
+
+      {packages.package.startTime.map((item, index) => {
+        const handleShow = () => {
+          setShow(true);
+        };
+        return (
+          <>
+            <input
+              key={index}
+              type="radio"
+              value={item}
+              onChange={(e) => setTime(e.target.value)}
+              name="time"
+              onClick={handleShow}
+              style={{margin: "14px 13px"}}
+            />
+            {item}
+       
+            {/* {show && (
+              <>
+                <p>{packages.package.name}</p>
+                <p>{packages.package.description}</p>
+                <p>
+                  Free Cancellation Untill{" "}
+                  <span className="siTaxiOp">
+                    {`${format(dates[0].startDate - 2, "MM/dd/yyyy")} `}
+                  </span>{" "}
+                </p>
+
+                <Button variant="contained">Book Now</Button>
+              </>
+            )} */}
+
+          </>
+        );
+      })}
+      </div>
+
+      <Button variant="contained" className="my-3" onClick={bookPackage}>Book Now</Button>
+    </div>
+  );
   const params = useParams();
   //   console.log(params);
   let { id } = useParams();
@@ -206,9 +282,8 @@ function SearchedPackageDetail() {
                     className="options"
                     style={{
                       position: "absolute",
-                      // top: "253px",
-                      top: "275px",
-                      // width: "16%",
+                      // top: "275px",
+                      top: "316px",
                       width: "31%",
                       zIndex: "1000000",
                       backgroundColor: "white",
@@ -331,12 +406,16 @@ function SearchedPackageDetail() {
               </section>
             </div>
 
-            <button
-              type="button"
-              className="btn btn-danger w-100 mt-4 p-2 mb-4"
-            >
-              Check Availability
-            </button>
+            {
+              <button
+                type="button"
+                className="btn btn-danger w-100 mt-4 p-2 mb-4"
+                onClick={onClickHandle}
+                id="availabilitybtn"
+              >
+                {buttonText}
+              </button>
+            }
             <small className="fw-bold">Reserve Now & Pay Later</small>
             <br />
             <small>Secure your spot while staying flexible</small>
@@ -347,7 +426,7 @@ function SearchedPackageDetail() {
           </div>
         </div>
         {/* end of package images and price */}
-
+        <div>{showResults ? <Results /> : null}</div>
         <div className="row">
           {/* start of detials about package */}
           <h3 className="text-black fw-bold">Overview</h3>
