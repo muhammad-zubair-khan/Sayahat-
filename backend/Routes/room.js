@@ -11,7 +11,7 @@ const {
 
 const router = express.Router();
 //CREATE
-router.post("/create/:hotelid", createRoom);
+router.post("/create/:hotelId", createRoom);
 
 //UPDATE
 router.put("/rooms/availability/:id", updateRoomAvailability);

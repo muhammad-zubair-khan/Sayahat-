@@ -10,6 +10,8 @@ import Zoom from "react-medium-image-zoom";
 import "react-medium-image-zoom/dist/styles.css";
 import { deleteHotel } from "../../../Redux/Actions/hotelAction";
 import { ImageUrl } from "../../../Redux/UrlConfig";
+import { Link } from "react-router-dom";
+import AddIcon from '@mui/icons-material/Add';
 
 const AllHotels = (props) => {
   const dispatch = useDispatch();
@@ -107,7 +109,9 @@ console.log(hotels)
             {/* <Link to={`/product/update/${params.getValue(params.id, "id")}`}>
               <MdModeEditOutline />
             </Link> */}
-
+            <Link to={`/room/create/${params.getValue(params.id, "id")}`}>
+            <AddIcon/>
+            </Link>
             <Button onClick={() => deleteHotelHandler(params.id)}>
               <DeleteIcon />
             </Button>

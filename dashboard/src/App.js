@@ -25,6 +25,7 @@ import GetHotelBySlug from "./screens/Vacation/HotelScreens/GetHotelBySlug";
 import GetCarBySlug from "./screens/Vacation/CarScreen/GetCarBySlug";
 import AllPackages from "./screens/Vacation/PackageScreen/AllPackages";
 import GetPackageBySlug from "./screens/Vacation/PackageScreen/GetPackageBySlug";
+import AddRoom from "./screens/Vacation/RoomScreen/AddRoom";
 
 function App() {
   const dispatch = useDispatch();
@@ -72,6 +73,11 @@ function App() {
           exact
           path="/package/:slug"
           component={GetPackageBySlug}
+        />
+        <PrivateRoute
+          exact
+          path="/room/create/:hotelId"
+          component={AddRoom}
         />
         <PrivateRoute exact path="/all-hotels" component={AllHotels} />
         <PrivateRoute exact path="/all-cars" component={AllCars} />

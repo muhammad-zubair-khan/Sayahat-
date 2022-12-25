@@ -231,7 +231,6 @@ function SearchedPackageDetail() {
               alt=""
               />
               </Zoom>
-          
           </div>
 
           <div className="col-4 BgPackage p-3 h-100">

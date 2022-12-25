@@ -39,7 +39,7 @@ const HotelDetail = () => {
   const { data, loading, error } = useFetch(
     `http://localhost:5000/api/hotel/${id}`
   );
-  const { user } = useSelector((state) => state.userAuth);
+  // const { user } = useSelector((state) => state.userAuth);
   // const { user } = useContext(AuthContext);
   // const { dates, options } = useContext(SearchContext);
   console.log(dates);
@@ -77,11 +77,11 @@ const HotelDetail = () => {
   };
 
   const handleClick = () => {
-    if (!user) {
+    // if (!user) {
       setOpenModal(true);
-    } else {
-      history.push("/login");
-    }
+    // } else {
+    //   history.push("/login");
+    // }
   };
   console.log(data);
   if (Object.keys(data).length === 0) {
