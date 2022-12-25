@@ -673,6 +673,7 @@ const CitiesManagementScreen = (props) => {
                 </div>
                 <div>
                   <TextField
+                  autoComplete="off"
                     fullWidth
                     required
                     id="outlined-required"
@@ -684,6 +685,7 @@ const CitiesManagementScreen = (props) => {
                 </div>
                 <div>
                   <TextField
+                  autoComplete="off"
                     fullWidth
                     required
                     id="outlined-required"
@@ -936,6 +938,7 @@ const CitiesManagementScreen = (props) => {
 
                 <div>
                   <TextField
+                  autoComplete="off"
                     fullWidth
                     required
                     id="outlined-required"
@@ -948,6 +951,7 @@ const CitiesManagementScreen = (props) => {
 
                 <div>
                   <TextField
+                  autoComplete="off"
                     fullWidth
                     required
                     id="outlined-required"
@@ -959,6 +963,7 @@ const CitiesManagementScreen = (props) => {
 
                 <div>
                   <TextField
+                  autoComplete="off"
                     type="number"
                     fullWidth
                     required
@@ -971,6 +976,7 @@ const CitiesManagementScreen = (props) => {
 
                 <div>
                   <TextField
+                  autoComplete="off"
                     fullWidth
                     required
                     id="outlined-required"
@@ -982,6 +988,7 @@ const CitiesManagementScreen = (props) => {
 
                 <div>
                   <TextField
+                  autoComplete="off"
                     fullWidth
                     required
                     id="outlined-required"

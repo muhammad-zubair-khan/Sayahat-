@@ -74,6 +74,7 @@ const AddNewCitites = () => {
 
               <div>
                 <TextField
+                autoComplete="off"
                   fullWidth
                   required
                   id="outlined-required"

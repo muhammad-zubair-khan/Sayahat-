@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Footer from "../../Footer/Footer";
 import Navbar from "../../Navbar/Navbar";
-// import "./StyleDestination.css";
 import {
   getPackageBySlug,
   getPackageDetailById,
@@ -11,14 +10,12 @@ import { useLocation, useParams, useHistory } from "react-router-dom";
 import { ImageUrl } from "../../Redux/UrlConfig";
 import { Button } from "@mui/material";
 import { format } from "date-fns";
+import Zoom from "react-medium-image-zoom";
+import "react-medium-image-zoom/dist/styles.css";
 import { DateRange, DateRangePicker } from "react-date-range";
+
 function SearchedPackageDetail() {
   const [showResults, setShowResults] = useState(false);
-  // useEffect(() => {
-  //   setTimeout(() => setSpinner(false), 3000)
-  //   // setTimeout(() => setShowResults(false), 3000)
-  // }, []);
-
   const history = useHistory();
   const [show, setShow] = useState(false);
   const location = useLocation();
@@ -199,6 +196,8 @@ function SearchedPackageDetail() {
   if (Object.keys(packages.package).length === 0) {
     return null;
   }
+ 
+
   return (
     <>
       <Navbar />
@@ -208,7 +207,7 @@ function SearchedPackageDetail() {
         {/* start of package images and price */}
         <div className="row">
           <h3 className="text-black">{packages.package.name}</h3>
-          <div class="col-2">
+          <div class="col-2" style={{height:"fit-content"}}>
             {packages.package.packageImages &&
               packages.package.packageImages.map((pic, index) => {
                 return (
@@ -223,14 +222,18 @@ function SearchedPackageDetail() {
               })}
           </div>
           <div className="col-6">
+            <Zoom>
             <img
               src={ImageUrl(packages.package.packageImages[0].img)}
               className=""
               width="100%"
               height=""
               alt=""
-            />
+              />
+              </Zoom>
+          
           </div>
+
           <div className="col-4 BgPackage p-3 h-100">
             <h4 className="text-black">From ${packages.package.price}</h4>
             <span style={{ color: "#1874A2" }}>Lowest Price Guarantee</span>

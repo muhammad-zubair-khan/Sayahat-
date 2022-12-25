@@ -131,14 +131,13 @@ const Landing = ({ type }) => {
     });
   };
   const { dispatch } = useContext(SearchContext);
-
   const handleSearch = () => {
     dispatch({ type: "NEW_SEARCH", payload: { destination, dates, options } });
     history.push("/hotels", { state: { destination, dates, options } });
   };
   const handlePackageSearch = () => {
     dispatch({ type: "NEW_SEARCH", payload: { packageDestination, dates, options } });
-    history.push(`/package/${destination}`, {
+    history.push(`/package/${packageDestination}`, {
       state: { packageDestination, dates, options },
     });
   };
@@ -149,7 +148,6 @@ const Landing = ({ type }) => {
     });
   };
   const { products } = useSelector((state) => state.vacationProduct);
-  console.log(products);
   useEffect(() => {
     dispatch(getAllVacationProduct());
   }, []);
@@ -170,7 +168,7 @@ const Landing = ({ type }) => {
   const CarhandleOnSelect = (product) => {
     // the item selected
     setStartDestination(product.name);
-    console.log(product);
+    // console.log(product);
   };
   const CarEndhandleOnSelect = (product) => {
     // the item selected
@@ -203,9 +201,7 @@ const Landing = ({ type }) => {
   };
 
   const handleOnSelect = (product) => {
-    // the item selected
-    setDestination(product.name);
-    console.log(product);
+    setPackageDestination(product.name);
   };
 
   const handleOnFocus = () => {
