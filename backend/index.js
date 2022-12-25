@@ -4,8 +4,9 @@ const cors = require("cors");
 app.use(cors());
 const bodyParser = require("body-parser");
 const env = require("dotenv");
+// env.config();
+env.config({path: './.env'})
 require("./Database/Connection");
-env.config();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 const path = require("path");
@@ -48,6 +49,13 @@ const initialDataRoutes = require("./Routes/initialData");
 app.use("/api", initialDataRoutes);
 
 app.use("/public", express.static(path.join(__dirname, "uploads")));
+
+
+  // if(process.env.NODE_ENV == "production"){
+  //     app.use(express.static("frontend/build"))
+  // }
+
+
 
 const PORT = process.env.PORT || 5001;
 app.listen(process.env.PORT, () => {
