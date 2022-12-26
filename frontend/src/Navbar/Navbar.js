@@ -102,7 +102,7 @@ const Navbar = (props) => {
   return (
     <>
       <ChangeColorOnScroll {...props}>
-        <div className="wrapper">
+        <div className="wrapper1">
           <nav>
             <input type="checkbox" id="show-search" />
             <input type="checkbox" id="show-menu" />

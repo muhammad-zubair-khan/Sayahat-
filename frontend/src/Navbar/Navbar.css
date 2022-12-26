@@ -6,7 +6,7 @@
   text-decoration: none;
   font-family: "Poppins", sans-serif;
 }
-.wrapper {
+.wrapper1 {
   /* background: #171c24; */
   background-color: red;
   position: fixed;
@@ -14,7 +14,7 @@
   z-index: 10000000;
   height: 80px;
 }
-.wrapper nav {
+.wrapper1 nav {
   position: relative;
   display: flex;
   max-width: calc(100% - 200px);
@@ -89,8 +89,8 @@ nav .content .links {
   /* background: #323c4e; */
   /* background: #ffc181; */
 }
-.wrapper .search-icon,
-.wrapper .menu-icon {
+.wrapper1 .search-icon,
+.wrapper1 .menu-icon {
   color: #fff;
   /* color: black; */
   font-size: 18px;
@@ -99,14 +99,14 @@ nav .content .links {
   width: 70px;
   text-align: center;
 }
-.wrapper .menu-icon {
+.wrapper1 .menu-icon {
   display: none;
 }
-.wrapper #show-search:checked ~ .search-icon i::before {
+.wrapper1 #show-search:checked ~ .search-icon i::before {
   content: "\f00d";
 }
 
-.wrapper .search-box {
+.wrapper1 .search-box {
   position: absolute;
   height: 100%;
   max-width: calc(100% - 50px);
@@ -115,7 +115,7 @@ nav .content .links {
   pointer-events: none;
   transition: all 0.3s ease;
 }
-.wrapper #show-search:checked ~ .search-box {
+.wrapper1 #show-search:checked ~ .search-box {
   opacity: 1;
   pointer-events: auto;
 }
@@ -146,7 +146,7 @@ nav .content .links {
   font-size: 20px;
   cursor: pointer;
 }
-.wrapper input[type="checkbox"] {
+.wrapper1 input[type="checkbox"] {
   display: none;
 }
 
@@ -196,7 +196,7 @@ a {
 
 /* Responsive code start */
 @media screen and (max-width: 1250px) {
-  .wrapper nav {
+  .wrapper1 nav {
     max-width: 100%;
     padding: 0px 20px;
     /* background-color: #fff; */
@@ -209,19 +209,19 @@ a {
   .content .links li a {
     padding: 8px 13px;
   }
-  .wrapper .search-box {
+  .wrapper1 .search-box {
     max-width: calc(100% - 100px);
   }
-  .wrapper .search-box input {
+  .wrapper1 .search-box input {
     padding: 0 100px 0 15px;
   }
 }
 
 @media screen and (max-width: 900px) {
-  .wrapper .menu-icon {
+  .wrapper1 .menu-icon {
     display: block;
   }
-  .wrapper #show-menu:checked ~ .menu-icon i::before {
+  .wrapper1 #show-menu:checked ~ .menu-icon i::before {
     content: "\f00d";
   }
   .menues{
@@ -290,7 +290,7 @@ a {
 }
 
 @media screen and (max-width: 400px) {
-  .wrapper nav {
+  .wrapper1 nav {
     padding: 0 10px;
   }
   .content .logo a {
@@ -299,14 +299,14 @@ a {
   .menues{
     color: white;
   }
-  .wrapper .search-box {
+  .wrapper1 .search-box {
     max-width: calc(100% - 70px);
   }
-  .wrapper .search-box .go-icon {
+  .wrapper1 .search-box .go-icon {
     width: 30px;
     right: 0;
   }
-  .wrapper .search-box input {
+  .wrapper1 .search-box input {
     padding-right: 30px;
   }
 }
