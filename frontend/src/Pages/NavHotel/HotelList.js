@@ -67,6 +67,7 @@ const HotelList = () => {
       </div>
       <SecNav />
       <div className="container text-center my-5">
+        {/* start of info of contact about hotel */}
         <div className="row">
           <div className="col-md-3">
             <i className="fa-solid fa-shield-halved text-primary fs-3"></i>
@@ -89,7 +90,9 @@ const HotelList = () => {
             <small>We are always here for you reach us 24 hours a day, 7 days a week.</small>
           </div>
         </div>
+        {/* end of info of contact about hotel */}
 
+        {/* start of email sign up */}
         <div className='row my-5 g-2'>
           <div style={{ height: '250px' }} className='col-md-6'>
             <div className="card h-100">
@@ -112,14 +115,16 @@ const HotelList = () => {
             </div>
           </div>
         </div>
+        {/* end of email sign up */}
 
+        {/* start of hotels card */}
         <div className='row'>
           <h1 className='text-start text-primary fw-bold'>Don't miss these hotel deals</h1>
           <div className="container text-center">
             <div className="row">
               {hotels.map((hotel) => {
                 return (
-                  <div className="col-md-4">
+                  <div className="col-md-4 my-3">
                     <div className="card">
                       <img src={hotel.image} className="card-img-top" alt="..." />
                       <div className="card-body">
@@ -137,7 +142,9 @@ const HotelList = () => {
             </div>
           </div>
         </div>
+        {/* end of hotels card */}
 
+        {/* start of hotels list */}
         <div className='row my-5'>
           <h4 className='text-start text-primary fw-bold'>Top Hotel Deals in the Pakistan</h4>
           <div class="container">
@@ -157,7 +164,7 @@ const HotelList = () => {
                 </ul>
               </div>
               <div className="col">
-              <ul className='list-unstyled text-start text-dark lh-lg'>
+                <ul className='list-unstyled text-start text-dark lh-lg'>
                   <li>Lahore Hotel</li>
                   <li>Karachi Hotel</li>
                   <li>Islamabad Hotel</li>
@@ -171,7 +178,7 @@ const HotelList = () => {
                 </ul>
               </div>
               <div className="col">
-              <ul className='list-unstyled text-start text-dark lh-lg'>
+                <ul className='list-unstyled text-start text-dark lh-lg'>
                   <li>Lahore Hotel</li>
                   <li>Karachi Hotel</li>
                   <li>Islamabad Hotel</li>
@@ -187,6 +194,8 @@ const HotelList = () => {
             </div>
           </div>
         </div>
+        {/* end of hotels list */}
+
       </div>
       <Footer />
     </>
