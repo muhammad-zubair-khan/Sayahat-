@@ -193,6 +193,17 @@ const Landing = ({ type }) => {
     );
   };
 
+//Stays Function
+const handleOnStayHover = (result) => {
+  // the item hovered
+  console.log(result);
+};
+
+const handleOnStaySelect = (product) => {
+  setDestination(product.name);
+};
+
+
 
   //Package Functions
   const handleOnHover = (result) => {
@@ -410,8 +421,8 @@ const Landing = ({ type }) => {
                                 <ReactSearchAutocomplete
                                   items={products}
                                   // onSearch={handleOnSearch}
-                                  onHover={handleOnHover}
-                                  onSelect={handleOnSelect}
+                                  onHover={handleOnStayHover}
+                                  onSelect={handleOnStaySelect}
                                   // onFocus={handleOnFocus}
                                   autoFocus
                                   formatResult={formatResult}
