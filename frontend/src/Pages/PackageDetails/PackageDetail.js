@@ -14,7 +14,9 @@ import { useState } from "react";
 function PackageDetail() {
   const location = useLocation()
   const [showResults, setShowResults] = useState(false);
-  const [dates,setDates] = useState(location.state.state.dates);
+  const [show, setShow] = useState(false);
+  // const [dates,setDates] = useState(location.state.state.dates);
+
   const [time, setTime] = useState("");
   console.log("time", time);
   const onClickHandle = () => {
@@ -24,22 +26,39 @@ function PackageDetail() {
   const Results = () => (
     <div id="results" className="search-results">
       {packages.package.startTime.map((item, index) => {
-        return (
-          <div>
-            <input
-              key={index}
-              type="radio"
-              value={item}
-              onChange={(e) => setTime(e.target.value)}
-              name={time}
+          const handleShow = () => {
+            setShow(true);
+          };
+          return (
+            <>
+              <input
+                key={index}
+                type="radio"
+                value={item}
+                onChange={(e) => setTime(e.target.value)}
+                name="time"
+                onClick={handleShow}
+                style={{ margin: "14px 13px" }}
               />
-            {item}
-              <p>{packages.package.name}</p>
-              <p>{packages.package.description}</p>
-              <p>Free Cancellation Untill{dates}</p>
-          </div>
-        );
-      })}
+              {item}
+
+              {/* {show && (
+              <>
+                <p>{packages.package.name}</p>
+                <p>{packages.package.description}</p>
+                <p>
+                  Free Cancellation Untill{" "}
+                  <span className="siTaxiOp">
+                    {`${format(dates[0].startDate - 2, "MM/dd/yyyy")} `}
+                  </span>{" "}
+                </p>
+
+                <Button variant="contained">Book Now</Button>
+              </>
+            )} */}
+            </>
+          );
+        })}
     </div>
   );
   const [openOptions, setOpenOptions] = useState(false);
@@ -63,7 +82,7 @@ function PackageDetail() {
 
   const dispatch = useDispatch();
   const packages = useSelector((state) => state.addPackageReducer);
-  // console.log("picc>>>>>>>>",packages.package.packageImage)
+  // console.log("picc>>>>>>>>",packages.package)
   useEffect(() => {
     dispatch(getPackageDetailById(id));
   }, [dispatch, id]);
@@ -144,7 +163,7 @@ function PackageDetail() {
         {/* start of package images and price */}
         <div className="row">
           <h3 className="text-black">{packages.package.name}</h3>
-          <div class="col-2">
+          <div class="col-2" style={{height:'fit-content'}}>
             {packages.package.packageImages &&
               packages.package.packageImages.map((pic, index) => {
                 return (

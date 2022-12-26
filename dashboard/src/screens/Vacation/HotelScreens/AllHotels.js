@@ -109,7 +109,7 @@ console.log(hotels)
             {/* <Link to={`/product/update/${params.getValue(params.id, "id")}`}>
               <MdModeEditOutline />
             </Link> */}
-            <Link to={`/room/create/${params.getValue(params.id, "id")}`}>
+            <Link title="Add New Rooms" to={`/room/create/${params.getValue(params.id, "id")}`}>
             <AddIcon/>
             </Link>
             <Button onClick={() => deleteHotelHandler(params.id)}>

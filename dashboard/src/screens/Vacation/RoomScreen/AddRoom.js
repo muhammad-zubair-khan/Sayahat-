@@ -8,9 +8,13 @@ import useFetch from "../../../hooks/useFetch";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllHotels } from "../../../Redux/Actions/hotelAction";
-import { useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
+import Sidebar from "../../../components/Sidebar";
+import Header from "../../../components/Header";
+import { TextareaAutosize } from "@mui/material";
 
 const AddRoom = () => {
+  const history = useHistory();
   const params = useParams();
   // const {hotelId} = params
   const dispatch = useDispatch();
@@ -43,58 +47,66 @@ const AddRoom = () => {
       console.log(err);
     }
     alert("Room Added Successfully");
+    history.push("/all-rooms");
   };
 
-  console.log(info);
   return (
-    <div className="new">
-      {/* <Sidebar /> */}
-      <div className="newContainer">
-        {/* <Navbar /> */}
-        <div className="top">
-          <h1>Add New Room</h1>
-        </div>
-        <div className="bottom">
-          <div className="right">
-            <form>
-              {roomInputs.map((input) => (
-                <div className="formInput" key={input.id}>
-                  <label>{input.label}</label>
-                  <input
-                    id={input.id}
-                    type={input.type}
-                    placeholder={input.placeholder}
-                    onChange={handleChange}
+    <Sidebar>
+      <Header />
+      <div className="new">
+        {/* <Sidebar /> */}
+        <div className="newContainer">
+          {/* <Navbar /> */}
+          <div className="top">
+            <h1>Add New Room</h1>
+          </div>
+          <div className="bottom">
+            <div className="right">
+              <form>
+                {roomInputs.map((input) => (
+                  <div className="formInput" key={input.id}>
+                    <label>{input.label}</label>
+                    <input
+                      id={input.id}
+                      type={input.type}
+                      placeholder={input.placeholder}
+                      onChange={handleChange}
+                    />
+                  </div>
+                ))}
+                <div className="formInput">
+                  <label>Rooms</label>
+                  <TextareaAutosize
+                    placeholder="give comma between room numbers."
+                    required
+                    id="outlined-required"
+                    style={{ width: 400, height: 50 }}
+                    className="text-area"
+                    onChange={(e) => setRooms(e.target.value)}
                   />
                 </div>
-              ))}
-              <div className="formInput">
-                <label>Rooms</label>
-                <textarea
-                  onChange={(e) => setRooms(e.target.value)}
-                  placeholder="give comma between room numbers."
-                />
-              </div>
-              <div className="formInput">
-                <label>Choose a hotel</label>
-                <select
-                  id="hotelId"
-                  onChange={(e) => setHotelId(e.target.value)}
-                >
-                  {hotels &&
-                    hotels.map((hotel) => (
-                      <option key={hotel._id} value={hotel._id}>
-                        {hotel.name}
-                      </option>
-                    ))}
-                </select>
-              </div>
-              <button onClick={handleClick}>Send</button>
-            </form>
+                <div className="formInput">
+                  <label>Choose a hotel</label>
+                  <select
+                    style={{height:'60px'}}
+                    id="hotelId"
+                    onChange={(e) => setHotelId(e.target.value)}
+                  >
+                    {hotels &&
+                      hotels.map((hotel) => (
+                        <option key={hotel._id} value={hotel._id}>
+                          {hotel.name}
+                        </option>
+                      ))}
+                  </select>
+                </div>
+                <button onClick={handleClick}>Send</button>
+              </form>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </Sidebar>
   );
 };
 

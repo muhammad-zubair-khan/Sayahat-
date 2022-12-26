@@ -13,23 +13,22 @@ import { Modal, Button } from "react-bootstrap";
 import { getAllHotels } from "../../Redux/Actions/hotelAction";
 import { getAllCars } from "../../Redux/Actions/carAction";
 import { getAllPackages } from "../../Redux/Actions/packageAction";
+import { getAllRooms } from "../../Redux/Actions/roomAction";
 import { Grid } from "@mui/material";
 
 const HomeScreen = () => {
   const dispatch = useDispatch();
   const {categories} = useSelector((state) => state.Vacationcategory);
-  // console.log(vacation);
   const {hotels} = useSelector((state) => state.hotelReducer);
-  // console.log(hotels)
   const { cars } = useSelector((state) => state.carsReducer);
-
   const {packages} = useSelector((state)=> state.packagesReducer);
-
+  const {rooms} = useSelector((state) => state.allRooms)
   useEffect(() => {
     dispatch(getAllHotels())
     dispatch(getAllVacationsCategory());
     dispatch(getAllCars())
     dispatch(getAllPackages())
+    dispatch(getAllRooms())
   }, [dispatch]);
 
   const [lgShow, setLgShow] = useState(false);
@@ -38,7 +37,6 @@ const HomeScreen = () => {
     <>
       <Sidebar>
         <Header />
-        
         <div className="dashboardSummary">
           <div className="dashboardSummaryBox2">
             <Link to="/vacations/add">
@@ -77,6 +75,16 @@ const HomeScreen = () => {
               <p>
                 {packages &&
                   packages.length}
+              </p>
+            </Link>
+          </div>
+          <div className="dashboardSummaryBox2">
+            <Link to='/all-rooms'>
+              <TourIcon />
+              <p className="para">Rooms</p>
+              <p>
+                {rooms &&
+                  rooms.length}
               </p>
             </Link>
           </div>

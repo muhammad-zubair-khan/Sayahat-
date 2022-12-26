@@ -1,6 +1,7 @@
 import "./HotelDetail.css";
 // import MailList from "../../components/mailList/MailList";
 // import Footer from "../../components/footer/Footer";
+import { Grid, Container } from "@mui/material";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCircleArrowLeft,
@@ -33,7 +34,9 @@ const HotelDetail = () => {
   const [open, setOpen] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const [dates, setDates] = useState(location.state.state.dates);
-  const [destination, setDestination] = useState(location.state.state.destination);
+  const [destination, setDestination] = useState(
+    location.state.state.destination
+  );
   const [options, setOptions] = useState(location.state.state.options);
 
   const { data, loading, error } = useFetch(
@@ -57,7 +60,7 @@ const HotelDetail = () => {
   // }, [dates]);
   const days = dayDifference(dates[0].endDate, dates[0].startDate);
   // console.log(options)
-// console.log(parseInt(localStorage.getItem('endDate')))
+  // console.log(parseInt(localStorage.getItem('endDate')))
 
   const handleOpen = (i) => {
     setSlideNumber(i);
@@ -78,7 +81,7 @@ const HotelDetail = () => {
 
   const handleClick = () => {
     // if (!user) {
-      setOpenModal(true);
+    setOpenModal(true);
     // } else {
     //   history.push("/login");
     // }
@@ -202,6 +205,167 @@ const HotelDetail = () => {
               </div>
             </div>
           </div>
+
+          {/* ----------------------------Review-Section-Start----------------------- */}
+          <Container className="my-2">
+            <Grid container>
+              <Grid xs={12} md={12}>
+                <div className="accordion-item" style={{backgroundColor: 'silver',
+    padding: '19px 19px'}}>
+                  <h2 className="accordion-header" id="flush-headingFive">
+                    <button
+                      className="accordion-button collapsed"
+                      type="button"
+                      data-bs-toggle="collapse"
+                      data-bs-target="#flush-collapseFive"
+                      aria-expanded="false"
+                      aria-controls="flush-collapseFive"
+                      style={{    color: 'black',
+                        fontWeight: 'bolder',textAlign:'center'}}
+                    >
+                      Give your Review
+                    </button>
+                  </h2>
+                  <div
+                    id="flush-collapseFive"
+                    className="accordion-collapse collapse"
+                    aria-labelledby="flush-headingFive"
+                    data-bs-parent="#accordionFlushExample"
+                  >
+                    <div className="accordion-body">
+                      <div
+                        className="wrape1"
+                        style={{ fontSize: "11px", color: "#777" }}
+                      >
+                        <h6 style={{ fontSize: "13px", padding: "10px 0px" }}>
+                          Write a Review
+                        </h6>
+                        <h6 style={{ fontSize: "13px", padding: "3px 0px" }}>
+                          Name <span style={{ color: "red" }}>*</span>
+                        </h6>
+                        <input
+                          style={{ width: "100%", outline: "none" }}
+                          type="Name"
+                          placeholder="Enyer your name"
+                        />
+                        <h6 style={{ fontSize: "13px", padding: "8px 0px" }}>
+                          Email <span style={{ color: "red" }}>*</span>
+                        </h6>
+                        <input
+                          style={{ width: "100%", ouline: "none" }}
+                          type="Name"
+                          placeholder="abc@example.com"
+                        />
+                        <br />
+                        <h6
+                          style={{
+                            fontSize: "13px",
+                            padding: "10px 0px",
+                            paddingBottom: "0px",
+                          }}
+                        >
+                          Ratings <span style={{ color: "red" }}>*</span>
+                          <div className="rate">
+                            <input
+                              type="radio"
+                              id="star5"
+                              name="rate"
+                              value="5"
+                            />
+                            <label for="star5" title="text">
+                              5 stars
+                            </label>
+                            <input
+                              type="radio"
+                              id="star4"
+                              name="rate"
+                              value="4"
+                            />
+                            <label for="star4" title="text">
+                              4 stars
+                            </label>
+                            <input
+                              type="radio"
+                              id="star3"
+                              name="rate"
+                              value="3"
+                            />
+                            <label for="star3" title="text">
+                              3 stars
+                            </label>
+                            <input
+                              type="radio"
+                              id="star2"
+                              name="rate"
+                              value="2"
+                            />
+                            <label for="star2" title="text">
+                              2 stars
+                            </label>
+                            <input
+                              type="radio"
+                              id="star1"
+                              name="rate"
+                              value="1"
+                            />
+                            <label for="star1" title="text">
+                              1 star
+                            </label>
+                          </div>
+                        </h6>
+                        <h6
+                          style={{
+                            fontSize: "13px",
+                            padding: "10px 0px",
+                            paddingTop: "0px",
+                          }}
+                        >
+                          Review Title <span style={{ color: "red" }}>*</span>
+                        </h6>
+                        <input
+                          style={{ width: "100%", outline: "none" }}
+                          type="Name"
+                          placeholder="Give your review a title"
+                        />
+                        <h6 style={{ fontSize: "13px", padding: "10px 0px" }}>
+                          Body of Review (1500){" "}
+                          <span style={{ color: "red" }}>*</span>
+                        </h6>
+                        <textarea
+                          style={{ width: "100%", outline: "none" }}
+                          name="text"
+                          id=""
+                          cols="30"
+                          rows="10"
+                          placeholder="Write your comments here"
+                        ></textarea>
+                        <br />
+                        {/* <!-- <input type="checkbox"> <label for="check">XS</label> --> */}
+                        <button
+                          style={{
+                            float: "right",
+                            position: "relative",
+                            bottom: "8px",
+                            backgroundColor: "black",
+                            color: "white",
+                            border: "1px solid",
+                            padding: "8px 9px",
+                            fontSize: "small",
+                            marginTop: "6px",
+                          }}
+                        >
+                          Submit Review
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </Grid>
+            </Grid>
+          </Container>
+
+          {/* ----------------------------Review-Section-End----------------------- */}
+
           <MailList />
           {/* <Footer /> */}
         </div>
