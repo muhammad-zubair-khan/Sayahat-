@@ -34,8 +34,8 @@ const Package = (props) => {
   console.log("location", location);
   const dispatch = useDispatch();
   const { packages } = useSelector((state) => state.packagesReducer);
-  // console.log(packages)
-  const { product } = useSelector((state) => state.newVacation);
+  console.log(packages)
+  // const { product } = useSelector((state) => state.newVacation);
   // console.log("products>>>", product);
   // const { destination } = useSelector((state) => state.newDestination);
 
@@ -213,9 +213,9 @@ const Package = (props) => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  const handleSearch = () => {
+  // const handleSearch = () => {
    
-  };
+  // };
   return (
     <>
       <Navbar />
@@ -224,8 +224,8 @@ const Package = (props) => {
         {/* Start of introduction of city */}
         <div className="row ms-4 mt-5">
           <div className="col-10 ms-5">
-            <h1 className="lhrH1">{params.slug}</h1>
-            <p className="lhrIntro mt-5">{product.description}</p>
+            <h1 className="lhrH1">{packageDestination}</h1>
+            {/* <p className="lhrIntro mt-5">{product.description}</p> */}
           </div>
         </div>
         {/* End of introduction of city */}
@@ -908,7 +908,7 @@ const Package = (props) => {
                       <div class="row g-0">
                         <div class="col-md-4 position-relative">
                           <img
-                            src={ImageUrl(data.packageImage[0].img)}
+                            src={ImageUrl(data.packageImages[0].img)}
                             class="img-fluid rounded-start h-100"
                             alt="pic"
                           />
@@ -953,7 +953,7 @@ const Package = (props) => {
                               ></i>
                               {/* <span className="ms-2">{card.review}</span> */}
                               <div className="mt-1">
-                                <small>{data.description}</small>
+                                <small>{data.description.substring(0,146)}....</small>
                               </div>
                             </p>
                             <small class="text-dark">

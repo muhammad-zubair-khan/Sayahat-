@@ -7,11 +7,60 @@ import {
   getPackageBySlug,
   getPackageDetailById,
 } from "../../Redux/Actions/packageAction";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { ImageUrl } from "../../Redux/UrlConfig";
 import { useState } from "react";
 
 function PackageDetail() {
+  const location = useLocation()
+  const [showResults, setShowResults] = useState(false);
+  const [show, setShow] = useState(false);
+  // const [dates,setDates] = useState(location.state.state.dates);
+
+  const [time, setTime] = useState("");
+  console.log("time", time);
+  const onClickHandle = () => {
+    setShowResults(true);
+    console.log("Clicked");
+  };
+  const Results = () => (
+    <div id="results" className="search-results">
+      {packages.package.startTime.map((item, index) => {
+          const handleShow = () => {
+            setShow(true);
+          };
+          return (
+            <>
+              <input
+                key={index}
+                type="radio"
+                value={item}
+                onChange={(e) => setTime(e.target.value)}
+                name="time"
+                onClick={handleShow}
+                style={{ margin: "14px 13px" }}
+              />
+              {item}
+
+              {/* {show && (
+              <>
+                <p>{packages.package.name}</p>
+                <p>{packages.package.description}</p>
+                <p>
+                  Free Cancellation Untill{" "}
+                  <span className="siTaxiOp">
+                    {`${format(dates[0].startDate - 2, "MM/dd/yyyy")} `}
+                  </span>{" "}
+                </p>
+
+                <Button variant="contained">Book Now</Button>
+              </>
+            )} */}
+            </>
+          );
+        })}
+    </div>
+  );
   const [openOptions, setOpenOptions] = useState(false);
   const [options, setOptions] = useState({
     adult: 1,
@@ -33,8 +82,7 @@ function PackageDetail() {
 
   const dispatch = useDispatch();
   const packages = useSelector((state) => state.addPackageReducer);
-  console.log("pack", packages.package.packageImage);
-  // console.log("picc>>>>>>>>",packages.package.packageImage)
+  // console.log("picc>>>>>>>>",packages.package)
   useEffect(() => {
     dispatch(getPackageDetailById(id));
   }, [dispatch, id]);
@@ -115,9 +163,9 @@ function PackageDetail() {
         {/* start of package images and price */}
         <div className="row">
           <h3 className="text-black">{packages.package.name}</h3>
-          <div class="col-2">
-            {packages.package.packageImage &&
-              packages.package.packageImage.map((pic, index) => {
+          <div class="col-2" style={{height:'fit-content'}}>
+            {packages.package.packageImages &&
+              packages.package.packageImages.map((pic, index) => {
                 return (
                   <img
                     src={ImageUrl(pic.img)}
@@ -131,7 +179,7 @@ function PackageDetail() {
           </div>
           <div className="col-6">
             <img
-              src={ImageUrl(packages.package.packageImage[0].img)}
+              src={ImageUrl(packages.package.packageImages[0].img)}
               className=""
               width="100%"
               height=""
@@ -226,7 +274,7 @@ function PackageDetail() {
                           className="optionbtn"
                           style={{ marginRight: "1px" }}
                           onClick={() => handleOption("adult", "increament")}
-                          disabled={options.adult >=15}
+                          disabled={options.adult >= 15}
                         >
                           +
                         </button>
@@ -244,7 +292,7 @@ function PackageDetail() {
                       <div className="optionButton">
                         <button
                           className="optionbtn"
-                          disabled={options.children <= 0 }
+                          disabled={options.children <= 0}
                           onClick={() => handleOption("children", "decreament")}
                         >
                           -
@@ -260,7 +308,9 @@ function PackageDetail() {
                         <button
                           className="optionbtn"
                           onClick={() => handleOption("children", "increament")}
-                          disabled={options.children >=15 && options.adult >=15 }
+                          disabled={
+                            options.children >= 15 && options.adult >= 15
+                          }
                         >
                           +
                         </button>
@@ -312,9 +362,11 @@ function PackageDetail() {
             <button
               type="button"
               className="btn btn-danger w-100 mt-4 p-2 mb-4"
+              onClick={onClickHandle}
             >
               Check Availability
             </button>
+
             <small className="fw-bold">Reserve Now & Pay Later</small>
             <br />
             <small>Secure your spot while staying flexible</small>
@@ -324,8 +376,8 @@ function PackageDetail() {
             {/* <small>Up to 24 hours in advance.Learn more</small> */}
           </div>
         </div>
+        <div>{showResults ? <Results /> : null}</div>
         {/* end of package images and price */}
-
         <div className="row">
           {/* start of detials about package */}
           <h3 className="text-black fw-bold">Overview</h3>

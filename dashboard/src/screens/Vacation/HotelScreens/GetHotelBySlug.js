@@ -9,10 +9,14 @@ import Button from "@mui/material/Button";
 import Zoom from "react-medium-image-zoom";
 import "react-medium-image-zoom/dist/styles.css";
 import { deleteHotel } from "../../../Redux/Actions/hotelAction";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory, useParams } from "react-router-dom";
 import { ImageUrl } from "../../../Redux/UrlConfig";
+import AddIcon from '@mui/icons-material/Add';
 
 const GetHotelBySlug = (props) => {
+  const params = useParams()
+  const {slug} = params
+  console.log(slug)
   const history = useHistory();
   const dispatch = useDispatch();
   const { hotels } = useSelector((state) => state.hotelReducer);
@@ -109,9 +113,9 @@ const GetHotelBySlug = (props) => {
       renderCell: (params) => {
         return (
           <>
-            {/* <Link to={`/product/update/${params.getValue(params.id, "id")}`}>
-              <MdModeEditOutline />
-            </Link> */}
+            <Link style={{textDecoration:'none'}} title="Add New Rooms" to={`/hotel/${slug}/room/create/${params.getValue(params.id, "id")}`}>
+              <AddIcon />Room
+            </Link>
 
             <Button onClick={() => deleteHotelHandler(params.id)}>
               <DeleteIcon />

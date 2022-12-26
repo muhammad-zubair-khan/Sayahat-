@@ -11,7 +11,7 @@ const {
 
 const router = express.Router();
 //CREATE
-router.post("/create/:hotelid", createRoom);
+router.post("/create/:hotelId", createRoom);
 
 //UPDATE
 router.put("/rooms/availability/:id", updateRoomAvailability);
@@ -21,7 +21,7 @@ router.put("/:id", updateRoom);
 router.delete("/:id/:hotelid", deleteRoom);
 
 //GET
-router.get("/:id", getRoom);
+router.get("/getRoomById/:id", getRoom);
 //GET ALL
 
 router.get("/rooms/all-rooms", getRooms);

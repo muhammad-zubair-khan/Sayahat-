@@ -9,12 +9,12 @@ import { getAllVacationProduct } from "../../../Redux/Actions/vacationProductAct
 const AllCities = () => {
   const dispatch = useDispatch();
   const { products } = useSelector((state) => state.vacationProduct);
-  const { destinations } = useSelector((state) => state.allDestinationReducer);
+  // const { destinations } = useSelector((state) => state.allDestinationReducer);
   // console.log("products>>>>",products);
   // console.log("destinations>>>>",destinations);
   useEffect(() => {
     dispatch(getAllVacationProduct());
-    dispatch(getAllDestinations())
+    // dispatch(getAllDestinations())
   }, []);
   return (
     <>
@@ -48,7 +48,7 @@ const AllCities = () => {
               );
             })}
 
-          {destinations &&
+          {/* {destinations &&
             destinations.map((data, index) => {
               return (
                 <>
@@ -72,7 +72,7 @@ const AllCities = () => {
                   </div>
                 </>
               );
-            })}
+            })} */}
         </div>
       </Sidebar>
     </>

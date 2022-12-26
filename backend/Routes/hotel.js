@@ -27,7 +27,7 @@ const upload = multer({ storage });
 
 router.post(
   "/vacation/Hotel/add",
-  upload.array("hotelImage"),
+  upload.array("hotelImages"),
   createHotel
 );
 

@@ -1,6 +1,6 @@
 // createVacationProduct
 const Hotel = require("../models/hotel");
-const Room = require("../Models/room");
+const RoomModal = require("../Models/room");
 const category = require("../models/vacationProduct");
 const topDest = require("../Models/destination");
 const slugify = require("slugify");
@@ -38,17 +38,17 @@ exports.createHotel = catchAsyncErrors(async (req, res, next) => {
     name: name,
     city: city,
     slug: slugify(name),
-    hotelImages,
-    description: description,
-    pool: pool,
-    Breakfast: Breakfast,
-    Hottub: Hottub,
-    FullyRefundable: FullyRefundable,
-    distance: distance,
-    cheapestPrice: cheapestPrice,
-    address: address,
-    title: title,
-    type: type,
+    description,
+    pool,
+    Breakfast,
+    Hottub,
+    FullyRefundable,
+    distance,
+    cheapestPrice,
+    address,
+    title,
+    type,
+    hotelImages: hotelImages,
     category,
     // createdBy: req.user._id,
   });
@@ -251,22 +251,25 @@ exports.GetHotelById = catchAsyncErrors(async (req, res) => {
   });
 });
 
-exports.getHotelRooms = catchAsyncErrors(async (req, res) => {
+exports.getHotelRooms = async(req, res) => {
   const hotel = await Hotel.findById(req.params.id);
   if (!hotel) {
-    return next(new ErrorHandler("Hotel not found", 404));
+    // return next(new ErrorHandler("Hotel not found", 404));
+    console.log("hotel not found")
   }
   const list = await Promise.all(
     hotel.rooms.map((room) => {
-      return Room.findById(room);
+      return RoomModal.findById(room);
     })
-  );
+    );
+ 
+    // console.log("list>>",list)
+    // res.status(200).json(list);
   res.status(200).json({
     success: true,
     list,
   });
-  // res.status(200).json(list);
-});
+};
 
 // exports.countByType = async (req, res, next) => {
 //   try {

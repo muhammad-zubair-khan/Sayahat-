@@ -2,23 +2,36 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Footer from "../../Footer/Footer";
 import Navbar from "../../Navbar/Navbar";
-// import "./StyleDestination.css";
 import {
   getPackageBySlug,
   getPackageDetailById,
 } from "../../Redux/Actions/packageAction";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation, useParams, useHistory } from "react-router-dom";
 import { ImageUrl } from "../../Redux/UrlConfig";
+import { Button } from "@mui/material";
 import { format } from "date-fns";
+import Zoom from "react-medium-image-zoom";
+import "react-medium-image-zoom/dist/styles.css";
 import { DateRange, DateRangePicker } from "react-date-range";
+
 function SearchedPackageDetail() {
+  const [showResults, setShowResults] = useState(false);
+  const history = useHistory();
+  const [show, setShow] = useState(false);
   const location = useLocation();
-  console.log(location);
+  const [time, setTime] = useState("");
+  const [buttonText, setButtonText] = useState("Check Availability");
+  console.log("time", time);
+  const onClickHandle = () => {
+    setTimeout(()=> setShowResults(true),1000);
+    setButtonText("Update Dates");
+  };
   const [packageDestination, setPackageDestination] = useState(
     location.state.state.packageDestination
   );
   const [openPackageDate, setOpenPackageDate] = useState(false);
   const [dates, setDates] = useState(location.state.state.dates);
+ 
   const [openOptions, setOpenOptions] = useState(false);
   const [options, setOptions] = useState(location.state.state.options);
   const handleOption = (name, operation) => {
@@ -30,14 +43,87 @@ function SearchedPackageDetail() {
       };
     });
   };
+  const { user } = useSelector((state) => state.userAuth);
+  // const id = location.pathname.split("/")[2];
 
+  const bookPackage = () => {
+    if (!user) {
+      dispatch({
+        type: "NEW_SEARCH",
+        payload: { packageDestination, dates, options },
+      });
+      history.push(`/package/${id}/checkout`, {
+        state: { packageDestination, dates, time, options },
+      });
+    } else {
+      history.push("/login");
+    }
+  };
+
+  const Results = () => (
+    <div
+      id="results"
+      className="search-results"
+      style={{
+        border: " 1px solid black",
+        backgroundColor: "#d9dae0",
+        padding: "17px 31px",
+        margin:"36px 1px",
+      }}
+    >
+      <div className="mt-3" style={{fontWeight:'bold'}}>{packages.package.name}</div>
+      <p className="mb-2">{packages.package.description}</p>
+      <div>
+        <b>Available Time</b> <br/>
+        {packages.package.startTime.map((item, index) => {
+          const handleShow = () => {
+            setShow(true);
+          };
+          return (
+            <>
+              <input
+                key={index}
+                type="radio"
+                value={item}
+                onChange={(e) => setTime(e.target.value)}
+                name="time"
+                onClick={handleShow}
+                style={{ margin: "14px 13px" }}
+              />
+              {item}
+
+              {/* {show && (
+              <>
+                <p>{packages.package.name}</p>
+                <p>{packages.package.description}</p>
+                <p>
+                  Free Cancellation Untill{" "}
+                  <span className="siTaxiOp">
+                    {`${format(dates[0].startDate - 2, "MM/dd/yyyy")} `}
+                  </span>{" "}
+                </p>
+
+                <Button variant="contained">Book Now</Button>
+              </>
+            )} */}
+            </>
+          );
+        })}
+      </div>
+
+      <Button variant="contained" className="my-3" onClick={bookPackage}>
+        Book Now
+      </Button>
+    </div>
+  );
   const params = useParams();
   //   console.log(params);
   let { id } = useParams();
 
   const dispatch = useDispatch();
   const packages = useSelector((state) => state.addPackageReducer);
-  console.log("pack", packages.package.packageImage);
+
+  // console.log("pack", packages.package.packageImages);
   // console.log("picc>>>>>>>>",packages.package.packageImage)
   useEffect(() => {
     dispatch(getPackageDetailById(id));
@@ -110,6 +196,8 @@ function SearchedPackageDetail() {
   if (Object.keys(packages.package).length === 0) {
     return null;
   }
+ 
+
   return (
     <>
       <Navbar />
@@ -119,9 +207,9 @@ function SearchedPackageDetail() {
         {/* start of package images and price */}
         <div className="row">
           <h3 className="text-black">{packages.package.name}</h3>
-          <div class="col-2">
-            {packages.package.packageImage &&
-              packages.package.packageImage.map((pic, index) => {
+          <div class="col-2" style={{height:"fit-content"}}>
+            {packages.package.packageImages &&
+              packages.package.packageImages.map((pic, index) => {
                 return (
                   <img
                     src={ImageUrl(pic.img)}
@@ -134,14 +222,17 @@ function SearchedPackageDetail() {
               })}
           </div>
           <div className="col-6">
+            <Zoom>
             <img
-              src={ImageUrl(packages.package.packageImage[0].img)}
+              src={ImageUrl(packages.package.packageImages[0].img)}
               className=""
               width="100%"
               height=""
               alt=""
-            />
+              />
+              </Zoom>
           </div>
+
           <div className="col-4 BgPackage p-3 h-100">
             <h4 className="text-black">From ${packages.package.price}</h4>
             <span style={{ color: "#1874A2" }}>Lowest Price Guarantee</span>
@@ -206,9 +297,8 @@ function SearchedPackageDetail() {
                     className="options"
                     style={{
                       position: "absolute",
-                      // top: "253px",
-                      top: "275px",
-                      // width: "16%",
+                      // top: "275px",
+                      top: "316px",
                       width: "31%",
                       zIndex: "1000000",
                       backgroundColor: "white",
@@ -331,12 +421,16 @@ function SearchedPackageDetail() {
               </section>
             </div>
 
-            <button
-              type="button"
-              className="btn btn-danger w-100 mt-4 p-2 mb-4"
-            >
-              Check Availability
-            </button>
+            {
+              <button
+                type="button"
+                className="btn btn-danger w-100 mt-4 p-2 mb-4"
+                onClick={onClickHandle}
+                id="availabilitybtn"
+              >
+                {buttonText}
+              </button>
+            }
             <small className="fw-bold">Reserve Now & Pay Later</small>
             <br />
             <small>Secure your spot while staying flexible</small>
@@ -347,7 +441,11 @@ function SearchedPackageDetail() {
           </div>
         </div>
         {/* end of package images and price */}
-
+        
+  {/* return !spinner && <div>Your content</div>; */}
+        <>{!showResults  ? (
+            <div style={{display:'none'}}>loading</div>
+          ) : (<Results />)}</>
         <div className="row">
           {/* start of detials about package */}
           <h3 className="text-black fw-bold">Overview</h3>

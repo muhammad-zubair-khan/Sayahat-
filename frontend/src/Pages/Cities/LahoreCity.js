@@ -216,7 +216,7 @@ const LahoreCity = (props) => {
                 );
               })} */}
 
-            <h4 className="text-dark">History</h4>
+            {/* <h4 className="text-dark">History</h4> */}
             {/* <p className="text-dark">
               Legend has it that it was founded about 4,000 years ago by Loh,
               son of Rama, the hero of the Hindu epic, the Ramayana. Reminiscent
@@ -261,11 +261,11 @@ const LahoreCity = (props) => {
                 Mosque) and the Alamgiri gateway to the fort.
               </span>
             </p> */}
-            <div className="d-flex justify-content-center">
+            {/* <div className="d-flex justify-content-center">
               <button className="btnRead" onClick={() => readMore()} id="myBtn">
                 Read more
               </button>
-            </div>
+            </div> */}
           </div>
         </div>
         {/* End of introduction of city */}
@@ -932,7 +932,7 @@ const LahoreCity = (props) => {
                       <div class="row g-0">
                         <div class="col-md-4 position-relative">
                           <img
-                            src={ImageUrl(data.packageImage[0].img)}
+                            src={ImageUrl(data.packageImages[0].img)}
                             class="img-fluid rounded-start h-100"
                             alt="image"
                           />
@@ -977,7 +977,7 @@ const LahoreCity = (props) => {
                               ></i>
                               {/* <span className="ms-2">{card.review}</span> */}
                               <div className="mt-1">
-                                <small>{data.description}</small>
+                                <small>{data.description.substring(0,144)}....</small>
                               </div>
                             </p>
                             <small class="text-dark">

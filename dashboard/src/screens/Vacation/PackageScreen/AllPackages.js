@@ -29,7 +29,7 @@ const AllPackages = (props) => {
 
   const columns = [
     {
-      field: "packageImage",
+      field: "packageImages",
       headerName: "Package img",
       minWidth: 290,
       minHeight: 200,
@@ -40,7 +40,7 @@ const AllPackages = (props) => {
           <div style={{ textAlign: "center" }}>
             <Zoom>
               <img
-                src={ImageUrl(params.row.packageImage[0].img)}
+                src={ImageUrl(params.row.packageImages[0].img)}
                 style={{ width: "20%", margin: "10px 10px" }}
                 alt={params.row.name}
               />
@@ -120,7 +120,7 @@ const AllPackages = (props) => {
     packages.forEach((item) => {
       rows.push({
         id: item._id,
-        packageImage: item.packageImage,
+        packageImages: item.packageImages,
         name: item.name,
         price: item.price,
         description: item.description,

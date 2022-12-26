@@ -25,7 +25,7 @@ const upload = multer({ storage });
 
 router.post(
   "/package/create",
-  upload.array("packageImage"),
+  upload.array("packageImages"),
   createPackage
 );
 router.get("/all-packages", getAllPackages);

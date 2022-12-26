@@ -19,6 +19,9 @@ import {
   GET_TOP_DES_HOTEL_BY_SLUG_REQUEST,
   GET_TOP_DES_HOTEL_BY_SLUG_SUCCESS,
   GET_TOP_DES_HOTEL_BY_SLUG_FAIL,
+  GET_HOTEL_DETAILS_REQUEST,
+  GET_HOTEL_DETAILS_SUCCESS,
+  GET_HOTEL_DETAILS_FAIL,
 } from "../Constants/hotelConstants";
 
 const initialStateHotel = {
@@ -26,19 +29,19 @@ const initialStateHotel = {
   loading: false,
 };
 
-export const newHotelReducer = (state = initialStateHotel, action) => {
+export const newHotelReducer = (state = { hotel: {} }, action) => {
   switch (action.type) {
     case CREATE_NEW_HOTEL_REQUEST:
       return {
-        // ...state,
-        hotel: {},
-        loading: false,
+        ...state,
+        // hotel: {},
+        loading: true,
       };
     case CREATE_NEW_HOTEL_SUCCESS:
       return {
-        loading: true,
+        loading: false,
         success: true,
-        hotel: action.payload,
+        hotel: action.payload.hotel,
       };
     case CREATE_NEW_HOTEL_FAIL:
       return {
@@ -52,7 +55,21 @@ export const newHotelReducer = (state = initialStateHotel, action) => {
         hotel: {},
         success: false,
       };
-
+      case GET_HOTEL_DETAILS_REQUEST:
+        return {
+          loading: true,
+          ...state
+        };
+      case GET_HOTEL_DETAILS_SUCCESS:
+        return {
+          loading: false,
+          hotel: action.payload,
+        };
+      case GET_HOTEL_DETAILS_FAIL:
+        return {
+          loading: false,
+          error: action.payload,
+        };
     default:
       return state;
   }
