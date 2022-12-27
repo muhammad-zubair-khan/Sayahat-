@@ -17,7 +17,7 @@ import MailIcon from "@mui/icons-material/Mail";
 import PhoneIcon from "@mui/icons-material/Phone";
 const Footer = () => {
   return (
-    <div style={{backgroundColor:'#e3e3e3',padding:'20px 0px', marginTop:'50px'}}>
+    <div style={{backgroundColor:'#e3e3e3',padding:'20px 0px'}}>
       <Container>
         <Grid container>
           <Grid xs={12} lg={3}>

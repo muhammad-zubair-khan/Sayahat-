@@ -8,6 +8,9 @@ const packageSchema = new mongoose.Schema(
       trim: true,
       unique: true,
     },
+    title:{
+      type:String,
+    },
     price: {
       type: String,
       required: true,

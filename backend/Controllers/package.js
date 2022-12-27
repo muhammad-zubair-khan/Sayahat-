@@ -17,6 +17,7 @@ exports.createPackage =catchAsyncErrors(async(req, res) => {
     duration,
     refundable,
     startTime,
+    title,
     carPickupDetails,
     product
   } = req.body;
@@ -38,6 +39,7 @@ exports.createPackage =catchAsyncErrors(async(req, res) => {
     duration,
     refundable,
     startTime,
+    title,
     carPickupDetails,
     product
     // createdBy: req.user._id,
