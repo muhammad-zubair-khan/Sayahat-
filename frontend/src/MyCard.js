@@ -1,8 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./MyCard.css";
 import { useState } from "react";
+import { Link, useHistory, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllPackages } from "./Redux/Actions/packageAction";
+import { Button, Grid } from "@mui/material";
+import { ImageUrl } from "./Redux/UrlConfig";
 
 const MyCard = () => {
+  const history = useHistory();
+  const params = useParams();
+  const { packages } = useSelector((state) => state.packagesReducer);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getAllPackages());
+  }, []);
+
   const cardData = [
     {
       image: "http://zwin.io/html/viaje/assets/img/destination-list/1.png",
@@ -117,7 +130,7 @@ const MyCard = () => {
       // document.getElementById("nextBtn").style.display = 'none';
       // setDisabled(true);
       // buttonRef.current.disabled = true;
-      console.log("disabled")
+      console.log("disabled");
     }
   };
 
@@ -126,205 +139,51 @@ const MyCard = () => {
       setcount(count - 1);
       setprogress(progress - 30);
       // document.getElementById("nextBtn").style.display = 'block';
-
     }
   };
+  const [show, setShow] = useState(false);
+  const handleTour = () => {};
+
   return (
     <>
-      <div className="container-fluid position-relative">
-        <div className="row g-0">
-          <div className="col-4 bgCarousel">
-            <button
-              className="btnPrev p-2"
-              onClick={() => countDecrement()}
-              type="button"
-              data-bs-target="#carouselExampleIndicators"
-              data-bs-slide="prev"
-            >
-              <span
-                className="carousel-control-prev-icon"
-                aria-hidden="true"
-              ></span>
-              <span className="visually-hidden">Previous</span>
-            </button>
-            <button
-              className="btnNext p-2"
-              id="nextBtn"
-              onClick={() => countIncrement()}
-              type="button"
-              data-bs-target="#carouselExampleIndicators"
-              data-bs-slide="next"
-              // disabled={count >= 3}
-              // disabled={isDisabled}
-            >
-              <span
-                className="carousel-control-next-icon"
-                aria-hidden="true"
-              ></span>
-              <span className="visually-hidden">Next</span>
-            </button>
-
-            <h1 className="countOfCard">0{count}</h1>
-            <div className="progress stepBar">
-              <div
-                className="progress-bar bg-warning"
-                role="progressbar"
-                aria-label="Warning example"
-                style={{ width: `${progress}%` }}
-                aria-valuenow="75"
-                aria-valuemin="0"
-                aria-valuemax="100"
-              ></div>
-            </div>
+      {/* <div className="container">
+        <Link className="card1" to="#" onMouseEnter={handleShow} onMouseLeave={handleHide}>
+          <h3>Naran</h3>
+         {show && <p className="small">
+            Card description with lots of great facts and interesting details.
+          </p>}
+          <div className="go-corner" href="#">
+            <div className="go-arrow">→</div>
           </div>
-          <div className="col-8">
-            <div
-              id="carouselExampleIndicators"
-              className="carousel slide"
-              // data-bs-ride="true"
-              data-bs-touch="false"
-              data-interval="false"
-            >
-              <div className="carousel-inner">
-                <div className="carousel-item active">
-                  <div className="container text-center">
-                    <div className="row">
-                      { cardData.map((data) => {
-                        return (
-                          <div className="col-md-4">
-                            <div className="card">
-                              <img
-                                src={data.image}
-                                class="card-img-top"
-                                alt="..."
-                              />
-                              <div className="card-body">
-                                <h5 className="card-title">{data.country}</h5>
-                                <p className="card-text">{data.description}</p>
-                                <span>
-                                  <i className="fa-solid fa-calendar-days text-primary ps-3 pe-2"></i>
-                                  <span>{data.date}</span>
-                                  <i className="fa-regular fa-clock text-primary ps-3 pe-2"></i>
-                                  <span>{data.date}</span>
-                                  <i className="fa-solid fa-star text-primary ps-3 pe-2"></i>
-                                  <span>{data.rating}</span>
-                                </span>
-                                <div className="row mt-3">
-                                  <div className="col-6">
-                                    <span>Price</span>
-                                    <h4 style={{ color: "#F3941E" }}>
-                                      ${data.dicPrice}
-                                    </h4>
-                                  </div>
-                                  <div className="col-6">
-                                    <p class="text-decoration-line-through pt-4">
-                                      {data.price}
-                                    </p>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        );
-                      })}
-                    </div>
-                  </div>
-                </div>
+        </Link>
+      </div> */}
 
-                <div className="carousel-item">
-                  <div className="container text-center">
-                    <div className="row">
-                      {cardDataTwo.map((data) => {
-                        return (
-                          <div className="col-md-4">
-                            <div className="card">
-                              <img
-                                src={data.image}
-                                class="card-img-top"
-                                alt="..."
-                              />
-                              <div className="card-body">
-                                <h5 className="card-title">{data.country}</h5>
-                                <p className="card-text">{data.description}</p>
-                                <span>
-                                  <i className="fa-solid fa-calendar-days text-primary ps-3 pe-2"></i>
-                                  <span>{data.date}</span>
-                                  <i className="fa-regular fa-clock text-primary ps-3 pe-2"></i>
-                                  <span>{data.date}</span>
-                                  <i className="fa-solid fa-star text-primary ps-3 pe-2"></i>
-                                  <span>{data.rating}</span>
-                                </span>
-                                <div className="row mt-3">
-                                  <div className="col-6">
-                                    <span>Price</span>
-                                    <h4 style={{ color: "#F3941E" }}>
-                                      ${data.dicPrice}
-                                    </h4>
-                                  </div>
-                                  <div className="col-6">
-                                    <p class="text-decoration-line-through pt-4">
-                                      {data.price}
-                                    </p>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        );
-                      })}
-                    </div>
-                  </div>
-                </div>
-
-                <div className="carousel-item">
-                  <div className="container text-center">
-                    <div className="row">
-                      {cardDataThree.map((data) => {
-                        return (
-                          <div className="col-md-4">
-                            <div className="card">
-                              <img
-                                src={data.image}
-                                class="card-img-top"
-                                alt="..."
-                              />
-                              <div className="card-body">
-                                <h5 className="card-title">{data.country}</h5>
-                                <p className="card-text">{data.description}</p>
-                                <span>
-                                  <i className="fa-solid fa-calendar-days text-primary ps-3 pe-2"></i>
-                                  <span>{data.date}</span>
-                                  <i className="fa-regular fa-clock text-primary ps-3 pe-2"></i>
-                                  <span>{data.date}</span>
-                                  <i className="fa-solid fa-star text-primary ps-3 pe-2"></i>
-                                  <span>{data.rating}</span>
-                                </span>
-                                <div className="row mt-3">
-                                  <div className="col-6">
-                                    <span>Price</span>
-                                    <h4 style={{ color: "#F3941E" }}>
-                                      ${data.dicPrice}
-                                    </h4>
-                                  </div>
-                                  <div className="col-6">
-                                    <p class="text-decoration-line-through pt-4">
-                                      {data.price}
-                                    </p>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        );
-                      })}
-                    </div>
+      <Grid container>
+        {packages.map((item, index) => {
+          return (
+            <Grid md={4}>
+              <div className="card1">
+                <div key={index}>
+                  <img
+                    src={ImageUrl(item.packageImages[0].img)}
+                    className="card-img"
+                    alt=""
+                  />
+                  <h2 className="heading-card">{item.city}</h2>
+                  <div className="content-1">
+                    <h3>{item.name}</h3>
+                    <Link to={`/vacation/${item.product}/${item.city}/${item._id}/detail`}>
+                      <Button variant="contained" style={{color:'white', backgroundColor:'#e17c35'}} onClick={handleTour}>
+                        Tour Details
+                      </Button>
+                    </Link>
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
-        </div>
-      </div>
+            </Grid>
+          );
+        })}
+      </Grid>
     </>
   );
 };
