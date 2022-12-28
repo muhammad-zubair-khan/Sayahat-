@@ -1,65 +1,73 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import Footer from '../../Footer/Footer'
 import Navbar from '../../Navbar/Navbar'
 import SecNav from '../../Navbar/SecNav'
+import { getAllHotels } from '../../Redux/Actions/hotelAction'
+import { ImageUrl } from '../../Redux/UrlConfig'
 
 const HotelList = () => {
-  let hotels = [
-    {
-      image: 'https://images.unsplash.com/photo-1517840901100-8179e982acb7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8aG90ZWx8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60',
-      city: 'Lahore',
-      name: 'Avari Hotel',
-      price: 69
-    },
-    {
-      image: 'https://images.unsplash.com/photo-1517840901100-8179e982acb7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8aG90ZWx8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60',
-      city: 'Lahore',
-      name: 'Avari Hotel',
-      price: 69
-    },
-    {
-      image: 'https://images.unsplash.com/photo-1517840901100-8179e982acb7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8aG90ZWx8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60',
-      city: 'Lahore',
-      name: 'Avari Hotel',
-      price: 69
-    },
-    {
-      image: 'https://images.unsplash.com/photo-1517840901100-8179e982acb7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8aG90ZWx8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60',
-      city: 'Lahore',
-      name: 'Avari Hotel',
-      price: 69
-    },
-    {
-      image: 'https://images.unsplash.com/photo-1517840901100-8179e982acb7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8aG90ZWx8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60',
-      city: 'Lahore',
-      name: 'Avari Hotel',
-      price: 69
-    },
-    {
-      image: 'https://images.unsplash.com/photo-1517840901100-8179e982acb7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8aG90ZWx8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60',
-      city: 'Lahore',
-      name: 'Avari Hotel',
-      price: 69
-    },
-    {
-      image: 'https://images.unsplash.com/photo-1517840901100-8179e982acb7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8aG90ZWx8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60',
-      city: 'Lahore',
-      name: 'Avari Hotel',
-      price: 69
-    },
-    {
-      image: 'https://images.unsplash.com/photo-1517840901100-8179e982acb7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8aG90ZWx8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60',
-      city: 'Lahore',
-      name: 'Avari Hotel',
-      price: 69
-    },
-    {
-      image: 'https://images.unsplash.com/photo-1517840901100-8179e982acb7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8aG90ZWx8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60',
-      city: 'Lahore',
-      name: 'Avari Hotel',
-      price: 69
-    }
-  ]
+  const dispatch = useDispatch()
+  const {hotels} = useSelector((state)=> state.hotelReducer)
+  useEffect(() => {
+   dispatch(getAllHotels())
+  },[]);
+  // let hotels = [
+  //   {
+  //     image: 'https://images.unsplash.com/photo-1517840901100-8179e982acb7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8aG90ZWx8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60',
+  //     city: 'Lahore',
+  //     name: 'Avari Hotel',
+  //     price: 69
+  //   },
+  //   {
+  //     image: 'https://images.unsplash.com/photo-1517840901100-8179e982acb7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8aG90ZWx8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60',
+  //     city: 'Lahore',
+  //     name: 'Avari Hotel',
+  //     price: 69
+  //   },
+  //   {
+  //     image: 'https://images.unsplash.com/photo-1517840901100-8179e982acb7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8aG90ZWx8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60',
+  //     city: 'Lahore',
+  //     name: 'Avari Hotel',
+  //     price: 69
+  //   },
+  //   {
+  //     image: 'https://images.unsplash.com/photo-1517840901100-8179e982acb7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8aG90ZWx8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60',
+  //     city: 'Lahore',
+  //     name: 'Avari Hotel',
+  //     price: 69
+  //   },
+  //   {
+  //     image: 'https://images.unsplash.com/photo-1517840901100-8179e982acb7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8aG90ZWx8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60',
+  //     city: 'Lahore',
+  //     name: 'Avari Hotel',
+  //     price: 69
+  //   },
+  //   {
+  //     image: 'https://images.unsplash.com/photo-1517840901100-8179e982acb7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8aG90ZWx8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60',
+  //     city: 'Lahore',
+  //     name: 'Avari Hotel',
+  //     price: 69
+  //   },
+  //   {
+  //     image: 'https://images.unsplash.com/photo-1517840901100-8179e982acb7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8aG90ZWx8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60',
+  //     city: 'Lahore',
+  //     name: 'Avari Hotel',
+  //     price: 69
+  //   },
+  //   {
+  //     image: 'https://images.unsplash.com/photo-1517840901100-8179e982acb7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8aG90ZWx8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60',
+  //     city: 'Lahore',
+  //     name: 'Avari Hotel',
+  //     price: 69
+  //   },
+  //   {
+  //     image: 'https://images.unsplash.com/photo-1517840901100-8179e982acb7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8aG90ZWx8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60',
+  //     city: 'Lahore',
+  //     name: 'Avari Hotel',
+  //     price: 69
+  //   }
+  // ]
   return (
     <>
       <div style={{ background: "rgb(0, 0, 0)", height: "75px" }}>
@@ -126,12 +134,12 @@ const HotelList = () => {
                 return (
                   <div className="col-md-4 my-3">
                     <div className="card">
-                      <img src={hotel.image} className="card-img-top" alt="..." />
+                      <img src={ImageUrl(hotel.hotelImages[0].img)} style={{height:'250px'}} className="card-img-top" alt="..." />
                       <div className="card-body">
                         <p className="card-text text-start">{hotel.city}</p>
                         <div className='row'>
-                          <h3 className="card-title text-start fw-bold text-dark col-md-6">{hotel.name}</h3>
-                          <h3 className="card-title text-end text-primary fw-bold col-md-6">From ${hotel.price}</h3>
+                          <h5 className="card-title text-start fw-bold text-dark col-md-8" >{hotel.name}</h5>
+                          <h6 className="card-title text-end text-primary fw-bold col-md-4">From ${hotel.cheapestPrice}</h6>
                         </div>
                       </div>
                     </div>

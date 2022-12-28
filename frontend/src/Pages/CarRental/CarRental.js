@@ -1,67 +1,77 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Navbar from '../../Navbar/Navbar'
 import Footer from "../../Footer/Footer";
 import Search from "../Search/Search";
 import CarList from "../Cars/CarList/CarList";
 import { Container, Grid } from '@mui/material';
 import SecNav from '../../Navbar/SecNav';
+import { useDispatch, useSelector } from 'react-redux';
+import { getAllCars } from '../../Redux/Actions/carAction';
+import { ImageUrl } from '../../Redux/UrlConfig';
+
 const CarRental = () => {
-  let hotels = [
-    {
-      image: 'https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8Y2FyfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60',
-      city: 'Lahore',
-      name: 'Nissan GTR',
-      price: 69
-    },
-    {
-      image: 'https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8Y2FyfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60',
-      city: 'Lahore',
-      name: 'Nissan GTR',
-      price: 69
-    },
-    {
-      image: 'https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8Y2FyfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60',
-      city: 'Lahore',
-      name: 'Nissan GTR',
-      price: 69
-    },
-    {
-      image: 'https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8Y2FyfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60',
-      city: 'Lahore',
-      name: 'Nissan GTR',
-      price: 69
-    },
-    {
-      image: 'https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8Y2FyfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60',
-      city: 'Lahore',
-      name: 'Nissan GTR',
-      price: 69
-    },
-    {
-      image: 'https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8Y2FyfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60',
-      city: 'Lahore',
-      name: 'Nissan GTR',
-      price: 69
-    },
-    {
-      image: 'https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8Y2FyfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60',
-      city: 'Lahore',
-      name: 'Nissan GTR',
-      price: 69
-    },
-    {
-      image: 'https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8Y2FyfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60',
-      city: 'Lahore',
-      name: 'Nissan GTR',
-      price: 69
-    },
-    {
-      image: 'https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8Y2FyfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60',
-      city: 'Lahore',
-      name: 'Nissan GTR',
-      price: 69
-    }
-  ]
+  const dispatch = useDispatch()
+  const {cars} = useSelector((state)=> state.carsReducer)
+
+  useEffect(() => {
+    dispatch(getAllCars())
+   },[]);
+  // let hotels = [
+  //   {
+  //     image: 'https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8Y2FyfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60',
+  //     city: 'Lahore',
+  //     name: 'Nissan GTR',
+  //     price: 69
+  //   },
+  //   {
+  //     image: 'https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8Y2FyfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60',
+  //     city: 'Lahore',
+  //     name: 'Nissan GTR',
+  //     price: 69
+  //   },
+  //   {
+  //     image: 'https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8Y2FyfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60',
+  //     city: 'Lahore',
+  //     name: 'Nissan GTR',
+  //     price: 69
+  //   },
+  //   {
+  //     image: 'https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8Y2FyfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60',
+  //     city: 'Lahore',
+  //     name: 'Nissan GTR',
+  //     price: 69
+  //   },
+  //   {
+  //     image: 'https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8Y2FyfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60',
+  //     city: 'Lahore',
+  //     name: 'Nissan GTR',
+  //     price: 69
+  //   },
+  //   {
+  //     image: 'https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8Y2FyfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60',
+  //     city: 'Lahore',
+  //     name: 'Nissan GTR',
+  //     price: 69
+  //   },
+  //   {
+  //     image: 'https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8Y2FyfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60',
+  //     city: 'Lahore',
+  //     name: 'Nissan GTR',
+  //     price: 69
+  //   },
+  //   {
+  //     image: 'https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8Y2FyfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60',
+  //     city: 'Lahore',
+  //     name: 'Nissan GTR',
+  //     price: 69
+  //   },
+  //   {
+  //     image: 'https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8Y2FyfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60',
+  //     city: 'Lahore',
+  //     name: 'Nissan GTR',
+  //     price: 69
+  //   }
+  // ]
   return (
     <>
     <div style={{ background: "rgb(0, 0, 0)", height: "75px" }}>
@@ -124,16 +134,19 @@ const CarRental = () => {
           <h1 className='text-start text-primary fw-bold'>Don't miss these car deals</h1>
           <div className="container text-center">
             <div className="row">
-              {hotels.map((hotel) => {
+              {cars.map((car) => {
                 return (
                   <div className="col-md-4 my-3">
-                    <div className="card">
-                      <img src={hotel.image} className="card-img-top" alt="..." />
+                    <div className="card h-100">
+                      <div style={{display:'flex',justifyContent:'center'}}>
+                      <img src={ImageUrl(car.carImages[0].img)}  className="card-img-top h-75 w-50 mt-3" alt="..." />
+
+                      </div>
                       <div className="card-body">
-                        <p className="card-text text-start">{hotel.city}</p>
+                        <p className="card-text text-start">{car.city}</p>
                         <div className='row'>
-                          <h3 className="card-title text-start fw-bold text-dark col-md-6">{hotel.name}</h3>
-                          <h3 className="card-title text-end text-primary fw-bold col-md-6">From ${hotel.price}</h3>
+                          <h5 className="card-title text-start fw-bold text-dark col-md-6">{car.name}</h5>
+                          <h6 className="card-title text-end text-primary fw-bold col-md-6">From PKR {car.fare}</h6>
                         </div>
                       </div>
                     </div>
