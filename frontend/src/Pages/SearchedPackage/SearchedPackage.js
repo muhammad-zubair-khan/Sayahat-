@@ -216,10 +216,19 @@ const Package = (props) => {
   // const handleSearch = () => {
    
   // };
+  console.log("pack",packages)
   return (
     <>
       <Navbar />
-      <div className="bgCity"></div>
+       {/* {packages && packages.map((item,index)=>{
+         return(
+          <div className="img-city">
+          <div key={index}>
+            <img style={{width:'100%',height:'100vh'}} src={ImageUrl(item.packageImages[0].img)} alt="Package img" />
+          </div>
+      </div>
+        )})} */}
+        <div className="bgCity"></div>
       <div className="container-fluid position-absolute top-100 introText">
         {/* Start of introduction of city */}
         <div className="row ms-4 mt-5">
