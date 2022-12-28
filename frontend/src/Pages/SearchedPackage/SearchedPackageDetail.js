@@ -43,11 +43,11 @@ function SearchedPackageDetail() {
       };
     });
   };
-  const { user } = useSelector((state) => state.userAuth);
+  // const { user } = useSelector((state) => state.userAuth);
   // const id = location.pathname.split("/")[2];
 
   const bookPackage = () => {
-    if (!user) {
+    // if (!user) {
       dispatch({
         type: "NEW_SEARCH",
         payload: { packageDestination, dates, options },
@@ -55,9 +55,9 @@ function SearchedPackageDetail() {
       history.push(`/package/${id}/checkout`, {
         state: { packageDestination, dates, time, options },
       });
-    } else {
-      history.push("/login");
-    }
+    // } else {
+    //   history.push("/login");
+    // }
   };
 
   const Results = () => (
