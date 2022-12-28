@@ -20,7 +20,6 @@ const AllCities = () => {
     <>
       <Sidebar>
         <Header />
-
         <div className="row container-fluid d-flex">
           {products &&
             products.map((data, index) => {

@@ -203,11 +203,8 @@ const routes = [
   },
 ];
 const Sidebar = ({ children, history }) => {
-  
-  
   const dispatch = useDispatch();
   const { admin } = useSelector((state) => state.auth);
-
   const logoutt = () => {
     dispatch(logout());
   };
@@ -249,6 +246,8 @@ const Sidebar = ({ children, history }) => {
   return (
     <>
       <div className="main-container">
+        {/* <div className="child-container"> */}
+
         <motion.div
           animate={{
             width: isOpen ? "290px" : "45px",
@@ -352,6 +351,7 @@ const Sidebar = ({ children, history }) => {
             })}
           </section>
         </motion.div>
+        {/* </div> */}
 
         <main>{children}</main>
       </div>

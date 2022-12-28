@@ -7,12 +7,10 @@
   right: 0;
   z-index: 1;
   background-image: url("https://images.unsplash.com/photo-1617128072203-310a93722ad8?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1537&q=80");
-  /* background-color: red; */
   filter: brightness(0.6);
   background-attachment: fixed;
   background-size: cover;
 }
-
 .introText {
     z-index: 2;
     margin-top: -150px;
