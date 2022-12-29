@@ -7,14 +7,16 @@ import React, { useState, useEffect } from "react";
 import "./Navbar.css";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllVacationsCategory } from "../Redux/Actions/vacationCategoryAction";
-import Dropdown from 'react-bootstrap/Dropdown';
-import DropdownButton from 'react-bootstrap/DropdownButton';
-import PermIdentityIcon from '@mui/icons-material/PermIdentity';
-import PhoneIcon from '@mui/icons-material/Phone';
-import HouseboatIcon from '@mui/icons-material/Houseboat';
-import HotelIcon from '@mui/icons-material/Hotel';
-import TipsAndUpdatesIcon from '@mui/icons-material/TipsAndUpdates';
-import DirectionsCarIcon from '@mui/icons-material/DirectionsCar';
+import Dropdown from "react-bootstrap/Dropdown";
+import DropdownButton from "react-bootstrap/DropdownButton";
+import PermIdentityIcon from "@mui/icons-material/PermIdentity";
+import PhoneIcon from "@mui/icons-material/Phone";
+import HouseboatIcon from "@mui/icons-material/Houseboat";
+import HotelIcon from "@mui/icons-material/Hotel";
+import TipsAndUpdatesIcon from "@mui/icons-material/TipsAndUpdates";
+import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
+import { signout } from "../Redux/Actions/authActions";
+import DropdownMenu from "../Components/MaterialUI/DropdownMenu";
 
 function ChangeColorOnScroll(props) {
   const { children, window } = props;
@@ -30,8 +32,10 @@ function ChangeColorOnScroll(props) {
 }
 
 const Navbar = (props) => {
+  const { user } = useSelector((state) => state.auth);
+  const auth = useSelector((state) => state.auth);
   const vacationCategory = useSelector((state) => state.Vacationcategory);
-  console.log(vacationCategory)
+  console.log(vacationCategory);
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -60,6 +64,10 @@ const Navbar = (props) => {
     return () => window.removeEventListener("scroll", handleScroll);
   });
 
+  const logout = () => {
+    dispatch(signout());
+  };
+
   const theme = useTheme();
   // console.log(theme);
   const isMatch = useMediaQuery(theme.breakpoints.down("md"));
@@ -73,13 +81,21 @@ const Navbar = (props) => {
           {category.parentId ? (
             <>
               <Link to={`/vacation/${category.slug}`} className="menues">
-               {category.name}
+                {category.name}
               </Link>
             </>
           ) : (
             <>
-              <label htmlFor="show-features"><HouseboatIcon style={{width: '18px',height: '15px',}}/> {category.name}</label>
-              {!isMatch && <Link to="#"><HouseboatIcon style={{width: '18px', height: '15px'}}/> {category.name}</Link>}
+              <label htmlFor="show-features">
+                <HouseboatIcon style={{ width: "18px", height: "15px" }} />{" "}
+                {category.name}
+              </label>
+              {!isMatch && (
+                <Link to="#">
+                  <HouseboatIcon style={{ width: "18px", height: "15px" }} />{" "}
+                  {category.name}
+                </Link>
+              )}
               <input type="checkbox" id="show-features" />
               {/* <Link>
               {category.name}
@@ -98,7 +114,40 @@ const Navbar = (props) => {
 
     return myCategories;
   };
+  const renderLoggedInMenu = () => {
+    return (
+      <DropdownMenu
+        menu={
+          <Link
+            className="fullName"
+            style={{
+              textTransform: "uppercase",
+              background: "#f78536",
+              color: "white",
+            }}
+          >
+            {user.fullName}
+          </Link>
+        }
+        menus={[
+          { label: "My Profile", href: "/myProfile", icon: null },
+          { label: "Wishlist", href: "", icon: null },
+          { label: "Rewards", href: "", icon: null },
+          { label: "Notifications", href: "", icon: null },
+          { label: "Logout", href: "", icon: null, onClick: logout },
+        ]}
+      />
+    );
+  };
 
+  const renderNonLoggedInMenu = () => {
+    return (
+      <Link to="/login">
+        <PermIdentityIcon style={{ width: "18px", height: "15px" }} />
+        Account
+      </Link>
+    );
+  };
   return (
     <>
       <ChangeColorOnScroll {...props}>
@@ -134,38 +183,42 @@ const Navbar = (props) => {
                     <li>
                       <Link to="/Karachi" className="menues" >Karachi</Link>
                     </li>
-                    <li>
-                      <Link to="/Lahore" className="menues" >Lahore</Link>
-                    </li>
-                    <li>
-                      <Link to="/Islamabad" className="menues" >Islamabad</Link>
-                    </li>
-                    <li>
-                      <Link to="/Peshawar" className="menues" >Peshawar</Link>
-                    </li>
-                    <li>
-                      <Link to="/Kashmir" className="menues" >Kashmir</Link>
-                    </li>
                   </ul>
                 </li> */}
 
                 <li>
-                  <Link to="/hotels-list"><HotelIcon style={{width: '18px', height: '15px'}}/> Hotels</Link>
+                  <Link to="/hotels-list">
+                    <HotelIcon style={{ width: "18px", height: "15px" }} />{" "}
+                    Hotels
+                  </Link>
                 </li>
                 <li>
-                  <Link to="/car-rentals"><DirectionsCarIcon style={{width: '18px', height: '15px'}}/> Cars</Link>
+                  <Link to="/car-rentals">
+                    <DirectionsCarIcon
+                      style={{ width: "18px", height: "15px" }}
+                    />{" "}
+                    Cars
+                  </Link>
                 </li>
                 <li>
-                  <Link to="/aboutus"><TipsAndUpdatesIcon style={{width: '18px', height: '15px'}}/> About us</Link>
+                  <Link to="/aboutus">
+                    <TipsAndUpdatesIcon
+                      style={{ width: "18px", height: "15px" }}
+                    />{" "}
+                    About us
+                  </Link>
                 </li>
                 <li>
-                  <Link to="/contactus"><PhoneIcon style={{width: '18px', height: '15px'}}/> Contact Us</Link>
+                  <Link to="/contactus">
+                    <PhoneIcon style={{ width: "18px", height: "15px" }} />{" "}
+                    Contact Us
+                  </Link>
                 </li>
                 <li>
-                  <Link to="/login"><PermIdentityIcon style={{width: '18px', height: '15px'}}/> Account</Link>
+                  {auth.authenticate
+                    ? renderLoggedInMenu()
+                    : renderNonLoggedInMenu()}
                 </li>
-               
-               
               </ul>
             </div>
           </nav>

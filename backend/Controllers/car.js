@@ -23,6 +23,7 @@ exports.addCar = catchAsyncErrors(async (req, res) => {
     gear,
     title,
     city,
+    createdBy,
   } = req.body;
 
   let carImages = [];
@@ -49,7 +50,7 @@ exports.addCar = catchAsyncErrors(async (req, res) => {
     city,
     title,
     category,
-    // createdBy: req.user._id,
+    createdBy: req.user._id,
   });
 
   car.save((err, data) => {

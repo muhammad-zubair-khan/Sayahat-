@@ -9,6 +9,12 @@ const {
   deleteVacationCategory,
   updateVacationCategories,
 } = require("../Controllers/vacationCategory");
+const {
+  requireSignin,
+  adminMiddleware,
+  userMiddleware,
+  superAdminMiddleware,
+} = require("../common-middleware");
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -19,18 +25,29 @@ const storage = multer.diskStorage({
   },
 });
 const upload = multer({ storage });
-
+//For Admin
 router.post(
-  "/vacation/category/add",
+  "/admin/vacation/category/add",
+  requireSignin,
+  superAdminMiddleware,
   upload.single("categoryImage"),
   addVacationCategory
 );
-router.get("/vacations/getcategories", getVacationCategory);
-router.post("/vacation/category/delete", deleteVacationCategory);
+//For Admin
+router.get("/admin/vacations/getcategories",requireSignin,
+superAdminMiddleware, getVacationCategory);
+//For Admin
+router.post("/admin/vacation/category/delete",requireSignin,
+superAdminMiddleware, deleteVacationCategory);
+//For Admin
 router.post(
-  "/vacation/category/update",
-  upload.array("categoryImage"),
+  "/admin/vacation/category/update",
+  requireSignin,
+  superAdminMiddleware,
+  upload.single("categoryImage"),
   updateVacationCategories
 );
+
+router.get("/vacations/getcategories", getVacationCategory);
 
 module.exports = router;

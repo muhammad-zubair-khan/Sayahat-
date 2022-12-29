@@ -5,7 +5,11 @@ const {
   getProductsBySlug,
   getProductDetailById,
 } = require("../Controllers/VacationProduct");
-
+const {
+  requireSignin,
+  adminMiddleware,
+  userMiddleware,
+} = require("../common-middleware");
 
 const multer = require("multer");
 const path = require("path");
@@ -23,14 +27,22 @@ const storage = multer.diskStorage({
   });
 const upload = multer({storage})
 
+//For Admin
 router
-.post("/admin/VacationProduct/new",upload.single("productVacationPicture"),createVacationProduct)
+.post("/admin/VacationProduct/new",upload.single("productVacationPicture"),requireSignin,
+adminMiddleware,createVacationProduct)
+//For Admin
+router.get("/admin/view-all-vacations", requireSignin,
+adminMiddleware, getAllVacationsProducts);
+//For Admin
+router.get("/admin/vacations/:slug", requireSignin,
+adminMiddleware,getProductsBySlug);
+//For Admin
+router.get("/admin/vacation-detail/:id",requireSignin,
+adminMiddleware,getProductDetailById);
 
-router.route("/view-all-vacations").get(getAllVacationsProducts);
-
-router.route("/vacations/:slug").get(getProductsBySlug);
-
-router.route("/vacation-detail/:id").get(getProductDetailById);
-
+router.get("/view-all-vacations", getAllVacationsProducts);
+router.get("/vacations/:slug", getProductsBySlug);
+router.get("/vacation-detail/:id",getProductDetailById);
 
 module.exports = router;

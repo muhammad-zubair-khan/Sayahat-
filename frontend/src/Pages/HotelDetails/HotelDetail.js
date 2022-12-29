@@ -1,7 +1,7 @@
 import "./HotelDetail.css";
 // import MailList from "../../components/mailList/MailList";
 // import Footer from "../../components/footer/Footer";
-import { Grid, Container } from "@mui/material";
+import { Grid, Container, Rating } from "@mui/material";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCircleArrowLeft,
@@ -24,10 +24,18 @@ import "react-medium-image-zoom/dist/styles.css";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MailList from "../../Components/MailList/MailList";
-const HotelDetail = () => {
+import { useDispatch } from "react-redux";
+import { newReview } from "../../Redux/Actions/hotelAction";
+import ReviewCard from "./ReviewCard/ReviewCard";
+
+const HotelDetail = ({ match }) => {
+  const dispatch = useDispatch();
   const history = useHistory();
   const location = useLocation();
   const id = location.pathname.split("/")[2];
+  const [rating, setRating] = useState(0);
+  const [comment, setComment] = useState("");
+  // const [rating,setRating] = useState(0)
   // console.log(id)
   // console.log("location>>",location)
   const [slideNumber, setSlideNumber] = useState(0);
@@ -38,14 +46,19 @@ const HotelDetail = () => {
     location.state.state.destination
   );
   const [options, setOptions] = useState(location.state.state.options);
-
+  const { success, error: reviewError } = useSelector(
+    (state) => state.newReview
+  );
+  const auth = useSelector((state)=> state.auth)
   const { data, loading, error } = useFetch(
     `http://localhost:5000/api/hotel/${id}`
   );
-  // const { user } = useSelector((state) => state.userAuth);
+  const hotel = useSelector((state) => state.hotelReviews);
+  console.log(hotel)
   // const { user } = useContext(AuthContext);
   // const { dates, options } = useContext(SearchContext);
   console.log(dates);
+
   console.log(options);
   console.log(destination);
   const MILLISECONDS_PER_DAY = 1000 * 60 * 60 * 24;
@@ -86,6 +99,8 @@ const HotelDetail = () => {
     //   history.push("/login");
     // }
   };
+  console.log(data)
+
   console.log(data);
   if (Object.keys(data).length === 0) {
     return null;
@@ -93,6 +108,17 @@ const HotelDetail = () => {
   // if (Object.keys(dates[0]).length === 0) {
   //   return null;
   // }
+  const reviewSubmitHandler = () => {
+    const myForm = new FormData();
+
+    myForm.set("rating", rating);
+    myForm.set("comment", comment);
+    myForm.set("id", match.params.id);
+
+    dispatch(newReview(myForm));
+   
+  };
+  
   return (
     <>
       <div style={{ background: "rgb(0, 0, 0)", height: "75px" }}>
@@ -210,8 +236,10 @@ const HotelDetail = () => {
           <Container className="my-2">
             <Grid container>
               <Grid xs={12} md={12}>
-                <div className="accordion-item" style={{backgroundColor: 'silver',
-    padding: '19px 19px'}}>
+                <div
+                  className="accordion-item"
+                  style={{ backgroundColor: "silver", padding: "19px 19px" }}
+                >
                   <h2 className="accordion-header" id="flush-headingFive">
                     <button
                       className="accordion-button collapsed"
@@ -220,8 +248,11 @@ const HotelDetail = () => {
                       data-bs-target="#flush-collapseFive"
                       aria-expanded="false"
                       aria-controls="flush-collapseFive"
-                      style={{    color: 'black',
-                        fontWeight: 'bolder',textAlign:'center'}}
+                      style={{
+                        color: "black",
+                        fontWeight: "bolder",
+                        textAlign: "center",
+                      }}
                     >
                       Give your Review
                     </button>
@@ -237,110 +268,20 @@ const HotelDetail = () => {
                         className="wrape1"
                         style={{ fontSize: "11px", color: "#777" }}
                       >
-                        <h6 style={{ fontSize: "13px", padding: "10px 0px" }}>
-                          Write a Review
-                        </h6>
-                        <h6 style={{ fontSize: "13px", padding: "3px 0px" }}>
-                          Name <span style={{ color: "red" }}>*</span>
-                        </h6>
-                        <input
-                          style={{ width: "100%", outline: "none" }}
-                          type="Name"
-                          placeholder="Enyer your name"
-                        />
-                        <h6 style={{ fontSize: "13px", padding: "8px 0px" }}>
-                          Email <span style={{ color: "red" }}>*</span>
-                        </h6>
-                        <input
-                          style={{ width: "100%", ouline: "none" }}
-                          type="Name"
-                          placeholder="abc@example.com"
-                        />
-                        <br />
-                        <h6
-                          style={{
-                            fontSize: "13px",
-                            padding: "10px 0px",
-                            paddingBottom: "0px",
+                        <Rating
+                          name="simple-controlled"
+                          value={rating}
+                          onChange={(event, newValue) => {
+                            setRating(newValue);
                           }}
-                        >
-                          Ratings <span style={{ color: "red" }}>*</span>
-                          <div className="rate">
-                            <input
-                              type="radio"
-                              id="star5"
-                              name="rate"
-                              value="5"
-                            />
-                            <label for="star5" title="text">
-                              5 stars
-                            </label>
-                            <input
-                              type="radio"
-                              id="star4"
-                              name="rate"
-                              value="4"
-                            />
-                            <label for="star4" title="text">
-                              4 stars
-                            </label>
-                            <input
-                              type="radio"
-                              id="star3"
-                              name="rate"
-                              value="3"
-                            />
-                            <label for="star3" title="text">
-                              3 stars
-                            </label>
-                            <input
-                              type="radio"
-                              id="star2"
-                              name="rate"
-                              value="2"
-                            />
-                            <label for="star2" title="text">
-                              2 stars
-                            </label>
-                            <input
-                              type="radio"
-                              id="star1"
-                              name="rate"
-                              value="1"
-                            />
-                            <label for="star1" title="text">
-                              1 star
-                            </label>
-                          </div>
-                        </h6>
-                        <h6
-                          style={{
-                            fontSize: "13px",
-                            padding: "10px 0px",
-                            paddingTop: "0px",
-                          }}
-                        >
-                          Review Title <span style={{ color: "red" }}>*</span>
-                        </h6>
-                        <input
-                          style={{ width: "100%", outline: "none" }}
-                          type="Name"
-                          placeholder="Give your review a title"
                         />
-                        <h6 style={{ fontSize: "13px", padding: "10px 0px" }}>
-                          Body of Review (1500){" "}
-                          <span style={{ color: "red" }}>*</span>
-                        </h6>
                         <textarea
-                          style={{ width: "100%", outline: "none" }}
-                          name="text"
-                          id=""
+                          className="submitDialogTextArea"
                           cols="30"
-                          rows="10"
-                          placeholder="Write your comments here"
+                          rows="5"
+                          value={comment}
+                          onChange={(e) => setComment(e.target.value)}
                         ></textarea>
-                        <br />
-                        {/* <!-- <input type="checkbox"> <label for="check">XS</label> --> */}
                         <button
                           style={{
                             float: "right",
@@ -353,6 +294,7 @@ const HotelDetail = () => {
                             fontSize: "small",
                             marginTop: "6px",
                           }}
+                          onClick={reviewSubmitHandler}
                         >
                           Submit Review
                         </button>
@@ -363,6 +305,22 @@ const HotelDetail = () => {
               </Grid>
             </Grid>
           </Container>
+
+          {data.hotel.reviews && data.hotel.reviews[0] ? (
+            <div className="reviews">
+              {data.hotel.reviews &&
+                data.hotel.reviews.map((review) => (
+                  <>
+                  <p>{review.fullName}</p>
+                  <ReviewCard key={review._id} review={review} />
+                  </>
+                  // {/* <img src={profilePng} alt="User" /> */}
+                  
+                ))}
+            </div>
+          ) : (
+            <p className="noReviews">No Reviews Yet</p>
+          )}
 
           {/* ----------------------------Review-Section-End----------------------- */}
 

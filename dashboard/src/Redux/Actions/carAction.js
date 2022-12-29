@@ -20,7 +20,7 @@ export const addCar = (form) => {
   return async dispatch => {
     dispatch({ type:  CREATE_NEW_CAR_REQUEST });
     try {
-      const res = await axios.post("/car/add", form);
+      const res = await axios.post("/admin/car/add", form);
       console.log("res......",res)
       if (res.status === 201) {
         dispatch({
@@ -46,7 +46,7 @@ export const getAllCars = () => async (dispatch) => {
     try {
       dispatch({ type: GET_ALL_CARS_REQUEST });
   
-      const { data } = await axios.get("/cars");
+      const { data } = await axios.get("/admin/cars");
   
       dispatch({
         type: GET_ALL_CARS_SUCCESS,
@@ -64,7 +64,7 @@ export const getAllCars = () => async (dispatch) => {
 export const getCarBySlug = (slug) => async (dispatch) => {
     try {
       dispatch({ type: GET_CAR_BY_SLUG_REQUEST });
-      const { data } = await axios.get(`/car/${slug}`);
+      const { data } = await axios.get(`/admin/car/${slug}`);
       console.log(data);
       dispatch({
         type: GET_CAR_BY_SLUG_SUCCESS,
@@ -84,7 +84,7 @@ export const getCarBySlug = (slug) => async (dispatch) => {
     try {
       dispatch({ type: DELETE_CAR_REQUEST });
   
-      const { data } = await axios.post(`/deletecar/${id}`);
+      const { data } = await axios.post(`/admin/deletecar/${id}`);
   
       dispatch({
         type: DELETE_CAR_SUCCESS,

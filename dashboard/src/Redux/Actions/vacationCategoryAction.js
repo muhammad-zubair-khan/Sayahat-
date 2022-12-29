@@ -18,7 +18,7 @@ export const createVacationCategory = (form) => {
   return async (dispatch) => {
     dispatch({ type: CREATE_NEW_CATEGORY_REQUEST });
     try {
-      const res = await axios.post("/vacation/category/add", form);
+      const res = await axios.post("/admin/vacation/category/add", form);
       if (res.status === 201) {
         dispatch(getAllVacationsCategory());
         dispatch({
@@ -40,7 +40,7 @@ export const createVacationCategory = (form) => {
 export const getAllVacationsCategory = () => {
   return async (dispatch) => {
     dispatch({ type: GET_ALL_VACATION_CATEGORIES_REQUEST });
-    const res = await axios.get(`/vacations/getcategories`);
+    const res = await axios.get(`/admin/vacations/getcategories`);
     // console.log(res);
     if (res.status === 200) {
       const { vacationCategoryList } = res.data;
@@ -61,7 +61,7 @@ export const getAllVacationsCategory = () => {
 export const deleteCategories = (ids) => {
   return async (dispatch) => {
     dispatch({ type: DELETE_VACATION_CATEGORY_REQUEST });
-    const res = await axios.post(`/vacation/category/delete`, {
+    const res = await axios.post(`/admin/vacation/category/delete`, {
       payload: {
         ids,
       },
@@ -82,7 +82,7 @@ export const deleteCategories = (ids) => {
 export const updateVacationCategories = (form) => {
   return async (dispatch) => {
     dispatch({ type: UPDATE_VACATION_CATEGORY_REQUEST });
-    const res = await axios.post(`/vacation/category/update`, form);
+    const res = await axios.post(`/admin/vacation/category/update`, form);
     if (res.status === 201) {
       dispatch({ type: UPDATE_VACATION_CATEGORY_SUCCESS });
       dispatch(getAllVacationsCategory());

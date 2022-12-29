@@ -5,11 +5,12 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import "./responsive.css";
 import Signin from "./components/Signin";
+import Signup from "./components/Signup.js";
 import PrivateRoute from "./components/Private/PrivateRoute";
 import HomeScreen from "./screens/Home/HomeScreen";
 import UserScreen from "./screens/User/UserScreen";
 import ProfileScreen from "./screens/Profile/ProfileScreen";
-import { isAdminLoggedIn } from "./Redux/Actions/adminActions";
+import { isUserLoggedIn } from "./Redux/Actions/authActions";
 import VacationScreen from "./screens/Vacation/VacationScreen/VacationScreen";
 import AddNewCitites from "./screens/Vacation/CitiesScreen/AddNewCitites";
 import CreateTopDestinations from "./screens/Destination/CreateTopDestinations";
@@ -32,9 +33,10 @@ function App() {
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
 
+  
   useEffect(() => {
     if (!auth.authenticate) {
-      dispatch(isAdminLoggedIn());
+      dispatch(isUserLoggedIn());
     }
     if (auth.authenticate) {
       dispatch(getInitialData());
@@ -92,6 +94,7 @@ function App() {
         <PrivateRoute exact path="/users" component={UserScreen} />
         <PrivateRoute exact path="/profile" component={ProfileScreen} />
         <Route exact path="/login" component={Signin} />
+        <Route exact path="/signup" component={Signup} />
 
         <Route path="*" component={<> not found</>} />
       </Switch>

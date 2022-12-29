@@ -18,6 +18,14 @@ const userSchema = new mongoose.Schema(
       min: 3,
       max: 10,
     },
+    userName:{
+      type:String,
+      required:true,
+      trim:true,
+      index:true,
+      unique:true,
+      lowercase:true
+    },
     email: {
       type: String,
       required: true,
@@ -28,11 +36,16 @@ const userSchema = new mongoose.Schema(
         type: String,
         required: true,
       },
-    isUser: {
-      type: Boolean,
-      required: true,
-      default: true,
+    phone: {
+      type: String,
     },
+    role: {
+      type: String,
+      enum: ["user", "admin", "super-admin"],
+      default: 'user',
+    },
+    profilePicture:{type:String},
+
   },
   { timestamps: true }
 );

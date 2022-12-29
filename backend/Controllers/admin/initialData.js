@@ -1,6 +1,6 @@
-const VacationCategoryModel = require('../Models/vacationCategory')
-const ErrorHandler = require("../utils/errorhandler");
-const catchAsyncErrors = require("../utils/catchAsyncErrors");
+const VacationCategoryModel = require('../../Models/vacationCategory')
+const ErrorHandler = require("../../utils/errorhandler");
+const catchAsyncErrors = require("../../utils/catchAsyncErrors");
 
 const createVacationCategories = (categories, parentId = null) => {
   const VacationCategoryList = []

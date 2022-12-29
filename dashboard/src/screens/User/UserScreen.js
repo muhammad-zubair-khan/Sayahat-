@@ -46,8 +46,8 @@ useEffect(() => {
       flex: 0.5,
     },
     {
-      field: "isAdmin",
-      headerName: "isAdmin ",
+      field: "role",
+      headerName: "role ",
       // type: "number",
       minWidth: 270,
       flex: 0.5,
@@ -89,7 +89,7 @@ useEffect(() => {
         firstName: item.firstName,
         lastName: item.lastName,
         email: item.email,
-        isAdmin: item.isAdmin,
+        role: item.role,
       });
     });
 

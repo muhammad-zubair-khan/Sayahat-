@@ -68,7 +68,7 @@ export const getAllVacationProduct = () => async (dispatch) => {
   try {
     dispatch({ type: GET_ALL_VACATION_PRODUCTS_REQUEST });
 
-    const { data } = await axios.get("/view-all-vacations");
+    const { data } = await axios.get("/admin/view-all-vacations");
 
     dispatch({
       type: GET_ALL_VACATION_PRODUCTS_SUCCESS,
@@ -86,7 +86,7 @@ export const getAllVacationProduct = () => async (dispatch) => {
 export const getVacationProductsBySlug = (slug) => async (dispatch) => {
   try {
     dispatch({ type: GET_VACATION_PRODUCTS_BY_SLUG_REQUEST });
-    const { data } = await axios.get(`/vacations/${slug}`);
+    const { data } = await axios.get(`/admin/vacations/${slug}`);
     console.log(data);
     dispatch({
       type: GET_VACATION_PRODUCTS_BY_SLUG_SUCCESS,

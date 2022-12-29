@@ -65,6 +65,13 @@ const carSchema = new mongoose.Schema({
         required: true,
     },
     category: { type: mongoose.Schema.Types.ObjectId, ref: 'Category', required: true },
+    reviews: [
+        {
+            userId: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
+            review: String
+        }
+    ],
+    createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
     updatedAt: Date,
   },
   { timestamps: true }

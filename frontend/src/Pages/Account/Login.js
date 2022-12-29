@@ -237,13 +237,18 @@
 
 import React from "react";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect, useHistory } from "react-router-dom";
 import Form from "./utilities/Forms";
 import "./style.css";
 import logo from "../../Assets/logo/logo.png";
 import { Row, Col } from "react-bootstrap";
+import { login } from "../../Redux/Actions/authActions";
+import {useDispatch, useSelector} from 'react-redux';
 
 const Login = () => {
+  const history = useHistory()
+  const dispatch = useDispatch()
+  const auth = useSelector((state)=> state.auth)
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [remember, setRemember] = useState(false);
@@ -296,7 +301,20 @@ const Login = () => {
       setShowPassword(true);
     }
   };
+  const signuInUser = (e) => {
+    e.preventDefault();
 
+    const user = {
+      email,
+      password,
+    };
+
+    dispatch(login(user));
+    history.push()
+  };
+  if (auth.authenticate) {
+    return <Redirect to={`/`} />;
+  }
   return (
     <Row>
       <Col
@@ -324,8 +342,7 @@ const Login = () => {
             <div className="auth-form-container text-start">
               <form
                 className="auth-form"
-                method="POST"
-                onSubmit={authenticate}
+                onSubmit={signuInUser}
                 autoComplete={"off"}
               >
                 <div className="email mb-3">

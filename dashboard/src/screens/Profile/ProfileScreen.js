@@ -3,12 +3,12 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
-import EditIcon from '@mui/icons-material/Edit';
+import EditIcon from "@mui/icons-material/Edit";
 
 const ProfileScreen = () => {
   const dispatch = useDispatch();
-  const { admin } = useSelector((state) => state.auth);
-  console.log(admin);
+  const { user } = useSelector((state) => state.auth);
+  console.log(user);
   return (
     <>
       <Sidebar>
@@ -27,22 +27,20 @@ const ProfileScreen = () => {
                     />
                   </div>
                   <div className="col-sm-6 col-md-6">
-                    <h4 style={{fontVariant:'small-caps'}}>{admin.fullName}</h4>
-                    <small>
-                      <cite>
-                        Lahore, PAK{" "}
-                        <i className="glyphicon glyphicon-map-marker"></i>
-                      </cite>
-                    </small>
+                    <h4 style={{ fontVariant: "small-caps" }}>
+                      {user.fullName}
+                    </h4>
                     <p>
-                      <i className="glyphicon glyphicon-envelope"></i>
-                      {admin.email}
-                    
-                      <br />
-                      <i className="glyphicon glyphicon-gift"></i>June 02, 1998
+                      Status: <b>{user.role}</b>
+                    </p>
+
+                    <p>
+                      {user.email}
                     </p>
                   </div>
-                <Button variant="contained">Edit Profile <EditIcon/></Button>
+                  <Button variant="contained">
+                    Edit Profile <EditIcon />
+                  </Button>
                 </div>
               </div>
             </div>

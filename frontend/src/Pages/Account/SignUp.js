@@ -5,9 +5,13 @@ import Form from "./utilities/Forms";
 import './style.css'
 import { Row, Col } from "react-bootstrap";
 import logo from '../../Assets/logo/logo.png'
+import { useDispatch } from 'react-redux';
+import { signup } from '../../Redux/Actions/authActions';
 
 const SignUp = () => {
-    const [name, setName] = useState("");
+  const dispatch = useDispatch()
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [validate, setValidate] = useState({});
@@ -17,8 +21,12 @@ const SignUp = () => {
       let isValid = true;
   
       let validator = Form.validator({
-        name: {
-          value: name,
+        firstName: {
+          value: firstName,
+          isRequired: true,
+        },
+        lastName: {
+          value: lastName,
           isRequired: true,
         },
         email: {
@@ -50,7 +58,8 @@ const SignUp = () => {
   
       if (validate) {
         setValidate({});
-        setName("");
+        setFirstName("");
+        setLastName("");
         setEmail("");
         setPassword("");
         alert("Successfully Register User");
@@ -63,6 +72,18 @@ const SignUp = () => {
       } else {
         setShowPassword(true);
       }
+    };
+    const registerUser = (e) => {
+      e.preventDefault();
+  
+      const user = {
+        firstName,
+        lastName,
+        email,
+        password,
+      };
+  
+      dispatch(signup(user));
     };
   
     return (
@@ -86,38 +107,65 @@ const SignUp = () => {
               <div className="auth-form-container text-start">
                 <form
                   className="auth-form"
-                  method="POST"
-                  onSubmit={register}
+                  onSubmit={registerUser}
                   autoComplete={"off"}
                 >
                   <div className="name mb-3">
                     <input
                       type="text"
                       className={`form-control ${
-                        validate.validate && validate.validate.name
+                        validate.validate && validate.validate.firstName
                           ? "is-invalid "
                           : ""
                       }`}
                       id="name"
-                      name="name"
-                      value={name}
-                      placeholder="Name"
-                      onChange={(e) => setName(e.target.value)}
+                      name="firstName"
+                      value={firstName}
+                      placeholder="First Name"
+                      onChange={(e) => setFirstName(e.target.value)}
                     />
   
                     <div
                       className={`invalid-feedback text-start ${
-                        validate.validate && validate.validate.name
+                        validate.validate && validate.validate.firstName
                           ? "d-block"
                           : "d-none"
                       }`}
                     >
-                      {validate.validate && validate.validate.name
-                        ? validate.validate.name[0]
+                      {validate.validate && validate.validate.firstName
+                        ? validate.validate.firstName[0]
                         : ""}
                     </div>
                   </div>
   
+                  <div className="name mb-3">
+                    <input
+                      type="text"
+                      className={`form-control ${
+                        validate.validate && validate.validate.lastName
+                          ? "is-invalid "
+                          : ""
+                      }`}
+                      id="name"
+                      name="lastName"
+                      value={lastName}
+                      placeholder="Last Name"
+                      onChange={(e) => setLastName(e.target.value)}
+                    />
+  
+                    <div
+                      className={`invalid-feedback text-start ${
+                        validate.validate && validate.validate.lastName
+                          ? "d-block"
+                          : "d-none"
+                      }`}
+                    >
+                      {validate.validate && validate.validate.lastName
+                        ? validate.validate.lastName[0]
+                        : ""}
+                    </div>
+                  </div>
+
                   <div className="email mb-3">
                     <input
                       type="email"

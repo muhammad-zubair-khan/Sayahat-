@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { logout } from "../Redux/Actions/adminActions";
+import { signout } from "../Redux/Actions/authActions";
 const Header = () => {
   const [theme, setTheme] = useState('light');
   const toggleTheme = () => {
@@ -16,7 +16,7 @@ const Header = () => {
   }, [theme]);
   const dispatch = useDispatch();
   const logoutt = () => {
-    dispatch(logout());
+    dispatch(signout());
   };
 
   return (

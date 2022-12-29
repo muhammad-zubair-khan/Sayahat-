@@ -19,7 +19,8 @@ exports.createPackage =catchAsyncErrors(async(req, res) => {
     startTime,
     title,
     carPickupDetails,
-    product
+    product,
+    createdBy,
   } = req.body;
 
   let packageImages = []
@@ -41,8 +42,8 @@ exports.createPackage =catchAsyncErrors(async(req, res) => {
     startTime,
     title,
     carPickupDetails,
-    product
-    // createdBy: req.user._id,
+    product,
+    createdBy: req.user._id,
   });
 
   package.save((err, data) => {

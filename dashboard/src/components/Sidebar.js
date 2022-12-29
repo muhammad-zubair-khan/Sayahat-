@@ -127,7 +127,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import SidebarMenu from "./SidebarMenu";
 import logo from "../assets/logo/logo-no-background.png";
 import { useDispatch, useSelector } from "react-redux";
-import { logout } from "../Redux/Actions/adminActions";
+import { signout } from "../Redux/Actions/authActions";
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 const routes = [
   {
@@ -204,9 +204,9 @@ const routes = [
 ];
 const Sidebar = ({ children, history }) => {
   const dispatch = useDispatch();
-  const { admin } = useSelector((state) => state.auth);
+  const { user } = useSelector((state) => state.auth);
   const logoutt = () => {
-    dispatch(logout());
+    dispatch(signout());
   };
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
@@ -291,8 +291,8 @@ const Sidebar = ({ children, history }) => {
                   marginBottom: "10px",
                 }}
               />
-              <h5 style={{marginBottom: '0'}}>{admin.fullName}</h5>
-              <span style={{marginBottom: '15px'}}>{admin.email}</span>
+              <h5 style={{marginBottom: '0'}}>{user.fullName}</h5>
+              <span style={{marginBottom: '15px'}}>{user.email}</span>
               <span
                 style={{
                   color: "#2874f0",

@@ -1,45 +1,39 @@
-import axios from 'axios';
-import {api} from '../UrlConfig';
-import store from '../store';
-import {USER_LOGOUT_SUCCESS} from '../Constants/adminConstants';
+import axios from "axios";
+import { api } from "../UrlConfig";
+import store from "../store";
+import { LOGOUT_SUCCESS } from "../Constants/authConstants";
+// import { authConstants } from "../actions/constants";
 
-const token = window.localStorage.getItem('token');
+const token = window.localStorage.getItem("token");
 
-const axiosInstance = axios.create({
-    baseURL: api,
-    headers: {
-        'Authorization': token ? `Bearer ${token}` : ''
-    }
+const axiosIntance = axios.create({
+  baseURL: api,
+  headers: {
+    Authorization: token ? `Bearer ${token}` : "",
+  },
 });
 
-//auth
-// axiosInstance.interceptors.request.use((req)=>{
-//     const {auth} = store.getState();
-// console.log(auth)
-//     if(auth.token){
-//         req.headers.Authorization = `Bearer ${auth.token}`;
-//     }
-//     return req;
-// });
-
-axiosInstance.interceptors.request.use((req)=>{
-    const {userAuth} = store.getState();
-    if(userAuth.token){
-        req.headers.Authorization = `Bearer ${userAuth.token}`;
-    }
-    return req;
+axiosIntance.interceptors.request.use((req) => {
+  const { auth } = store.getState();
+  if (auth.token) {
+    req.headers.Authorization = `Bearer ${auth.token}`;
+  }
+  return req;
 });
 
-// axiosInstance.interceptors.response.use((res)=>{
-//     return res;
-// },(error)=>{
-//     console.log(error.response);
-//     const  status  = error.response ? error.response.status : 500;
-//     if(status && status === 500){
-//         localStorage.clear();
-//         store.dispatch({type: USER_LOGOUT_SUCCESS})
-//     }
-//     return Promise.reject(error)
-// });
+axiosIntance.interceptors.response.use(
+  (res) => {
+    return res;
+  },
+  (error) => {
+    console.log(error.response);
+    const status = error.response ? error.response.status : 500;
+    if (status && status === 500) {
+      localStorage.clear();
+      store.dispatch({ type: LOGOUT_SUCCESS });
+    }
+    return Promise.reject(error);
+  }
+);
 
-export default axiosInstance;
+export default axiosIntance;

@@ -52,7 +52,7 @@ const hotelSchema = new mongoose.Schema(
     FullyRefundable: {
       type: String,
     },
-    rating: {
+    ratings: {
       type: String,
       min: 0,
       max: 5
@@ -73,9 +73,39 @@ const hotelSchema = new mongoose.Schema(
       type: Boolean,
       default: false
     },
-    category: { type: mongoose.Schema.Types.ObjectId, ref: 'Category', required: true },
-    // room: { type: mongoose.Schema.Types.ObjectId, ref: 'Room', required: true },
-
+  //   reviews: [
+  //     {
+  //         userId: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
+  //         review: String
+  //     }
+  // ],
+  numOfReviews: {
+    type: Number,
+    default: 0,
+  },
+  reviews: [
+    {
+      user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+        required: true,
+      },
+      fullName: {
+        type: String,
+        required: true,
+      },
+      rating: {
+        type: Number,
+        required: true,
+      },
+      comment: {
+        type: String,
+        required: true,
+      },
+    },
+  ],
+  category: { type: mongoose.Schema.Types.ObjectId, ref: 'Category', required: true },
+  createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
     updatedAt: Date,
   },
   { timestamps: true }

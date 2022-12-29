@@ -46,7 +46,8 @@ const CarDetail = () => {
     `http://localhost:5000/api/car-detail/${id}`
   );
   // console.log(data)
-  const { user } = useSelector((state) => state.userAuth);
+  const auth = useSelector((state) => state.auth);
+
   // const { user } = useContext(AuthContext);
   // const { date } = useContext(SearchContext);
   // console.log(date)
@@ -79,7 +80,7 @@ const CarDetail = () => {
 
   const handleClick = () => {
     
-    if (!user) {
+    if (auth.authenticate) {
       dispatch({ type: "NEW_SEARCH", payload: { startDestination,endDestination,pickupTime,dropoffTime, dates } });
       history.push(`/car/${id}/checkout`,{
         state: { startDestination,endDestination,pickupTime,dropoffTime, dates },

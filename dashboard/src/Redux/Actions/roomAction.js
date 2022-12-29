@@ -10,7 +10,7 @@ export const getAllRooms = () => async (dispatch) => {
   try {
     dispatch({ type: GET_ALL_ROOMS_REQUEST });
 
-    const { data } = await axios.get("/rooms/all-rooms");
+    const { data } = await axios.get("/admin/rooms/all-rooms");
     dispatch({
       type: GET_ALL_ROOMS_SUCCESS,
       payload: data,

@@ -101,7 +101,7 @@ export const getAllHotels = () => async (dispatch) => {
 export const getHotelBySlug = (slug) => async (dispatch) => {
   try {
     dispatch({ type: GET_HOTEL_BY_SLUG_REQUEST });
-    const { data } = await axios.get(`/hotels/${slug}`);
+    const { data } = await axios.get(`/admin/hotels/${slug}`);
     console.log(data);
     dispatch({
       type: GET_HOTEL_BY_SLUG_SUCCESS,
@@ -138,7 +138,7 @@ export const getHotelBySlug = (slug) => async (dispatch) => {
   try {
     dispatch({ type: DELETE_HOTEL_REQUEST });
 
-    const { data } = await axios.post(`/vacation/hotel/${id}`);
+    const { data } = await axios.post(`/admin/vacation/hotel/${id}`);
 
     dispatch({
       type: DELETE_HOTEL_SUCCESS,
@@ -160,7 +160,7 @@ export const getHotelDetails = (id) => async (dispatch) => {
   try {
     dispatch({ type: GET_HOTEL_DETAILS_REQUEST });
     // const { productId } = payload.params;
-    const { data } = await axios.get(`/hotel/${id}`);
+    const { data } = await axios.get(`/admin/hotel/${id}`);
     dispatch({
       type: GET_HOTEL_DETAILS_SUCCESS,
       payload: data.hotel,

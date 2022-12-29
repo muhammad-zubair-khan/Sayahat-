@@ -25,6 +25,7 @@ exports.createHotel = catchAsyncErrors(async (req, res, next) => {
     cheapestPrice,
     address,
     category,
+    createdBy,
   } = req.body;
 
   let hotelImages = [];
@@ -50,7 +51,7 @@ exports.createHotel = catchAsyncErrors(async (req, res, next) => {
     type,
     hotelImages: hotelImages,
     category,
-    // createdBy: req.user._id,
+    createdBy: req.user._id,
   });
 
   hotel.save((err, data) => {
@@ -290,3 +291,108 @@ exports.getHotelRooms = async(req, res) => {
 //     next(err);
 //   }
 // };
+
+
+
+// ------------------------------------------Review-Section---------------
+// Create New Review or Update the review
+exports.createHotelReview = catchAsyncErrors(async (req, res, next) => {
+  const { rating, comment, id } = req.body;
+
+  const review = {
+    user: req.user._id,
+    fullName: req.user.fullName,
+    rating: Number(rating),
+    comment,
+  };
+  console.log(req.user)
+  const hotel = await Hotel.findById(id);
+  const isReviewed = hotel.reviews.find(
+    (rev) => rev.user.toString() === req.user._id.toString()
+  );
+
+  if (isReviewed) {
+    hotel.reviews.forEach((rev) => {
+      if (rev.user.toString() === req.user._id.toString())
+        (rev.rating = rating), (rev.comment = comment);
+    });
+  } else {
+    hotel.reviews.push(review);
+    hotel.numOfReviews = hotel.reviews.length;
+  }
+
+  let avg = 0;
+
+  hotel.reviews.forEach((rev) => {
+    avg += rev.rating;
+  });
+
+  hotel.ratings = avg / hotel.reviews.length;
+
+  await hotel.save({ validateBeforeSave: false });
+
+  res.status(200).json({
+    success: true,
+  });
+});
+
+// Get All Reviews of a product
+exports.getHotelReviews = catchAsyncErrors(async (req, res, next) => {
+  const hotel = await Hotel.findById(req.query.id);
+
+  if (!hotel) {
+    return next(new ErrorHandler("Hotel not found", 404));
+  }
+
+  res.status(200).json({
+    success: true,
+    reviews: hotel.reviews,
+  });
+});
+
+// Delete Review
+exports.deleteReview = catchAsyncErrors(async (req, res, next) => {
+  const hotel = await Hotel.findById(req.query.productId);
+
+  if (!hotel) {
+    return next(new ErrorHandler("Hotel not found", 404));
+  }
+
+  const reviews = hotel.reviews.filter(
+    (rev) => rev._id.toString() !== req.query.id.toString()
+  );
+
+  let avg = 0;
+
+  reviews.forEach((rev) => {
+    avg += rev.rating;
+  });
+
+  let ratings = 0;
+
+  if (reviews.length === 0) {
+    ratings = 0;
+  } else {
+    ratings = avg / reviews.length;
+  }
+
+  const numOfReviews = reviews.length;
+
+  await Hotel.findByIdAndUpdate(
+    req.query.hotelId,
+    {
+      reviews,
+      ratings,
+      numOfReviews,
+    },
+    {
+      new: true,
+      runValidators: true,
+      useFindAndModify: false,
+    }
+  );
+
+  res.status(200).json({
+    success: true,
+  });
+});

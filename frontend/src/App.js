@@ -26,7 +26,7 @@ import SearchedPackage from "./Pages/SearchedPackage/SearchedPackage";
 import SearchedPackageDetail from "./Pages/SearchedPackage/SearchedPackageDetail";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllVacationsCategory } from "./Redux/Actions/vacationCategoryAction";
-import { isUserLoggedIn } from "../src/Redux/Actions/userActions";
+import { isUserLoggedIn } from "../src/Redux/Actions/authActions";
 import { getInitialData } from "../src/Redux/Actions/initialDataAction";
 import HotelList from "./Pages/NavHotel/HotelList";
 import Checkout from "./Pages/Checkout/Checkout";
@@ -35,18 +35,18 @@ import PackageCheckout from "./Pages/Checkout/PackageCheckout.js";
 
 function App() {
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.userAuth);
-  console.log(user)
+  const auth = useSelector((state) => state.auth);
+  console.log(auth)
 
   useEffect(() => {
-    if (!user.authenticate) {
+    if (!auth.authenticate) {
       dispatch(isUserLoggedIn());
     }
     // if (user.authenticate) {
     //   dispatch(getInitialData());
     //   dispatch(getAllVacationsCategory());
     // }
-  }, [dispatch, user.authenticate]);
+  }, [auth.authenticate]);
 
   // useEffect(() => {
   //   // 👇️ scroll to top on page load

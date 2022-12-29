@@ -1,7 +1,7 @@
 import axios from 'axios';
 import {api} from '../UrlConfig';
 import store from '../store';
-import {USER_LOGOUT_SUCCESS} from '../Constants/adminConstants';
+import {LOGOUT_SUCCESS} from '../Constants/authConstants';
 
 const token = window.localStorage.getItem('token');
 
@@ -20,16 +20,16 @@ axiosInstance.interceptors.request.use((req)=>{
     return req;
 });
 
-// axiosInstance.interceptors.response.use((res)=>{
-//     return res;
-// },(error)=>{
-//     console.log(error.response);
-//     const  status  = error.response ? error.response.status : 500;
-//     if(status && status === 500){
-//         localStorage.clear();
-//         store.dispatch({type: USER_LOGOUT_SUCCESS})
-//     }
-//     return Promise.reject(error)
-// });
+axiosInstance.interceptors.response.use((res) => {
+    return res;
+}, (error) => {
+    console.log(error.response);
+    const status = error.response ? error.response.status : 500;
+    if(status && status === 500){
+        localStorage.clear();
+        store.dispatch({ type: LOGOUT_SUCCESS });
+    }
+    return Promise.reject(error);
+})
 
 export default axiosInstance;

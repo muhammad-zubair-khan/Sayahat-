@@ -23,7 +23,7 @@ export const createPackage = (form) => {
   return async dispatch => {
     dispatch({ type:  CREATE_NEW_PACKAGE_REQUEST });
     try {
-      const res = await axios.post("/package/create", form);
+      const res = await axios.post("/admin/package/create", form);
       console.log("res......",res)
       if (res.status === 201) {
         dispatch({
@@ -50,7 +50,7 @@ export const getAllPackages = () => async (dispatch) => {
   try {
     dispatch({ type: GET_ALL_PACKAGES_REQUEST });
 
-    const { data } = await axios.get("/all-packages");
+    const { data } = await axios.get("/admin/all-packages");
 
     dispatch({
       type: GET_ALL_PACKAGES_SUCCESS,
@@ -68,7 +68,7 @@ export const getAllPackages = () => async (dispatch) => {
 export const getPackageBySlug = (slug) => async (dispatch) => {
   try {
     dispatch({ type: GET_PACKAGE_BY_SLUG_REQUEST });
-    const { data } = await axios.get(`/package/${slug}`);
+    const { data } = await axios.get(`/admin/package/${slug}`);
     console.log(data);
     dispatch({
       type: GET_PACKAGE_BY_SLUG_SUCCESS,
@@ -105,7 +105,7 @@ export const getTopDesPackageBySlug = (slug) => async (dispatch) => {
   try {
     dispatch({ type: DELETE_PACKAGE_REQUEST });
 
-    const { data } = await axios.post(`/deletepackage/${id}`);
+    const { data } = await axios.post(`/admin/deletepackage/${id}`);
 
     dispatch({
       type: DELETE_PACKAGE_SUCCESS,

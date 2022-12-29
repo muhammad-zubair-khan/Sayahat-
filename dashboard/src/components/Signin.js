@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { login } from "../Redux/Actions/adminActions";
-import { Redirect } from "react-router-dom";
+import { login } from "../Redux/Actions/authActions";
+import { Link, Redirect } from "react-router-dom";
 import { Row, Col } from "react-bootstrap";
 import { Form } from "react-bootstrap";
 import Button from "@mui/material/Button";
@@ -20,12 +20,12 @@ const Signin = () => {
   const adminLogin = (e) => {
     e.preventDefault();
 
-    const admin = {
+    const user = {
       email,
       password,
     };
 
-    dispatch(login(admin));
+    dispatch(login(user));
   };
 
   if (auth.authenticate) {
@@ -74,6 +74,11 @@ const Signin = () => {
             <Button variant="contained" type="submit">
               Login
             </Button>
+             <Link to='/signup' style={{marginLeft:'10px'}}>
+            <Button variant="contained" type="submit">
+              Signup
+            </Button>
+             </Link>
           </Form>
         </Col>
       </Row>

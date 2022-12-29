@@ -18,7 +18,10 @@ process.on("uncaughtException", (err) => {
   process.exit(1);
 });
 
-const adminRoutes = require("./Routes/admin");
+const authRoutes = require("./Routes/auth");
+app.use("/api", authRoutes);
+
+const adminRoutes = require("./Routes/Admin/auth");
 app.use("/api", adminRoutes);
 
 const vacationCategoryRoutes = require("./Routes/vacationCategory");
@@ -39,13 +42,13 @@ app.use("/api", carRoutes);
 const packageRoutes = require("./Routes/package");
 app.use("/api", packageRoutes);
 
-const userRoutes = require("./Routes/user");
-app.use("/api", userRoutes);
+// const userRoutes = require("./Routes/user");
+// app.use("/api", userRoutes);
 
 // const destinationRoutes = require("./Routes/destination");
 // app.use("/api", destinationRoutes);
 
-const initialDataRoutes = require("./Routes/initialData");
+const initialDataRoutes = require("./Routes/Admin/initialData");
 app.use("/api", initialDataRoutes);
 
 app.use("/public", express.static(path.join(__dirname, "uploads")));
