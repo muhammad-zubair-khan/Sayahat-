@@ -90,7 +90,7 @@ const hotelSchema = new mongoose.Schema(
         ref: "User",
         required: true,
       },
-      fullName: {
+      name: {
         type: String,
         required: true,
       },

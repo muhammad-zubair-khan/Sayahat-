@@ -196,3 +196,105 @@ exports.deleteCar = catchAsyncErrors(async (req, res, next) => {
     message: "Car Delete Successfully",
   });
 });
+
+
+// ------------------------------------------Review-Section---------------
+// Create New Review or Update the review
+exports.createCarReview = catchAsyncErrors(async (req, res, next) => {
+  const { rating, comment, id } = req.body;
+  const review = {
+    user: req.user._id,
+    name: req.user._id,
+    rating: Number(rating),
+    comment,
+  };
+  const car = await Car.findById(id);
+  const isReviewed = car.reviews.find(
+    (rev) => rev.user.toString() === req.user._id.toString()
+  );
+
+  if (isReviewed) {
+    car.reviews.forEach((rev) => {
+      if (rev.user.toString() === req.user._id.toString())
+        (rev.rating = rating), (rev.comment = comment);
+    });
+  } else {
+    car.reviews.push(review);
+    car.numOfReviews = car.reviews.length;
+  }
+
+  let avg = 0;
+
+  car.reviews.forEach((rev) => {
+    avg += rev.rating;
+  });
+
+  car.ratings = avg / car.reviews.length;
+
+  await car.save({ validateBeforeSave: false });
+
+  res.status(200).json({
+    success: true,
+  });
+});
+
+// Get All Reviews of a Car
+exports.getCarReviews = catchAsyncErrors(async (req, res, next) => {
+  const car = await Car.findById(req.query.id);
+
+  if (!car) {
+    return next(new ErrorHandler("Car not found", 404));
+  }
+
+  res.status(200).json({
+    success: true,
+    reviews: car.reviews,
+  });
+});
+
+// Delete Review
+exports.deleteCarReview = catchAsyncErrors(async (req, res, next) => {
+  const car = await Car.findById(req.query.id);
+
+  if (!car) {
+    return next(new ErrorHandler("Car not found", 404));
+  }
+
+  const reviews = car.reviews.filter(
+    (rev) => rev._id.toString() !== req.query.id.toString()
+  );
+
+  let avg = 0;
+
+  reviews.forEach((rev) => {
+    avg += rev.rating;
+  });
+
+  let ratings = 0;
+
+  if (reviews.length === 0) {
+    ratings = 0;
+  } else {
+    ratings = avg / reviews.length;
+  }
+
+  const numOfReviews = reviews.length;
+
+  await Car.findByIdAndUpdate(
+    req.query.id,
+    {
+      reviews,
+      ratings,
+      numOfReviews,
+    },
+    {
+      new: true,
+      runValidators: true,
+      useFindAndModify: false,
+    }
+  );
+
+  res.status(200).json({
+    success: true,
+  });
+});

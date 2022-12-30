@@ -90,3 +90,19 @@ exports.allAdmins = async(req, res) => {
    user
   });
 };
+
+exports.deleteUser = async(req, res, next) => {
+  const result = await User.findById(req.params.id);
+  if (!result) {
+    return res.status(400).json({
+      error: "Something went wrong",
+    });
+  }
+
+  await result.remove();
+
+  res.status(200).json({
+    success: true,
+    message: "User Deleted Successfully",
+  });
+};

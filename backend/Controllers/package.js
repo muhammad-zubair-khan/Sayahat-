@@ -188,3 +188,105 @@ exports.deletePackage = catchAsyncErrors(async(req, res) => {
     message: "Package Delete Successfully",
   });
 });
+
+
+// ------------------------------------------Review-Section---------------
+// Create New Review or Update the review
+exports.createPackageReview = catchAsyncErrors(async (req, res, next) => {
+  const { rating, comment, id } = req.body;
+  const review = {
+    user: req.user._id,
+    name: req.user._id,
+    rating: Number(rating),
+    comment,
+  };
+  const package = await Package.findById(id);
+  const isReviewed = package.reviews.find(
+    (rev) => rev.user.toString() === req.user._id.toString()
+  );
+
+  if (isReviewed) {
+    package.reviews.forEach((rev) => {
+      if (rev.user.toString() === req.user._id.toString())
+        (rev.rating = rating), (rev.comment = comment);
+    });
+  } else {
+    package.reviews.push(review);
+    package.numOfReviews = package.reviews.length;
+  }
+
+  let avg = 0;
+
+  package.reviews.forEach((rev) => {
+    avg += rev.rating;
+  });
+
+  package.ratings = avg / package.reviews.length;
+
+  await package.save({ validateBeforeSave: false });
+
+  res.status(200).json({
+    success: true,
+  });
+});
+
+// Get All Reviews of a Paackage
+exports.getPackageReviews = catchAsyncErrors(async (req, res, next) => {
+  const package = await Package.findById(req.query.id);
+
+  if (!package) {
+    return next(new ErrorHandler("Package not found", 404));
+  }
+
+  res.status(200).json({
+    success: true,
+    reviews: package.reviews,
+  });
+});
+
+// Delete Review
+exports.deletePackageReview = catchAsyncErrors(async (req, res, next) => {
+  const package = await Package.findById(req.query.id);
+
+  if (!package) {
+    return next(new ErrorHandler("Package not found", 404));
+  }
+
+  const reviews = package.reviews.filter(
+    (rev) => rev._id.toString() !== req.query.id.toString()
+  );
+
+  let avg = 0;
+
+  reviews.forEach((rev) => {
+    avg += rev.rating;
+  });
+
+  let ratings = 0;
+
+  if (reviews.length === 0) {
+    ratings = 0;
+  } else {
+    ratings = avg / reviews.length;
+  }
+
+  const numOfReviews = reviews.length;
+
+  await Package.findByIdAndUpdate(
+    req.query.id,
+    {
+      reviews,
+      ratings,
+      numOfReviews,
+    },
+    {
+      new: true,
+      runValidators: true,
+      useFindAndModify: false,
+    }
+  );
+
+  res.status(200).json({
+    success: true,
+  });
+});

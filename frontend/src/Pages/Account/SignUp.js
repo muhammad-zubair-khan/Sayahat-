@@ -5,10 +5,15 @@ import Form from "./utilities/Forms";
 import './style.css'
 import { Row, Col } from "react-bootstrap";
 import logo from '../../Assets/logo/logo.png'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { signup } from '../../Redux/Actions/authActions';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const SignUp = () => {
+  const auth = useSelector((state)=>state.auth)
+  const {error} = useSelector((state)=>state.auth)
+  
   const dispatch = useDispatch()
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
@@ -84,6 +89,11 @@ const SignUp = () => {
       };
   
       dispatch(signup(user));
+      if(!auth.authenticate){
+        toast.error(error, {
+          position: toast.POSITION.BOTTOM_CENTER,
+        });
+      }
     };
   
     return (
@@ -256,6 +266,7 @@ const SignUp = () => {
             </div>
           </div>
         </Col>
+        <ToastContainer/>
       </Row>
     );
   };

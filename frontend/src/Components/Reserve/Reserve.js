@@ -7,11 +7,12 @@ import { useSelector } from "react-redux";
 import { SearchContext } from "../../Context/SearchContext";
 import axios from "axios";
 import { Redirect, useHistory, useLocation } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Reserve = ({ setOpen, hotelId }) => {
   const auth = useSelector((state) => state.auth);
   const location = useLocation();
-  console.log(location);
   const id = location.pathname.split("/")[2];
   const [dates, setDates] = useState(location.state.state.dates);
   const [options, setOptions] = useState(location.state.state.options);
@@ -23,7 +24,6 @@ const Reserve = ({ setOpen, hotelId }) => {
   const { data, loading, error } = useFetch(
     `http://localhost:5000/api/room/${hotelId}`
   );
-  console.log(data);
   // const { dates } = useContext(SearchContext);
   const getDatesInRange = (startDate, endDate) => {
     const start = new Date(startDate);
@@ -78,12 +78,23 @@ const Reserve = ({ setOpen, hotelId }) => {
           })
         );
         setOpen(false);
-        history.push(`/hotel/${id}/checkout`, {
-          state: { destination, dates, options, selectedRooms },
+        toast.success(`Room is Booked Successfully`, {
+          position: toast.POSITION.BOTTOM_CENTER,
         });
+        setTimeout(() => {
+          history.push(`/hotel/${id}/checkout`, {
+            state: { destination, dates, options, selectedRooms },
+          });
+        }, 3000);
       } catch (err) {}
     } else {
-      history.push("/login");
+      toast.error(`booking is Failed please login first`, {
+        position: toast.POSITION.BOTTOM_CENTER,
+      });
+      setTimeout(() => {
+        history.push("/login");
+      }, 2000);
+      // history.push("/login");
     }
   };
   return (
@@ -125,6 +136,7 @@ const Reserve = ({ setOpen, hotelId }) => {
         <button onClick={handleClick} className="rButton">
           Reserve Now!
         </button>
+        <ToastContainer />
       </div>
     </div>
   );

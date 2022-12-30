@@ -13,17 +13,34 @@ import { format } from "date-fns";
 import Zoom from "react-medium-image-zoom";
 import "react-medium-image-zoom/dist/styles.css";
 import { DateRange, DateRangePicker } from "react-date-range";
+import {
+  clearErrors,
+  getAllPackageReviews,
+  newPackageReview,
+} from "../../Redux/Actions/packageAction";
+import ReviewCard from "../HotelDetails/ReviewCard/ReviewCard";
+import { NEW_REVIEW_RESET } from "../../Redux/Constants/packageConstants";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import {
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+} from "@mui/material";
+import { Container, Rating } from "@mui/material";
 
-function SearchedPackageDetail() {
+function SearchedPackageDetail({ match }) {
   const [showResults, setShowResults] = useState(false);
   const history = useHistory();
+  const [rating, setRating] = useState(0);
+  const [comment, setComment] = useState("");
   const [show, setShow] = useState(false);
   const location = useLocation();
   const [time, setTime] = useState("");
   const [buttonText, setButtonText] = useState("Check Availability");
-  console.log("time", time);
   const onClickHandle = () => {
-    setTimeout(()=> setShowResults(true),1000);
+    setTimeout(() => setShowResults(true), 1000);
     setButtonText("Update Dates");
   };
   const [packageDestination, setPackageDestination] = useState(
@@ -31,7 +48,7 @@ function SearchedPackageDetail() {
   );
   const [openPackageDate, setOpenPackageDate] = useState(false);
   const [dates, setDates] = useState(location.state.state.dates);
- 
+
   const [openOptions, setOpenOptions] = useState(false);
   const [options, setOptions] = useState(location.state.state.options);
   const handleOption = (name, operation) => {
@@ -52,12 +69,51 @@ function SearchedPackageDetail() {
         type: "NEW_SEARCH",
         payload: { packageDestination, dates, options },
       });
-      history.push(`/package/${id}/checkout`, {
-        state: { packageDestination, dates, time, options },
+      toast.success(`Done! please wait`, {
+        position: toast.POSITION.BOTTOM_CENTER,
       });
+      setTimeout(() => {
+        history.push(`/package/${id}/checkout`, {
+          state: { packageDestination, dates, time, options },
+        });
+      }, 3000);
     } else {
-      history.push("/login");
+      toast.error(`You have to login first!`, {
+        position: toast.POSITION.BOTTOM_CENTER,
+      });
+      setTimeout(() => {
+        history.push("/login");
+      }, 2000);
     }
+  };
+  const submitPackageReviewToggle = () => {
+    openPackageReview
+      ? setOpenPackageReview(false)
+      : setOpenPackageReview(true);
+  };
+  const packageReviewSubmitHandler = () => {
+    if(auth.authenticate){
+
+      const myForm = new FormData();
+      
+      myForm.set("rating", rating);
+    myForm.set("comment", comment);
+    myForm.set("id", match.params.id);
+
+    dispatch(newPackageReview(myForm));
+    // dispatch({type:GET_ALL_REVIEWS})
+
+    setOpenPackageReview(false);
+    history.go(0);
+  }else{
+    toast.error("Login First", {
+      position: toast.POSITION.BOTTOM_CENTER,
+    });
+    setOpenPackageReview(false)
+    setTimeout(() => {
+      history.push('/login')
+    }, 3000);
+  }
   };
 
   const Results = () => (
@@ -68,13 +124,15 @@ function SearchedPackageDetail() {
         border: " 1px solid black",
         backgroundColor: "#d9dae0",
         padding: "17px 31px",
-        margin:"36px 1px",
+        margin: "36px 1px",
       }}
     >
-      <div className="mt-3" style={{fontWeight:'bold'}}>{packages.package.name}</div>
+      <div className="mt-3" style={{ fontWeight: "bold" }}>
+        {packages.package.name}
+      </div>
       <p className="mb-2">{packages.package.description}</p>
       <div>
-        <b>Available Time</b> <br/>
+        <b>Available Time</b> <br />
         {packages.package.startTime.map((item, index) => {
           const handleShow = () => {
             setShow(true);
@@ -132,6 +190,32 @@ function SearchedPackageDetail() {
   // console.log(packages)
   // const {product} = useSelector((state) => state.newVacation);
   // console.log("products>>>", product);
+  const [openPackageReview, setOpenPackageReview] = useState(false);
+  const { success, error: reviewError } = useSelector(
+    (state) => state.newPackageReview
+  );
+  useEffect(() => {
+    // if (error) {
+    //   toast.error(error, {
+    //     position: toast.POSITION.BOTTOM_CENTER,
+    //   });
+    //   dispatch(clearErrors());
+    // }
+
+    if (reviewError) {
+      toast.error(reviewError, {
+        position: toast.POSITION.BOTTOM_CENTER,
+      });
+      dispatch(clearErrors());
+    }
+
+    if (success) {
+      toast.success("Review Submitted Successfully", {
+        position: toast.POSITION.BOTTOM_CENTER,
+      });
+      dispatch({ type: NEW_REVIEW_RESET });
+    }
+  }, [dispatch, reviewError, success]);
 
   let pictures = [
     {
@@ -196,7 +280,6 @@ function SearchedPackageDetail() {
   if (Object.keys(packages.package).length === 0) {
     return null;
   }
- 
 
   return (
     <>
@@ -207,7 +290,7 @@ function SearchedPackageDetail() {
         {/* start of package images and price */}
         <div className="row">
           <h3 className="text-black">{packages.package.name}</h3>
-          <div class="col-2" style={{height:"fit-content"}}>
+          <div class="col-2" style={{ height: "fit-content" }}>
             {packages.package.packageImages &&
               packages.package.packageImages.map((pic, index) => {
                 return (
@@ -223,14 +306,14 @@ function SearchedPackageDetail() {
           </div>
           <div className="col-6">
             <Zoom>
-            <img
-              src={ImageUrl(packages.package.packageImages[0].img)}
-              className=""
-              width="100%"
-              height=""
-              alt=""
+              <img
+                src={ImageUrl(packages.package.packageImages[0].img)}
+                className=""
+                width="100%"
+                height=""
+                alt=""
               />
-              </Zoom>
+            </Zoom>
           </div>
 
           <div className="col-4 BgPackage p-3 h-100">
@@ -253,24 +336,6 @@ function SearchedPackageDetail() {
                 />
               )}
             </div>
-
-            {/* <input
-              className="form-control form-control"
-              type="date"
-              placeholder=".form-control-lg"
-              aria-label=".form-control-lg example"
-            ></input> */}
-            {/* <div className="input-group mt-3">
-              <span className="input-group-text">
-                <i class="fa-regular fa-user"></i>
-              </span>
-              <input
-                type="number"
-                className="form-control"
-                aria-label="Dollar amount (with dot and two decimal places)"
-                placeholder="Adults"
-              ></input>
-            </div> */}
             <div
               className=" col-xxs-12 col-xs-6 mt"
               style={{ textAlign: "center" }}
@@ -421,16 +486,15 @@ function SearchedPackageDetail() {
               </section>
             </div>
 
-            {
-              <button
-                type="button"
-                className="btn btn-danger w-100 mt-4 p-2 mb-4"
-                onClick={onClickHandle}
-                id="availabilitybtn"
-              >
-                {buttonText}
-              </button>
-            }
+            <button
+              type="button"
+              className="btn btn-danger w-100 mt-4 p-2 mb-4"
+              onClick={onClickHandle}
+              id="availabilitybtn"
+            >
+              {buttonText}
+            </button>
+            
             <small className="fw-bold">Reserve Now & Pay Later</small>
             <br />
             <small>Secure your spot while staying flexible</small>
@@ -438,14 +502,24 @@ function SearchedPackageDetail() {
             <small className="fw-bold">{packages.package.refundable}</small>
             <br />
             {/* <small>Up to 24 hours in advance.Learn more</small> */}
+            <button
+              onClick={submitPackageReviewToggle}
+              className="submitReview"
+            >
+              Submit Review
+            </button>
           </div>
         </div>
         {/* end of package images and price */}
-        
-  {/* return !spinner && <div>Your content</div>; */}
-        <>{!showResults  ? (
-            <div style={{display:'none'}}>loading</div>
-          ) : (<Results />)}</>
+
+        {/* return !spinner && <div>Your content</div>; */}
+        <>
+          {!showResults ? (
+            <div style={{ display: "none" }}>loading</div>
+          ) : (
+            <Results />
+          )}
+        </>
         <div className="row">
           {/* start of detials about package */}
           <h3 className="text-black fw-bold">Overview</h3>
@@ -629,163 +703,140 @@ function SearchedPackageDetail() {
           {/* end of detials about package */}
 
           {/* start of package reviews */}
-          <div className="row">
-            <h3 className="text-black fw-bold my-4">Reviews</h3>
-            <div className="col-4">
-              <h2 className="text-black fw-bold my-1">
-                3.5{" "}
-                <i
-                  style={{ color: "#EDAB56" }}
-                  className="fa-solid fa-star fs-5"
-                ></i>{" "}
-                <i
-                  style={{ color: "#EDAB56" }}
-                  className="fa-solid fa-star fs-5"
-                ></i>{" "}
-                <i
-                  style={{ color: "#EDAB56" }}
-                  className="fa-solid fa-star fs-5"
-                ></i>{" "}
-                <i
-                  style={{ color: "#EDAB56" }}
-                  className="fa-solid fa-star fs-5"
-                ></i>{" "}
-                <i
-                  style={{ color: "#EDAB56" }}
-                  className="fa-solid fa-star fs-5"
-                ></i>{" "}
-              </h2>
-              <small>22 reviews</small>
-            </div>
-            <div className="col-8">
-              <div className="row my-2">
-                <div className="col-2 text-end">
-                  <span style={{ color: "#1874A2" }}>5 stars</span>
-                </div>
-                <div className="col-6 progress">
-                  <div
-                    className="progress-bar w-75"
-                    role="progressbar"
-                    aria-label="Basic example"
-                    aria-valuenow="75"
-                    aria-valuemin="0"
-                    aria-valuemax="100"
-                  ></div>
-                </div>
-                <div className="col-4">
-                  <span style={{ color: "#1874A2" }}>8</span>
-                </div>
-              </div>
-              <div className="row my-2">
-                <div className="col-2 text-end">
-                  <span style={{ color: "#1874A2" }}>4 stars</span>
-                </div>
-                <div className="col-6 progress">
-                  <div
-                    className="progress-bar w-50"
-                    role="progressbar"
-                    aria-label="Basic example"
-                    aria-valuenow="50"
-                    aria-valuemin="0"
-                    aria-valuemax="100"
-                  ></div>
-                </div>
-                <div className="col-4">
-                  <span style={{ color: "#1874A2" }}>6</span>
-                </div>
-              </div>
-              <div className="row my-2">
-                <div className="col-2 text-end">
-                  <span style={{ color: "#1874A2" }}>3 stars</span>
-                </div>
-                <div className="col-6 progress">
-                  <div
-                    className="progress-bar w-25"
-                    role="progressbar"
-                    aria-label="Basic example"
-                    aria-valuenow="25"
-                    aria-valuemin="0"
-                    aria-valuemax="100"
-                  ></div>
-                </div>
-                <div className="col-4">
-                  <span style={{ color: "#1874A2" }}>4</span>
-                </div>
-              </div>
-              <div className="row my-2">
-                <div className="col-2 text-end">
-                  <span style={{ color: "#1874A2" }}>2 stars</span>
-                </div>
-                <div className="col-6 progress">
-                  <div
-                    className="progress-bar w-50"
-                    role="progressbar"
-                    aria-label="Basic example"
-                    aria-valuenow="50"
-                    aria-valuemin="0"
-                    aria-valuemax="100"
-                  ></div>
-                </div>
-                <div className="col-4">
-                  <span style={{ color: "#1874A2" }}>2</span>
-                </div>
-              </div>
-              <div className="row">
-                <div className="col-2 text-end">
-                  <span style={{ color: "#1874A2" }}>1 stars</span>
-                </div>
-                <div className="col-6 progress">
-                  <div
-                    className="progress-bar w-0"
-                    role="progressbar"
-                    aria-label="Basic example"
-                    aria-valuenow="0"
-                    aria-valuemin="0"
-                    aria-valuemax="100"
-                  ></div>
-                </div>
-                <div className="col-4">
-                  <span style={{ color: "#1874A2" }}>0</span>
-                </div>
-              </div>
-            </div>
+          {/* ----------------------------Review-Section-Start----------------------- */}
+          <h3 className="reviewsHeading">REVIEWS</h3>
+          <Dialog
+            aria-labelledby="simple-dialog-title"
+            open={openPackageReview}
+            onClose={submitPackageReviewToggle}
+          >
+            <DialogTitle>Submit Review</DialogTitle>
+            <DialogContent
+              className="submitDialog"
+              style={{ display: "flex", flexDirection: "column" }}
+            >
+              <Rating
+                onChange={(e) => setRating(e.target.value)}
+                value={rating}
+                size="large"
+              />
 
-            <div className="row my-5">
-              {reviews.map((review) => {
-                return (
-                  <>
-                    <h6 className="text-black fw-bold my-1">
-                      <i
-                        style={{ color: "#EDAB56" }}
-                        className="fa-solid fa-star fs-6"
-                      ></i>{" "}
-                      <i
-                        style={{ color: "#EDAB56" }}
-                        className="fa-solid fa-star fs-6"
-                      ></i>{" "}
-                      <i
-                        style={{ color: "#EDAB56" }}
-                        className="fa-solid fa-star fs-6"
-                      ></i>{" "}
-                      <i
-                        style={{ color: "#EDAB56" }}
-                        className="fa-solid fa-star fs-6"
-                      ></i>{" "}
-                      <i
-                        style={{ color: "#EDAB56" }}
-                        className="fa-solid fa-star fs-6 me-2"
-                      ></i>{" "}
-                      {review.title}{" "}
-                    </h6>
-                    <p className="text-black my-2">
-                      {review.name}, {review.date}
-                    </p>
-                    <p className="text-black">{review.comment}</p>
-                  </>
-                );
-              })}
-            </div>
-          </div>
+              <textarea
+                required
+                className="submitDialogTextArea"
+                cols="40"
+                rows="5"
+                value={comment}
+                onChange={(e) => setComment(e.target.value)}
+              ></textarea>
+            </DialogContent>
+            <DialogActions>
+              <Button
+                onClick={submitPackageReviewToggle}
+                variant="outlined"
+                color="secondary"
+              >
+                Cancel
+              </Button>
+              <Button
+                onClick={packageReviewSubmitHandler}
+                variant="outlined"
+                color="primary"
+              >
+                Submit
+              </Button>
+            </DialogActions>
+          </Dialog>
+
+          <ToastContainer />
+          {/* <Container className="my-2">
+            <Grid container>
+              <Grid xs={12} md={12}>
+                <div
+                  className="accordion-item"
+                  style={{ backgroundColor: "silver", padding: "19px 19px" }}
+                >
+                  <h2 className="accordion-header" id="flush-headingFive">
+                    <button
+                      className="accordion-button collapsed"
+                      type="button"
+                      data-bs-toggle="collapse"
+                      data-bs-target="#flush-collapseFive"
+                      aria-expanded="false"
+                      aria-controls="flush-collapseFive"
+                      style={{
+                        color: "black",
+                        fontWeight: "bolder",
+                        textAlign: "center",
+                      }}
+                    >
+                      Give your Review
+                    </button>
+                  </h2>
+                  <div
+                    id="flush-collapseFive"
+                    className="accordion-collapse collapse"
+                    aria-labelledby="flush-headingFive"
+                    data-bs-parent="#accordionFlushExample"
+                  >
+                    <div className="accordion-body">
+                      <div
+                        className="wrape1"
+                        style={{ fontSize: "11px", color: "#777" }}
+                      >
+                        <Rating
+                          name="simple-controlled"
+                          value={rating}
+                          onChange={(event, newValue) => {
+                            setRating(newValue);
+                          }}
+                        />
+                        <textarea
+                          className="submitDialogTextArea"
+                          cols="30"
+                          rows="5"
+                          value={comment}
+                          onChange={(e) => setComment(e.target.value)}
+                        ></textarea>
+                        <button
+                          style={{
+                            float: "right",
+                            position: "relative",
+                            bottom: "8px",
+                            backgroundColor: "black",
+                            color: "white",
+                            border: "1px solid",
+                            padding: "8px 9px",
+                            fontSize: "small",
+                            marginTop: "6px",
+                          }}
+                          onClick={reviewSubmitHandler}
+                        >
+                          Submit Review
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </Grid>
+            </Grid>
+          </Container> */}
+
+          <Container>
+            {packages.package.reviews && packages.package.reviews[0] ? (
+              <div className="reviews">
+                {packages.package.reviews &&
+                  packages.package.reviews.map((review) => (
+                    <ReviewCard key={review._id} review={review} />
+                    // {/* <img src={profilePng} alt="User" /> */}
+                  ))}
+              </div>
+            ) : (
+              <p className="noReviews">No Reviews Yet</p>
+            )}
+          </Container>
+
+          {/* ----------------------------Review-Section-End----------------------- */}
 
           {/* start of package reviews */}
         </div>

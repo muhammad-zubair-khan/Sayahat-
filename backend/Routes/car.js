@@ -10,6 +10,9 @@ const {
     getCarBySlug,
     getAllCars,
     GetCarById,
+    createCarReview,
+    getCarReviews,
+    deleteCarReview,
 } = require("../Controllers/car");
 const {
   requireSignin,
@@ -48,6 +51,13 @@ adminMiddleware, deleteCar);
 //For Admin
 router.get("/admin/car-detail/:id", requireSignin,
 adminMiddleware, GetCarById);
+
+router.route("/create/car/review").put(requireSignin,userMiddleware, createCarReview);
+router
+  .route("/reviews")
+  .get(getCarReviews)
+  .delete(requireSignin,userMiddleware, deleteCarReview);
+
 
 router.get("/cars",getAllCars);
 router.get("/car/:slug", getCarBySlug);

@@ -1,6 +1,6 @@
 import "./App.css";
 import React, { useEffect } from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Redirect, Route, Switch } from "react-router-dom";
 import PrivateRoute from "./Components/Private/PrivateRoute";
 import Navbar from "./Navbar/Navbar";
 import Landing from "./Landing/Landing";
@@ -36,7 +36,6 @@ import PackageCheckout from "./Pages/Checkout/PackageCheckout.js";
 function App() {
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
-  console.log(auth)
 
   useEffect(() => {
     if (!auth.authenticate) {
@@ -46,7 +45,7 @@ function App() {
     //   dispatch(getInitialData());
     //   dispatch(getAllVacationsCategory());
     // }
-  }, [auth.authenticate]);
+  }, [dispatch,auth.authenticate]);
 
   // useEffect(() => {
   //   // 👇️ scroll to top on page load

@@ -26,7 +26,8 @@ import {
     NEW_REVIEW_REQUEST,
     NEW_REVIEW_SUCCESS,
     NEW_REVIEW_RESET,
-    DELETE_REVIEW_RESET
+    DELETE_REVIEW_RESET,
+    CLEAR_ERRORS
   } from "../Constants/hotelConstants";
 
   const initialStateHotel = {
@@ -181,11 +182,11 @@ import {
           ...state,
           success: false,
         };
-      // case CLEAR_ERRORS:
-      //   return {
-      //     ...state,
-      //     error: null,
-      //   };
+      case CLEAR_ERRORS:
+        return {
+          ...state,
+          error: null,
+        };
       default:
         return state;
     }
@@ -210,11 +211,11 @@ import {
           error: action.payload,
         };
   
-      // case CLEAR_ERRORS:
-      //   return {
-      //     ...state,
-      //     error: null,
-      //   };
+      case CLEAR_ERRORS:
+        return {
+          ...state,
+          error: null,
+        };
       default:
         return state;
     }

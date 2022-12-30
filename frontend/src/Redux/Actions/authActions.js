@@ -12,7 +12,7 @@ import {
   // ALL_USER_FAIL,
 } from "../Constants/authConstants";
 import axios from "../helpers/axios";
-
+import { setAlert } from "./alert";
 // new update signup action
 export const signup = (user) => {
   return async (dispatch) => {
@@ -74,6 +74,42 @@ export const login = (user) => {
     }
   };
 };
+
+// export const login = (email, password) => async (dispatch) => {
+// 	const config = {
+// 		headers: {
+// 			"Content-Type": "application/json",
+// 		},
+// 	};
+
+// 	const body = JSON.stringify({ email, password });
+
+// 	try {
+// 		const res = await axios.post(
+// 			"/signin",
+// 			body,
+// 			config
+// 		);
+
+// 		dispatch({
+// 			type: LOGIN_SUCCESS,
+// 			payload: res.data,
+// 		});
+
+// 		dispatch(isUserLoggedIn());
+// 	} catch (err) {
+// 		const errors = err.response.data.errors;
+
+// 		if (errors) {
+// 			errors.forEach((error) => dispatch(setAlert(error.msg, "danger")));
+// 		}
+
+// 		dispatch({
+// 			type: LOGIN_FAILURE,
+// 		});
+// 	}
+// };
+
 
 export const isUserLoggedIn = () => {
   return async (dispatch) => {

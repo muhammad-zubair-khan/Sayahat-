@@ -939,32 +939,7 @@ const Package = (props) => {
                                 </h5>
                               </div>
                             </div>
-                            <p class="card-text">
-                              <i
-                                style={{ color: "#EDAB56" }}
-                                className="fa-solid fa-star"
-                              ></i>
-                              <i
-                                style={{ color: "#EDAB56" }}
-                                className="fa-solid fa-star"
-                              ></i>
-                              <i
-                                style={{ color: "#EDAB56" }}
-                                className="fa-solid fa-star"
-                              ></i>
-                              <i
-                                style={{ color: "#EDAB56" }}
-                                className="fa-solid fa-star"
-                              ></i>
-                              <i
-                                style={{ color: "#EDAB56" }}
-                                className="fa-solid fa-star"
-                              ></i>
-                              {/* <span className="ms-2">{card.review}</span> */}
-                              <div className="mt-1">
-                                <small>{data.description.substring(0,146)}....</small>
-                              </div>
-                            </p>
+                           {data.reviews.length > 0  && <p className='text-data'>{data.ratings}/10 {data.numOfReviews} Reviews</p>}
                             <small class="text-dark">
                               <div>
                                 <i class="fa-regular fa-clock me-2"></i>

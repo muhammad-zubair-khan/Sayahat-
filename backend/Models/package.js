@@ -53,13 +53,37 @@ const packageSchema = new mongoose.Schema(
       ref: "Product",
       required: true,
     },
+    ratings: {
+      type: String,
+      min: 0,
+      max: 5
+    },
+    numOfReviews: {
+      type: Number,
+      default: 0,
+    },
     reviews: [
       {
-          userId: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
-          review: String
-      }
-  ],
-  createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+        user: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "User",
+          required: true,
+        },
+        name: {
+          type: String,
+          required: true,
+        },
+        rating: {
+          type: Number,
+          required: true,
+        },
+        comment: {
+          type: String,
+          required: true,
+        },
+      },
+    ],
+    createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
     updatedAt: Date,
   },
   { timestamps: true }

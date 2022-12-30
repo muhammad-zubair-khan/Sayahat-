@@ -10,6 +10,7 @@ import { Container } from "@mui/material";
 // import logo from "../assets/logo/logo-black.png";
 import logo from "../assets/logo/logo.png";
 
+
 const Signup = () => {
   const dispatch = useDispatch();
   window.scrollTo(0, 0);
@@ -30,6 +31,7 @@ const Signup = () => {
     };
 
     dispatch(signup(user));
+
   };
 
   if (auth.authenticate) {
@@ -99,6 +101,7 @@ const Signup = () => {
             <Link style={{marginLeft:'10px'}} to='/login'>Already have an Account? Login</Link>
           </Form>
         </Col>
+     
       </Row>
     </Container>
   );

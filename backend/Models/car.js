@@ -65,12 +65,36 @@ const carSchema = new mongoose.Schema({
         required: true,
     },
     category: { type: mongoose.Schema.Types.ObjectId, ref: 'Category', required: true },
-    reviews: [
+    ratings: {
+        type: String,
+        min: 0,
+        max: 5
+      },
+      numOfReviews: {
+        type: Number,
+        default: 0,
+      },
+      reviews: [
         {
-            userId: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
-            review: String
-        }
-    ],
+          user: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "User",
+            required: true,
+          },
+          name: {
+            type: String,
+            required: true,
+          },
+          rating: {
+            type: Number,
+            required: true,
+          },
+          comment: {
+            type: String,
+            required: true,
+          },
+        },
+      ],
     createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
     updatedAt: Date,
   },

@@ -1,36 +1,37 @@
 import {
-    GET_HOTEL_BY_SLUG_REQUEST,
-    GET_HOTEL_BY_SLUG_SUCCESS,
-    GET_HOTEL_BY_SLUG_FAIL,
-    CREATE_NEW_HOTEL_REQUEST,
-    CREATE_NEW_HOTEL_SUCCESS,
-    CREATE_NEW_HOTEL_FAIL,
-    CREATE_NEW_HOTEL_RESET,
-    GET_ALL_HOTELS_REQUEST,
-    GET_ALL_HOTELS_SUCCESS,
-    GET_ALL_HOTELS_FAIL,
-    DELETE_HOTEL_REQUEST,
-    DELETE_HOTEL_SUCCESS,
-    DELETE_HOTEL_FAIL,
-    DELETE_REVIEW_FAIL,
-    DELETE_REVIEW_SUCCESS,
-    DELETE_REVIEW_REQUEST,
-    ALL_REVIEW_FAIL,
-    ALL_REVIEW_SUCCESS,
-    ALL_REVIEW_REQUEST,
-    NEW_REVIEW_SUCCESS,
-    NEW_REVIEW_FAIL,
-    NEW_REVIEW_REQUEST,
-  } from "../Constants/hotelConstants";
-  import axios from "../helpers/axios";
+  GET_HOTEL_BY_SLUG_REQUEST,
+  GET_HOTEL_BY_SLUG_SUCCESS,
+  GET_HOTEL_BY_SLUG_FAIL,
+  CREATE_NEW_HOTEL_REQUEST,
+  CREATE_NEW_HOTEL_SUCCESS,
+  CREATE_NEW_HOTEL_FAIL,
+  CREATE_NEW_HOTEL_RESET,
+  GET_ALL_HOTELS_REQUEST,
+  GET_ALL_HOTELS_SUCCESS,
+  GET_ALL_HOTELS_FAIL,
+  DELETE_HOTEL_REQUEST,
+  DELETE_HOTEL_SUCCESS,
+  DELETE_HOTEL_FAIL,
+  DELETE_REVIEW_FAIL,
+  DELETE_REVIEW_SUCCESS,
+  DELETE_REVIEW_REQUEST,
+  ALL_REVIEW_FAIL,
+  ALL_REVIEW_SUCCESS,
+  ALL_REVIEW_REQUEST,
+  NEW_REVIEW_SUCCESS,
+  NEW_REVIEW_FAIL,
+  NEW_REVIEW_REQUEST,
+  CLEAR_ERRORS,
+} from "../Constants/hotelConstants";
+import axios from "../helpers/axios";
 
 // Create New Hotel
 export const createHotel = (form) => {
-  return async dispatch => {
-    dispatch({ type:  CREATE_NEW_HOTEL_REQUEST });
+  return async (dispatch) => {
+    dispatch({ type: CREATE_NEW_HOTEL_REQUEST });
     try {
       const res = await axios.post("/vacation/Hotel/add", form);
-      console.log("res......",res)
+      console.log("res......", res);
       if (res.status === 201) {
         dispatch({
           type: CREATE_NEW_HOTEL_SUCCESS,
@@ -44,10 +45,9 @@ export const createHotel = (form) => {
       }
     } catch (error) {
       console.log(error.message);
-    //   if(e instance of BSONTypeError){
-    //  }
+      //   if(e instance of BSONTypeError){
+      //  }
     }
-
   };
 };
 
@@ -88,9 +88,8 @@ export const getHotelBySlug = (slug) => async (dispatch) => {
   }
 };
 
-
- // Delete Product
- export const deleteHotel = (id) => async (dispatch) => {
+// Delete Product
+export const deleteHotel = (id) => async (dispatch) => {
   try {
     dispatch({ type: DELETE_HOTEL_REQUEST });
 
@@ -102,7 +101,7 @@ export const getHotelBySlug = (slug) => async (dispatch) => {
     });
     dispatch({
       type: GET_ALL_HOTELS_SUCCESS,
-    })
+    });
   } catch (error) {
     dispatch({
       type: DELETE_HOTEL_FAIL,
@@ -119,9 +118,7 @@ export const newReview = (reviewData) => async (dispatch) => {
     const config = {
       headers: { "Content-Type": "application/json" },
     };
-
     const { data } = await axios.put(`/review`, reviewData, config);
-
     dispatch({
       type: NEW_REVIEW_SUCCESS,
       payload: data.success,
@@ -134,7 +131,7 @@ export const newReview = (reviewData) => async (dispatch) => {
   }
 };
 
-// Get All Reviews of a Product
+// Get All Reviews of a Hotel
 export const getAllReviews = (id) => async (dispatch) => {
   try {
     dispatch({ type: ALL_REVIEW_REQUEST });
@@ -172,4 +169,9 @@ export const deleteReviews = (reviewId, hotelId) => async (dispatch) => {
       payload: error.response.data.message,
     });
   }
+};
+
+// Clearing Errors
+export const clearErrors = () => async (dispatch) => {
+  dispatch({ type: CLEAR_ERRORS });
 };

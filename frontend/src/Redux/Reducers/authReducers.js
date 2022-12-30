@@ -1,6 +1,6 @@
 // import { authConstants } from "../actions/constants";
 
-import { LOGIN_REQUEST, LOGIN_SUCCESS, LOGOUT_FAILURE, LOGOUT_REQUEST, LOGOUT_SUCCESS, SIGNUP_FAILURE, SIGNUP_REQUEST, SIGNUP_SUCCESS } from "../Constants/authConstants";
+import { LOGIN_FAILURE, LOGIN_REQUEST, LOGIN_SUCCESS, LOGOUT_FAILURE, LOGOUT_REQUEST, LOGOUT_SUCCESS, SIGNUP_FAILURE, SIGNUP_REQUEST, SIGNUP_SUCCESS } from "../Constants/authConstants";
 
 const initState = {
   token: null,
@@ -19,7 +19,6 @@ const initState = {
 
 export const authReducer = (state = initState, action) => {
   console.log(action);
-
   switch (action.type) {
     case LOGIN_REQUEST:
       state = {
@@ -34,6 +33,16 @@ export const authReducer = (state = initState, action) => {
         token: action.payload.token,
         authenticate: true,
         authenticating: false,
+        error:null,
+        // success:action.payload.success,
+      };
+      break;
+    case LOGIN_FAILURE:
+      state = {
+        ...state,
+        authenticate:false,
+        error: action.payload.error,
+        loading: false,
       };
       break;
     case LOGOUT_REQUEST:

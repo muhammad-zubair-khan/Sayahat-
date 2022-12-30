@@ -11,6 +11,9 @@ const {
     getTopDesPackageBySlug,
     getPackageDetailsById,
     getAllAdminPackages,
+    createPackageReview,
+    getPackageReviews,
+    deletePackageReview,
 } = require("../Controllers/package");
 const {
   requireSignin,
@@ -50,6 +53,13 @@ adminMiddleware, getPackageBySlug);
 // For Admin
 router.get('/admin/package-detail/:id', requireSignin,
 adminMiddleware,getPackageDetailsById);
+
+router.route("/create/review").put(requireSignin,userMiddleware, createPackageReview);
+router
+  .route("/reviews")
+  .get(getPackageReviews)
+  .delete(requireSignin,userMiddleware, deletePackageReview);
+
 
 router.get("/all-packages", getAllPackages);
 router.get("/package/:slug", getPackageBySlug);

@@ -235,7 +235,7 @@
 
 // export default Account;
 
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import { Link, Redirect, useHistory } from "react-router-dom";
 import Form from "./utilities/Forms";
@@ -243,17 +243,20 @@ import "./style.css";
 import logo from "../../Assets/logo/logo.png";
 import { Row, Col } from "react-bootstrap";
 import { login } from "../../Redux/Actions/authActions";
-import {useDispatch, useSelector} from 'react-redux';
-
+import { useDispatch, useSelector } from "react-redux";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const Login = () => {
-  const history = useHistory()
-  const dispatch = useDispatch()
-  const auth = useSelector((state)=> state.auth)
+  const history = useHistory();
+  const dispatch = useDispatch();
+  const auth = useSelector((state) => state.auth);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [remember, setRemember] = useState(false);
   const [validate, setValidate] = useState({});
   const [showPassword, setShowPassword] = useState(false);
+  // const {error,success} = useSelector((state)=>state.auth)
+  // console.log(success)
 
   const validateLogin = () => {
     let isValid = true;
@@ -293,7 +296,6 @@ const Login = () => {
       alert("Successfully Login");
     }
   };
-
   const togglePassword = (e) => {
     if (showPassword) {
       setShowPassword(false);
@@ -310,11 +312,14 @@ const Login = () => {
     };
 
     dispatch(login(user));
-    history.push()
+
+    // history.push()
   };
+
   if (auth.authenticate) {
     return <Redirect to={`/`} />;
   }
+
   return (
     <Row>
       <Col

@@ -13,9 +13,9 @@ const ReviewCard = ({ review }) => {
   return (
     <div className="reviewCard">
       {/* <img src={profilePng} alt="User" /> */}
-      {/* <p>{review.name}</p> */}
+      <p>{review.name}</p>
       <Rating {...options} />
-      <span className="reviewCardComment">{review.comment}</span>
+      <span className="reviewCardComment" style={{fontWeight:'bold',fontSize:'16px'}}>{review.comment}</span>
     </div>
   );
 };

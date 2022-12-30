@@ -1,5 +1,6 @@
 // createVacationProduct
 const Hotel = require("../models/hotel");
+const User = require("../Models/user");
 const RoomModal = require("../Models/room");
 const category = require("../models/vacationProduct");
 const topDest = require("../Models/destination");
@@ -298,14 +299,12 @@ exports.getHotelRooms = async(req, res) => {
 // Create New Review or Update the review
 exports.createHotelReview = catchAsyncErrors(async (req, res, next) => {
   const { rating, comment, id } = req.body;
-
   const review = {
     user: req.user._id,
-    fullName: req.user.fullName,
+    name: req.user._id,
     rating: Number(rating),
     comment,
   };
-  console.log(req.user)
   const hotel = await Hotel.findById(id);
   const isReviewed = hotel.reviews.find(
     (rev) => rev.user.toString() === req.user._id.toString()
@@ -336,7 +335,7 @@ exports.createHotelReview = catchAsyncErrors(async (req, res, next) => {
   });
 });
 
-// Get All Reviews of a product
+// Get All Reviews of a Hotel
 exports.getHotelReviews = catchAsyncErrors(async (req, res, next) => {
   const hotel = await Hotel.findById(req.query.id);
 
@@ -352,7 +351,7 @@ exports.getHotelReviews = catchAsyncErrors(async (req, res, next) => {
 
 // Delete Review
 exports.deleteReview = catchAsyncErrors(async (req, res, next) => {
-  const hotel = await Hotel.findById(req.query.productId);
+  const hotel = await Hotel.findById(req.query.id);
 
   if (!hotel) {
     return next(new ErrorHandler("Hotel not found", 404));
@@ -379,7 +378,7 @@ exports.deleteReview = catchAsyncErrors(async (req, res, next) => {
   const numOfReviews = reviews.length;
 
   await Hotel.findByIdAndUpdate(
-    req.query.hotelId,
+    req.query.id,
     {
       reviews,
       ratings,

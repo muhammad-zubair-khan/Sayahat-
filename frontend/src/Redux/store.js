@@ -5,8 +5,8 @@ import { authReducer, allAdminsReducer } from "./Reducers/authReducers";
 import { VacationCategoryReducer } from "./Reducers/vacationCategoryReducer";
 import { vacationProductReducer,addCitiesReducer,allCitiesReducer } from "./Reducers/VacationProductReducer";
 import { allHotelsReducer, hotelsReducer, newReviewReducer, hotelReviewsReducer, reviewReducer } from "./Reducers/hotelReducer";
-import { allCarsReducer, newCarReducer } from "./Reducers/carReducer";
-import { allPackagesReducer, newPackageReducer } from "./Reducers/packageReducer";
+import { allCarsReducer, carReviewsReducer, newCarReducer, newReviewCarReducer, reviewCarReducer } from "./Reducers/carReducer";
+import { allPackagesReducer, newPackageReducer, newReviewPackageReducer, packageReviewsReducer, reviewPackageReducer } from "./Reducers/packageReducer";
 import { allUsersReducer, userAuthReducer } from "./Reducers/userReducers";
 import { addNewDestinationReducer, destinationReducer } from "./Reducers/topDestinatonsReducer";
 
@@ -29,6 +29,12 @@ const reducer = combineReducers({
   newReview: newReviewReducer,
   hotelReviews: hotelReviewsReducer,
   review: reviewReducer,
+  newPackageReview:newReviewPackageReducer,
+  packageReview:packageReviewsReducer,
+  delPackageReview:reviewPackageReducer,
+  newCarReview:newReviewCarReducer,
+  carReview:carReviewsReducer,
+  delCarReview:reviewCarReducer,
   // allVacation: allCitiesReducer,
   // userLogin: userLoginReducer,
   // userLogin: userLoginReducer,

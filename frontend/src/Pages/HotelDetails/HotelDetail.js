@@ -1,6 +1,13 @@
 import "./HotelDetail.css";
 // import MailList from "../../components/mailList/MailList";
 // import Footer from "../../components/footer/Footer";
+import { Button } from "@mui/material";
+import {
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+} from "@mui/material";
 import { Grid, Container, Rating } from "@mui/material";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -21,12 +28,18 @@ import Reserve from "../../Components/Reserve/Reserve";
 import { ImageUrl } from "../../Redux/UrlConfig";
 import Zoom from "react-medium-image-zoom";
 import "react-medium-image-zoom/dist/styles.css";
-import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MailList from "../../Components/MailList/MailList";
 import { useDispatch } from "react-redux";
-import { newReview } from "../../Redux/Actions/hotelAction";
+import {
+  clearErrors,
+  getAllReviews,
+  newReview,
+} from "../../Redux/Actions/hotelAction";
 import ReviewCard from "./ReviewCard/ReviewCard";
+import { NEW_REVIEW_RESET } from "../../Redux/Constants/hotelConstants";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const HotelDetail = ({ match }) => {
   const dispatch = useDispatch();
@@ -46,27 +59,46 @@ const HotelDetail = ({ match }) => {
     location.state.state.destination
   );
   const [options, setOptions] = useState(location.state.state.options);
+  const [openReview, setOpenReview] = useState(false);
   const { success, error: reviewError } = useSelector(
     (state) => state.newReview
   );
-  const auth = useSelector((state)=> state.auth)
+  // const auth = useSelector((state) => state.auth);
+
   const { data, loading, error } = useFetch(
     `http://localhost:5000/api/hotel/${id}`
   );
-  const hotel = useSelector((state) => state.hotelReviews);
-  console.log(hotel)
-  // const { user } = useContext(AuthContext);
-  // const { dates, options } = useContext(SearchContext);
-  console.log(dates);
 
-  console.log(options);
-  console.log(destination);
+  const auth = useSelector((state) => state.auth);
+
   const MILLISECONDS_PER_DAY = 1000 * 60 * 60 * 24;
   function dayDifference(date1, date2) {
     const timeDiff = Math.abs(date2.getTime() - date1.getTime());
     const diffDays = Math.ceil(timeDiff / MILLISECONDS_PER_DAY);
     return diffDays;
   }
+  useEffect(() => {
+    if (error) {
+      toast.error(error, {
+        position: toast.POSITION.BOTTOM_CENTER,
+      });
+      dispatch(clearErrors());
+    }
+
+    if (reviewError) {
+      toast.error(reviewError, {
+        position: toast.POSITION.BOTTOM_CENTER,
+      });
+      dispatch(clearErrors());
+    }
+
+    if (success) {
+      toast.success("Review Submitted Successfully", {
+        position: toast.POSITION.BOTTOM_CENTER,
+      });
+      dispatch({ type: NEW_REVIEW_RESET });
+    }
+  }, [dispatch, error, reviewError, success]);
   // useEffect(() => {
   //   window.localStorage.setItem("endDate", dates[0].endDate);
   //   window.localStorage.setItem("startDate", dates[0].startDate);
@@ -99,16 +131,18 @@ const HotelDetail = ({ match }) => {
     //   history.push("/login");
     // }
   };
-  console.log(data)
 
-  console.log(data);
   if (Object.keys(data).length === 0) {
     return null;
   }
   // if (Object.keys(dates[0]).length === 0) {
   //   return null;
   // }
+  const submitReviewToggle = () => {
+    openReview ? setOpenReview(false) : setOpenReview(true);
+  };
   const reviewSubmitHandler = () => {
+    if(auth.authenticate){
     const myForm = new FormData();
 
     myForm.set("rating", rating);
@@ -116,9 +150,21 @@ const HotelDetail = ({ match }) => {
     myForm.set("id", match.params.id);
 
     dispatch(newReview(myForm));
-   
+    // dispatch({type:GET_ALL_REVIEWS})
+
+    setOpenReview(false);
+    history.go(0)
+  }else{
+    toast.error("Login First", {
+      position: toast.POSITION.BOTTOM_CENTER,
+    });
+    setOpenReview(false)
+    setTimeout(() => {
+      history.push('/login')
+    }, 3000);
+  }
   };
-  
+
   return (
     <>
       <div style={{ background: "rgb(0, 0, 0)", height: "75px" }}>
@@ -228,12 +274,61 @@ const HotelDetail = ({ match }) => {
                   </Tooltip>
                 </h6>
                 <button onClick={handleClick}>Reserve or Book Now!</button>
+                <button onClick={submitReviewToggle} className="submitReview">
+                  Submit Review
+                </button>
               </div>
             </div>
           </div>
 
           {/* ----------------------------Review-Section-Start----------------------- */}
-          <Container className="my-2">
+          <h3 className="reviewsHeading">REVIEWS</h3>
+          <Dialog
+            aria-labelledby="simple-dialog-title"
+            open={openReview}
+            onClose={submitReviewToggle}
+          >
+            <DialogTitle>Submit Review</DialogTitle>
+            <DialogContent
+              className="submitDialog"
+              style={{ display: "flex", flexDirection: "column" }}
+            >
+              <Rating
+                onChange={(e) => setRating(e.target.value)}
+                value={rating}
+                size="large"
+                
+              />
+
+              <textarea
+              required
+                className="submitDialogTextArea"
+                cols="40"
+                rows="5"
+                value={comment}
+                onChange={(e) => setComment(e.target.value)}
+              ></textarea>
+            </DialogContent>
+            <DialogActions>
+              <Button
+                onClick={submitReviewToggle}
+                variant="outlined"
+                color="secondary"
+              >
+                Cancel
+              </Button>
+              <Button
+                onClick={reviewSubmitHandler}
+                variant="outlined"
+                color="primary"
+              >
+                Submit
+              </Button>
+            </DialogActions>
+          </Dialog>
+
+          <ToastContainer />
+          {/* <Container className="my-2">
             <Grid container>
               <Grid xs={12} md={12}>
                 <div
@@ -304,23 +399,21 @@ const HotelDetail = ({ match }) => {
                 </div>
               </Grid>
             </Grid>
-          </Container>
+          </Container> */}
 
-          {data.hotel.reviews && data.hotel.reviews[0] ? (
-            <div className="reviews">
-              {data.hotel.reviews &&
-                data.hotel.reviews.map((review) => (
-                  <>
-                  <p>{review.fullName}</p>
-                  <ReviewCard key={review._id} review={review} />
-                  </>
-                  // {/* <img src={profilePng} alt="User" /> */}
-                  
-                ))}
-            </div>
-          ) : (
-            <p className="noReviews">No Reviews Yet</p>
-          )}
+          <Container>
+            {data.hotel.reviews && data.hotel.reviews[0] ? (
+              <div className="reviews">
+                {data.hotel.reviews &&
+                  data.hotel.reviews.map((review) => (
+                    <ReviewCard key={review._id} review={review} />
+                    // {/* <img src={profilePng} alt="User" /> */}
+                  ))}
+              </div>
+            ) : (
+              <p className="noReviews">No Reviews Yet</p>
+            )}
+          </Container>
 
           {/* ----------------------------Review-Section-End----------------------- */}
 

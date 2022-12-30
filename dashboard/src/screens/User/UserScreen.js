@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -9,15 +9,26 @@ import { getAllAdmins } from "../../Redux/Actions/adminActions";
 import EditIcon from "@mui/icons-material/Edit";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { DataGrid } from "@mui/x-data-grid";
+import axios from "axios";
 
 const UserScreen = () => {
+  const history = useHistory()
   const dispatch = useDispatch();
   const { admins } = useSelector((state) => state.allAdmins);
   // const {admins} = useSelector((state) => state.allAdmins)
-// console.log(admins)
-useEffect(() => {
-  dispatch(getAllAdmins());
-}, [])
+  // console.log(admins)
+  const deleteUserHandler = (id) => {
+    const deleteUrl = `http://www.localhost:5000/api/admin/user/delete`;
+    try {
+      axios.delete(`${deleteUrl}/${id}`);
+      history.go(0);
+    } catch (err) {
+      alert(err);
+    }
+  };
+  useEffect(() => {
+    dispatch(getAllAdmins());
+  }, []);
 
   //   dispatch(getAllAdmins())
   //   console.log(admins)
@@ -66,11 +77,9 @@ useEffect(() => {
               <MdModeEditOutline />
             </Link> */}
 
-            <Button
-              // onClick={() =>
-              //   deleteProductHandler(params.id)
-              // }
-              >
+            <Button 
+            onClick={() => deleteUserHandler(params.id)}
+            >
               {/* <Link to={`/admin/product/${params.id}`}>delete</Link> */}
               <DeleteIcon />
             </Button>
@@ -83,7 +92,7 @@ useEffect(() => {
   const rows = [];
 
   admins &&
-  admins.forEach((item) => {
+    admins.forEach((item) => {
       rows.push({
         id: item._id,
         firstName: item.firstName,
@@ -98,8 +107,8 @@ useEffect(() => {
       <Sidebar>
         <Header />
         <div className="dashboard">
-        <div className="productListContainer">
-          <h1 id="productListHeading">Registered Customers</h1>
+          <div className="productListContainer">
+            <h1 id="productListHeading">Registered Customers</h1>
             <DataGrid
               rows={rows}
               columns={columns}
@@ -107,10 +116,10 @@ useEffect(() => {
               disableSelectionOnClick
               className="productListTable"
               autoHeight
-              style={{fontWeight:'600'}}
-              />
+              style={{ fontWeight: "600" }}
+            />
+          </div>
         </div>
-      </div>
         {/* <div className="container-lg">
           <div className="table-responsive">
             <div className="table-wrapper">

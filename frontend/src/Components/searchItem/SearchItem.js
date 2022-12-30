@@ -67,9 +67,9 @@ const history = useHistory()
         </span>
       </div>
       <div className="siDetails">
-        {item.rating && <div className="siRating">
+        {item.ratings && <div className="siRating">
           <span>Excellent</span>
-          <button>{item.rating}</button>
+          <button cursor="revert">{item.ratings}</button>
         </div>}
         <div className="siDetailTexts">
           <span className="siPrice">PKR {item.cheapestPrice}</span>
