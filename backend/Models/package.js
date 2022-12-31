@@ -8,8 +8,8 @@ const packageSchema = new mongoose.Schema(
       trim: true,
       unique: true,
     },
-    title:{
-      type:String,
+    title: {
+      type: String,
     },
     price: {
       type: String,
@@ -17,6 +17,11 @@ const packageSchema = new mongoose.Schema(
     },
     city: {
       type: String,
+    },
+    type: {
+      type: String,
+      // required: true,
+      default: 'All'
     },
     description: {
       type: String,
@@ -26,10 +31,10 @@ const packageSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-     startTime: {
-      type:[String],
-      required:true,
-     },
+    startTime: {
+      type: [String],
+      required: true,
+    },
 
     pickupLocation: {
       type: String,
@@ -56,7 +61,7 @@ const packageSchema = new mongoose.Schema(
     ratings: {
       type: String,
       min: 0,
-      max: 5
+      max: 5,
     },
     numOfReviews: {
       type: Number,
@@ -83,7 +88,11 @@ const packageSchema = new mongoose.Schema(
         },
       },
     ],
-    createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+    createdBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
     updatedAt: Date,
   },
   { timestamps: true }

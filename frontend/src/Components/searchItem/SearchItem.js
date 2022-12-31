@@ -37,11 +37,11 @@ const SearchItem = ({ item }) => {
 const history = useHistory()
   // console.log(item)
 
-  const { data, loading, error, reFetch } = useFetch(
-    `http://localhost:5000/api/hotels?city=${destination}&min=${min || 0}&max=${
-      max || 99999
-    }`
-  );
+  // const { data, loading, error, reFetch } = useFetch(
+  //   `http://localhost:5000/api/hotels?city=${destination}&min=${min || 0}&max=${
+  //     max || 99999
+  //   }`
+  // );
 
   const handleSearch = () => {
     dispatch({ type: "NEW_SEARCH", payload: { destination, dates, options } });

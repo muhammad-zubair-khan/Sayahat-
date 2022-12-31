@@ -67,8 +67,10 @@ function App() {
         <Route exact path="/car/:id" component={CarDetail} />
         <Route exact path="/aboutus" component={Aboutus} />
         <Route exact path="/car-rentals" component={CarRental} />
-        <Route exact path="/package/:slug" component={SearchedPackage} />
-        <Route exact path="/package/:slug/:id/detail" component={SearchedPackageDetail} />
+        {/* <Route exact path="/package/:slug" component={SearchedPackage} /> */}
+        <Route exact path="/packages" component={SearchedPackage} />
+        <Route exact path="/package/:id" component={SearchedPackageDetail} />
+        {/* <Route exact path="/package/:slug/:id/detail" component={SearchedPackageDetail} /> */}
         <Route exact path="/vacation/:slug/:slug/:id/detail"  component={PackageDetail}/>
         <Route exact path="/contactus" component={Contactus} />
         <Route exact path="/car/:id/checkout" component={Checkout} />

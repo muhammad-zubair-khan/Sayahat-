@@ -1,96 +1,57 @@
 import React, { useEffect, useState } from "react";
 import { Link, useHistory, useLocation, useParams } from "react-router-dom";
 import Navbar from "../../Navbar/Navbar";
-// import "./StyleCity.css";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import Offcanvas from "react-bootstrap/Offcanvas";
 import Footer from "../../Footer/Footer";
 import { useDispatch, useSelector } from "react-redux";
-// import { getPackageBySlug } from "../../Redux/Actions/packageAction";
-// import { getProductDetailById } from "../../Redux/Actions/vacationProductAction";
-import { getDestinationDetailById } from "../../Redux/Actions/topDestinationAction";
 import { ImageUrl } from "../../Redux/UrlConfig";
-import { getPackageBySlug } from "../../Redux/Actions/packageAction";
-import { getProductDetailById } from "../../Redux/Actions/vacationProductAction";
 import { format } from "date-fns";
 import { DateRange, DateRangePicker } from "react-date-range";
+import useFetch from "../../hook/useFetch";
+import {getAllPackages} from "../../Redux/Actions/packageAction";
 
 const Package = (props) => {
-  const params = useParams();
-  const {slug} = params
-  const location = useLocation();
+  const dispatch= useDispatch()
   const history = useHistory();
-  // console.log(params);
+  const location = useLocation();
   const [packageDestination, setPackageDestination] = useState(
-    slug
+    location.state.state.packageDestination
   );
   const [dates, setDates] = useState(location.state.state.dates);
   const [options, setOptions] = useState(location.state.state.options);
   const [openPackageDate, setOpenPackageDate] = useState(false);
-
-  let { id } = useParams();
-  console.log(params)
-  console.log("location", location);
-  const dispatch = useDispatch();
+  const [type, setType] = useState("");
   const { packages } = useSelector((state) => state.packagesReducer);
-  console.log(packages)
-  // const { product } = useSelector((state) => state.newVacation);
-  // console.log("products>>>", product);
-  // const { destination } = useSelector((state) => state.newDestination);
+  console.log("pacla",packages)
+  const [min, setMin] = useState(undefined);
+  const [max, setMax] = useState(undefined);
+  
+  const { data, loading, error, reFetch } = useFetch(
+    `http://localhost:5000/api/all-packages?city=${packageDestination}&min=${
+      min || 0
+    }&max=${max || 99999}&type=${type || 'Full Day Tour'}`
+  );
+    useEffect(() => {
+      dispatch(getAllPackages())
+    }, [])
+    
 
-  useEffect(() => {
-    dispatch(getPackageBySlug(params.slug));
-    // dispatch(getProductDetailById(id));
-    // dispatch(getDestinationDetailById(id));
-  }, [dispatch, params.slug, id]);
-
-  let readMore = () => {
-    var dots = document.getElementById("dots");
-    var moreText = document.getElementById("more");
-    var btnText = document.getElementById("myBtn");
-
-    if (dots.style.display === "none") {
-      dots.style.display = "inline";
-      btnText.innerHTML = "Read more";
-      moreText.style.display = "none";
-    } else {
-      dots.style.display = "none";
-      btnText.innerHTML = "Read less";
-      moreText.style.display = "inline";
-    }
+  const handleClick = () => {
+    reFetch();
   };
+
 
   let tours = [
     {
-      image:
-        "https://media.tacdn.com/media/attractions-splice-spp-100x100/07/32/c3/6e.jpg",
-      plan: "Night Tours",
+      type: "Full Day Tour",
     },
     {
-      image:
-        "https://media.tacdn.com/media/attractions-splice-spp-100x100/0d/3d/07/0d.jpg",
-      plan: "Half Day Tours",
+      type: "Half Day Tour",
     },
     {
-      image:
-        "https://media.tacdn.com/media/attractions-splice-spp-100x100/0b/bb/ca/e5.jpg",
-      plan: "City Tours",
-    },
-    {
-      image:
-        "https://media.tacdn.com/media/attractions-splice-spp-100x100/07/71/39/f1.jpg",
-      plan: "Full Day Tours",
-    },
-    {
-      image:
-        "https://media.tacdn.com/media/attractions-splice-spp-100x100/06/6f/03/c6.jpg",
-      plan: "Helicopter Tours",
-    },
-    {
-      image:
-        "https://media.tacdn.com/media/attractions-splice-spp-100x100/0c/76/ff/fc.jpg",
-      plan: "Adventure Tours",
+      type: "One Day Tour",
     },
   ];
 
@@ -118,109 +79,15 @@ const Package = (props) => {
     },
   ];
 
-  let cards = [
-    {
-      pakage: "Half-Day Emerald Cove Kayak Tour",
-      image:
-        "https://media.tacdn.com/media/attractions-splice-spp-360x240/0a/29/a4/a7.jpg",
-      price: 69.99,
-      review: 2355,
-      description:
-        "Experience the serenity of Emerald Cave, a picturesque natural attraction on the Colorado River. This kayaking tour takes a small group max of 15 people paddling up the river with a guide.",
-      time: "4 to 5 hours",
-      cancel: "Free Cancellation",
-    },
-    {
-      pakage: "Half-Day Emerald Cove Kayak Tour",
-      image:
-        "https://media.tacdn.com/media/attractions-splice-spp-360x240/06/73/26/88.jpg",
-      price: 69.99,
-      review: 2355,
-      description:
-        "Experience the serenity of Emerald Cave, a picturesque natural attraction on the Colorado River. This kayaking tour takes a small group max of 15 people paddling up the river with a guide.",
-      time: "4 to 5 hours",
-      cancel: "Free Cancellation",
-    },
-    {
-      pakage: "Half-Day Emerald Cove Kayak Tour",
-      image:
-        "https://media.tacdn.com/media/attractions-splice-spp-360x240/07/72/f5/3d.jpg",
-      price: 69.99,
-      review: 2355,
-      description:
-        "Experience the serenity of Emerald Cave, a picturesque natural attraction on the Colorado River. This kayaking tour takes a small group max of 15 people paddling up the river with a guide.",
-      time: "4 to 5 hours",
-      cancel: "Free Cancellation",
-    },
-    {
-      pakage: "Half-Day Emerald Cove Kayak Tour",
-      image:
-        "https://media.tacdn.com/media/attractions-splice-spp-360x240/0a/9a/4c/e1.jpg",
-      price: 69.99,
-      review: 2355,
-      description:
-        "Experience the serenity of Emerald Cave, a picturesque natural attraction on the Colorado River. This kayaking tour takes a small group max of 15 people paddling up the river with a guide.",
-      time: "4 to 5 hours",
-      cancel: "Free Cancellation",
-    },
-    {
-      pakage: "Half-Day Emerald Cove Kayak Tour",
-      image:
-        "https://media.tacdn.com/media/attractions-splice-spp-360x240/0a/f0/89/9b.jpg",
-      price: 69.99,
-      review: 2355,
-      description:
-        "Experience the serenity of Emerald Cave, a picturesque natural attraction on the Colorado River. This kayaking tour takes a small group max of 15 people paddling up the river with a guide.",
-      time: "4 to 5 hours",
-      cancel: "Free Cancellation",
-    },
-    {
-      pakage: "Half-Day Emerald Cove Kayak Tour",
-      image:
-        "https://media.tacdn.com/media/attractions-splice-spp-360x240/0b/30/7e/2d.jpg",
-      price: 69.99,
-      review: 2355,
-      description:
-        "Experience the serenity of Emerald Cave, a picturesque natural attraction on the Colorado River. This kayaking tour takes a small group max of 15 people paddling up the river with a guide.",
-      time: "4 to 5 hours",
-      cancel: "Free Cancellation",
-    },
-    {
-      pakage: "Half-Day Emerald Cove Kayak Tour",
-      image:
-        "https://media.tacdn.com/media/attractions-splice-spp-360x240/0b/b6/25/0f.jpg",
-      price: 69.99,
-      review: 2355,
-      description:
-        "Experience the serenity of Emerald Cave, a picturesque natural attraction on the Colorado River. This kayaking tour takes a small group max of 15 people paddling up the river with a guide.",
-      time: "4 to 5 hours",
-      cancel: "Free Cancellation",
-    },
-    {
-      pakage: "Half-Day Emerald Cove Kayak Tour",
-      image:
-        "https://media.tacdn.com/media/attractions-splice-spp-360x240/06/6b/8c/9f.jpg",
-      price: 69.99,
-      review: 2355,
-      description:
-        "Experience the serenity of Emerald Cave, a picturesque natural attraction on the Colorado River. This kayaking tour takes a small group max of 15 people paddling up the river with a guide.",
-      time: "4 to 5 hours",
-      cancel: "Free Cancellation",
-    },
-  ];
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  // const handleSearch = () => {
-   
-  // };
-  console.log("pack",packages)
   return (
     <>
       <Navbar />
-       {/* {packages && packages.map((item,index)=>{
+      {/* {packages && packages.map((item,index)=>{
          return(
           <div className="img-city">
           <div key={index}>
@@ -228,7 +95,7 @@ const Package = (props) => {
           </div>
       </div>
         )})} */}
-        <div className="bgCity"></div>
+      <div className="bgCity"></div>
       <div className="container-fluid position-absolute top-100 introText">
         {/* Start of introduction of city */}
         <div className="row ms-4 mt-5">
@@ -242,25 +109,30 @@ const Package = (props) => {
         {/* Start of carousel cards */}
         <div
           id="carouselExampleControls"
-          className="carousel slide mt-4"
+          className="carousel slide my-5 container"
           data-bs-interval="false"
         >
           <div className="carousel-inner">
             <div className="carousel-item active">
               <div className="row g-0">
-                {tours.map((tour) => {
+                {packages.map((tour) => {
                   return (
-                    <div className="col-2">
-                      <Link to="/">
-                        <div className="border border-primary rounded-pill p-2">
-                          <img
-                            src={tour.image}
-                            className="rounded-circle w-25"
-                            alt="..."
-                          />
-                          <span className="text-dark ms-3">{tour.plan}</span>
-                        </div>
-                      </Link>
+                    <div
+                      className="col-2"
+                      style={{
+                        width: "auto",
+                        margin: "0 auto",
+                        cursor: "pointer",
+                      }}
+                    >
+                      <div
+                        className="border border-primary p-2"
+                        style={{ width: "fit-content" }}
+                        key={tour}
+                        onClick={(e) => setType(tour.type)}
+                      >
+                        <span className="text-dark">{tour.type}</span>
+                      </div>
                     </div>
                   );
                 })}
@@ -268,19 +140,24 @@ const Package = (props) => {
             </div>
             <div className="carousel-item">
               <div className="row g-0">
-                {tours.map((tour) => {
+                {packages.map((tour) => {
                   return (
-                    <div className="col-2">
-                      <Link to="/">
-                        <div className="border border-primary rounded-pill p-2">
-                          <img
-                            src={tour.image}
-                            className="rounded-circle w-25"
-                            alt="..."
-                          />
-                          <span className="text-dark ms-3">{tour.plan}</span>
-                        </div>
-                      </Link>
+                    <div
+                      className="col-2"
+                      style={{
+                        width: "auto",
+                        margin: "0 auto",
+                        cursor: "pointer",
+                      }}
+                    >
+                      <div
+                        className="border border-primary p-2"
+                        style={{ width: "fit-content" }}
+                        key={tour}
+                        onClick={(e) => setType(tour.type)}
+                      >
+                        <span className="text-dark">{tour.type}</span>
+                      </div>
                     </div>
                   );
                 })}
@@ -288,6 +165,7 @@ const Package = (props) => {
             </div>
           </div>
           <button
+            style={{ width: "auto" }}
             className="carousel-control-prev"
             type="button"
             data-bs-target="#carouselExampleControls"
@@ -296,10 +174,12 @@ const Package = (props) => {
             <span
               className="carousel-control-prev-icon bg-dark"
               aria-hidden="true"
+              style={{ width: "26px", height: "26px" }}
             ></span>
             <span className="visually-hidden">Previous</span>
           </button>
           <button
+            style={{ width: "auto" }}
             className="carousel-control-next"
             type="button"
             data-bs-target="#carouselExampleControls"
@@ -308,10 +188,12 @@ const Package = (props) => {
             <span
               className="carousel-control-next-icon bg-dark"
               aria-hidden="true"
+              style={{ width: "26px", height: "26px" }}
             ></span>
             <span className="visually-hidden">Next</span>
           </button>
         </div>
+
         {/* End of carousel cards */}
 
         <div className="container-fluid">
@@ -910,8 +792,9 @@ const Package = (props) => {
 
             {/* Start of package cards */}
             <div className="col-md-8">
-              {packages &&
-                packages.map((data, index) => {
+            
+              {data.packages ?
+                data.packages.map((data, index) => {
                   return (
                     <div class="card mb-3 p-4" key={index}>
                       <div class="row g-0">
@@ -939,7 +822,15 @@ const Package = (props) => {
                                 </h5>
                               </div>
                             </div>
-                           {data.reviews.length > 0  && <p className='text-data'>{data.ratings}/10 {data.numOfReviews} Reviews</p>}
+                            {data.reviews.length > 0 && (
+                              <p
+                                className="text-data"
+                                style={{ fontWeight: "bolder" }}
+                              >
+                                {data.ratings}/10 ({data.numOfReviews}){" "}
+                                {data.numOfReviews >= 1 ? "Review" : "Reviews"}
+                              </p>
+                            )}
                             <small class="text-dark">
                               <div>
                                 <i class="fa-regular fa-clock me-2"></i>
@@ -951,28 +842,33 @@ const Package = (props) => {
                             {/* <Link
                               to={`/${data._id}`}
                             > */}
-                              <Button
-                              onClick={function() {
+                            <Button
+                              onClick={function () {
                                 dispatch({
                                   type: "NEW_SEARCH",
-                                  payload: { packageDestination, dates, options },
+                                  payload: {
+                                    packageDestination,
+                                    dates,
+                                    options,
+                                  },
                                 });
-                                history.push(`${params.slug}/${data._id}/detail`,{
+                                history.push(`/package/${data._id}`, {
                                   state: { packageDestination, dates, options },
                                 });
                               }}
-                                variant="contained"
-                                style={{ float: "right" }}
-                              >
-                                Reserve
-                              </Button>
+                              variant="contained"
+                              style={{ float: "right" }}
+                            >
+                              Reserve
+                            </Button>
                             {/* </Link> */}
                           </div>
                         </div>
                       </div>
                     </div>
                   );
-                })}
+                })
+                : 'No Data Found'}
 
               {/* <nav aria-label="Page navigation example">
                 <ul class="pagination d-flex justify-content-center">

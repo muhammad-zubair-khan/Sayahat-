@@ -82,7 +82,7 @@ export const getPackageBySlug = (slug) => async (dispatch) => {
     console.log(data);
     dispatch({
       type: GET_PACKAGE_BY_SLUG_SUCCESS,
-      payload: data.package,
+      payload: data.packages,
     });
   } catch (error) {
     dispatch({
@@ -97,7 +97,6 @@ export const getPackageDetailById = (id) => async (dispatch) => {
   try {
     dispatch({ type: GET_PACKAGE_DETAIL_BY_ID_REQUEST });
     const { data } = await axios.get(`/package-detail/${id}`);
-    console.log(data);
     dispatch({
       type: GET_PACKAGE_DETAIL_BY_ID_SUCCESS,
       payload: data.package,

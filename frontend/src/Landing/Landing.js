@@ -143,7 +143,7 @@ const Landing = ({ type }) => {
       type: "NEW_SEARCH",
       payload: { packageDestination, dates, options },
     });
-    history.push(`/package/${packageDestination}`, {
+    history.push("/packages", {
       state: { packageDestination, dates, options },
     });
   };

@@ -18,6 +18,7 @@ exports.createPackage =catchAsyncErrors(async(req, res) => {
     refundable,
     startTime,
     title,
+    type,
     carPickupDetails,
     product,
     createdBy,
@@ -41,6 +42,7 @@ exports.createPackage =catchAsyncErrors(async(req, res) => {
     refundable,
     startTime,
     title,
+    type,
     carPickupDetails,
     product,
     createdBy: req.user._id,
@@ -78,10 +80,14 @@ exports.createPackage =catchAsyncErrors(async(req, res) => {
 
 // Get All Pacages (Admin)
 exports.getAllPackages = async(req, res) => {
-  const packages = await Package.find();
-  // if(!packages){
-  //   return next(new ErrorHandler("Packages not found", 404));
-  // }
+  // const packages = await Package.find();
+  const { min, max, ...others } = req.query;
+  // const hotelsCount = await Hotel.countDocuments();
+
+  const packages = await Package.find({
+    ...others,
+    price: { $gt: min | 1, $lt: max || 99999 },
+  });
   res.status(200).json({
     success: true,
     packages,
@@ -90,11 +96,6 @@ exports.getAllPackages = async(req, res) => {
 
 //get package by slug
 exports.getPackageBySlug = (req, res) => {
-  // return next(new ErrorHander("this is my temp alert error",500))
-  
-  // const resultPerPage = 8;
-  // const productsCount =  Product.countDocuments();
-  
   const { slug } = req.params;
   product.findOne({ slug: slug })
   .select("_id")
@@ -109,23 +110,45 @@ exports.getPackageBySlug = (req, res) => {
       })
     }
     if (product) {
-      Package.find({ product: product._id }).exec((error, package) => {
+      Package.find({ product: product._id }).exec((error, packages) => {
           if (error) {
             return res.status(400).json({
               error,
             });
-          } else {
+          } 
+          if (packages.length > 0) {
             res.status(200).json({
-              success:true,
-              package,
-              // productsCount,
+              success: true,
+              packages,
+              packagesByPrice: {
+                under5k: packages.filter((package) => package.price <= 5000),
+                under6k: packages.filter(
+                  (package) =>
+                  package.price > 5000 && package.price <= 6000
+                ),
+                under7k: packages.filter(
+                  (package) =>
+                  package.price > 6000 && package.price <= 7000
+                ),
+                under8k: packages.filter(
+                  (package) =>
+                  package.price > 7000 && package.price <= 8000
+                ),
+                under9k: packages.filter(
+                  (package) =>
+                  package.price > 8000 && package.price <= 9000
+                ),
+                under10k: packages.filter(
+                  (package) =>
+                  package.price > 9000 && package.price <= 10000
+                ),
+              },
             });
           }
         });
       }
     });
 };
-
 //get top des package by slug
 // exports.getTopDesPackageBySlug = (req, res) => {
 //   const { slug } = req.params;

@@ -120,6 +120,7 @@ const CitiesManagementScreen = (props) => {
   const [duration, setDuration] = useState("");
   const [refundable, setRefundable] = useState("");
   const [product, setProduct] = useState("");
+  const [packageType, setPackageType] = useState("");
   const [carPickupDetails, setCarPickupDetails] = useState("");
   const [packageImages, setPackageImages] = useState([]);
   const [tagValue, setTagValue] = useState("");
@@ -342,6 +343,9 @@ const CitiesManagementScreen = (props) => {
 
     myForm.set("product", product);
     console.log(product);
+
+    myForm.set("type", packageType);
+    console.log(packageType);
 
     myForm.set("duration", duration);
     console.log(duration);
@@ -983,6 +987,18 @@ const CitiesManagementScreen = (props) => {
                     label="Duration"
                     value={duration}
                     onChange={(e) => setDuration(e.target.value)}
+                  />
+                </div>
+
+                <div>
+                  <TextField
+                  autoComplete="off"
+                    fullWidth
+                    required
+                    id="outlined-required"
+                    label="Package Type"
+                    value={packageType}
+                    onChange={(e) => setPackageType(e.target.value)}
                   />
                 </div>
 

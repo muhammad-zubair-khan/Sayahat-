@@ -180,7 +180,7 @@ function SearchedPackageDetail({ match }) {
 
   const dispatch = useDispatch();
   const packages = useSelector((state) => state.addPackageReducer);
-
+console.log(packages)
   // console.log("pack", packages.package.packageImages);
   // console.log("picc>>>>>>>>",packages.package.packageImage)
   useEffect(() => {
