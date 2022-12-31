@@ -72,7 +72,7 @@ export const getPackageBySlug = (slug) => async (dispatch) => {
     console.log(data);
     dispatch({
       type: GET_PACKAGE_BY_SLUG_SUCCESS,
-      payload: data.package,
+      payload: data.packages,
     });
   } catch (error) {
     dispatch({

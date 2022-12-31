@@ -32,7 +32,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 //For Admin
 router.post(
-  "/package/create",
+  "/admin/package/create",
   upload.array("packageImages"),
   requireSignin,
   adminMiddleware,

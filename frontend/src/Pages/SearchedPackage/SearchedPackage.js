@@ -55,29 +55,7 @@ const Package = (props) => {
     },
   ];
 
-  let filters = [
-    {
-      title: "Cruises & Sailing",
-      one: "Day Cruises",
-      two: "Multi-day Cruises",
-      three: "Sailing",
-      four: "Sightseeing Cruises",
-    },
-    {
-      title: "How to Get Around",
-      one: "Air Tours",
-      two: "Bike Rentals",
-      three: "Bike Tours",
-      four: "Buggy Rentals",
-    },
-    {
-      title: "Tours by Duration",
-      one: "Day Trips",
-      two: "Full-day Tours",
-      three: "Half-day Tours",
-      four: "Multi-day Tours",
-    },
-  ];
+  
 
   const [show, setShow] = useState(false);
 
@@ -115,7 +93,7 @@ const Package = (props) => {
           <div className="carousel-inner">
             <div className="carousel-item active">
               <div className="row g-0">
-                {packages.map((tour) => {
+                {tours.map((tour) => {
                   return (
                     <div
                       className="col-2"
@@ -140,7 +118,7 @@ const Package = (props) => {
             </div>
             <div className="carousel-item">
               <div className="row g-0">
-                {packages.map((tour) => {
+                {tours.map((tour) => {
                   return (
                     <div
                       className="col-2"
@@ -238,169 +216,6 @@ const Package = (props) => {
                     </div>
 
                     <div className="p-4">
-                      <p className="fw-bold text-dark">Popular</p>
-                      <div className="row">
-                        <div className="form-check col-10">
-                          <input
-                            className="form-check-input"
-                            type="checkbox"
-                            value=""
-                            id="flexCheckDefault"
-                          />
-                          <label
-                            className="form-check-label"
-                            for="flexCheckDefault"
-                          >
-                            Good for avoiding crowds
-                          </label>
-                        </div>
-                        <div className="col-2">
-                          <Tooltip
-                            title="Search experiences that may have limited interaction with crowds."
-                            placement="right"
-                          >
-                            <Button>
-                              <i className="text-dark fs-5 fa-solid fa-circle-info"></i>
-                            </Button>
-                          </Tooltip>
-                        </div>
-                      </div>
-                      <div className="row">
-                        <div className="form-check col-10">
-                          <input
-                            className="form-check-input"
-                            type="checkbox"
-                            value=""
-                            id="flexCheckDefault"
-                          />
-                          <label
-                            className="form-check-label"
-                            for="flexCheckDefault"
-                          >
-                            Taking safety measures
-                          </label>
-                        </div>
-                        <div className="col-2">
-                          <Tooltip
-                            title="Search experiences with increased health and safety practices."
-                            placement="right"
-                          >
-                            <Button>
-                              <i className="text-dark fs-5 fa-solid fa-circle-info"></i>
-                            </Button>
-                          </Tooltip>
-                        </div>
-                      </div>
-                      <div className="row">
-                        <div className="form-check col-10">
-                          <input
-                            className="form-check-input"
-                            type="checkbox"
-                            value=""
-                            id="flexCheckDefault"
-                          />
-                          <label
-                            className="form-check-label"
-                            for="flexCheckDefault"
-                          >
-                            Virtual experiences
-                          </label>
-                        </div>
-                        <div className="col-2">
-                          <Tooltip
-                            title="Search tours and activities you can do from home."
-                            placement="right"
-                          >
-                            <Button>
-                              <i className="text-dark fs-5 fa-solid fa-circle-info"></i>
-                            </Button>
-                          </Tooltip>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="accordion" id="accordionExample">
-                      <div class="accordion-item">
-                        <h2 class="accordion-header" id="headingOne">
-                          <button
-                            class="accordion-button text-dark"
-                            type="button"
-                            data-bs-toggle="collapse"
-                            data-bs-target="#collapseOne"
-                            aria-expanded="true"
-                            aria-controls="collapseOne"
-                          >
-                            Tours, Sightseeing & Cruises
-                          </button>
-                        </h2>
-                        <div
-                          id="collapseOne"
-                          class="accordion-collapse collapse show"
-                          aria-labelledby="headingOne"
-                          data-bs-parent="#accordionExample"
-                        >
-                          <div class="accordion-body">
-                            {/* filters */}
-                            {filters.map((filter) => {
-                              return (
-                                <div class="accordion" id="accordionExample">
-                                  <div class="accordion-item">
-                                    <h2
-                                      class="accordion-header"
-                                      id="headingTwo"
-                                    >
-                                      <button
-                                        class="accordion-button text-dark"
-                                        type="button"
-                                        data-bs-toggle="collapse"
-                                        data-bs-target="#collapseTwo"
-                                        aria-expanded="true"
-                                        aria-controls="collapseTwo"
-                                      >
-                                        {filter.title}
-                                      </button>
-                                    </h2>
-                                    <div
-                                      id="collapseTwo"
-                                      class="accordion-collapse collapse show"
-                                      aria-labelledby="headingTwo"
-                                      data-bs-parent="#accordionExample"
-                                    >
-                                      <div class="accordion-body">
-                                        <ul class="list-group b-0">
-                                          <li class="list-group-item border-0">
-                                            <Link className="text-dark" to="/">
-                                              {filter.one}
-                                            </Link>
-                                          </li>
-                                          <li class="list-group-item border-0">
-                                            <Link className="text-dark" to="/">
-                                              {filter.two}
-                                            </Link>
-                                          </li>
-                                          <li class="list-group-item border-0">
-                                            <Link className="text-dark" to="/">
-                                              {filter.three}
-                                            </Link>
-                                          </li>
-                                          <li class="list-group-item border-0">
-                                            <Link className="text-dark" to="/">
-                                              {filter.four}
-                                            </Link>
-                                          </li>
-                                        </ul>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              );
-                            })}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="p-4">
                       <label for="customRange3" class="form-label">
                         Price
                       </label>
@@ -421,7 +236,29 @@ const Package = (props) => {
                     <div className="px-4">
                       <p className="fw-bold text-dark">Duration</p>
                       <ul class="list-group">
-                        <li class="list-group-item border-0">
+                        {packages.map((item)=>{
+                          return(
+                            <>
+                              <li class="list-group-item border-0">
+                          <div class="form-check">
+                            <input
+                              class="form-check-input"
+                              type="checkbox"
+                              value=""
+                              id="flexCheckDefault"
+                            />
+                            <label
+                              class="form-check-label"
+                              for="flexCheckDefault"
+                            >
+                              {item.duration}
+                            </label>
+                          </div>
+                        </li>
+                            </>
+                          )
+                        })}
+                        {/* <li class="list-group-item border-0">
                           <div class="form-check">
                             <input
                               class="form-check-input"
@@ -436,71 +273,8 @@ const Package = (props) => {
                               Up to 1 hour
                             </label>
                           </div>
-                        </li>
-                        <li class="list-group-item border-0">
-                          <div class="form-check">
-                            <input
-                              class="form-check-input"
-                              type="checkbox"
-                              value=""
-                              id="flexCheckDefault"
-                            />
-                            <label
-                              class="form-check-label"
-                              for="flexCheckDefault"
-                            >
-                              1 to 4 hours
-                            </label>
-                          </div>
-                        </li>
-                        <li class="list-group-item border-0">
-                          <div class="form-check">
-                            <input
-                              class="form-check-input"
-                              type="checkbox"
-                              value=""
-                              id="flexCheckDefault"
-                            />
-                            <label
-                              class="form-check-label"
-                              for="flexCheckDefault"
-                            >
-                              4 hours to 1 day
-                            </label>
-                          </div>
-                        </li>
-                        <li class="list-group-item border-0">
-                          <div class="form-check">
-                            <input
-                              class="form-check-input"
-                              type="checkbox"
-                              value=""
-                              id="flexCheckDefault"
-                            />
-                            <label
-                              class="form-check-label"
-                              for="flexCheckDefault"
-                            >
-                              1 to 3 days
-                            </label>
-                          </div>
-                        </li>
-                        <li class="list-group-item border-0">
-                          <div class="form-check">
-                            <input
-                              class="form-check-input"
-                              type="checkbox"
-                              value=""
-                              id="flexCheckDefault"
-                            />
-                            <label
-                              class="form-check-label"
-                              for="flexCheckDefault"
-                            >
-                              3+ days
-                            </label>
-                          </div>
-                        </li>
+                        </li> */}
+                       
                       </ul>
                     </div>
 
