@@ -18,7 +18,8 @@ const initState = {
 };
 
 export const authReducer = (state = initState, action) => {
-  console.log(action);
+  // console.log(action);
+  // eslint-disable-next-line default-case
   switch (action.type) {
     case LOGIN_REQUEST:
       state = {
@@ -40,9 +41,7 @@ export const authReducer = (state = initState, action) => {
     case LOGIN_FAILURE:
       state = {
         ...state,
-        authenticate:false,
         error: action.payload.error,
-        loading: false,
       };
       break;
     case LOGOUT_REQUEST:

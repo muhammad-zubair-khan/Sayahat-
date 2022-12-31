@@ -255,8 +255,8 @@ const Login = () => {
   const [remember, setRemember] = useState(false);
   const [validate, setValidate] = useState({});
   const [showPassword, setShowPassword] = useState(false);
-  // const {error,success} = useSelector((state)=>state.auth)
-  // console.log(success)
+  const {error} = useSelector((state)=>state.auth)
+  console.log(error)
 
   const validateLogin = () => {
     let isValid = true;

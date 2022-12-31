@@ -160,7 +160,7 @@ const CarDetail = ({match}) => {
     
     setOpenCarReview(false);
     history.go(0)
-  }else{
+  }else if(!localStorage.token){
     toast.error("Login First", {
       position: toast.POSITION.BOTTOM_CENTER,
     });
