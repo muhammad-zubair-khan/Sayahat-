@@ -6,6 +6,7 @@ const slugify = require('slugify');
 const path = require("path");
 const ErrorHandler = require("../utils/errorhandler");
 const catchAsyncErrors = require("../utils/catchAsyncErrors");
+const ApiFeatures = require("../utils/ApiFeatures");
 
 // Create Package -- Admin
 exports.createPackage =catchAsyncErrors(async(req, res) => {
@@ -63,31 +64,42 @@ exports.createPackage =catchAsyncErrors(async(req, res) => {
   });
 });
 
-// Get All Pacages (Admin)
-// exports.getAllPackages = async(req, res) => {
-//   // const packages = await Package.find();
-//   const { min, max, ...others } = req.query;
-//   // const hotelsCount = await Hotel.countDocuments();
+// Get All Product
+// exports.getAllPackages = catchAsyncErrors(async (req, res, next) => {
+//   const resultPerPage = 8;
+//   const packagesCount = await Package.countDocuments();
 
-//   const packages = await Package.find({
-//     ...others,
-//     price: { $gt: min | 1, $lt: max || 99999 },
-//   });
-//   res.status(200).json(
+//   const apiFeature = new ApiFeatures(Package.find(), req.query)
+//   .filter();
+//     // .search()
+
+//   let packages = await apiFeature.query;
+
+//   let filteredPackagesCount = packages.length;
+
+//   // apiFeature.pagination(resultPerPage);
+
+//   // products = await apiFeature.query;
+
+//   res.status(200).json({
+//     success: true,
 //     packages,
-//   );
-// };
+//     packagesCount,
+//     // resultPerPage,
+//     // filteredProductsCount,
+//   });
+// });
 
-// Get All Pacages (Admin)
+
+// Get All Packages (Admin)
 exports.getAllPackages = async(req, res) => {
-  // const packages = await Package.find();
   const { min, max, ...others } = req.query;
-  // const hotelsCount = await Hotel.countDocuments();
-
-  const packages = await Package.find({
+  const apiFeature =  new ApiFeatures(Package.find({
     ...others,
-    price: { $gt: min | 1, $lt: max || 99999 },
-  });
+    price: { $gte: min | 1, $lte: max || 99999 },
+    // ratings: {$gt: maxRating | 0, $lt: maxRating || 5},
+  })).filter();
+  const packages = await apiFeature.query
   res.status(200).json({
     success: true,
     packages,

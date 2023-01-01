@@ -10,10 +10,11 @@ import { ImageUrl } from "../../Redux/UrlConfig";
 import { format } from "date-fns";
 import { DateRange, DateRangePicker } from "react-date-range";
 import useFetch from "../../hook/useFetch";
-import {getAllPackages} from "../../Redux/Actions/packageAction";
+import { getAllPackages } from "../../Redux/Actions/packageAction";
+import { Slider, Typography } from "@mui/material";
 
 const Package = (props) => {
-  const dispatch= useDispatch()
+  const dispatch = useDispatch();
   const history = useHistory();
   const location = useLocation();
   const [packageDestination, setPackageDestination] = useState(
@@ -23,39 +24,30 @@ const Package = (props) => {
   const [options, setOptions] = useState(location.state.state.options);
   const [openPackageDate, setOpenPackageDate] = useState(false);
   const [type, setType] = useState("");
+  const [price, setPrice] = useState([0, 95000]);
+  const [ratings, setRatings] = useState(0);
+  console.log(type);
   const { packages } = useSelector((state) => state.packagesReducer);
-  console.log("pacla",packages)
+  console.log("pacla", packages);
   const [min, setMin] = useState(undefined);
   const [max, setMax] = useState(undefined);
-  
-  const { data, loading, error, reFetch } = useFetch(
-    `http://localhost:5000/api/all-packages?city=${packageDestination}&min=${
-      min || 0
-    }&max=${max || 99999}&type=${type || 'Full Day Tour'}`
-  );
-    useEffect(() => {
-      dispatch(getAllPackages())
-    }, [])
-    
+  // const [minRating, setMinRating] = useState(undefined);
+  // const [maxRating, setMaxRating] = useState(undefined);
 
-  const handleClick = () => {
-    reFetch();
-  };
+  // const { data, loading, error, reFetch } = useFetch(
+  //   `http://localhost:5000/api/all-packages?city=${packageDestination}&min=${
+  //     min || 0
+  //   }&max=${max || 99999}&type=${type || "Full Day Tour"}`
+  // );
+  useEffect(() => {
+    dispatch(getAllPackages(type, min, max));
+  }, [dispatch, type, min, max]);
 
+  // const handleClick = () => {
+  //   reFetch();
+  // };
 
-  let tours = [
-    {
-      type: "Full Day Tour",
-    },
-    {
-      type: "Half Day Tour",
-    },
-    {
-      type: "One Day Tour",
-    },
-  ];
-
-  
+  const types = ["Full Day Tour", "Half Day Tour", "One Day Tour"];
 
   const [show, setShow] = useState(false);
 
@@ -93,7 +85,7 @@ const Package = (props) => {
           <div className="carousel-inner">
             <div className="carousel-item active">
               <div className="row g-0">
-                {tours.map((tour) => {
+                {types.map((type) => {
                   return (
                     <div
                       className="col-2"
@@ -106,10 +98,10 @@ const Package = (props) => {
                       <div
                         className="border border-primary p-2"
                         style={{ width: "fit-content" }}
-                        key={tour}
-                        onClick={(e) => setType(tour.type)}
+                        key={type}
+                        onClick={(e) => setType(type)}
                       >
-                        <span className="text-dark">{tour.type}</span>
+                        <span className="text-dark">{type}</span>
                       </div>
                     </div>
                   );
@@ -118,7 +110,7 @@ const Package = (props) => {
             </div>
             <div className="carousel-item">
               <div className="row g-0">
-                {tours.map((tour) => {
+                {types.map((type) => {
                   return (
                     <div
                       className="col-2"
@@ -131,10 +123,10 @@ const Package = (props) => {
                       <div
                         className="border border-primary p-2"
                         style={{ width: "fit-content" }}
-                        key={tour}
-                        onClick={(e) => setType(tour.type)}
+                        key={type}
+                        onClick={(e) => setType(type)}
                       >
-                        <span className="text-dark">{tour.type}</span>
+                        <span className="text-dark">{type}</span>
                       </div>
                     </div>
                   );
@@ -216,47 +208,108 @@ const Package = (props) => {
                     </div>
 
                     <div className="p-4">
-                      <label for="customRange3" class="form-label">
-                        Price
-                      </label>
-                      <div className="row">
-                        <div className="col-6">$0</div>
-                        <div className="col-6 text-end">$500</div>
+                      <div className="lsOptionItem">
+                        <span
+                          className="lsOptionText"
+                          style={{ color: "black" }}
+                        >
+                          Min price
+                        </span>
+                        <input
+                          type="number"
+                          onChange={(e) => setMin(e.target.value)}
+                          className="lsOptionInput"
+                        />
                       </div>
-                      <input
-                        type="range"
-                        class="form-range"
-                        min="0"
-                        max="5"
-                        step="0.5"
-                        id="customRange3"
-                      ></input>
+                      <div className="lsOptionItem">
+                        <span
+                          className="lsOptionText"
+                          style={{ color: "black" }}
+                        >
+                          Max price
+                        </span>
+                        <input
+                          type="number"
+                          onChange={(e) => setMax(e.target.value)}
+                          className="lsOptionInput"
+                        />
+                      </div>
                     </div>
+
+                    {/* <div className="p-4">
+                      <fieldset>
+                        <Typography component="legend">
+                          Ratings Above
+                        </Typography>
+                        <Slider
+                          value={ratings}
+                          onChange={(e, newRating) => {
+                            setRatings(newRating);
+                          }}
+                          aria-labelledby="continuous-slider"
+                          valueLabelDisplay="auto"
+                          default={packages.map((item) => {
+                            return item.ratings;
+                          })}
+                          min={0}
+                          max={5}
+                        />
+                      </fieldset>
+                    </div> */}
+
+                    {/* <div className="p-4">
+                      <div className="lsOptionItem">
+                        <span
+                          className="lsOptionText"
+                          style={{ color: "black" }}
+                        >
+                          Min Rating
+                        </span>
+                        <input
+                          type="number"
+                          onChange={(e) => setMinRating(e.target.value)}
+                          className="lsOptionInput"
+                        />
+                      </div>
+                      <div className="lsOptionItem">
+                        <span
+                          className="lsOptionText"
+                          style={{ color: "black" }}
+                        >
+                          Max Rating
+                        </span>
+                        <input
+                          type="number"
+                          onChange={(e) => setMaxRating(e.target.value)}
+                          className="lsOptionInput"
+                        />
+                      </div>
+                    </div> */}
 
                     <div className="px-4">
                       <p className="fw-bold text-dark">Duration</p>
                       <ul class="list-group">
-                        {packages.map((item)=>{
-                          return(
+                        {packages.map((item) => {
+                          return (
                             <>
                               <li class="list-group-item border-0">
-                          <div class="form-check">
-                            <input
-                              class="form-check-input"
-                              type="checkbox"
-                              value=""
-                              id="flexCheckDefault"
-                            />
-                            <label
-                              class="form-check-label"
-                              for="flexCheckDefault"
-                            >
-                              {item.duration}
-                            </label>
-                          </div>
-                        </li>
+                                <div class="form-check">
+                                  <input
+                                    class="form-check-input"
+                                    type="checkbox"
+                                    value=""
+                                    id="flexCheckDefault"
+                                  />
+                                  <label
+                                    class="form-check-label"
+                                    for="flexCheckDefault"
+                                  >
+                                    {item.duration}
+                                  </label>
+                                </div>
+                              </li>
                             </>
-                          )
+                          );
                         })}
                         {/* <li class="list-group-item border-0">
                           <div class="form-check">
@@ -274,7 +327,6 @@ const Package = (props) => {
                             </label>
                           </div>
                         </li> */}
-                       
                       </ul>
                     </div>
 
@@ -566,83 +618,88 @@ const Package = (props) => {
 
             {/* Start of package cards */}
             <div className="col-md-8">
-            
-              {data.packages ?
-                data.packages.map((data, index) => {
-                  return (
-                    <div class="card mb-3 p-4" key={index}>
-                      <div class="row g-0">
-                        <div class="col-md-4 position-relative">
-                          <img
-                            src={ImageUrl(data.packageImages[0].img)}
-                            class="img-fluid rounded-start h-100"
-                            alt="pic"
-                          />
-                          <div className="heartIcon">
-                            <i class="fa-regular fa-heart fs-4 d-flex justify-content-center"></i>
-                          </div>
-                        </div>
-                        <div class="col-md-8">
-                          <div class="card-body">
-                            <div className="row">
-                              <div className="col-8">
-                                <h5 class="card-title text-dark">
-                                  {data.name}
-                                </h5>
-                              </div>
-                              <div className="col-4 text-end">
-                                <h5 class="card-title text-dark">
-                                  ${data.price}
-                                </h5>
-                              </div>
+              {packages
+                ? packages.map((data, index) => {
+                    return (
+                      <div class="card mb-3 p-4" key={index}>
+                        <div class="row g-0">
+                          <div class="col-md-4 position-relative">
+                            <img
+                              src={ImageUrl(data.packageImages[0].img)}
+                              class="img-fluid rounded-start h-100"
+                              alt="pic"
+                            />
+                            <div className="heartIcon">
+                              <i class="fa-regular fa-heart fs-4 d-flex justify-content-center"></i>
                             </div>
-                            {data.reviews.length > 0 && (
-                              <p
-                                className="text-data"
-                                style={{ fontWeight: "bolder" }}
-                              >
-                                {data.ratings}/10 ({data.numOfReviews}){" "}
-                                {data.numOfReviews >= 1 ? "Review" : "Reviews"}
-                              </p>
-                            )}
-                            <small class="text-dark">
-                              <div>
-                                <i class="fa-regular fa-clock me-2"></i>
-                                {data.duration}
+                          </div>
+                          <div class="col-md-8">
+                            <div class="card-body">
+                              <div className="row">
+                                <div className="col-8">
+                                  <h5 class="card-title text-dark">
+                                    {data.name}
+                                  </h5>
+                                </div>
+                                <div className="col-4 text-end">
+                                  <h5 class="card-title text-dark">
+                                    ${data.price}
+                                  </h5>
+                                </div>
                               </div>
-                              <i class="fa-solid fa-check me-2"></i>
-                              {data.refundable}
-                            </small>
-                            {/* <Link
+                              {data.reviews.length > 0 && (
+                                <p
+                                  className="text-data"
+                                  style={{ fontWeight: "bolder" }}
+                                >
+                                  {data.ratings}/10 ({data.numOfReviews}){" "}
+                                  {data.numOfReviews >= 1
+                                    ? "Review"
+                                    : "Reviews"}
+                                </p>
+                              )}
+                              <small class="text-dark">
+                                <div>
+                                  <i class="fa-regular fa-clock me-2"></i>
+                                  {data.duration}
+                                </div>
+                                <i class="fa-solid fa-check me-2"></i>
+                                {data.refundable}
+                              </small>
+                              {/* <Link
                               to={`/${data._id}`}
                             > */}
-                            <Button
-                              onClick={function () {
-                                dispatch({
-                                  type: "NEW_SEARCH",
-                                  payload: {
-                                    packageDestination,
-                                    dates,
-                                    options,
-                                  },
-                                });
-                                history.push(`/package/${data._id}`, {
-                                  state: { packageDestination, dates, options },
-                                });
-                              }}
-                              variant="contained"
-                              style={{ float: "right" }}
-                            >
-                              Reserve
-                            </Button>
-                            {/* </Link> */}
+                              <Button
+                                onClick={function () {
+                                  dispatch({
+                                    type: "NEW_SEARCH",
+                                    payload: {
+                                      packageDestination,
+                                      dates,
+                                      options,
+                                    },
+                                  });
+                                  history.push(`/package/${data._id}`, {
+                                    state: {
+                                      packageDestination,
+                                      dates,
+                                      options,
+                                    },
+                                  });
+                                }}
+                                variant="contained"
+                                style={{ float: "right" }}
+                              >
+                                Reserve
+                              </Button>
+                              {/* </Link> */}
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                  );
-                })
-                : 'No Data Found'}
+                    );
+                  })
+                : "No Data Found"}
 
               {/* <nav aria-label="Page navigation example">
                 <ul class="pagination d-flex justify-content-center">

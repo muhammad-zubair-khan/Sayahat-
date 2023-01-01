@@ -54,17 +54,71 @@ export const createPackage = (form) => {
 
   };
 };
+// Get All Products
+// export const getAllPackages =
+//   (type, ratings = 0) =>
+//   async (dispatch) => {
+//     try {
+//       dispatch({ type: GET_ALL_PACKAGES_REQUEST });
+
+//       let link = `/all-packages`;
+
+//       // eslint-disable-next-line no-cond-assign
+//       if (type) {
+//         link = `/all-packages?type=${type}&ratings=${ratings}`;
+//       }
+//       else if(ratings){
+//         link = `/all-packages?ratings=${ratings}`
+//       }
+    
+//       const { data } = await axios.get(link);
+
+//       dispatch({
+//         type: GET_ALL_PACKAGES_SUCCESS,
+//         payload: data,
+//       });
+//     } catch (error) {
+//       dispatch({
+//         type: GET_ALL_PACKAGES_FAIL,
+//         payload: error.response.data.message,
+//       });
+//     }
+//   };
+
+
+
 
 // Get All Packages For Admin
-export const getAllPackages = () => async (dispatch) => {
+// export const getAllPackages = () => async (dispatch) => {
+//   try {
+//     dispatch({ type: GET_ALL_PACKAGES_REQUEST });
+
+//     const { data } = await axios.get("/all-packages");
+
+//     dispatch({
+//       type: GET_ALL_PACKAGES_SUCCESS,
+//       payload: data.packages,
+//     });
+//   } catch (error) {
+//     dispatch({
+//       type: GET_ALL_PACKAGES_FAIL,
+//       payload: error.response.data.message,
+//     });
+//   }
+// };
+export const getAllPackages = (type,min,max) => async (dispatch) => {
   try {
     dispatch({ type: GET_ALL_PACKAGES_REQUEST });
+    let link = `/all-packages?min=${min || 0}&max=${max || 9999}`;
 
-    const { data } = await axios.get("/all-packages");
+    if (type) {
+      link = `/all-packages?type=${type}&min=${min || 0}&max=${max || 9999}`;
+    }
+    const { data } = await axios.get(link);
 
     dispatch({
       type: GET_ALL_PACKAGES_SUCCESS,
-      payload: data.packages,
+      payload: data,
     });
   } catch (error) {
     dispatch({

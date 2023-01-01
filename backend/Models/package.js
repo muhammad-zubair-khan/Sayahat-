@@ -62,6 +62,7 @@ const packageSchema = new mongoose.Schema(
       type: String,
       min: 0,
       max: 5,
+      default:0
     },
     numOfReviews: {
       type: Number,
