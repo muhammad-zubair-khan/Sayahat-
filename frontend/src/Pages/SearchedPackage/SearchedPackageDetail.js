@@ -180,7 +180,6 @@ function SearchedPackageDetail({ match }) {
 
   const dispatch = useDispatch();
   const packages = useSelector((state) => state.addPackageReducer);
-console.log(packages)
   // console.log("pack", packages.package.packageImages);
   // console.log("picc>>>>>>>>",packages.package.packageImage)
   useEffect(() => {
@@ -749,78 +748,7 @@ console.log(packages)
           </Dialog>
 
           <ToastContainer />
-          {/* <Container className="my-2">
-            <Grid container>
-              <Grid xs={12} md={12}>
-                <div
-                  className="accordion-item"
-                  style={{ backgroundColor: "silver", padding: "19px 19px" }}
-                >
-                  <h2 className="accordion-header" id="flush-headingFive">
-                    <button
-                      className="accordion-button collapsed"
-                      type="button"
-                      data-bs-toggle="collapse"
-                      data-bs-target="#flush-collapseFive"
-                      aria-expanded="false"
-                      aria-controls="flush-collapseFive"
-                      style={{
-                        color: "black",
-                        fontWeight: "bolder",
-                        textAlign: "center",
-                      }}
-                    >
-                      Give your Review
-                    </button>
-                  </h2>
-                  <div
-                    id="flush-collapseFive"
-                    className="accordion-collapse collapse"
-                    aria-labelledby="flush-headingFive"
-                    data-bs-parent="#accordionFlushExample"
-                  >
-                    <div className="accordion-body">
-                      <div
-                        className="wrape1"
-                        style={{ fontSize: "11px", color: "#777" }}
-                      >
-                        <Rating
-                          name="simple-controlled"
-                          value={rating}
-                          onChange={(event, newValue) => {
-                            setRating(newValue);
-                          }}
-                        />
-                        <textarea
-                          className="submitDialogTextArea"
-                          cols="30"
-                          rows="5"
-                          value={comment}
-                          onChange={(e) => setComment(e.target.value)}
-                        ></textarea>
-                        <button
-                          style={{
-                            float: "right",
-                            position: "relative",
-                            bottom: "8px",
-                            backgroundColor: "black",
-                            color: "white",
-                            border: "1px solid",
-                            padding: "8px 9px",
-                            fontSize: "small",
-                            marginTop: "6px",
-                          }}
-                          onClick={reviewSubmitHandler}
-                        >
-                          Submit Review
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </Grid>
-            </Grid>
-          </Container> */}
+        
 
           <Container>
             {packages.package.reviews && packages.package.reviews[0] ? (
@@ -838,7 +766,7 @@ console.log(packages)
 
           {/* ----------------------------Review-Section-End----------------------- */}
 
-          {/* start of package reviews */}
+          {/* end of package reviews */}
         </div>
       </div>
 

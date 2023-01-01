@@ -25,9 +25,7 @@ const Package = (props) => {
   const [type, setType] = useState("");
   const [price, setPrice] = useState([0, 95000]);
   const [ratings, setRatings] = useState(0);
-  console.log(type);
   const { packages } = useSelector((state) => state.packagesReducer);
-  console.log("pacla", packages);
   const [min, setMin] = useState(undefined);
   const [max, setMax] = useState(undefined);
   // const [minRat, setMinRat] = useState(undefined);
@@ -177,12 +175,7 @@ const Package = (props) => {
                       className="p-4 lsItem"
                     >
                       <p style={{ color: "white" }}>When are you traveling?</p>
-                      {/* <input
-                        className="form-control form-control-lg"
-                        type="date"
-                        placeholder=".form-control-lg"
-                        aria-label=".form-control-lg example"
-                      ></input> */}
+                  
                       <span
                         onClick={() => setOpenPackageDate(!openPackageDate)}
                       >{`${format(
