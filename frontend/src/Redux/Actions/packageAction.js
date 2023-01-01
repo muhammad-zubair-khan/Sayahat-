@@ -106,13 +106,13 @@ export const createPackage = (form) => {
 //     });
 //   }
 // };
-export const getAllPackages = (type,min,max) => async (dispatch) => {
+export const getAllPackages = (type,min,max,ratings) => async (dispatch) => {
   try {
     dispatch({ type: GET_ALL_PACKAGES_REQUEST });
-    let link = `/all-packages?min=${min || 0}&max=${max || 9999}`;
+    let link = `/all-packages?min=${min || 0}&max=${max || 9999}&ratings=${ratings || 0 }`;
 
     if (type) {
-      link = `/all-packages?type=${type}&min=${min || 0}&max=${max || 9999}`;
+      link = `/all-packages?type=${type}&min=${min || 0}&max=${max || 9999}&ratings=${ratings || 0}`;
     }
     const { data } = await axios.get(link);
 

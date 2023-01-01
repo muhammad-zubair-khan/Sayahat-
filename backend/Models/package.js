@@ -20,8 +20,8 @@ const packageSchema = new mongoose.Schema(
     },
     type: {
       type: String,
-      // required: true,
-      default: 'All'
+      required: true,
+      // default: 'All'
     },
     description: {
       type: String,
@@ -60,9 +60,10 @@ const packageSchema = new mongoose.Schema(
     },
     ratings: {
       type: String,
-      min: 0,
-      max: 5,
-      default:0
+      required:true,
+      // min: 0,
+      // max: 5,
+      // default:0
     },
     numOfReviews: {
       type: Number,

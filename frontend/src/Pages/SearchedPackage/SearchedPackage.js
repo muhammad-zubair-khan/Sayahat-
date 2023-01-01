@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { Link, useHistory, useLocation, useParams } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import Navbar from "../../Navbar/Navbar";
 import Button from "@mui/material/Button";
-import Tooltip from "@mui/material/Tooltip";
 import Offcanvas from "react-bootstrap/Offcanvas";
 import Footer from "../../Footer/Footer";
 import { useDispatch, useSelector } from "react-redux";
 import { ImageUrl } from "../../Redux/UrlConfig";
 import { format } from "date-fns";
 import { DateRange, DateRangePicker } from "react-date-range";
-import useFetch from "../../hook/useFetch";
+// import useFetch from "../../hook/useFetch";
 import { getAllPackages } from "../../Redux/Actions/packageAction";
 import { Slider, Typography } from "@mui/material";
 
@@ -31,8 +30,8 @@ const Package = (props) => {
   console.log("pacla", packages);
   const [min, setMin] = useState(undefined);
   const [max, setMax] = useState(undefined);
-  // const [minRating, setMinRating] = useState(undefined);
-  // const [maxRating, setMaxRating] = useState(undefined);
+  // const [minRat, setMinRat] = useState(undefined);
+  // const [maxRat, setMaxRat] = useState(undefined);
 
   // const { data, loading, error, reFetch } = useFetch(
   //   `http://localhost:5000/api/all-packages?city=${packageDestination}&min=${
@@ -40,8 +39,8 @@ const Package = (props) => {
   //   }&max=${max || 99999}&type=${type || "Full Day Tour"}`
   // );
   useEffect(() => {
-    dispatch(getAllPackages(type, min, max));
-  }, [dispatch, type, min, max]);
+    dispatch(getAllPackages(type, min, max, ratings));
+  }, [dispatch, type, min, max, ratings]);
 
   // const handleClick = () => {
   //   reFetch();
@@ -57,14 +56,6 @@ const Package = (props) => {
   return (
     <>
       <Navbar />
-      {/* {packages && packages.map((item,index)=>{
-         return(
-          <div className="img-city">
-          <div key={index}>
-            <img style={{width:'100%',height:'100vh'}} src={ImageUrl(item.packageImages[0].img)} alt="Package img" />
-          </div>
-      </div>
-        )})} */}
       <div className="bgCity"></div>
       <div className="container-fluid position-absolute top-100 introText">
         {/* Start of introduction of city */}
@@ -236,7 +227,7 @@ const Package = (props) => {
                       </div>
                     </div>
 
-                    {/* <div className="p-4">
+                    <div className="p-4">
                       <fieldset>
                         <Typography component="legend">
                           Ratings Above
@@ -255,23 +246,10 @@ const Package = (props) => {
                           max={5}
                         />
                       </fieldset>
-                    </div> */}
+                    </div>
 
                     {/* <div className="p-4">
-                      <div className="lsOptionItem">
-                        <span
-                          className="lsOptionText"
-                          style={{ color: "black" }}
-                        >
-                          Min Rating
-                        </span>
-                        <input
-                          type="number"
-                          onChange={(e) => setMinRating(e.target.value)}
-                          className="lsOptionInput"
-                        />
-                      </div>
-                      <div className="lsOptionItem">
+                    <div className="lsOptionItem">
                         <span
                           className="lsOptionText"
                           style={{ color: "black" }}
@@ -280,7 +258,7 @@ const Package = (props) => {
                         </span>
                         <input
                           type="number"
-                          onChange={(e) => setMaxRating(e.target.value)}
+                          onChange={(e) => setRatings(e.target.value)}
                           className="lsOptionInput"
                         />
                       </div>
@@ -378,147 +356,6 @@ const Package = (props) => {
                               for="flexCheckDefault"
                             >
                               5pm—12am
-                            </label>
-                          </div>
-                        </li>
-                      </ul>
-                    </div>
-
-                    <div className="p-4">
-                      <p className="fw-bold text-dark">Rating</p>
-                      <ul class="list-group">
-                        <li class="list-group-item border-0">
-                          <div class="form-check">
-                            <input
-                              class="form-check-input"
-                              type="checkbox"
-                              value=""
-                              id="flexCheckDefault"
-                            />
-                            <label
-                              class="form-check-label"
-                              for="flexCheckDefault"
-                            >
-                              <i
-                                style={{ color: "#EDAB56" }}
-                                className="fa-solid fa-star fs-5"
-                              ></i>
-                              <i
-                                style={{ color: "#EDAB56" }}
-                                className="fa-solid fa-star fs-5"
-                              ></i>
-                              <i
-                                style={{ color: "#EDAB56" }}
-                                className="fa-solid fa-star fs-5"
-                              ></i>
-                              <i
-                                style={{ color: "#EDAB56" }}
-                                className="fa-solid fa-star fs-5"
-                              ></i>
-                              <i
-                                style={{ color: "#EDAB56" }}
-                                className="fa-solid fa-star fs-5"
-                              ></i>
-                            </label>
-                          </div>
-                        </li>
-                        <li class="list-group-item border-0">
-                          <div class="form-check">
-                            <input
-                              class="form-check-input"
-                              type="checkbox"
-                              value=""
-                              id="flexCheckDefault"
-                            />
-                            <label
-                              class="form-check-label"
-                              for="flexCheckDefault"
-                            >
-                              <i
-                                style={{ color: "#EDAB56" }}
-                                className="fa-solid fa-star fs-5"
-                              ></i>
-                              <i
-                                style={{ color: "#EDAB56" }}
-                                className="fa-solid fa-star fs-5"
-                              ></i>
-                              <i
-                                style={{ color: "#EDAB56" }}
-                                className="fa-solid fa-star fs-5"
-                              ></i>
-                              <i
-                                style={{ color: "#EDAB56" }}
-                                className="fa-solid fa-star fs-5"
-                              ></i>
-                            </label>
-                          </div>
-                        </li>
-                        <li class="list-group-item border-0">
-                          <div class="form-check">
-                            <input
-                              class="form-check-input"
-                              type="checkbox"
-                              value=""
-                              id="flexCheckDefault"
-                            />
-                            <label
-                              class="form-check-label"
-                              for="flexCheckDefault"
-                            >
-                              <i
-                                style={{ color: "#EDAB56" }}
-                                className="fa-solid fa-star fs-5"
-                              ></i>
-                              <i
-                                style={{ color: "#EDAB56" }}
-                                className="fa-solid fa-star fs-5"
-                              ></i>
-                              <i
-                                style={{ color: "#EDAB56" }}
-                                className="fa-solid fa-star fs-5"
-                              ></i>
-                            </label>
-                          </div>
-                        </li>
-                        <li class="list-group-item border-0">
-                          <div class="form-check">
-                            <input
-                              class="form-check-input"
-                              type="checkbox"
-                              value=""
-                              id="flexCheckDefault"
-                            />
-                            <label
-                              class="form-check-label"
-                              for="flexCheckDefault"
-                            >
-                              <i
-                                style={{ color: "#EDAB56" }}
-                                className="fa-solid fa-star fs-5"
-                              ></i>
-                              <i
-                                style={{ color: "#EDAB56" }}
-                                className="fa-solid fa-star fs-5"
-                              ></i>
-                            </label>
-                          </div>
-                        </li>
-                        <li class="list-group-item border-0">
-                          <div class="form-check">
-                            <input
-                              class="form-check-input"
-                              type="checkbox"
-                              value=""
-                              id="flexCheckDefault"
-                            />
-                            <label
-                              class="form-check-label"
-                              for="flexCheckDefault"
-                            >
-                              <i
-                                style={{ color: "#EDAB56" }}
-                                className="fa-solid fa-star fs-5"
-                              ></i>
                             </label>
                           </div>
                         </li>
@@ -652,7 +489,7 @@ const Package = (props) => {
                                   className="text-data"
                                   style={{ fontWeight: "bolder" }}
                                 >
-                                  {data.ratings}/10 ({data.numOfReviews}){" "}
+                                  {data.ratings}/5 ({data.numOfReviews}){" "}
                                   {data.numOfReviews >= 1
                                     ? "Review"
                                     : "Reviews"}

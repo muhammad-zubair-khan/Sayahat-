@@ -20,6 +20,7 @@ import useFetch from "../../../hook/useFetch";
 import { format } from "date-fns";
 import { DateRange, DateRangePicker } from "react-date-range";
 import CarSearchItem from "../../../Components/CarSearchItem/CarSearchItem.js";
+import Offcanvas from "react-bootstrap/Offcanvas";
 
 const CarList = () => {
   const location = useLocation();
@@ -38,86 +39,292 @@ const CarList = () => {
   const [min, setMin] = useState(undefined);
   const [max, setMax] = useState(undefined);
   const { data, loading, error, reFetch } = useFetch(
-    `http://localhost:5000/api/cars?city=${startDestination}&min=${min || 0}&max=${
-      max || 99999
-    }`
+    `http://localhost:5000/api/cars?city=${startDestination}&min=${
+      min || 0
+    }&max=${max || 99999}`
   );
-  console.log("carsByFare", data);
-  console.log("location.....", location);
+
   const handleClick = () => {
     reFetch();
   };
-  console.log("startDestination>>",startDestination)
-  console.log("endDestination>>",endDestination)
-  console.log("dates>>",dates)
-  console.log("pickupTime>>",pickupTime)
-  console.log("dropoffTime>>",dropoffTime)
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
   return (
     <>
-      {/* <Grid container spacing={2}>
-        <Grid
-          item
-          xs={12}
-          lg={4}
-          style={{ textAlign: "center", margin: "auto" }}
-        >
-          <img
-            className="img-fluid"
-            src="https://mediaim.expedia.com/cars/19/7b8cf277-4ee5-46f4-b8fe-ac19c0f41d69.jpg?impolicy=resizecrop&ra=fit&rh=165&rw=165"
-            alt="SUV "
-          ></img>
-        </Grid>
-        <Grid item xs={12} lg={4}>
-          <Typography variant="h6">Midsize SUV</Typography>
-          <span className="small-span">Kia Sportage or similar</span>
-          <List>
-            <ListItem disablePadding>
-              <ListItemIcon>
-                <PersonIcon />
-              </ListItemIcon>
-              <ListItemText primary="5" />
-            </ListItem>
-            <ListItem disablePadding>
-              <ListItemIcon>
-                <SpeedIcon />
-              </ListItemIcon>
-              <ListItemText primary="Unlimited mileage" />
-            </ListItem>
-            <ListItem disablePadding>
-              <ListItemIcon>
-                <AutoAwesomeIcon />
-              </ListItemIcon>
-              <ListItemText primary="Enhanced cleaning" />
-            </ListItem>
-            <ListItem disablePadding>
-              <ListItemIcon>
-                <AirplaneTicketIcon />
-              </ListItemIcon>
-              <ListItemText primary="Shuttle to counter and car" />
-            </ListItem>
-          </List>
-        </Grid>
-
-        <Grid item xs={12} lg={4} style={{ textAlign: "end" }}>
-          <Typography
-            variant="h5"
-            style={{ color: "black", fontWeight: "bolder" }}
-          >
-            68$
-          </Typography>
-          <h6 paragraph>per day</h6>
-          <h6 paragraph>$95 total</h6>
-          <Button variant="contained">
-            <Link to="/car/:id" style={{ color: "white" }}>
-              Continue
-            </Link>
-          </Button>
-        </Grid>
-      </Grid> */}
       <Grid container>
         <Grid item xs={12} lg={3}>
-          <div className="listSearch">
-            {/* <h1 className="lsTitle">Search</h1> */}
+          <Button variant="primary" onClick={handleShow}>
+            <i class="fa-solid fa-bars me-2 fs-3"></i>{" "}
+            <span className="fs-3">Filters</span>
+          </Button>
+          <Offcanvas show={show} onHide={handleClose} responsive="lg">
+            <Offcanvas.Header closeButton>
+              <Offcanvas.Title>Offcanvas</Offcanvas.Title>
+            </Offcanvas.Header>
+            <Offcanvas.Body>
+              <div className="col-12">
+                <div
+                  className="lsItem p-4"
+                  style={{ backgroundColor: "#186B6D" }}
+                >
+                  <label>From</label>
+                  <input
+                    placeholder={location.state.state.startDestination}
+                    onChange={(e) => setStartDestination(e.target.value)}
+                    type="text"
+                  />
+                </div>
+                <div
+                  className="lsItem p-4"
+                  style={{ backgroundColor: "#186B6D" }}
+                >
+                  <label>To</label>
+                  <input
+                    placeholder={location.state.state.endDestination}
+                    onChange={(e) => setEndDestination(e.target.value)}
+                    type="text"
+                  />
+                </div>
+                <div
+                  className="lsItem p-4"
+                  style={{ backgroundColor: "#186B6D" }}
+                >
+                  <label for="from">Pick-up Time</label>
+                  <input
+                    type="time"
+                    className="form-control"
+                    value={pickupTime}
+                    onChange={(e) => setPickupTime(e.target.value)}
+                  />
+                </div>
+                <div
+                  className="lsItem p-4"
+                  style={{ backgroundColor: "#186B6D" }}
+                >
+                  <label for="from">Drop-off Time</label>
+                  <input
+                    type="time"
+                    className="form-control"
+                    value={dropoffTime}
+                    onChange={(e) => setDropoffTime(e.target.value)}
+                  />
+                </div>
+
+                <div
+                  className="p-4 IsItem"
+                  style={{ backgroundColor: "#186B6D" }}
+                >
+                  <p style={{ color: "white", fontSize: "small" }}>
+                    Check-in Date
+                  </p>
+                  <span
+                    style={{ color: "white", cursor: "pointer" }}
+                    onClick={() => setOpenCarDate(!openCarDate)}
+                  >{`${format(dates[0].startDate, "MM/dd/yyyy")} to ${format(
+                    dates[0].endDate,
+                    "MM/dd/yyyy"
+                  )}`}</span>
+                  {openCarDate && (
+                    <DateRange
+                      onChange={(item) => setDates([item.selection])}
+                      ranges={dates}
+                      minDate={new Date()}
+                    />
+                  )}
+                </div>
+
+                <div className="p-4">
+                  <div className="lsOptionItem">
+                    <span className="lsOptionText" style={{ color: "black" }}>
+                      Min price
+                    </span>
+                    <input
+                      type="number"
+                      onChange={(e) => setMin(e.target.value)}
+                      className="lsOptionInput"
+                    />
+                  </div>
+                  <div className="lsOptionItem">
+                    <span className="lsOptionText" style={{ color: "black" }}>
+                      Max price
+                    </span>
+                    <input
+                      type="number"
+                      onChange={(e) => setMax(e.target.value)}
+                      className="lsOptionInput"
+                    />
+                  </div>
+                </div>
+
+                {/* <div className="p-4">
+                <fieldset>
+                  <Typography component="legend">Ratings Above</Typography>
+                  <Slider
+                    value={ratings}
+                    onChange={(e, newRating) => {
+                      setRatings(newRating);
+                    }}
+                    aria-labelledby="continuous-slider"
+                    valueLabelDisplay="auto"
+                    default={packages.map((item) => {
+                      return item.ratings;
+                    })}
+                    min={0}
+                    max={5}
+                  />
+                </fieldset>
+              </div> */}
+
+                {/* <div className="px-4">
+                <p className="fw-bold text-dark">Duration</p>
+                <ul class="list-group">
+                  {packages.map((item) => {
+                    return (
+                      <>
+                        <li class="list-group-item border-0">
+                          <div class="form-check">
+                            <input
+                              class="form-check-input"
+                              type="checkbox"
+                              value=""
+                              id="flexCheckDefault"
+                            />
+                            <label
+                              class="form-check-label"
+                              for="flexCheckDefault"
+                            >
+                              {item.duration}
+                            </label>
+                          </div>
+                        </li>
+                      </>
+                    );
+                  })}
+               
+                </ul>
+              </div> */}
+
+                {/* <div className="p-4">
+                <p className="fw-bold text-dark">Time of Day</p>
+                <ul class="list-group">
+                  <li class="list-group-item border-0">
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        value=""
+                        id="flexCheckDefault"
+                      />
+                      <label class="form-check-label" for="flexCheckDefault">
+                        6am—12pm
+                      </label>
+                    </div>
+                  </li>
+                  <li class="list-group-item border-0">
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        value=""
+                        id="flexCheckDefault"
+                      />
+                      <label class="form-check-label" for="flexCheckDefault">
+                        12pm—5pm
+                      </label>
+                    </div>
+                  </li>
+                  <li class="list-group-item border-0">
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        value=""
+                        id="flexCheckDefault"
+                      />
+                      <label class="form-check-label" for="flexCheckDefault">
+                        5pm—12am
+                      </label>
+                    </div>
+                  </li>
+                </ul>
+              </div> */}
+
+                {/* <div className="p-4">
+                <p className="fw-bold text-dark">Specials</p>
+                <ul class="list-group">
+                  <li class="list-group-item border-0">
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        value=""
+                        id="flexCheckDefault"
+                      />
+                      <label class="form-check-label" for="flexCheckDefault">
+                        Deals & Discounts
+                      </label>
+                    </div>
+                  </li>
+                  <li class="list-group-item border-0">
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        value=""
+                        id="flexCheckDefault"
+                      />
+                      <label class="form-check-label" for="flexCheckDefault">
+                        Free Cancellation
+                      </label>
+                    </div>
+                  </li>
+                  <li class="list-group-item border-0">
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        value=""
+                        id="flexCheckDefault"
+                      />
+                      <label class="form-check-label" for="flexCheckDefault">
+                        Likely to Sell Out
+                      </label>
+                    </div>
+                  </li>
+                  <li class="list-group-item border-0">
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        value=""
+                        id="flexCheckDefault"
+                      />
+                      <label class="form-check-label" for="flexCheckDefault">
+                        Skip-The-Line
+                      </label>
+                    </div>
+                  </li>
+                  <li class="list-group-item border-0">
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        value=""
+                        id="flexCheckDefault"
+                      />
+                      <label class="form-check-label" for="flexCheckDefault">
+                        Private Tour
+                      </label>
+                    </div>
+                  </li>
+                </ul>
+              </div> */}
+              </div>
+            </Offcanvas.Body>
+          </Offcanvas>
+          {/* <div className="listSearch">
             <div className="lsItem">
               <label>From</label>
               <input
@@ -167,45 +374,25 @@ const CarList = () => {
               )}
             </div>
 
-            {/* <div className="lsItem">
-              <label>Options</label>
-              <div className="lsOptions">
-                <div className="lsOptionItem">
-                  <span className="lsOptionText">Min price</span>
-                  <input
-                    type="number"
-                    onChange={(e) => setMin(e.target.value)}
-                    className="lsOptionInput"
-                  />
-                </div>
-                <div className="lsOptionItem">
-                  <span className="lsOptionText">Max price</span>
-                  <input
-                    type="number"
-                    onChange={(e) => setMax(e.target.value)}
-                    className="lsOptionInput"
-                  />
-                </div>
-
-              </div>
-              <button onClick={handleClick}>Search</button>
-            </div> */}
-          </div>
+          </div> */}
         </Grid>
 
-        {/* <div className="listResult"> */}
         {loading ? (
           "loading"
         ) : (
-          <Grid container
-          lg={9}
-          style={{
-            height: "fit-content",
-            border: "1px solid #f1e1e1",
-            padding: "18px 18px",
-          }}>
+          <Grid
+            container
+            lg={9}
+            style={{
+              height: "fit-content",
+              // border: "1px solid #f1e1e1",
+              padding: "18px 18px",
+            }}
+          >
             {data.cars &&
-              data.cars.map((item) => <CarSearchItem item={item} key={item._id} />)}
+              data.cars.map((item) => (
+                <CarSearchItem item={item} key={item._id} />
+              ))}
           </Grid>
         )}
         {/* </div> */}

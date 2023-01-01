@@ -48,86 +48,106 @@ const CarSearchItem = ({ item }) => {
   const [dates, setDates] = useState(location.state.state.dates);
   const [openDate, setOpenDate] = useState(false);
   const [pickupTime, setPickupTime] = useState(location.state.state.pickupTime);
-  const [dropoffTime, setDropoffTime] = useState(location.state.state.dropoffTime);
+  const [dropoffTime, setDropoffTime] = useState(
+    location.state.state.dropoffTime
+  );
 
   const { dispatch } = useContext(SearchContext);
   const history = useHistory();
-  
+
   const { data, loading, error, reFetch } = useFetch(
-      `http://localhost:5000/api/cars?city=${startDestination}`
-      );
-    //   console.log("item>>>",data.carsByFare.under5k.length);
+    `http://localhost:5000/api/cars?city=${startDestination}`
+  );
+  //   console.log("item>>>",data.carsByFare.under5k.length);
 
   const handleSearch = () => {
-    dispatch({ type: "NEW_SEARCH", payload: { startDestination,endDestination,pickupTime,dropoffTime, dates } });
+    dispatch({
+      type: "NEW_SEARCH",
+      payload: {
+        startDestination,
+        endDestination,
+        pickupTime,
+        dropoffTime,
+        dates,
+      },
+    });
     history.push(`/car/${item._id}`, {
-      state: { startDestination,endDestination,pickupTime,dropoffTime, dates },
+      state: {
+        startDestination,
+        endDestination,
+        pickupTime,
+        dropoffTime,
+        dates,
+      },
     });
   };
   return (
     <>
-      {/* <Grid
-        
-      > */}
-        <Grid
-          item
-          xs={12}
-          lg={4}
-          style={{ marginTop: "39px", paddingLeft: "51px" }}
+      <Grid
+        item
+        xs={12}
+        lg={4}
+        style={{ marginTop: "39px", paddingLeft: "51px" }}
+      >
+        <Zoom>
+          <img
+            className="img-fluid"
+            src={ImageUrl(item.carImages[0].img)}
+            alt="SUV "
+          />
+        </Zoom>
+      </Grid>
+      <Grid item xs={12} lg={4}>
+        <Typography variant="h6">{item.name}</Typography>
+        <span className="small-span">{item.title}</span>
+        {item.reviews.length > 0 && (
+          <p className="text-data" style={{ fontWeight: "bolder" }}>
+            {item.ratings}/5 ({item.numOfReviews}){" "}
+            {item.numOfReviews >= 1 ? "Review" : "Reviews"}
+          </p>
+        )}
+        <List>
+          <ListItem disablePadding>
+            <ListItemIcon>
+              <PersonIcon />
+            </ListItemIcon>
+            <ListItemText primary={item.passenger} />
+          </ListItem>
+          <ListItem disablePadding>
+            <ListItemIcon>
+              <SpeedIcon />
+            </ListItemIcon>
+            <ListItemText primary={item.mileage} />
+          </ListItem>
+          <ListItem disablePadding>
+            <ListItemIcon>
+              <AutoAwesomeIcon />
+            </ListItemIcon>
+            <ListItemText primary={item.gear} />
+          </ListItem>
+          <ListItem disablePadding>
+            <ListItemIcon>
+              <AirplaneTicketIcon />
+            </ListItemIcon>
+            <ListItemText primary={item.shuttle} />
+          </ListItem>
+        </List>
+      </Grid>
+      <Grid item xs={12} lg={4} style={{ textAlign: "end" }}>
+        <Typography
+          variant="h5"
+          style={{ color: "black", fontWeight: "bolder" }}
         >
-          <Zoom>
-            <img
-              className="img-fluid"
-              src={ImageUrl(item.carImages[0].img)}
-              alt="SUV "
-            />
-          </Zoom>
-        </Grid>
-        <Grid item xs={12} lg={4}>
-          <Typography variant="h6">{item.name}</Typography>
-          <span className="small-span">{item.title}</span>
-          <List>
-            <ListItem disablePadding>
-              <ListItemIcon>
-                <PersonIcon />
-              </ListItemIcon>
-              <ListItemText primary={item.passenger} />
-            </ListItem>
-            <ListItem disablePadding>
-              <ListItemIcon>
-                <SpeedIcon />
-              </ListItemIcon>
-              <ListItemText primary={item.mileage} />
-            </ListItem>
-            <ListItem disablePadding>
-              <ListItemIcon>
-                <AutoAwesomeIcon />
-              </ListItemIcon>
-              <ListItemText primary={item.gear} />
-            </ListItem>
-            <ListItem disablePadding>
-              <ListItemIcon>
-                <AirplaneTicketIcon />
-              </ListItemIcon>
-              <ListItemText primary={item.shuttle} />
-            </ListItem>
-          </List>
-        </Grid>
-        <Grid item xs={12} lg={4} style={{ textAlign: "end" }}>
-          <Typography
-            variant="h5"
-            style={{ color: "black", fontWeight: "bolder" }}
-          >
-            PKR {item.fare}
-          </Typography>
-          <h6 paragraph>per day</h6>
-          <h6 paragraph>{`PKR total`}</h6>
-          <Button variant="contained">
-            <Link onClick={handleSearch} style={{ color: "white" }}>
-              Continue
-            </Link>
-          </Button>
-        </Grid>
+          PKR {item.fare}
+        </Typography>
+        <h6 paragraph>per day</h6>
+        <h6 paragraph>{`PKR total`}</h6>
+        <Button variant="contained">
+          <Link onClick={handleSearch} style={{ color: "white" }}>
+            Continue
+          </Link>
+        </Button>
+      </Grid>
       {/* </Grid> */}
     </>
   );
