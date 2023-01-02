@@ -66,7 +66,7 @@ exports.createPackage = catchAsyncErrors(async (req, res) => {
 exports.getAllAdminPackages = catchAsyncErrors(async (req, res, next) => {
   const apiFeature = new ApiFeatures(Package.find(), req.query);
   let packages = await apiFeature.query;
-  let filteredPackagesCount = packages.length;
+  // let filteredPackagesCount = packages.length;
   res.status(200).json({
     success: true,
     packages,

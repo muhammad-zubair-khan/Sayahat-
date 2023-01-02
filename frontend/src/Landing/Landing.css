@@ -590,6 +590,7 @@ div.cs-select span {
 .search-item {
   position: relative;
   cursor: pointer;
+  /* top: 31px; */
 }
 .date {
   position: absolute;
@@ -601,10 +602,9 @@ div.cs-select span {
 }
 .options{
   position: absolute;
-  /* top: 90px; */
-  /* top: 203px; */
-  top: 215px;
-  width: 16%;
+  top: 112px;
+  /* width: 16%; */
+  width: 27%;
   z-index: 1000000;
   background-color: white;
   box-shadow: 0px 0px 10px #848484;
@@ -636,10 +636,8 @@ div.cs-select span {
 }
 .options2{
   position: absolute;
-  /* top: 170px; */
-  /* top: 278px; */
-  top: 214px;
-  width: 16%;
+  top: 112px;
+  width: 27%;
   z-index: 1000000;
   background-color: white;
   box-shadow: 0px 0px 10px #848484;

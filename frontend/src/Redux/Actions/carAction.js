@@ -52,15 +52,23 @@ export const addCar = (form) => {
 
 
 // Get All Cars For Admin
-export const getAllCars = () => async (dispatch) => {
+export const getAllCars = (type, min, max, ratings,startDestination,gear) => async (dispatch) => {
     try {
       dispatch({ type: GET_ALL_CARS_REQUEST });
-  
-      const { data } = await axios.get("/cars");
+      let link = `/cars?city=${startDestination}&gear=${gear}&min=${min || 0}&max=${max || 9999}&ratings=${
+        ratings || 0
+      }`;
+      if (type) {
+        link = `/cars?city=${startDestination}&type=${type}&gear=${gear}&min=${min || 0}&max=${
+          max || 9999
+        }&ratings=${ratings || 0}`;
+      }
+
+      const { data } = await axios.get(link);
   
       dispatch({
         type: GET_ALL_CARS_SUCCESS,
-        payload: data.cars,
+        payload: data,
       });
     } catch (error) {
       dispatch({

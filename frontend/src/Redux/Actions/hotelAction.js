@@ -52,15 +52,39 @@ export const createHotel = (form) => {
 };
 
 // Get All Hotels For Admin
-export const getAllHotels = () => async (dispatch) => {
+// export const getAllHotels = () => async (dispatch) => {
+//   try {
+//     dispatch({ type: GET_ALL_HOTELS_REQUEST });
+
+//     const { data } = await axios.get("/all-hotels");
+
+//     dispatch({
+//       type: GET_ALL_HOTELS_SUCCESS,
+//       payload: data.hotels,
+//     });
+//   } catch (error) {
+//     dispatch({
+//       type: GET_ALL_HOTELS_FAIL,
+//       payload: error.response.data.message,
+//     });
+//   }
+// };
+
+export const getAllHotels = (type, min, max, ratings,destination) => async (dispatch) => {
   try {
     dispatch({ type: GET_ALL_HOTELS_REQUEST });
-
-    const { data } = await axios.get("/all-hotels");
-
+    let link = `/all-hotels?city=${destination}&min=${min || 0}&max=${max || 9999}&ratings=${
+      ratings || 0
+    }`;
+    if (type) {
+      link = `/all-hotels?city=${destination}&type=${type}&min=${min || 0}&max=${
+        max || 9999
+      }&ratings=${ratings || 0}`;
+    }
+    const { data } = await axios.get(link);
     dispatch({
       type: GET_ALL_HOTELS_SUCCESS,
-      payload: data.hotels,
+      payload: data,
     });
   } catch (error) {
     dispatch({

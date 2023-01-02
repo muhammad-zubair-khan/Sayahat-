@@ -77,7 +77,7 @@ import {
       case GET_ALL_CARS_SUCCESS:
         return {
           loading: false,
-          cars: action.payload,
+          cars: action.payload.cars,
         };
       case GET_ALL_CARS_FAIL:
         return {

@@ -17,26 +17,39 @@ import axios from "axios";
 import { Col, Row } from "react-bootstrap";
 import { Slider, Typography } from "@mui/material";
 const HotelList = () => {
+  const dispatch = useDispatch();
   const location = useLocation();
   const [destination, setDestination] = useState(
     location.state.state.destination
   );
-  // console.log(location.state.state.destination)
+  const { hotels } = useSelector((state) => state.hotelReducer);
   const [dates, setDates] = useState(location.state.state.dates);
   const [openDate, setOpenDate] = useState(false);
   const [options, setOptions] = useState(location.state.state.options);
   const [min, setMin] = useState(undefined);
   const [max, setMax] = useState(undefined);
+  const [type, setType] = useState("");
+  const [ratings, setRatings] = useState(0);
 
-  const { data, loading, error, reFetch } = useFetch(
-    `http://localhost:5000/api/all-hotels?city=${destination}&min=${
-      min || 0
-    }&max=${max || 99999}`
-  );
-  // console.log(data)
-  const handleClick = () => {
-    reFetch();
-  };
+  useEffect(() => {
+    dispatch(getAllHotels(type, min, max, ratings,destination));
+  }, [dispatch, type, min, max, ratings,destination]);
+
+  // const { data, loading, error, reFetch } = useFetch(
+  //   `http://localhost:5000/api/all-hotels?city=${destination}&min=${
+  //     min || 0
+  //   }&max=${max || 99999}`
+  // );
+
+  // const handleClick = () => {
+  //   reFetch();
+  // };
+  const types = [
+    "Hotel",
+    "Appartment",
+    "Villa",
+    "Studio",
+  ];
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -151,9 +164,11 @@ const HotelList = () => {
                   className="p-4 IsItem"
                   style={{ backgroundColor: "#186B6D" }}
                 >
-                  <p style={{ color: "white",fontSize:'small' }}>Check-in Date</p>
+                  <p style={{ color: "white", fontSize: "small" }}>
+                    Check-in Date
+                  </p>
                   <span
-                    style={{ color: "white",cursor:'pointer' }}
+                    style={{ color: "white", cursor: "pointer" }}
                     onClick={() => setOpenDate(!openDate)}
                   >{`${format(dates[0].startDate, "MM/dd/yyyy")} to ${format(
                     dates[0].endDate,
@@ -242,79 +257,44 @@ const HotelList = () => {
                   </div>
                 </div>
 
-                {/* <div className="px-4">
-                      <p className="fw-bold text-dark">Duration</p>
-                      <ul class="list-group">
-                        {packages.map((item) => {
+                <div className="p-4">
+                      <fieldset>
+                        <Typography component="legend">
+                          Ratings Above
+                        </Typography>
+                        <Slider
+                          value={ratings}
+                          onChange={(e, newRating) => {
+                            setRatings(newRating);
+                          }}
+                          aria-labelledby="continuous-slider"
+                          valueLabelDisplay="auto"
+                          default={hotels.map((item) => {
+                            return item.ratings;
+                          })}
+                          min={0}
+                          max={5}
+                        />
+                      </fieldset>
+                    </div>
+
+                <div className="px-4">
+                      <p className="fw-bold text-dark">Types</p>
+                      <ul className="list-group">
+                        {types.map((type) => {
                           return (
                             <>
-                              <li class="list-group-item border-0">
-                                <div class="form-check">
-                                  <input
-                                    class="form-check-input"
-                                    type="checkbox"
-                                    value=""
-                                    id="flexCheckDefault"
-                                  />
-                                  <label
-                                    class="form-check-label"
-                                    for="flexCheckDefault"
-                                  >
-                                    {item.duration}
-                                  </label>
-                                </div>
+                              <li className="list-group-item border-0" style={{cursor:'pointer'}} key={type} 
+                                onClick={(e) => setType(type)}
+                              >
+                                 {type}
                               </li>
                             </>
                           );
                         })}
                      
                       </ul>
-                    </div> */}
-
-                <div className="p-4">
-                  <p className="fw-bold text-dark">Time of Day</p>
-                  <ul class="list-group">
-                    <li class="list-group-item border-0">
-                      <div class="form-check">
-                        <input
-                          class="form-check-input"
-                          type="checkbox"
-                          value=""
-                          id="flexCheckDefault"
-                        />
-                        <label class="form-check-label" for="flexCheckDefault">
-                          6am—12pm
-                        </label>
-                      </div>
-                    </li>
-                    <li class="list-group-item border-0">
-                      <div class="form-check">
-                        <input
-                          class="form-check-input"
-                          type="checkbox"
-                          value=""
-                          id="flexCheckDefault"
-                        />
-                        <label class="form-check-label" for="flexCheckDefault">
-                          12pm—5pm
-                        </label>
-                      </div>
-                    </li>
-                    <li class="list-group-item border-0">
-                      <div class="form-check">
-                        <input
-                          class="form-check-input"
-                          type="checkbox"
-                          value=""
-                          id="flexCheckDefault"
-                        />
-                        <label class="form-check-label" for="flexCheckDefault">
-                          5pm—12am
-                        </label>
-                      </div>
-                    </li>
-                  </ul>
-                </div>
+                    </div>
 
                 <div className="p-4">
                   <p className="fw-bold text-dark">Specials</p>
@@ -392,16 +372,14 @@ const HotelList = () => {
         </div>
         <Col md={6} lg={8}>
           {/* <div className="listResult"> */}
-          {loading ? (
+          {/* {loading ? (
             "loading"
           ) : (
-            <>
-              {data.hotels &&
-                data.hotels.map((item) => (
-                  <SearchItem item={item} key={item._id} />
-                ))}
-            </>
-          )}
+            <> */}
+          {hotels &&
+            hotels.map((item) => <SearchItem item={item} key={item._id} />)}
+          {/* </>
+          )} */}
           {/* </div> */}
         </Col>
       </Row>

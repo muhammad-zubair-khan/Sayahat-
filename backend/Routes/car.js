@@ -38,7 +38,7 @@ router.post(
 );
 //For Admin
 router.get("/admin/cars", requireSignin,
-adminMiddleware,getAllCars);
+adminMiddleware,getAllAdminCars);
 //For Admin
 // router.get("/admin/cars", requireSignin,
 // adminMiddleware, getAllAdminCars);

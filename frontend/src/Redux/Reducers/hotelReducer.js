@@ -77,7 +77,7 @@ import {
       case GET_ALL_HOTELS_SUCCESS:
         return {
           loading: false,
-          hotels: action.payload,
+          hotels: action.payload.hotels,
         };
       case GET_ALL_HOTELS_FAIL:
         return {

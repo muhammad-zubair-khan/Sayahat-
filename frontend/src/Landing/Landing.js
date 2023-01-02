@@ -13,9 +13,9 @@ import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
-import { Container } from "@mui/material";
+import { Button, Container } from "@mui/material";
 import videoplayback from "../Assets/videoplayback.mp4";
-import ReactPlayer from 'react-player'
+import ReactPlayer from "react-player";
 import CardSlider from "../CardSlider";
 import "../CardSlider.css";
 import { TopDes } from "../TopDes";
@@ -26,26 +26,14 @@ import { format } from "date-fns";
 import "react-date-range/dist/styles.css"; // main style file
 import "react-date-range/dist/theme/default.css"; // theme css file
 import { useDispatch, useSelector } from "react-redux";
-// import { useHistory } from "react-router-dom";
 import { getAllHotels } from "../Redux/Actions/hotelAction";
 import { SearchContext } from "../Context/SearchContext";
 import { ReactSearchAutocomplete } from "react-search-autocomplete";
 import { useEffect } from "react";
 import { getAllVacationProduct } from "../Redux/Actions/vacationProductAction";
-import TextField from "@mui/material/TextField";
 import VillaIcon from "@mui/icons-material/Villa";
-
-// import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-// import { LocalizationProvider } from '@mui/x-date-pickers';
-// import { TimePicker } from '@mui/x-date-pickers';
-// import { TimePicker } from "@mui/x-date-pickers/TimePicker";
-// import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider/LocalizationProvider";
-// import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 const Landing = ({ type }) => {
   const history = useHistory();
-  // const dispatch = useDispatch()
-  // const {slug}= useParams()
-  // const [endDestination, setEndDestination] = useState("");
   //Stays
   const [destination, setDestination] = useState("");
   const [openDate, setOpenDate] = useState(false);
@@ -64,11 +52,8 @@ const Landing = ({ type }) => {
   });
 
   //Car
-
   const [startDestination, setStartDestination] = useState("");
   const [endDestination, setEndDestination] = useState("");
-  // const [pickupTime,setPickupTime] = useState("");
-  // const [dropoffTime,setDropoffTime] = useState("");
   const [openCarDate, setOpenCarDate] = useState(false);
   const [pickupTime, setPickupTime] = useState(null);
   const [dropoffTime, setDropoffTime] = useState(null);
@@ -84,15 +69,6 @@ const Landing = ({ type }) => {
     children: 0,
     room: 1,
   });
-  //Hotel
-  // const [openHotelDate, setOpenHotelDate] = useState(false); //Hotel
-  // const [hotelDate, setHotelDate] = useState([
-  //   {
-  //     startDate: new Date(),
-  //     endDate: new Date(),
-  //     key: "selection",
-  //   },
-  // ]);
 
   //Hotel
   const handleOption = (name, operation) => {
@@ -262,7 +238,7 @@ const Landing = ({ type }) => {
           <div className="desc">
             <div className="container">
               <div className="row">
-                <div className="col-sm-12 col-md-5 col-lg-5">
+                <div className="col-sm-12 col-md-12 col-lg-12">
                   <div className="tabulation animate-box">
                     {/* <!-- Nav tabs --> */}
                     <ul className="nav nav-tabs" role="tablist">
@@ -309,7 +285,7 @@ const Landing = ({ type }) => {
                         id="cars"
                       >
                         <div className="row">
-                          <div className="col-xxs-12 col-xs-6 mt">
+                          <div className="col-xxs-12 col-xs-6 col-md-3 col-lg-3 mt">
                             <div className="input-field">
                               <label for="from">From:</label>
                               {/* <input
@@ -337,7 +313,7 @@ const Landing = ({ type }) => {
                               />
                             </div>
                           </div>
-                          <div className="col-xxs-12 col-xs-6 mt">
+                          <div className="col-xxs-12 col-xs-6 col-md-3 col-lg-3 mt">
                             <div className="input-field">
                               <label for="from">To:</label>
                               {/* <input
@@ -365,11 +341,15 @@ const Landing = ({ type }) => {
                               />
                             </div>
                           </div>
-                          <div className="col-xxs-12 col-xs-6 mt">
+                          <div className="col-xxs-12 col-xs-6 col-md-3 col-lg-3 mt">
                             <div className="input-field">
                               <label for="from">Pick-up Time</label>
                               <input
-                                style={{ backgroundColor: "#d3d4d6" }}
+                                style={{
+                                  backgroundColor: "#d3d4d6",
+                                  minHeight: "44px",
+                                  borderRadius:0,
+                                }}
                                 type="time"
                                 className="form-control"
                                 onChange={(e) => setPickupTime(e.target.value)}
@@ -377,11 +357,15 @@ const Landing = ({ type }) => {
                               />
                             </div>
                           </div>
-                          <div className="col-xxs-12 col-xs-6 mt">
+                          <div className="col-xxs-12 col-xs-6 col-md-3 col-lg-3 mt">
                             <div className="input-field">
                               <label for="from">Drop-off Time</label>
                               <input
-                                style={{ backgroundColor: "#d3d4d6" }}
+                                style={{
+                                  backgroundColor: "#d3d4d6",
+                                  minHeight: "44px",
+                                  borderRadius:0
+                                }}
                                 type="time"
                                 className="form-control"
                                 onChange={(e) => setDropoffTime(e.target.value)}
@@ -390,52 +374,63 @@ const Landing = ({ type }) => {
                               />
                             </div>
                           </div>
-                          <div className="col-xxs-12 col-xs-6 mt alternate">
-                            <div className="input-field search-item">
-                              <CalendarMonthIcon style={{ color: "white" }} />
-                              <span
-                                style={{
-                                  color: "rgba(255, 255, 255, 0.8)",
-                                  fontSize: "14px",
-                                }}
-                                onClick={() => setOpenCarDate(!openCarDate)}
-                              >
-                                {`${format(
-                                  dates[0].startDate,
-                                  "MM/dd/yyyy"
-                                )} to ${format(
-                                  dates[0].endDate,
-                                  "MM/dd/yyyy"
-                                )}`}
-                              </span>
-                              {openCarDate && (
-                                <DateRangePicker
-                                  editableDateInputs={true}
-                                  ranges={dates}
-                                  moveRangeOnFirstSelection={false}
-                                  onChange={(item) =>
-                                    setDates([item.selection])
-                                  }
-                                  className="date"
-                                  minDate={new Date()}
-                                />
-                              )}
+                          <div className="row">
+                            <div
+                              className="col-xxs-12 col-xs-6 col-md-3 col-lg-3 mt"
+                              style={{
+                                margin: "15px 0px",
+                                width: "fit-content",
+                              }}
+                            >
+                              <div className="input-field search-item">
+                                <CalendarMonthIcon style={{ color: "white" }} />
+                                <span
+                                  style={{
+                                    color: "rgba(255, 255, 255, 0.8)",
+                                    fontSize: "14px",
+                                  }}
+                                  onClick={() => setOpenCarDate(!openCarDate)}
+                                >
+                                  {`${format(
+                                    dates[0].startDate,
+                                    "MM/dd/yyyy"
+                                  )} to ${format(
+                                    dates[0].endDate,
+                                    "MM/dd/yyyy"
+                                  )}`}
+                                </span>
+                                {openCarDate && (
+                                  <DateRangePicker
+                                    editableDateInputs={true}
+                                    ranges={dates}
+                                    moveRangeOnFirstSelection={false}
+                                    onChange={(item) =>
+                                      setDates([item.selection])
+                                    }
+                                    className="date"
+                                    minDate={new Date()}
+                                  />
+                                )}
+                              </div>
                             </div>
-                          </div>
-
-                          <div className="col-xxs-12 col-xs-6">
-                            <input
-                              className="btn btn-primary btn-block"
-                              value="Search Cars"
-                              onClick={handleCarSearch}
-                            />
+                            <div className="col-xxs-12 col-xs-6 col-md-9 col-lg-9" style={{textAlign:'end'}}>
+                              <Button
+                                style={{
+                                  backgroundColor: "#f78536",
+                                }}
+                                variant="contained"
+                                onClick={handleCarSearch}
+                              >
+                                Search Car
+                              </Button>
+                            </div>
                           </div>
                         </div>
                       </div>
 
                       <div role="tabpanel" className="tab-pane" id="stays">
                         <div className="row">
-                          <div className="col-xxs-12 col-xs-12 mt">
+                          <div className="col-xxs-12 col-xs-12 col-md-4 col-lg-4  mt">
                             <div className="input-field">
                               <label for="from">City:</label>
                               <div>
@@ -463,8 +458,8 @@ const Landing = ({ type }) => {
                             </div>
                           </div>
 
-                          <div className="col-xxs-12 col-xs-12 mt alternate">
-                            <div className="input-field search-item">
+                          <div className="col-xxs-12 col-xs-12 col-md-4 col-lg-4 mt alternate" style={{textAlign:' center'}}>
+                            <div className="input-field search-item" style={{top: '31px'}}>
                               <CalendarMonthIcon style={{ color: "white" }} />
                               <span
                                 style={{
@@ -496,12 +491,12 @@ const Landing = ({ type }) => {
                               )}
                             </div>
                           </div>
-                          <div className=" col-xxs-12 col-xs-6 mt">
-                            <section>
+                          <div className=" col-xxs-12 col-xs-6 col-md-4 col-lg-4 mt" style={{textAlign:' center'}}>
                               <span
                                 style={{
                                   color: "rgba(255, 255, 255, 0.8)",
-
+                                  position: 'relative',
+                                  top: '29px',
                                   fontSize: "14px",
                                   cursor: "pointer",
                                 }}
@@ -624,33 +619,28 @@ const Landing = ({ type }) => {
                                   </div>
                                 </div>
                               )}
-                            </section>
                           </div>
 
                           <div className="col-xs-12 mt">
-                            <button
+                            <Button
                               onClick={handleSearch}
-                              className="btn btn-primary btn-block"
-                              value="Search Hotels"
+                              variant="contained"
+                              style={{
+                                backgroundColor: "#f78536",
+                              }}
                             >
                               Search Hotels
-                            </button>
+                            </Button>
                           </div>
                         </div>
                       </div>
                       {/* /////////////////////////////////////////////////////////////// */}
                       <div role="tabpanel" className="tab-pane" id="packages">
                         <div className="row">
-                          <div className="col-xxs-12 col-xs-12 mt">
+                          <div className="col-xxs-12 col-xs-12 col-md-4 col-lg-4 mt">
                             <div className="input-field">
                               <label for="from">City:</label>
-                              {/* <input
-                                type="text"
-                                className="form-control"
-                                id="from-place"
-                                placeholder="Lahore, PK"
-                              /> */}
-                              <div style={{ width: 400 }}>
+                              <div>
                                 <ReactSearchAutocomplete
                                   items={products}
                                   // // onSearch={handleOnSearch}
@@ -671,19 +661,8 @@ const Landing = ({ type }) => {
                               </div>
                             </div>
                           </div>
-                          {/* <div className="col-xxs-12 col-xs-6 mt">
-                            <div className="input-field">
-                              <label for="from">Destination:</label>
-                              <input
-                                type="text"
-                                className="form-control"
-                                id="to-place"
-                                placeholder="Islamabad, PK"
-                              />
-                            </div>
-                          </div> */}
-                          <div className="col-xxs-12 col-xs-6 mt alternate">
-                            <div className="input-field search-item">
+                          <div className="col-xxs-12 col-xs-6 col-md-4 col-lg-4 mt alternate">
+                            <div className="input-field search-item" style={{top: '31px ',textAlign:'center'}}>
                               <CalendarMonthIcon style={{ color: "white" }} />
                               <span
                                 style={{
@@ -716,12 +695,12 @@ const Landing = ({ type }) => {
                               )}
                             </div>
                           </div>
-
-                          <div className=" col-xxs-12 col-xs-6 mt">
-                            <section>
+                          <div className=" col-xxs-12 col-xs-6 col-md-4 col-lg-4 mt" style={{textAlign:'center'}}>
                               <span
                                 style={{
                                   color: "rgba(255, 255, 255, 0.8)",
+                                  position: 'relative',
+                                  top: '29px',
                                   fontSize: "14px",
                                   cursor: "pointer",
                                 }}
@@ -844,21 +823,23 @@ const Landing = ({ type }) => {
                                   </div> */}
                                 </div>
                               )}
-                            </section>
                           </div>
                           <div className="col-xs-12">
-                            <input
+                            <Button
                               onClick={handlePackageSearch}
-                              className="btn btn-primary btn-block"
-                              value="Search Packages"
-                            />
+                              variant="contained"
+                              style={{
+                                backgroundColor: "#f78536",
+                              }}
+                             
+                            >Search Packages</Button>
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
-                <div className="desc2 animate-box col-md-7 col-sm-12 col-lg-7">
+                {/* <div className="desc2 animate-box col-md-7 col-sm-12 col-lg-7">
                   <div>
                     <h2>
                       Be a Traveler not a <br /> Tourist
@@ -868,7 +849,7 @@ const Landing = ({ type }) => {
                       around in circles
                     </span>
                   </div>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
@@ -881,7 +862,7 @@ const Landing = ({ type }) => {
           backgroundColor: "black",
           marginTop: "0",
           border: "1px solid",
-          paddingBottom:'60px'
+          paddingBottom: "60px",
         }}
       >
         <Container className="mt-5 mb-3">
@@ -896,12 +877,27 @@ const Landing = ({ type }) => {
         <Container>
           {/* -----ABOUT-US-START----------- */}
           <Grid container className="mt-5">
-            <Grid xs={12} lg={6} className='mt-3'>
+            <Grid xs={12} lg={6} className="mt-3">
               <Box style={{ textAlign: "center", padding: "52px 04px" }}>
-                <h3 style={{color:'white'}}>What You Know About Pakistan?</h3>
-                <p style={{ textAlign: "justify", marginTop: "10px", color:'#dddddd'}}>
-                Pakistan is one of the most fascinating nations you might travel to, with a vibrant culture, a sizable population, and a fascinatingly wide range of natural magnificence. Here are some of Pakistan's most distinctive features, all of which enrich and beautify the world.
-                Pakistan, officially the Islamic Republic of Pakistan, is a country in South Asia. It is the world's fifth-most populous country, with a population of almost 243 million people, and has the world's second-largest Muslim population {" "}
+                <h3 style={{ color: "white" }}>
+                  What You Know About Pakistan?
+                </h3>
+                <p
+                  style={{
+                    textAlign: "justify",
+                    marginTop: "10px",
+                    color: "#dddddd",
+                  }}
+                >
+                  Pakistan is one of the most fascinating nations you might
+                  travel to, with a vibrant culture, a sizable population, and a
+                  fascinatingly wide range of natural magnificence. Here are
+                  some of Pakistan's most distinctive features, all of which
+                  enrich and beautify the world. Pakistan, officially the
+                  Islamic Republic of Pakistan, is a country in South Asia. It
+                  is the world's fifth-most populous country, with a population
+                  of almost 243 million people, and has the world's
+                  second-largest Muslim population{" "}
                 </p>
               </Box>
             </Grid>
@@ -910,7 +906,13 @@ const Landing = ({ type }) => {
                 {/* <video width="100%" autoPlay={true} loop={true}>
                   <source src={videoplayback} />
                 </video> */}
-                <ReactPlayer width={'100%'} height={'100%'} style={{width:'100%'}} playing={true} url={videoplayback} />
+                <ReactPlayer
+                  width={"100%"}
+                  height={"100%"}
+                  style={{ width: "100%" }}
+                  playing={true}
+                  url={videoplayback}
+                />
               </Box>
             </Grid>
           </Grid>
@@ -919,8 +921,8 @@ const Landing = ({ type }) => {
           {/* ---HOLIDAY_PLANS_START------ */}
 
           <Box className="mt-5" style={{ textAlign: "center" }}>
-            <h3 style={{color:'white'}}>Perfect Hotels Deals</h3>
-            <p style={{color:'#dddddd'}}>
+            <h3 style={{ color: "white" }}>Perfect Hotels Deals</h3>
+            <p style={{ color: "#dddddd" }}>
               No vis fastidii accumsan, ignota postulant ea mea. Vis et prima
               integre, ei vis ridens moderatius reformidans cu vim doctus
               accumsan ignota.
@@ -940,7 +942,7 @@ const Landing = ({ type }) => {
                     src="https://i.dawn.com/primary/2019/01/5c2c5a5cdbc6a.jpg"
                     alt=""
                     width="80%"
-                    style={{filter: 'brightness(0.5)'}}
+                    style={{ filter: "brightness(0.5)" }}
                   />
                   <p
                     style={{

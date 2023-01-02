@@ -43,7 +43,7 @@ router.post(
 );
 // For Admin
 router.get("/admin/hotels", requireSignin,
-adminMiddleware, getAllHotels);
+adminMiddleware, getAllHotelsAdmin);
 // For Admin
 router.get("/admin/hotels/:slug", requireSignin,
 adminMiddleware, getHotelsBySlug);

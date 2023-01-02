@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./CarList.css";
 import { Link, useLocation } from "react-router-dom";
 import { Col, Row } from "react-bootstrap";
@@ -10,6 +10,7 @@ import {
   ListItemButton,
   ListItemIcon,
   ListItemText,
+  Slider,
   Typography,
 } from "@mui/material";
 import PersonIcon from "@mui/icons-material/Person";
@@ -21,9 +22,12 @@ import { format } from "date-fns";
 import { DateRange, DateRangePicker } from "react-date-range";
 import CarSearchItem from "../../../Components/CarSearchItem/CarSearchItem.js";
 import Offcanvas from "react-bootstrap/Offcanvas";
+import { useDispatch ,useSelector} from "react-redux";
+import { getAllCars } from "../../../Redux/Actions/carAction";
 
 const CarList = () => {
   const location = useLocation();
+  const dispatch = useDispatch()
   const [startDestination, setStartDestination] = useState(
     location.state.state.startDestination
   );
@@ -36,17 +40,36 @@ const CarList = () => {
   const [dropoffTime, setDropoffTime] = useState(
     location.state.state.dropoffTime
   );
+  const [type, setType] = useState("");
+  const [gear, setGear] = useState("");
+  const [ratings, setRatings] = useState(0);
+  const { cars } = useSelector((state) => state.carsReducer);
   const [min, setMin] = useState(undefined);
   const [max, setMax] = useState(undefined);
-  const { data, loading, error, reFetch } = useFetch(
-    `http://localhost:5000/api/cars?city=${startDestination}&min=${
-      min || 0
-    }&max=${max || 99999}`
-  );
+  // const { data, loading, error, reFetch } = useFetch(
+  //   `http://localhost:5000/api/cars?city=${startDestination}&min=${
+  //     min || 0
+  //   }&max=${max || 99999}`
+  // );
 
-  const handleClick = () => {
-    reFetch();
-  };
+  // const handleClick = () => {
+  //   reFetch();
+  // };
+const types = [
+  "SUV",
+  "Van",
+  "Mercedes",
+  "Mini-Van",
+];
+const gears = [
+  "Automatic",
+  "Manual"
+];
+
+  useEffect(() => {
+    dispatch(getAllCars(min,max,type,ratings,startDestination,gear))
+  }, [dispatch,min,max,type,ratings,startDestination,gear])
+  
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -66,7 +89,7 @@ const CarList = () => {
             <Offcanvas.Body>
               <div className="col-12">
                 <div
-                  className="lsItem p-4"
+                  className="lsItem p-3"
                   style={{ backgroundColor: "#186B6D" }}
                 >
                   <label>From</label>
@@ -77,7 +100,7 @@ const CarList = () => {
                   />
                 </div>
                 <div
-                  className="lsItem p-4"
+                  className="lsItem p-3"
                   style={{ backgroundColor: "#186B6D" }}
                 >
                   <label>To</label>
@@ -88,7 +111,7 @@ const CarList = () => {
                   />
                 </div>
                 <div
-                  className="lsItem p-4"
+                  className="lsItem p-3"
                   style={{ backgroundColor: "#186B6D" }}
                 >
                   <label for="from">Pick-up Time</label>
@@ -100,7 +123,7 @@ const CarList = () => {
                   />
                 </div>
                 <div
-                  className="lsItem p-4"
+                  className="lsItem p-3"
                   style={{ backgroundColor: "#186B6D" }}
                 >
                   <label for="from">Drop-off Time</label>
@@ -113,7 +136,7 @@ const CarList = () => {
                 </div>
 
                 <div
-                  className="p-4 IsItem"
+                  className="p-3 IsItem"
                   style={{ backgroundColor: "#186B6D" }}
                 >
                   <p style={{ color: "white", fontSize: "small" }}>
@@ -135,9 +158,9 @@ const CarList = () => {
                   )}
                 </div>
 
-                <div className="p-4">
-                  <div className="lsOptionItem">
-                    <span className="lsOptionText" style={{ color: "black" }}>
+                <div className="p-4" style={{ backgroundColor: "#186B6D" }}>
+                  <div className="lsOptionItem" >
+                    <span className="lsOptionText"  style={{ color: "white" }}>
                       Min price
                     </span>
                     <input
@@ -147,7 +170,7 @@ const CarList = () => {
                     />
                   </div>
                   <div className="lsOptionItem">
-                    <span className="lsOptionText" style={{ color: "black" }}>
+                    <span className="lsOptionText" style={{ color: "white" }}>
                       Max price
                     </span>
                     <input
@@ -157,6 +180,63 @@ const CarList = () => {
                     />
                   </div>
                 </div>
+
+                <div className="p-4">
+                      <fieldset>
+                        <Typography component="legend">
+                          Ratings Above
+                        </Typography>
+                        <Slider
+                          value={ratings}
+                          onChange={(e, newRating) => {
+                            setRatings(newRating);
+                          }}
+                          aria-labelledby="continuous-slider"
+                          valueLabelDisplay="auto"
+                          default={cars.map((item) => {
+                            return item.ratings;
+                          })}
+                          min={0}
+                          max={5}
+                        />
+                      </fieldset>
+                    </div>
+
+                    <div className="px-4">
+                      <p className="fw-bold text-dark">Types</p>
+                      <ul className="list-group">
+                        {types.map((type) => {
+                          return (
+                            <>
+                              <li className="list-group-item border-0" style={{cursor:'pointer'}} key={type} 
+                                onClick={(e) => setType(type)}
+                              >
+                                 {type}
+                              </li>
+                            </>
+                          );
+                        })}
+                     
+                      </ul>
+                    </div>
+
+                    <div className="px-4">
+                      <p className="fw-bold text-dark mt-4">Gear</p>
+                      <ul className="list-group">
+                        {gears.map((gear) => {
+                          return (
+                            <>
+                              <li className="list-group-item border-0" style={{cursor:'pointer'}} key={gear} 
+                                onClick={(e) => setGear(gear)}
+                              >
+                                 {gear}
+                              </li>
+                            </>
+                          );
+                        })}
+                     
+                      </ul>
+                    </div>
 
                 {/* <div className="p-4">
                 <fieldset>
@@ -377,9 +457,9 @@ const CarList = () => {
           </div> */}
         </Grid>
 
-        {loading ? (
+        {/* {loading ? (
           "loading"
-        ) : (
+        ) : ( */}
           <Grid
             container
             lg={9}
@@ -389,12 +469,12 @@ const CarList = () => {
               padding: "18px 18px",
             }}
           >
-            {data.cars &&
-              data.cars.map((item) => (
+            {cars &&
+              cars.map((item) => (
                 <CarSearchItem item={item} key={item._id} />
               ))}
           </Grid>
-        )}
+        {/* )} */}
         {/* </div> */}
       </Grid>
     </>
