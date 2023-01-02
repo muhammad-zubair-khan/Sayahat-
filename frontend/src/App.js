@@ -1,9 +1,7 @@
 import "./App.css";
 import React, { useEffect } from "react";
-import { BrowserRouter as Router, Redirect, Route, Switch } from "react-router-dom";
-import PrivateRoute from "./Components/Private/PrivateRoute";
-import Navbar from "./Navbar/Navbar";
-import Landing from "./Landing/Landing";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+// import PrivateRoute from "./Components/Private/PrivateRoute";
 import Home from "./Pages/Home/Home";
 import Hotel from "./Pages/Hotel/Hotel";
 import HotelDetail from "./Pages/HotelDetails/HotelDetail";
@@ -12,8 +10,6 @@ import CarRental from "./Pages/CarRental/CarRental";
 import CarDetail from "./Pages/CarDetails/CarDetail";
 import Aboutus from "./Pages/About/Aboutus";
 import Contactus from "./Pages/Contact/Contactus";
-import LahoreCity from "./Pages/Cities/LahoreCity";
-import Tours from "./Pages/Tours/Tours";
 import Login from "./Pages/Account/Login";
 import SignUp from "./Pages/Account/SignUp";
 import Forgot from "./Pages/Account/Forgot";
@@ -25,9 +21,9 @@ import PackageDetail from "./Pages/PackageDetails/PackageDetail";
 import SearchedPackage from "./Pages/SearchedPackage/SearchedPackage";
 import SearchedPackageDetail from "./Pages/SearchedPackage/SearchedPackageDetail";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllVacationsCategory } from "./Redux/Actions/vacationCategoryAction";
 import { isUserLoggedIn } from "../src/Redux/Actions/authActions";
-import { getInitialData } from "../src/Redux/Actions/initialDataAction";
+// import { getAllVacationsCategory } from "./Redux/Actions/vacationCategoryAction";
+// import { getInitialData } from "../src/Redux/Actions/initialDataAction";
 import HotelList from "./Pages/NavHotel/HotelList";
 import Checkout from "./Pages/Checkout/Checkout";
 import HotelCheckout from "./Pages/Checkout/HotelCheckout";
@@ -67,8 +63,10 @@ function App() {
         <Route exact path="/car/:id" component={CarDetail} />
         <Route exact path="/aboutus" component={Aboutus} />
         <Route exact path="/car-rentals" component={CarRental} />
-        <Route exact path="/package/:slug" component={SearchedPackage} />
-        <Route exact path="/package/:slug/:id/detail" component={SearchedPackageDetail} />
+        {/* <Route exact path="/package/:slug" component={SearchedPackage} /> */}
+        <Route exact path="/packages" component={SearchedPackage} />
+        <Route exact path="/package/:id" component={SearchedPackageDetail} />
+        {/* <Route exact path="/package/:slug/:id/detail" component={SearchedPackageDetail} /> */}
         <Route exact path="/vacation/:slug/:slug/:id/detail"  component={PackageDetail}/>
         <Route exact path="/contactus" component={Contactus} />
         <Route exact path="/car/:id/checkout" component={Checkout} />

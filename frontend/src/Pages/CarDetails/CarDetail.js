@@ -160,7 +160,7 @@ const CarDetail = ({match}) => {
     
     setOpenCarReview(false);
     history.go(0)
-  }else{
+  }else if(!localStorage.token){
     toast.error("Login First", {
       position: toast.POSITION.BOTTOM_CENTER,
     });
@@ -221,7 +221,7 @@ const CarDetail = ({match}) => {
             </div>
             <span className="hotelDistance">{data.car.title}</span>
             <span className="hotelPriceHighlight">
-              Fare: PKR{data.car.fare}
+              Fare: PKR{data.car.price}
             </span>
             <div className="hotelImages">
               {data.car.carImages?.map((photo, i) => (
@@ -248,8 +248,8 @@ const CarDetail = ({match}) => {
                   this property has an excellent location score of 9.8!
                 </span>
                 <h6>
-                  <b>PKR{days * data.car.fare}</b> ({days} days)
-                  <Tooltip title={`${data.car.fare} x ${days}`} placement="top">
+                  <b>PKR{days * data.car.price}</b> ({days} days)
+                  <Tooltip title={`${data.car.price} x ${days}`} placement="top">
                     <Button>
                       <i className="text-dark fs-5 fa-solid fa-circle-info"></i>
                     </Button>

@@ -94,24 +94,43 @@ exports.createHotel = catchAsyncErrors(async (req, res, next) => {
 // };
 
 // Get All Hotel
+// exports.getAllHotels = async (req, res) => {
+//   // const hotels = await Hotel.find();
+//   const { min, max, ...others } = req.query;
+//   // const hotelsCount = await Hotel.countDocuments();
+
+//   const hotels = await Hotel.find({
+//     ...others,
+//     cheapestPrice: { $gt: min | 1, $lt: max || 99999 },
+//   });
+//   // if(!hotels){
+//   // return next(new ErrorHandler("Hotel not found", 404));
+
+//   // }
+//   res.status(200).json({
+//     hotels,
+//   });
+// };
+
+
 exports.getAllHotels = async (req, res) => {
-  // const hotels = await Hotel.find();
-  const { min, max, ...others } = req.query;
-  // const hotelsCount = await Hotel.countDocuments();
-
-  const hotels = await Hotel.find({
-    ...others,
-    cheapestPrice: { $gt: min | 1, $lt: max || 99999 },
-  });
-  // if(!hotels){
-  // return next(new ErrorHandler("Hotel not found", 404));
-
-  // }
+  const { min, max, ratings, ...others } = req.query;
+  const apiFeature = new ApiFeatures(
+    Hotel.find({
+      ...others,
+      cheapestPrice: { $gte: min | 1, $lte: max || 99999 },
+      ratings,
+    })
+  ).filter();
+  const hotels = await apiFeature.query;
   res.status(200).json({
+    success: true,
     hotels,
   });
 };
 
+
+// Get All Hotel (Admin)
 exports.getAllHotelsAdmin = catchAsyncErrors(async (req, res) => {
   const hotels = await Hotel.find();
   if (!hotels) {

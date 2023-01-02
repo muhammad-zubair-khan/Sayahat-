@@ -1,37 +1,36 @@
 import {
-    GET_CAR_BY_SLUG_REQUEST,
-    GET_CAR_BY_SLUG_SUCCESS,
-    GET_CAR_BY_SLUG_FAIL,
-    CREATE_NEW_CAR_REQUEST,
-    CREATE_NEW_CAR_SUCCESS,
-    CREATE_NEW_CAR_FAIL,
-    CREATE_NEW_CAR_RESET,
-    GET_ALL_CARS_REQUEST,
-    GET_ALL_CARS_SUCCESS,
-    GET_ALL_CARS_FAIL,
-    DELETE_CAR_REQUEST,
-    DELETE_CAR_SUCCESS,
-    DELETE_CAR_FAIL,
-    CLEAR_ERRORS,
-    NEW_REVIEW_REQUEST,
-    NEW_REVIEW_SUCCESS,
-    NEW_REVIEW_FAIL,
-    ALL_REVIEW_REQUEST,
-    ALL_REVIEW_SUCCESS,
-    ALL_REVIEW_FAIL,
-    DELETE_REVIEW_REQUEST,
-    DELETE_REVIEW_SUCCESS,
-    DELETE_REVIEW_FAIL,
-  } from "../Constants/carConstants";
-  import axios from "../helpers/axios";
+  GET_CAR_BY_SLUG_REQUEST,
+  GET_CAR_BY_SLUG_SUCCESS,
+  GET_CAR_BY_SLUG_FAIL,
+  CREATE_NEW_CAR_REQUEST,
+  CREATE_NEW_CAR_SUCCESS,
+  CREATE_NEW_CAR_FAIL,
+  GET_ALL_CARS_REQUEST,
+  GET_ALL_CARS_SUCCESS,
+  GET_ALL_CARS_FAIL,
+  DELETE_CAR_REQUEST,
+  DELETE_CAR_SUCCESS,
+  DELETE_CAR_FAIL,
+  CLEAR_ERRORS,
+  NEW_REVIEW_REQUEST,
+  NEW_REVIEW_SUCCESS,
+  NEW_REVIEW_FAIL,
+  ALL_REVIEW_REQUEST,
+  ALL_REVIEW_SUCCESS,
+  ALL_REVIEW_FAIL,
+  DELETE_REVIEW_REQUEST,
+  DELETE_REVIEW_SUCCESS,
+  DELETE_REVIEW_FAIL,
+} from "../Constants/carConstants";
+import axios from "../helpers/axios";
 
 // Create New Car
 export const addCar = (form) => {
-  return async dispatch => {
-    dispatch({ type:  CREATE_NEW_CAR_REQUEST });
+  return async (dispatch) => {
+    dispatch({ type: CREATE_NEW_CAR_REQUEST });
     try {
       const res = await axios.post("/car/add", form);
-      console.log("res......",res)
+      console.log("res......", res);
       if (res.status === 201) {
         dispatch({
           type: CREATE_NEW_CAR_SUCCESS,
@@ -46,21 +45,32 @@ export const addCar = (form) => {
     } catch (error) {
       console.log(error.message);
     }
-
   };
 };
 
-
 // Get All Cars For Admin
-export const getAllCars = () => async (dispatch) => {
+export const getAllCars =
+  (type, min, max, ratings, startDestination) => async (dispatch) => {
     try {
       dispatch({ type: GET_ALL_CARS_REQUEST });
-  
-      const { data } = await axios.get("/cars");
-  
+      let link = `/cars?city=${startDestination}&min=${min || 0}&max=${max || 9999
+        }&ratings=${ratings || 0}`;
+
+      if (type) {
+        link = `/cars?city=${startDestination}&type=${type}&min=${min || 0
+          }&max=${max || 9999}&ratings=${ratings || 0}`;
+      }
+      // if(gear) {
+      //   link = `/cars?city=${startDestination}&gear=${gear}&min=${
+      //     min || 0
+      //   }&max=${max || 9999}&ratings=${ratings || 0}`;
+      // }
+
+      const { data } = await axios.get(link);
+
       dispatch({
         type: GET_ALL_CARS_SUCCESS,
-        payload: data.cars,
+        payload: data,
       });
     } catch (error) {
       dispatch({
@@ -69,48 +79,46 @@ export const getAllCars = () => async (dispatch) => {
       });
     }
   };
-  
-  //get Car by Slug
+
+//get Car by Slug
 export const getCarBySlug = (slug) => async (dispatch) => {
-    try {
-      dispatch({ type: GET_CAR_BY_SLUG_REQUEST });
-      const { data } = await axios.get(`/car/${slug}`);
-      console.log(data);
-      dispatch({
-        type: GET_CAR_BY_SLUG_SUCCESS,
-        payload: data.car,
-      });
-    } catch (error) {
-      dispatch({
-        type: GET_CAR_BY_SLUG_FAIL,
-        payload: error.response.data.message,
-      });
-    }
-  };
-  
-  
-   // Delete Car
-   export const deleteCar = (id) => async (dispatch) => {
-    try {
-      dispatch({ type: DELETE_CAR_REQUEST });
-  
-      const { data } = await axios.post(`/deletecar/${id}`);
-  
-      dispatch({
-        type: DELETE_CAR_SUCCESS,
-        payload: data.success,
-      });
-      dispatch({
-        type: GET_ALL_CARS_SUCCESS,
-      })
-    } catch (error) {
-      dispatch({
-        type: DELETE_CAR_FAIL,
-        payload: error.response.data.message,
-      });
-    }
-  };
-  
+  try {
+    dispatch({ type: GET_CAR_BY_SLUG_REQUEST });
+    const { data } = await axios.get(`/car/${slug}`);
+    console.log(data);
+    dispatch({
+      type: GET_CAR_BY_SLUG_SUCCESS,
+      payload: data.car,
+    });
+  } catch (error) {
+    dispatch({
+      type: GET_CAR_BY_SLUG_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+// Delete Car
+export const deleteCar = (id) => async (dispatch) => {
+  try {
+    dispatch({ type: DELETE_CAR_REQUEST });
+
+    const { data } = await axios.post(`/deletecar/${id}`);
+
+    dispatch({
+      type: DELETE_CAR_SUCCESS,
+      payload: data.success,
+    });
+    dispatch({
+      type: GET_ALL_CARS_SUCCESS,
+    });
+  } catch (error) {
+    dispatch({
+      type: DELETE_CAR_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
 
 // NEW REVIEW
 export const newCarReview = (reviewData) => async (dispatch) => {
@@ -157,9 +165,7 @@ export const deleteCarReviews = (reviewId, id) => async (dispatch) => {
   try {
     dispatch({ type: DELETE_REVIEW_REQUEST });
 
-    const { data } = await axios.delete(
-      `/reviews?id=${reviewId}&CarId=${id}`
-    );
+    const { data } = await axios.delete(`/reviews?id=${reviewId}&CarId=${id}`);
 
     dispatch({
       type: DELETE_REVIEW_SUCCESS,

@@ -4,16 +4,16 @@ const shortid = require("shortid");
 const path = require("path");
 const multer = require("multer");
 const {
-    createPackage,
-    getAllPackages,
-    deletePackage,
-    getPackageBySlug,
-    getTopDesPackageBySlug,
-    getPackageDetailsById,
-    getAllAdminPackages,
-    createPackageReview,
-    getPackageReviews,
-    deletePackageReview,
+  createPackage,
+  getAllPackages,
+  deletePackage,
+  getPackageBySlug,
+  getTopDesPackageBySlug,
+  getPackageDetailsById,
+  getAllAdminPackages,
+  createPackageReview,
+  getPackageReviews,
+  deletePackageReview,
 } = require("../Controllers/package");
 const {
   requireSignin,
@@ -32,38 +32,59 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 //For Admin
 router.post(
-  "/package/create",
+  "/admin/package/create",
   upload.array("packageImages"),
   requireSignin,
   adminMiddleware,
   createPackage
 );
 //For Admin
-router.get("/admin/all-packages",  requireSignin,
-adminMiddleware, getAllPackages);
+router.get(
+  "/admin/all-packages",
+  requireSignin,
+  adminMiddleware,
+  getAllAdminPackages
+);
 //For Admin
-router.get("/admin/package/:slug",  requireSignin,
-adminMiddleware, getPackageBySlug);
+router.get(
+  "/admin/package/:slug",
+  requireSignin,
+  adminMiddleware,
+  getPackageBySlug
+);
 //For Admin
-router.post("/admin/deletepackage/:id",  requireSignin,
-adminMiddleware, deletePackage);
+router.post(
+  "/admin/deletepackage/:id",
+  requireSignin,
+  adminMiddleware,
+  deletePackage
+);
 // For Admin
-router.get("/admin/package/:slug",  requireSignin,
-adminMiddleware, getPackageBySlug);
+router.get(
+  "/admin/package/:slug",
+  requireSignin,
+  adminMiddleware,
+  getPackageBySlug
+);
 // For Admin
-router.get('/admin/package-detail/:id', requireSignin,
-adminMiddleware,getPackageDetailsById);
+router.get(
+  "/admin/package-detail/:id",
+  requireSignin,
+  adminMiddleware,
+  getPackageDetailsById
+);
 
-router.route("/create/review").put(requireSignin,userMiddleware, createPackageReview);
+router
+  .route("/create/review")
+  .put(requireSignin, userMiddleware, createPackageReview);
 router
   .route("/reviews")
   .get(getPackageReviews)
-  .delete(requireSignin,userMiddleware, deletePackageReview);
-
+  .delete(requireSignin, userMiddleware, deletePackageReview);
 
 router.get("/all-packages", getAllPackages);
 router.get("/package/:slug", getPackageBySlug);
-router.get('/package-detail/:id', getPackageDetailsById);
+router.get("/package-detail/:id", getPackageDetailsById);
 // router.get("/top-des-package/:slug", getTopDesPackageBySlug);
 // router.post(
 //   "/vacation/category/update",

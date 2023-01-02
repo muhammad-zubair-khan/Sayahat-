@@ -27,7 +27,7 @@ const carSchema = new mongoose.Schema({
         type:String,
         required:true,
     },
-    fare:{
+    price:{
         type: String,
         required:true,
     },
@@ -68,7 +68,8 @@ const carSchema = new mongoose.Schema({
     ratings: {
         type: String,
         min: 0,
-        max: 5
+        max: 5,
+        default:0,
       },
       numOfReviews: {
         type: Number,

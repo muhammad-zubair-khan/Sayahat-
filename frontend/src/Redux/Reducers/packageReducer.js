@@ -95,7 +95,7 @@ export const allPackagesReducer = (state = { packages: [] }, action) => {
     case GET_ALL_PACKAGES_SUCCESS:
       return {
         loading: false,
-        packages: action.payload,
+        packages: action.payload.packages,
       };
     case GET_ALL_PACKAGES_FAIL:
       return {

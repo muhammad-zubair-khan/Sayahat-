@@ -13,63 +13,76 @@ import 'react-toastify/dist/ReactToastify.css';
 const SignUp = () => {
   const auth = useSelector((state)=>state.auth)
   const {error} = useSelector((state)=>state.auth)
-  
+  // console.log(error)
   const dispatch = useDispatch()
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
+    // const [values, setValues] = useState({ email: "" });
+  const [errors, setErrors] = useState({});
+  const [show,setShow] = useState(false)
     const [password, setPassword] = useState("");
     const [validate, setValidate] = useState({});
     const [showPassword, setShowPassword] = useState(false);
-  
-    const validateRegister = () => {
-      let isValid = true;
-  
-      let validator = Form.validator({
-        firstName: {
-          value: firstName,
-          isRequired: true,
-        },
-        lastName: {
-          value: lastName,
-          isRequired: true,
-        },
-        email: {
-          value: email,
-          isRequired: true,
-          isEmail: true,
-        },
-        password: {
-          value: password,
-          isRequired: true,
-          minLength: 6,
-        },
-      });
-  
-      if (validator !== null) {
-        setValidate({
-          validate: validator.errors,
-        });
-  
-        isValid = false;
-      }
-      return isValid;
-    };
-  
-    const register = (e) => {
-      e.preventDefault();
-  
-      const validate = validateRegister();
-  
-      if (validate) {
-        setValidate({});
-        setFirstName("");
-        setLastName("");
-        setEmail("");
-        setPassword("");
-        alert("Successfully Register User");
+    const handleShow = () => {
+      if (!isEmail(email)) {
+        setShow(false);
+      } else if (isEmail(email)) {
+        setShow(true);
       }
     };
+    // const validateRegister = () => {
+    //   let isValid = true;
+  
+    //   let validator = Form.validator({
+    //     firstName: {
+    //       value: firstName,
+    //       isRequired: true,
+    //     },
+    //     lastName: {
+    //       value: lastName,
+    //       isRequired: true,
+    //     },
+    //     email: {
+    //       value: email,
+    //       isRequired: true,
+    //       isEmail: true,
+    //     },
+    //     password: {
+    //       value: password,
+    //       isRequired: true,
+    //       minLength: 6,
+    //     },
+    //   });
+  
+    //   if (validator !== null) {
+    //     setValidate({
+    //       validate: validator.errors,
+    //     });
+  
+    //     isValid = false;
+    //   }
+    //   return isValid;
+    // };
+    const isEmail = (email) =>
+    /^[-!#$%&'*+\/0-9=?A-Z^_a-z{|}~](\.?[-!#$%&'*+\/0-9=?A-Z^_a-z`{|}~])*@[a-zA-Z0-9](-*\.?[a-zA-Z0-9])*\.[a-zA-Z](-?[a-zA-Z0-9])+$/.test(
+      email
+    );
+
+    // const register = (e) => {
+    //   e.preventDefault();
+  
+    //   const validate = validateRegister();
+  
+    //   if (validate) {
+    //     setValidate({});
+    //     setFirstName("");
+    //     setLastName("");
+    //     setEmail("");
+    //     setPassword("");
+    //     alert("Successfully Register User");
+    //   }
+    // };
   
     const togglePassword = (e) => {
       if (showPassword) {
@@ -81,6 +94,13 @@ const SignUp = () => {
     const registerUser = (e) => {
       e.preventDefault();
   
+      const errors = {};
+
+      if (!isEmail(email)) {
+        errors.email = "Invalid email!";
+      } 
+      setErrors(errors);
+
       const user = {
         firstName,
         lastName,
@@ -128,7 +148,7 @@ const SignUp = () => {
                           ? "is-invalid "
                           : ""
                       }`}
-                      id="name"
+                      id="firstName"
                       name="firstName"
                       value={firstName}
                       placeholder="First Name"
@@ -156,7 +176,7 @@ const SignUp = () => {
                           ? "is-invalid "
                           : ""
                       }`}
-                      id="name"
+                      id="lastName"
                       name="lastName"
                       value={lastName}
                       placeholder="Last Name"
@@ -191,7 +211,7 @@ const SignUp = () => {
                       onChange={(e) => setEmail(e.target.value)}
                     />
   
-                    <div
+                    {/* <div
                       className={`invalid-feedback text-start ${
                         validate.validate && validate.validate.email
                           ? "d-block"
@@ -201,7 +221,20 @@ const SignUp = () => {
                       {validate.validate && validate.validate.email
                         ? validate.validate.email[0]
                         : ""}
-                    </div>
+                    </div> */}
+                    {Object.entries(errors).map(([key, error]) => (
+                          <span
+                            key={`${key}: ${error}`}
+                            style={{
+                              fontWeight: "bold",
+                              color: "red",
+                              display: "flex",
+                              marginLeft: "7px",
+                            }}
+                          >
+                            {error}
+                          </span>
+                        ))}
                   </div>
   
                   <div className="password mb-3">
@@ -249,6 +282,9 @@ const SignUp = () => {
                     <button
                       type="submit"
                       className="btn btn-primary w-100 theme-btn mx-auto"
+                      disabled={
+                        !firstName || !lastName || !email || !password
+                      }
                     >
                       Sign Up
                     </button>

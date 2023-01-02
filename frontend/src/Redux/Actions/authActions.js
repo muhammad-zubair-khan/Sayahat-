@@ -32,11 +32,13 @@ export const signup = (user) => {
             user,
           },
         });
-      } else {
-        const { error } = res.data;
-        dispatch({ type: SIGNUP_FAILURE, payload: { error } });
-      }
-    } catch (error) {
+      } 
+      // else {
+      //   // const { error } = res.data;
+      //   // dispatch({ type: SIGNUP_FAILURE, payload: { error } });
+      // }
+    } 
+    catch (error) {
       const { data } = error.response;
       dispatch({
         type: SIGNUP_FAILURE,

@@ -6,12 +6,12 @@ const path = require("path");
 const ErrorHandler = require("../utils/errorhandler");
 const catchAsyncErrors = require("../utils/catchAsyncErrors");
 const ApiFeatures = require("../utils/apifeatures");
-// Create Hotel -- Admin
+// Create Car -- Admin
 exports.addCar = catchAsyncErrors(async (req, res) => {
   const {
     name,
     passenger,
-    fare,
+    price,
     mileage,
     payAt,
     shuttle,
@@ -38,7 +38,7 @@ exports.addCar = catchAsyncErrors(async (req, res) => {
     slug: slugify(name),
     passenger,
     carImages,
-    fare,
+    price,
     description,
     mileage,
     payAt,
@@ -68,50 +68,67 @@ exports.addCar = catchAsyncErrors(async (req, res) => {
   });
 });
 
-// Get All Hotel (Admin)
+// Get All Car 
+// exports.getAllCars = async (req, res) => {
+//   // const hotels = await Hotel.find();
+//   // const { min, max, ...others } = req.query;
+//   // // const hotelsCount = await Hotel.countDocuments();
+
+//   //   const cars = await Car.find({
+//   //     ...others,
+//   //     fare: { $gt: min | 1, $lt: max || 99999 },
+//   //   });
+//   const apiFeature = new ApiFeatures(
+//     Car.find(),
+//     req.query
+//   )
+//     // .search()
+//     .filter();
+
+//   let cars = await apiFeature.query;
+//   // console.log(cars)
+//   // if (!cars) {
+//   //   return next(new ErrorHandler("Cars not found", 404));
+//   // }
+//   res.status(200).json({
+//     success: true,
+//     cars,
+//     // carsByFare: {
+//     //   under5k: cars.filter((car) => car.fare <= 5000),
+//     //   under6k: cars.filter((car) => car.fare > 5000 && car.fare <= 6000),
+//     //   under7k: cars.filter((car) => car.fare > 6000 && car.fare <= 7000),
+//     //   under8k: cars.filter((car) => car.fare > 7000 && car.fare <= 8000),
+//     //   under9k: cars.filter((car) => car.fare > 8000 && car.fare <= 9000),
+//     //   under10k: cars.filter((car) => car.fare > 9000 && car.fare <= 10000),
+//     //   under11k: cars.filter((car) => car.fare > 10000 && car.fare <= 11000),
+//     //   under12k: cars.filter((car) => car.fare > 11000 && car.fare <= 12000),
+//     //   under13k: cars.filter((car) => car.fare > 12000 && car.fare <= 13000),
+//     //   under14k: cars.filter((car) => car.fare > 13000 && car.fare <= 14000),
+//     //   under15k: cars.filter((car) => car.fare > 14000 && car.fare <= 15000),
+//     //   under16k: cars.filter((car) => car.fare > 15000 && car.fare <= 16000),
+//     //   under17k: cars.filter((car) => car.fare > 16000 && car.fare <= 17000),
+//     //   under18k: cars.filter((car) => car.fare > 17000 && car.fare <= 18000),
+//     //   under19k: cars.filter((car) => car.fare > 18000 && car.fare <= 19000),
+//     //   under20k: cars.filter((car) => car.fare > 19000 && car.fare <= 20000),
+//     //   under21k: cars.filter((car) => car.fare > 20000 && car.fare <= 21000),
+//     // },
+//   });
+// };
+
+
 exports.getAllCars = async (req, res) => {
-  // const hotels = await Hotel.find();
-  // const { min, max, ...others } = req.query;
-  // // const hotelsCount = await Hotel.countDocuments();
-
-  //   const cars = await Car.find({
-  //     ...others,
-  //     fare: { $gt: min | 1, $lt: max || 99999 },
-  //   });
+  const { min, max, ratings, ...others } = req.query;
   const apiFeature = new ApiFeatures(
-    Car.find(),
-    req.query
-  )
-    // .search()
-    .filter();
-
-  let cars = await apiFeature.query;
-  // console.log(cars)
-  // if (!cars) {
-  //   return next(new ErrorHandler("Cars not found", 404));
-  // }
+    Car.find({
+      ...others,
+      price: { $gte: min | 0, $lte: max || 99999 },
+      ratings,
+    })
+  ).filter();
+  const cars = await apiFeature.query;
   res.status(200).json({
     success: true,
     cars,
-    // carsByFare: {
-    //   under5k: cars.filter((car) => car.fare <= 5000),
-    //   under6k: cars.filter((car) => car.fare > 5000 && car.fare <= 6000),
-    //   under7k: cars.filter((car) => car.fare > 6000 && car.fare <= 7000),
-    //   under8k: cars.filter((car) => car.fare > 7000 && car.fare <= 8000),
-    //   under9k: cars.filter((car) => car.fare > 8000 && car.fare <= 9000),
-    //   under10k: cars.filter((car) => car.fare > 9000 && car.fare <= 10000),
-    //   under11k: cars.filter((car) => car.fare > 10000 && car.fare <= 11000),
-    //   under12k: cars.filter((car) => car.fare > 11000 && car.fare <= 12000),
-    //   under13k: cars.filter((car) => car.fare > 12000 && car.fare <= 13000),
-    //   under14k: cars.filter((car) => car.fare > 13000 && car.fare <= 14000),
-    //   under15k: cars.filter((car) => car.fare > 14000 && car.fare <= 15000),
-    //   under16k: cars.filter((car) => car.fare > 15000 && car.fare <= 16000),
-    //   under17k: cars.filter((car) => car.fare > 16000 && car.fare <= 17000),
-    //   under18k: cars.filter((car) => car.fare > 17000 && car.fare <= 18000),
-    //   under19k: cars.filter((car) => car.fare > 18000 && car.fare <= 19000),
-    //   under20k: cars.filter((car) => car.fare > 19000 && car.fare <= 20000),
-    //   under21k: cars.filter((car) => car.fare > 20000 && car.fare <= 21000),
-    // },
   });
 };
 
@@ -119,9 +136,8 @@ exports.getAllCars = async (req, res) => {
 exports.getAllAdminCars = catchAsyncErrors(async (req, res) => {
   const cars = await Car.find();
   if (!cars) {
-    return next(new ErrorHandler("Product not found", 404));
+    return next(new ErrorHandler("Car not found", 404));
   }
-
   res.status(200).json({
     success: true,
     cars,

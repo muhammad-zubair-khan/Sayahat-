@@ -15,6 +15,7 @@ import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
 import { Container } from "@mui/material";
 import videoplayback from "../Assets/videoplayback.mp4";
+import ReactPlayer from 'react-player'
 import CardSlider from "../CardSlider";
 import "../CardSlider.css";
 import { TopDes } from "../TopDes";
@@ -32,6 +33,8 @@ import { ReactSearchAutocomplete } from "react-search-autocomplete";
 import { useEffect } from "react";
 import { getAllVacationProduct } from "../Redux/Actions/vacationProductAction";
 import TextField from "@mui/material/TextField";
+import VillaIcon from "@mui/icons-material/Villa";
+
 // import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 // import { LocalizationProvider } from '@mui/x-date-pickers';
 // import { TimePicker } from '@mui/x-date-pickers';
@@ -136,22 +139,43 @@ const Landing = ({ type }) => {
     history.push("/hotels", { state: { destination, dates, options } });
   };
   const handlePackageSearch = () => {
-    dispatch({ type: "NEW_SEARCH", payload: { packageDestination, dates, options } });
-    history.push(`/package/${packageDestination}`, {
+    dispatch({
+      type: "NEW_SEARCH",
+      payload: { packageDestination, dates, options },
+    });
+    history.push("/packages", {
       state: { packageDestination, dates, options },
     });
   };
   const handleCarSearch = () => {
-    dispatch({ type: "NEW_SEARCH", payload: { startDestination, endDestination, pickupTime, dropoffTime, dates,options } });
-    history.push(`/cars?from=${startDestination}&to=${endDestination}&pickup-Time=${pickupTime}&dropoff-time=${dropoffTime}`, {
-      state: { startDestination, endDestination, pickupTime, dropoffTime, dates  },
+    dispatch({
+      type: "NEW_SEARCH",
+      payload: {
+        startDestination,
+        endDestination,
+        pickupTime,
+        dropoffTime,
+        dates,
+        options,
+      },
     });
+    history.push(
+      `/cars?from=${startDestination}&to=${endDestination}&pickup-Time=${pickupTime}&dropoff-time=${dropoffTime}`,
+      {
+        state: {
+          startDestination,
+          endDestination,
+          pickupTime,
+          dropoffTime,
+          dates,
+        },
+      }
+    );
   };
   const { products } = useSelector((state) => state.vacationProduct);
   useEffect(() => {
     dispatch(getAllVacationProduct());
   }, []);
-
 
   // const handleOnSearch = (string, results) => {
   //   // onSearch will have as the first callback parameter
@@ -193,17 +217,15 @@ const Landing = ({ type }) => {
     );
   };
 
-//Stays Function
-const handleOnStayHover = (result) => {
-  // the item hovered
-  console.log(result);
-};
+  //Stays Function
+  const handleOnStayHover = (result) => {
+    // the item hovered
+    console.log(result);
+  };
 
-const handleOnStaySelect = (product) => {
-  setDestination(product.name);
-};
-
-
+  const handleOnStaySelect = (product) => {
+    setDestination(product.name);
+  };
 
   //Package Functions
   const handleOnHover = (result) => {
@@ -300,20 +322,19 @@ const handleOnStaySelect = (product) => {
                                 }
                               /> */}
                               <ReactSearchAutocomplete
-                                  items={products}
-                                  // onSearch={handleOnSearch}
-                                  onHover={CarhandleOnHover}
-                                  onSelect={CarhandleOnSelect}
-                                  // onFocus={handleOnFocus}
-                                  autoFocus
-                                  formatResult={CarformatResult}
-                                  value={startDestination}
-
-                                  onChange={(e) =>
-                                    setStartDestination(e.target.value)
-                                  }
-                                  placeholder="Lahore, PK"
-                                />
+                                items={products}
+                                // onSearch={handleOnSearch}
+                                onHover={CarhandleOnHover}
+                                onSelect={CarhandleOnSelect}
+                                // onFocus={handleOnFocus}
+                                autoFocus
+                                formatResult={CarformatResult}
+                                value={startDestination}
+                                onChange={(e) =>
+                                  setStartDestination(e.target.value)
+                                }
+                                placeholder="Lahore, PK"
+                              />
                             </div>
                           </div>
                           <div className="col-xxs-12 col-xs-6 mt">
@@ -329,32 +350,29 @@ const handleOnStaySelect = (product) => {
                                 }
                               /> */}
                               <ReactSearchAutocomplete
-                                  items={products}
-                                  // onSearch={handleOnSearch}
-                                  onHover={CarhandleOnHover}
-                                  onSelect={CarEndhandleOnSelect}
-                                  // onFocus={handleOnFocus}
-                                  autoFocus
-                                  formatResult={CarformatResult}
-                                  value={endDestination}
-                                  onChange={(e) =>
-                                    setEndDestination(e.target.value)
-                                  }
-                                  placeholder="Islamabad, PK"
-                                  
-                                />
+                                items={products}
+                                // onSearch={handleOnSearch}
+                                onHover={CarhandleOnHover}
+                                onSelect={CarEndhandleOnSelect}
+                                // onFocus={handleOnFocus}
+                                autoFocus
+                                formatResult={CarformatResult}
+                                value={endDestination}
+                                onChange={(e) =>
+                                  setEndDestination(e.target.value)
+                                }
+                                placeholder="Islamabad, PK"
+                              />
                             </div>
                           </div>
                           <div className="col-xxs-12 col-xs-6 mt">
                             <div className="input-field">
                               <label for="from">Pick-up Time</label>
                               <input
-                              style={{backgroundColor:"#d3d4d6"}}
+                                style={{ backgroundColor: "#d3d4d6" }}
                                 type="time"
                                 className="form-control"
-                                onChange={(e) =>
-                                  setPickupTime(e.target.value)
-                                }
+                                onChange={(e) => setPickupTime(e.target.value)}
                                 required
                               />
                             </div>
@@ -363,12 +381,10 @@ const handleOnStaySelect = (product) => {
                             <div className="input-field">
                               <label for="from">Drop-off Time</label>
                               <input
-                              style={{backgroundColor:"#d3d4d6"}}
+                                style={{ backgroundColor: "#d3d4d6" }}
                                 type="time"
                                 className="form-control"
-                                onChange={(e) =>
-                                  setDropoffTime(e.target.value)
-                                }
+                                onChange={(e) => setDropoffTime(e.target.value)}
                                 placeholder="select pickup time"
                                 required
                               />
@@ -387,14 +403,19 @@ const handleOnStaySelect = (product) => {
                                 {`${format(
                                   dates[0].startDate,
                                   "MM/dd/yyyy"
-                                )} to ${format(dates[0].endDate, "MM/dd/yyyy")}`}
+                                )} to ${format(
+                                  dates[0].endDate,
+                                  "MM/dd/yyyy"
+                                )}`}
                               </span>
                               {openCarDate && (
                                 <DateRangePicker
                                   editableDateInputs={true}
                                   ranges={dates}
                                   moveRangeOnFirstSelection={false}
-                                  onChange={(item) => setDates([item.selection])}
+                                  onChange={(item) =>
+                                    setDates([item.selection])
+                                  }
                                   className="date"
                                   minDate={new Date()}
                                 />
@@ -760,10 +781,7 @@ const handleOnStaySelect = (product) => {
                                         className="optionbtn"
                                         disabled={options.children <= 0}
                                         onClick={() =>
-                                          handleOption(
-                                            "children",
-                                            "decreament"
-                                          )
+                                          handleOption("children", "decreament")
                                         }
                                       >
                                         -
@@ -779,10 +797,7 @@ const handleOnStaySelect = (product) => {
                                       <button
                                         className="optionbtn"
                                         onClick={() =>
-                                          handleOption(
-                                            "children",
-                                            "increament"
-                                          )
+                                          handleOption("children", "increament")
                                         }
                                       >
                                         +
@@ -860,96 +875,96 @@ const handleOnStaySelect = (product) => {
         </div>
       </div>
       {/* -------------------------Special Offers & Discount----------------------------- */}
-      <Container>
-        <div className="mt-5">
-          <h3>Special Offers & Discount</h3>
-          <p>
-            Lorem Ipsum is simply dummy text the printing and typesetting
-            industry. Lorem Ipsum has been the industry's standard dummy text
-            ever since the 1500s,
-          </p>
+      <div
+        className="tours"
+        style={{
+          backgroundColor: "black",
+          marginTop: "0",
+          border: "1px solid",
+          paddingBottom:'60px'
+        }}
+      >
+        <Container className="mt-5 mb-3">
+          <h3 style={{ color: "white" }}>
+            <VillaIcon /> Tour Packages
+          </h3>
+        </Container>
 
-          {/* ---------------CARDS----START */}
-          <MyCard />
-          {/* ---------------CARDS----END */}
-        </div>
-
-        {/* -----ABOUT-US-START----------- */}
-        <Grid container className="mt-5">
-          <Grid xs={12} lg={6}>
-            <Box style={{ textAlign: "center", padding: "52px 04px" }}>
-              <h3>What You Know About Pakistan?</h3>
-              <p style={{ textAlign: "justify", marginTop: "10px" }}>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
-                urna lectus, lacinia ut magna eu, congue dictum libero.
-                Curabitur est elit, scelerisque nec congue quis, rutrum non
-                enim. Fusce hendrerit aliquam ipsum, et finibus ligula. Aliquam
-                vitae pellentesque neque. Nulla ac augue dictum, tincidunt nibh
-                a, venenatis libero. Vestibulum euismod leo ex, sit amet ornare
-                ex scelerisque blandit. Quisque blandit orci quis varius
-                tincidunt. Nullam gravida egestas scelerisque. Cras feugiat
-                ligula vitae varius finibus. Vivamus fringilla ultricies leo
-                eget suscipit. Morbi imperdiet velit eu ipsum euismod finibus.{" "}
-              </p>
-            </Box>
-          </Grid>
-          <Grid xs={12} lg={6} style={{ padding: "30px" }}>
-            <Box>
-              <video width="100%" controls loop={true}>
-                <source src={videoplayback} />
-              </video>
-            </Box>
-          </Grid>
-        </Grid>
-        {/* -----ABOUT-US-END----------- */}
-
-        {/* ---HOLIDAY_PLANS_START------ */}
-
-        <Box className="mt-5" style={{ textAlign: "center" }}>
-          <h3>Perfect Holiday Plan</h3>
-          <p>
-            No vis fastidii accumsan, ignota postulant ea mea. Vis et prima
-            integre, ei vis ridens moderatius reformidans cu vim doctus accumsan
-            ignota.
-          </p>
-        </Box>
-
-        <CardSlider />
-
-        {/* ---HOLIDAY_PLANS_END------ */}
-
-        {/* -----ARTICLES--- */}
-        <Grid container className="mt-5">
-          <Grid xs={12} lg={12}>
-            <div style={{ position: "relative", textAlign: "center" }}>
-              <Link to="/artciles">
-                <img
-                  src="https://i.dawn.com/primary/2019/01/5c2c5a5cdbc6a.jpg"
-                  alt=""
-                  width="80%"
-                  style={{}}
-                />
-                <p
-                  style={{
-                    position: "absolute",
-                    top: "50%",
-                    fontSize: "29px",
-                    color: "white",
-                    width: " 100%",
-                  }}
-                >
-                  CUSTOMS AND CUISINE OF PAKISTAN
+        {/* ---------------CARDS----START */}
+        <MyCard />
+        {/* ---------------CARDS----END */}
+        <Container>
+          {/* -----ABOUT-US-START----------- */}
+          <Grid container className="mt-5">
+            <Grid xs={12} lg={6} className='mt-3'>
+              <Box style={{ textAlign: "center", padding: "52px 04px" }}>
+                <h3 style={{color:'white'}}>What You Know About Pakistan?</h3>
+                <p style={{ textAlign: "justify", marginTop: "10px", color:'#dddddd'}}>
+                Pakistan is one of the most fascinating nations you might travel to, with a vibrant culture, a sizable population, and a fascinatingly wide range of natural magnificence. Here are some of Pakistan's most distinctive features, all of which enrich and beautify the world.
+                Pakistan, officially the Islamic Republic of Pakistan, is a country in South Asia. It is the world's fifth-most populous country, with a population of almost 243 million people, and has the world's second-largest Muslim population {" "}
                 </p>
-              </Link>
-            </div>
+              </Box>
+            </Grid>
+            <Grid xs={12} lg={6} style={{ padding: "30px" }}>
+              <Box>
+                {/* <video width="100%" autoPlay={true} loop={true}>
+                  <source src={videoplayback} />
+                </video> */}
+                <ReactPlayer width={'100%'} height={'100%'} style={{width:'100%'}} playing={true} url={videoplayback} />
+              </Box>
+            </Grid>
           </Grid>
-        </Grid>
-        {/* -----ARTICLES--- */}
+          {/* -----ABOUT-US-END----------- */}
 
-        {/* ----TOP DESTINATION-START---- */}
-        <TopDes />
-        {/* ----TOP DESTINATION-END---- */}
-      </Container>
+          {/* ---HOLIDAY_PLANS_START------ */}
+
+          <Box className="mt-5" style={{ textAlign: "center" }}>
+            <h3 style={{color:'white'}}>Perfect Hotels Deals</h3>
+            <p style={{color:'#dddddd'}}>
+              No vis fastidii accumsan, ignota postulant ea mea. Vis et prima
+              integre, ei vis ridens moderatius reformidans cu vim doctus
+              accumsan ignota.
+            </p>
+          </Box>
+
+          <CardSlider />
+
+          {/* ---HOLIDAY_PLANS_END------ */}
+
+          {/* -----ARTICLES--- */}
+          <Grid container className="mt-5">
+            <Grid xs={12} lg={12}>
+              <div style={{ position: "relative", textAlign: "center" }}>
+                <Link to="/artciles">
+                  <img
+                    src="https://i.dawn.com/primary/2019/01/5c2c5a5cdbc6a.jpg"
+                    alt=""
+                    width="80%"
+                    style={{filter: 'brightness(0.5)'}}
+                  />
+                  <p
+                    style={{
+                      position: "absolute",
+                      top: "50%",
+                      fontSize: "29px",
+                      color: "white",
+                      width: " 100%",
+                    }}
+                  >
+                    CUSTOMS AND CUISINE OF PAKISTAN
+                  </p>
+                </Link>
+              </div>
+            </Grid>
+          </Grid>
+          {/* -----ARTICLES--- */}
+
+          {/* ----TOP DESTINATION-START---- */}
+          <TopDes />
+          {/* ----TOP DESTINATION-END---- */}
+        </Container>
+      </div>
+
       <Footer />
     </>
   );

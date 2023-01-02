@@ -1,7 +1,4 @@
 import {
-    GET_ALL_VACATION_PRODUCTS_REQUEST,
-    GET_ALL_VACATION_PRODUCTS_SUCCESS,
-    GET_ALL_VACATION_PRODUCTS_FAIL,
     GET_CAR_BY_SLUG_REQUEST,
     GET_CAR_BY_SLUG_SUCCESS,
     GET_CAR_BY_SLUG_FAIL,
@@ -12,10 +9,6 @@ import {
     GET_ALL_CARS_REQUEST,
     GET_ALL_CARS_SUCCESS,
     GET_ALL_CARS_FAIL,
-    DELETE_HOTEL_REQUEST,
-    DELETE_HOTEL_SUCCESS,
-    DELETE_HOTEL_FAIL,
-    DELETE_HOTEL_RESET,
     NEW_REVIEW_REQUEST,
     NEW_REVIEW_SUCCESS,
     NEW_REVIEW_FAIL,
@@ -77,7 +70,7 @@ import {
       case GET_ALL_CARS_SUCCESS:
         return {
           loading: false,
-          cars: action.payload,
+          cars: action.payload.cars,
         };
       case GET_ALL_CARS_FAIL:
         return {

@@ -1,7 +1,4 @@
 import {
-    GET_ALL_VACATION_PRODUCTS_REQUEST,
-    GET_ALL_VACATION_PRODUCTS_SUCCESS,
-    GET_ALL_VACATION_PRODUCTS_FAIL,
     GET_HOTEL_BY_SLUG_REQUEST,
     GET_HOTEL_BY_SLUG_SUCCESS,
     GET_HOTEL_BY_SLUG_FAIL,
@@ -77,7 +74,7 @@ import {
       case GET_ALL_HOTELS_SUCCESS:
         return {
           loading: false,
-          hotels: action.payload,
+          hotels: action.payload.hotels,
         };
       case GET_ALL_HOTELS_FAIL:
         return {
