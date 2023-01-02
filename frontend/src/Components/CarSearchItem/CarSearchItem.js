@@ -55,9 +55,9 @@ const CarSearchItem = ({ item }) => {
   const { dispatch } = useContext(SearchContext);
   const history = useHistory();
 
-  const { data, loading, error, reFetch } = useFetch(
-    `http://localhost:5000/api/cars?city=${startDestination}`
-  );
+  // const { data, loading, error, reFetch } = useFetch(
+  //   `http://localhost:5000/api/cars?city=${startDestination}`
+  // );
   //   console.log("item>>>",data.carsByFare.under5k.length);
 
   const handleSearch = () => {
@@ -138,7 +138,7 @@ const CarSearchItem = ({ item }) => {
           variant="h5"
           style={{ color: "black", fontWeight: "bolder" }}
         >
-          PKR {item.fare}
+          PKR {item.price}
         </Typography>
         <h6 paragraph>per day</h6>
         <h6 paragraph>{`PKR total`}</h6>

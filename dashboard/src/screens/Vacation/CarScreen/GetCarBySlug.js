@@ -78,7 +78,7 @@ console.log(cars)
     },
 
     {
-      field: "fare",
+      field: "price",
       headerName: "Fare",
       // type: "number",
       minWidth: 270,
@@ -132,7 +132,7 @@ console.log(cars)
         name: item.name,
         type: item.type,
         description: item.description,
-        fare: item.fare,
+        price: item.price,
         mileage: item.mileage,
         passenger: item.passenger,
         shuttle:item.shuttle,

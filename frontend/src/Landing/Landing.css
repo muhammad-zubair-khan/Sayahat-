@@ -160,6 +160,7 @@
  background-image: url('https://preview.colorlib.com/theme/travello/images/home_slider.jpg.webp');
  filter: brightness(.6);
 background-attachment: fixed;
+background-position-y:bottom;
 }
 
 .fh5co-cover {
@@ -323,7 +324,8 @@ figure {
   z-index: 9999999;
 }
 .nav-tabs > li > a.active {
-  background-color: #f78536;
+  /* background-color: #f78536; */
+  background-color: #132138;
   color: white;
 }
 
@@ -397,7 +399,7 @@ figure {
   /* margin-top: -7em */
   margin-top: 0;
   /* background: rgba(255, 255, 255, 0.95); */
-  background: #232931;
+  /* background: #232931; */
   -webkit-box-shadow: 0px 43px 83px -20px rgba(0, 0, 0, 0.41);
   -moz-box-shadow: 0px 43px 83px -20px rgba(0, 0, 0, 0.41);
   -ms-box-shadow: 0px 43px 83px -20px rgba(0, 0, 0, 0.41);
@@ -602,7 +604,7 @@ div.cs-select span {
 }
 .options{
   position: absolute;
-  top: 112px;
+  top: 360px;
   /* width: 16%; */
   width: 27%;
   z-index: 1000000;
@@ -636,7 +638,7 @@ div.cs-select span {
 }
 .options2{
   position: absolute;
-  top: 112px;
+  top: 360px;
   width: 27%;
   z-index: 1000000;
   background-color: white;

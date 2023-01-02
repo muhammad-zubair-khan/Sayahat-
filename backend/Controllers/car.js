@@ -6,12 +6,12 @@ const path = require("path");
 const ErrorHandler = require("../utils/errorhandler");
 const catchAsyncErrors = require("../utils/catchAsyncErrors");
 const ApiFeatures = require("../utils/apifeatures");
-// Create Hotel -- Admin
+// Create Car -- Admin
 exports.addCar = catchAsyncErrors(async (req, res) => {
   const {
     name,
     passenger,
-    fare,
+    price,
     mileage,
     payAt,
     shuttle,
@@ -38,7 +38,7 @@ exports.addCar = catchAsyncErrors(async (req, res) => {
     slug: slugify(name),
     passenger,
     carImages,
-    fare,
+    price,
     description,
     mileage,
     payAt,
@@ -121,7 +121,7 @@ exports.getAllCars = async (req, res) => {
   const apiFeature = new ApiFeatures(
     Car.find({
       ...others,
-      fare: { $gte: min | 0, $lte: max || 99999 },
+      price: { $gte: min | 0, $lte: max || 99999 },
       ratings,
     })
   ).filter();

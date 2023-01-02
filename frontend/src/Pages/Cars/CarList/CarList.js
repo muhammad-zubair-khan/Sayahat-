@@ -1,33 +1,23 @@
 import React, { useEffect, useState } from "react";
 import "./CarList.css";
-import { Link, useLocation } from "react-router-dom";
-import { Col, Row } from "react-bootstrap";
+import { useLocation } from "react-router-dom";
 import {
   Button,
   Grid,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
   Slider,
   Typography,
 } from "@mui/material";
-import PersonIcon from "@mui/icons-material/Person";
-import SpeedIcon from "@mui/icons-material/Speed";
-import AutoAwesomeIcon from "@mui/icons-material/AutoAwesome";
-import AirplaneTicketIcon from "@mui/icons-material/AirplaneTicket";
-import useFetch from "../../../hook/useFetch";
+// import useFetch from "../../../hook/useFetch";
 import { format } from "date-fns";
-import { DateRange, DateRangePicker } from "react-date-range";
+import { DateRange } from "react-date-range";
 import CarSearchItem from "../../../Components/CarSearchItem/CarSearchItem.js";
 import Offcanvas from "react-bootstrap/Offcanvas";
-import { useDispatch ,useSelector} from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getAllCars } from "../../../Redux/Actions/carAction";
 
 const CarList = () => {
   const location = useLocation();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const [startDestination, setStartDestination] = useState(
     location.state.state.startDestination
   );
@@ -55,21 +45,16 @@ const CarList = () => {
   // const handleClick = () => {
   //   reFetch();
   // };
-const types = [
-  "SUV",
-  "Van",
-  "Mercedes",
-  "Mini-Van",
-];
-const gears = [
-  "Automatic",
-  "Manual"
-];
+  const types = ["SUV", "Van", "Mercedes", "Mini-Van"];
+  // const gears = [
+  //   "Automatic",
+  //   "Manual"
+  // ];
 
   useEffect(() => {
-    dispatch(getAllCars(min,max,type,ratings,startDestination,gear))
-  }, [dispatch,min,max,type,ratings,startDestination,gear])
-  
+    dispatch(getAllCars(min, max, type, ratings, startDestination));
+  }, [dispatch, min, max, type, ratings, startDestination]);
+
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -134,7 +119,6 @@ const gears = [
                     onChange={(e) => setDropoffTime(e.target.value)}
                   />
                 </div>
-
                 <div
                   className="p-3 IsItem"
                   style={{ backgroundColor: "#186B6D" }}
@@ -157,10 +141,9 @@ const gears = [
                     />
                   )}
                 </div>
-
                 <div className="p-4" style={{ backgroundColor: "#186B6D" }}>
-                  <div className="lsOptionItem" >
-                    <span className="lsOptionText"  style={{ color: "white" }}>
+                  <div className="lsOptionItem">
+                    <span className="lsOptionText" style={{ color: "white" }}>
                       Min price
                     </span>
                     <input
@@ -180,47 +163,44 @@ const gears = [
                     />
                   </div>
                 </div>
-
                 <div className="p-4">
-                      <fieldset>
-                        <Typography component="legend">
-                          Ratings Above
-                        </Typography>
-                        <Slider
-                          value={ratings}
-                          onChange={(e, newRating) => {
-                            setRatings(newRating);
-                          }}
-                          aria-labelledby="continuous-slider"
-                          valueLabelDisplay="auto"
-                          default={cars.map((item) => {
-                            return item.ratings;
-                          })}
-                          min={0}
-                          max={5}
-                        />
-                      </fieldset>
-                    </div>
-
-                    <div className="px-4">
-                      <p className="fw-bold text-dark">Types</p>
-                      <ul className="list-group">
-                        {types.map((type) => {
-                          return (
-                            <>
-                              <li className="list-group-item border-0" style={{cursor:'pointer'}} key={type} 
-                                onClick={(e) => setType(type)}
-                              >
-                                 {type}
-                              </li>
-                            </>
-                          );
-                        })}
-                     
-                      </ul>
-                    </div>
-
-                    <div className="px-4">
+                  <fieldset>
+                    <Typography component="legend">Ratings Above</Typography>
+                    <Slider
+                      value={ratings}
+                      onChange={(e, newRating) => {
+                        setRatings(newRating);
+                      }}
+                      aria-labelledby="continuous-slider"
+                      valueLabelDisplay="auto"
+                      default={cars.map((item) => {
+                        return item.ratings;
+                      })}
+                      min={0}
+                      max={5}
+                    />
+                  </fieldset>
+                </div>
+                <div className="px-4">
+                  <p className="fw-bold text-dark">Types</p>
+                  <ul className="list-group">
+                    {types.map((type) => {
+                      return (
+                        <>
+                          <li
+                            className="list-group-item border-0"
+                            style={{ cursor: "pointer" }}
+                            key={type}
+                            onClick={(e) => setType(type)}
+                          >
+                            {type}
+                          </li>
+                        </>
+                      );
+                    })}
+                  </ul>
+                </div>
+                {/* <div className="px-4">
                       <p className="fw-bold text-dark mt-4">Gear</p>
                       <ul className="list-group">
                         {gears.map((gear) => {
@@ -236,8 +216,7 @@ const gears = [
                         })}
                      
                       </ul>
-                    </div>
-
+                    </div> */}
                 {/* <div className="p-4">
                 <fieldset>
                   <Typography component="legend">Ratings Above</Typography>
@@ -460,20 +439,18 @@ const gears = [
         {/* {loading ? (
           "loading"
         ) : ( */}
-          <Grid
-            container
-            lg={9}
-            style={{
-              height: "fit-content",
-              // border: "1px solid #f1e1e1",
-              padding: "18px 18px",
-            }}
-          >
-            {cars &&
-              cars.map((item) => (
-                <CarSearchItem item={item} key={item._id} />
-              ))}
-          </Grid>
+        <Grid
+          container
+          lg={9}
+          style={{
+            height: "fit-content",
+            // border: "1px solid #f1e1e1",
+            padding: "18px 18px",
+          }}
+        >
+          {cars &&
+            cars.map((item) => <CarSearchItem item={item} key={item._id} />)}
+        </Grid>
         {/* )} */}
         {/* </div> */}
       </Grid>

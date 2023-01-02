@@ -1,50 +1,41 @@
 import {
   Button,
   Grid,
-  Container,
   TextField,
   AppBar,
   Toolbar,
 } from "@mui/material";
-import Modal from "react-bootstrap/Modal";
 import React, { useState } from "react";
 import { MultiStepForm, Step } from "react-multi-form";
-import ContactDetails from "./ContactDetails/ContactDetails";
-import ActivityDetails from "./ActivityDetails/ActivityDetails";
-import PaymentDetails from "./PaymentDetails/PaymentDetails";
-import { Link, useHistory, useLocation, useParams } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import "./PaymentDetails/PaymentDetails.css";
 import useFetch from "../../hook/useFetch";
 import { ImageUrl } from "../../Redux/UrlConfig";
-import Navbar from "../../Navbar/Navbar";
 import logo from "../../Assets/logo/logo-black.png";
 import Footer from "../../Footer/Footer";
 const Checkout = () => {
   const location = useLocation();
-  const [startDestination, setStartDestination] = useState(
-    location.state.state.startDestination
-  );
-  const [endDestination, setEndDestination] = useState(
-    location.state.state.endDestination
-  );
-  const [dates, setDates] = useState(location.state.state.dates);
+  // const [startDestination, setStartDestination] = useState(
+  //   location.state.state.startDestination
+  // );
+  // const [endDestination, setEndDestination] = useState(
+  //   location.state.state.endDestination
+  // );
+  // const [dates, setDates] = useState(location.state.state.dates);
   const [pickupTime, setPickupTime] = useState(location.state.state.pickupTime);
   const [dropoffTime, setDropoffTime] = useState(
     location.state.state.dropoffTime
   );
   const { id } = useParams();
-  const { data, loading, error } = useFetch(
+  const { data } = useFetch(
     `http://localhost:5000/api/car-detail/${id}`
   );
-  console.log(data);
-  console.log(startDestination);
-  const history = useHistory();
+  // const history = useHistory();
   const [show, setShow] = useState(false);
 
-  const handleClose = () => {
-    setShow(false);
-    // navigate(0);
-  };
+  // const handleClose = () => {
+  //   setShow(false);
+  // };
 
   const isEmail = (email) =>
     /^[-!#$%&'*+\/0-9=?A-Z^_a-z{|}~](\.?[-!#$%&'*+\/0-9=?A-Z^_a-z`{|}~])*@[a-zA-Z0-9](-*\.?[a-zA-Z0-9])*\.[a-zA-Z](-?[a-zA-Z0-9])+$/.test(
@@ -252,7 +243,7 @@ const Checkout = () => {
               <b>{data.car.name}</b>
             </span>
             <span>
-              <b>PKR {data.car.fare}</b>
+              <b>PKR {data.car.price}</b>
             </span>
               </div>
                 <div style={{display:'flex',flexDirection:"column",margin:"14px 19px"}}>
@@ -262,7 +253,7 @@ const Checkout = () => {
                   <span className="siTaxiOp">{data.car.refund}</span>
                 
                   <p style={{marginTop:"10px"}}>
-                    Total Price: <span>PKR {data.car.fare}</span>{" "}
+                    Total Price: <span>PKR {data.car.price}</span>{" "}
                   </p>
                 </div>
                
@@ -415,7 +406,7 @@ const Checkout = () => {
               <b>{data.car.name}</b>
             </span>
             <span>
-              <b>PKR {data.car.fare}</b>
+              <b>PKR {data.car.price}</b>
             </span>
           </div>
           <div
@@ -442,7 +433,7 @@ const Checkout = () => {
             }}
           >
             <b>Total Price</b>
-            <b>PKR {data.car.fare}</b>
+            <b>PKR {data.car.price}</b>
           </div>
         </Grid>
       </Grid>

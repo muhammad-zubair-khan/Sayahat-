@@ -1,19 +1,19 @@
 import React, { useEffect } from "react";
-import { Link, useHistory, useLocation, useParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { useState } from "react";
 import { format } from "date-fns";
 import Button from "@mui/material/Button";
 import Offcanvas from "react-bootstrap/Offcanvas";
-import { DateRange, DateRangePicker } from "react-date-range";
+import { DateRange } from "react-date-range";
 import SearchItem from "../../../Components/searchItem/SearchItem";
-import useFetch from "../../../hook/useFetch";
+// import useFetch from "../../../hook/useFetch";
 import "./HotelList.css";
 import {
   getAllHotels,
   // getHotelBySlug,
 } from "../../../Redux/Actions/hotelAction";
 import { useDispatch, useSelector } from "react-redux";
-import axios from "axios";
+// import axios from "axios";
 import { Col, Row } from "react-bootstrap";
 import { Slider, Typography } from "@mui/material";
 const HotelList = () => {
@@ -25,7 +25,7 @@ const HotelList = () => {
   const { hotels } = useSelector((state) => state.hotelReducer);
   const [dates, setDates] = useState(location.state.state.dates);
   const [openDate, setOpenDate] = useState(false);
-  const [options, setOptions] = useState(location.state.state.options);
+  // const [options, setOptions] = useState(location.state.state.options);
   const [min, setMin] = useState(undefined);
   const [max, setMax] = useState(undefined);
   const [type, setType] = useState("");

@@ -283,7 +283,7 @@ const CitiesManagementScreen = (props) => {
     myForm.set("passenger", passenger);
     console.log(passenger);
 
-    myForm.set("fare", fare);
+    myForm.set("price", fare);
     console.log(fare);
 
     myForm.set("type", type);
