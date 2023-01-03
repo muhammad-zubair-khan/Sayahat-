@@ -30,7 +30,7 @@ const CarList = () => {
   const [dropoffTime, setDropoffTime] = useState(
     location.state.state.dropoffTime
   );
-  const [type, setType] = useState("");
+  const [carType, setCarType] = useState("");
   const [gear, setGear] = useState("");
   const [ratings, setRatings] = useState(0);
   const { cars } = useSelector((state) => state.carsReducer);
@@ -52,8 +52,8 @@ const CarList = () => {
   // ];
 
   useEffect(() => {
-    dispatch(getAllCars(min, max, type, ratings, startDestination));
-  }, [dispatch, min, max, type, ratings, startDestination]);
+    dispatch(getAllCars(min, max, startDestination,carType));
+  }, [dispatch, min, max, startDestination,carType]);
 
   const [show, setShow] = useState(false);
 
@@ -191,7 +191,7 @@ const CarList = () => {
                             className="list-group-item border-0"
                             style={{ cursor: "pointer" }}
                             key={type}
-                            onClick={(e) => setType(type)}
+                            onClick={(e) => setCarType(type)}
                           >
                             {type}
                           </li>

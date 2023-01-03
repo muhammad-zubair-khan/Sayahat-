@@ -37,14 +37,20 @@ const Package = (props) => {
   //   }&max=${max || 99999}&type=${type || "Full Day Tour"}`
   // );
   useEffect(() => {
-    dispatch(getAllPackages(type, min, max, ratings));
-  }, [dispatch, type, min, max, ratings]);
+    dispatch(getAllPackages(type, min, max, packageDestination, ratings));
+  }, [dispatch, type, min, max, packageDestination, ratings]);
 
   // const handleClick = () => {
   //   reFetch();
   // };
 
-  const types = ["Full Day Tour", "Half Day Tour", "One Day Tour"];
+  const types = [
+    "Full Day Tour",
+    "Half Day Tour",
+    "One Day Tour",
+    "Private Tour",
+    "Group Tour",
+  ];
 
   const [show, setShow] = useState(false);
 
@@ -85,8 +91,12 @@ const Package = (props) => {
                       }}
                     >
                       <div
-                        className="border border-primary p-2"
-                        style={{ width: "fit-content" }}
+                        className="p-2"
+                        style={{
+                          width: "fit-content",
+                          border: "1px solid #d4d4d4",
+                          borderRadius: "16px",
+                        }}
                         key={type}
                         onClick={(e) => setType(type)}
                       >
@@ -110,8 +120,12 @@ const Package = (props) => {
                       }}
                     >
                       <div
-                        className="border border-primary p-2"
-                        style={{ width: "fit-content" }}
+                        className="p-2"
+                        style={{
+                          width: "fit-content",
+                          border: "1px solid #d4d4d4",
+                          borderRadius: "16px",
+                        }}
                         key={type}
                         onClick={(e) => setType(type)}
                       >
@@ -175,7 +189,7 @@ const Package = (props) => {
                       className="p-4 lsItem"
                     >
                       <p style={{ color: "white" }}>When are you traveling?</p>
-                  
+
                       <span
                         onClick={() => setOpenPackageDate(!openPackageDate)}
                       >{`${format(
@@ -472,20 +486,24 @@ const Package = (props) => {
                                   </h5>
                                 </div>
                                 <div className="col-4 text-end">
-                                  <h5 class="card-title text-dark">
-                                    ${data.price}
+                                  <h5 class="card-title text-dark" style={{fontWeight:'bolder'}}>
+                                    PKR {data.price}
                                   </h5>
                                 </div>
                               </div>
-                              {data.reviews.length > 0 && (
+                              {data.reviews.length > 0 ? (
                                 <p
                                   className="text-data"
-                                  style={{ fontWeight: "bolder" }}
+                                  style={{ fontWeight: "bolder",fontSize:'small' }}
                                 >
                                   {data.ratings}/5 ({data.numOfReviews}){" "}
                                   {data.numOfReviews >= 1
                                     ? "Review"
                                     : "Reviews"}
+                                </p>
+                              ) : (
+                                <p style={{ fontSize: "small" }}>
+                                  No Reviews
                                 </p>
                               )}
                               <small class="text-dark">

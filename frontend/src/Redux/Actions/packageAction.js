@@ -25,6 +25,9 @@ import {
     DELETE_REVIEW_SUCCESS,
     DELETE_REVIEW_FAIL,
     CLEAR_ERRORS,
+    GET_ALL_FEATURED_PACKAGES_REQUEST,
+    GET_ALL_FEATURED_PACKAGES_SUCCESS,
+    GET_ALL_FEATURED_PACKAGES_FAIL,
   } from "../Constants/packageConstants";
   import axios from "../helpers/axios";
 
@@ -106,14 +109,35 @@ export const createPackage = (form) => {
 //     });
 //   }
 // };
-export const getAllPackages = (type,min,max,ratings) => async (dispatch) => {
+export const getPackages = () => async (dispatch) => {
   try {
     dispatch({ type: GET_ALL_PACKAGES_REQUEST });
-    let link = `/all-packages?min=${min || 0}&max=${max || 9999}&ratings=${ratings || 0 }`;
+    let link = `/all-packages`;
+    const { data } = await axios.get(link);
+    dispatch({
+      type: GET_ALL_PACKAGES_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: GET_ALL_PACKAGES_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+export const getAllPackages = (type,min,max,packageDestination,ratings) => async (dispatch) => {
+  try {
+    dispatch({ type: GET_ALL_PACKAGES_REQUEST });
+    let link = `/all-packages?city=${packageDestination}&min=${min || 0}&max=${max || 9999}`;
+    // let link = `/all-packages?min=${min || 0}&max=${max || 9999}&ratings=${ratings || 0 }`;
 
     if (type) {
-      link = `/all-packages?type=${type}&min=${min || 0}&max=${max || 9999}&ratings=${ratings || 0}`;
+      link = `/all-packages?city=${packageDestination}&type=${type}&min=${min || 0}&max=${max || 9999}`;
     }
+    // if (type) {
+    //   link = `/all-packages?type=${type}&min=${min || 0}&max=${max || 9999}&ratings=${ratings || 0}`;
+    // }
     const { data } = await axios.get(link);
 
     dispatch({
@@ -127,6 +151,24 @@ export const getAllPackages = (type,min,max,ratings) => async (dispatch) => {
     });
   }
 };
+
+export const getAllFeaturedPackages = () => async (dispatch) => {
+  try {
+    dispatch({ type: GET_ALL_FEATURED_PACKAGES_REQUEST });
+    let link = `/all-packages?featured=${true}&limit=${6}`;
+    const { data } = await axios.get(link);
+    dispatch({
+      type: GET_ALL_FEATURED_PACKAGES_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: GET_ALL_FEATURED_PACKAGES_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+
 
 //get Package by Slug
 export const getPackageBySlug = (slug) => async (dispatch) => {

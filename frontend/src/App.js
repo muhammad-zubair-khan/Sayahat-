@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Home from "./Pages/Home/Home";
 import Hotel from "./Pages/Hotel/Hotel";
 import HotelDetail from "./Pages/HotelDetails/HotelDetail";
+import HotelBySlug from "./Pages/HotelBySlug/HotelBySlug";
 import Car from "./Pages/Cars/Car";
 import CarRental from "./Pages/CarRental/CarRental";
 import CarDetail from "./Pages/CarDetails/CarDetail";
@@ -59,6 +60,7 @@ function App() {
         {/* <Route exact path="/lahore" component={LahoreCity} /> */}
         <Route exact path="/hotels" component={Hotel} />
         <Route exact path="/hotel/:id" component={HotelDetail} />
+        <Route exact path="/hotelsby/:slug" component={HotelBySlug} />
         <Route exact path="/cars" component={Car} />
         <Route exact path="/car/:id" component={CarDetail} />
         <Route exact path="/aboutus" component={Aboutus} />
@@ -72,7 +74,7 @@ function App() {
         <Route exact path="/car/:id/checkout" component={Checkout} />
         <Route exact path="/hotel/:id/checkout" component={HotelCheckout} />
         <Route exact path="/package/:id/checkout" component={PackageCheckout} />
-        <Route exact path="/hotels-list" component={HotelList} />
+        <Route exact path="/hotels/all" component={HotelList} />
         <Route path="/login" component={Login} />
         <Route path="/register" component={SignUp} />
         <Route path="/forgot-password" component={Forgot} />

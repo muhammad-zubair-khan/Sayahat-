@@ -215,10 +215,10 @@ const HotelDetail = ({ match }) => {
               <span>{data.hotel.address}</span>
             </div>
             <span className="hotelDistance">
-              Excellent location – {data.hotel.distance}m from center
+              Excellent location – {data.hotel.distance}
             </span>
             <span className="hotelPriceHighlight">
-              Book a stay over ${data.hotel.cheapestPrice} at this property and
+              Book a stay over PKR {data.hotel.cheapestPrice} at this property and
               get a free airport taxi
             </span>
             <div className="hotelImages">

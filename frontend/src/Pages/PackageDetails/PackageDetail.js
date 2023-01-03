@@ -68,7 +68,7 @@ function PackageDetail({match}) {
         type: "NEW_SEARCH",
         payload: { dates, options },
       });
-      toast.success(`Done! please wait`, {
+      toast.success(`Confirming! please wait`, {
         position: toast.POSITION.BOTTOM_CENTER,
       });
       setTimeout(() => {
@@ -239,7 +239,7 @@ function PackageDetail({match}) {
             />
           </div>
           <div className="col-4 BgPackage p-3 h-100">
-            <h4 className="text-black">From ${packages.package.price}</h4>
+            <h4 className="text-black">From PKR {packages.package.price}</h4>
             <span style={{ color: "#1874A2" }}>Lowest Price Guarantee</span>
             <hr />
             <h4 className="text-black">Select Date and Travelers</h4>

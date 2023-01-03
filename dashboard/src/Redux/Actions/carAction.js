@@ -21,7 +21,7 @@ export const addCar = (form) => {
     dispatch({ type:  CREATE_NEW_CAR_REQUEST });
     try {
       const res = await axios.post("/admin/car/add", form);
-      console.log("res......",res)
+      // console.log("res......",res)
       if (res.status === 201) {
         dispatch({
           type: CREATE_NEW_CAR_SUCCESS,

@@ -53,6 +53,10 @@ const packageSchema = new mongoose.Schema(
         },
       },
     ],
+    featured:{
+      type: Boolean,
+      default: false
+    },
     product: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Product",
@@ -60,10 +64,10 @@ const packageSchema = new mongoose.Schema(
     },
     ratings: {
       type: String,
-      required:true,
-      // min: 0,
-      // max: 5,
-      // default:0
+      // required:true,
+      min: 0,
+      max: 5,
+      default:0
     },
     numOfReviews: {
       type: Number,

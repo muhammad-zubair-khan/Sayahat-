@@ -88,7 +88,7 @@ const Reserve = ({ setOpen, hotelId }) => {
         }, 3000);
       } catch (err) {}
     } else {
-      toast.error(`booking is Failed please login first`, {
+      toast.error(`Booking is Failed please login first`, {
         position: toast.POSITION.BOTTOM_CENTER,
       });
       setTimeout(() => {

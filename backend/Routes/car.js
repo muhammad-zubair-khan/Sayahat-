@@ -30,7 +30,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 //For Admin
 router.post(
-  "/car/add",
+  "/admin/car/add",
   upload.array("carImages"),
   requireSignin,
   adminMiddleware,

@@ -4,15 +4,15 @@ import SimpleImageSlider from "react-simple-image-slider";
 import PlaceIcon from "@mui/icons-material/Place";
 import "./CardSlider.css";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllHotels } from "./Redux/Actions/hotelAction";
+import { getAllHotels, getFeaturedHotels } from "./Redux/Actions/hotelAction";
 import { ImageUrl } from "./Redux/UrlConfig";
+import { Link } from "react-router-dom";
 
 const swat = [
   // "https://encrypted-tbn2.gstatic.com/licensed-image?q=tbn:ANd9GcTI7dXAHON8IedSsXKr-VSieEFTYAs6HU_9SoKcWbiPpRsAzIznXMXpN4FLxgHdo14NS0hrvwoo3WfGNRZEo0nMVw",
   // "https://encrypted-tbn0.gstatic.com/licensed-image?q=tbn:ANd9GcQ4A9utNyo5M0S-69hb7Q1aC4fE98cl1MUCLl7ktfl09SS9tU2LHfAEv-1k4g70bNVVU4-r9mC_AQrWuHRXTZnjAw",
   // "https://encrypted-tbn1.gstatic.com/licensed-image?q=tbn:ANd9GcSiJu877Mgz_R83j7t2_nvXALnepR1Z7BHYLnftisscLW7rIgybfPvKEpfDfmRxw06mTARqlzV4s9iWcqe1rUtZEA",
   // "https://encrypted-tbn3.gstatic.com/licensed-image?q=tbn:ANd9GcR7sYcmXrpUqLclODrY1rhS3Ose0Hvsh4C88RVyQT54_qwJIF1NQn1xhDXVgKn0KeBIm72Zr_myogp2BQlB0VTO-g",
-
 ];
 const Kashmir = [
   "https://images.unsplash.com/photo-1629745493093-04f1d97b0411?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Nnx8bmVlbGFtJTIwdmFsbGV5fGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60",
@@ -32,9 +32,10 @@ const Isb = [
 
 const CardSlider = () => {
   const dispatch = useDispatch();
-  const { hotels } = useSelector((state) => state.hotelReducer);
+  const { hotels } = useSelector((state) => state.featureHotels);
   useEffect(() => {
-    dispatch(getAllHotels());
+    // dispatch(getAllHotels());
+    dispatch(getFeaturedHotels());
   }, []);
 
   return (
@@ -43,18 +44,28 @@ const CardSlider = () => {
         hotels.map((item, index) => {
           return (
             <>
-              <Grid xs={12} lg={3} >
-                <div style={{margin:'0px 10px'}}>
+              <Grid xs={12} lg={3}>
+                <div style={{ margin: "0px 10px" }} key={index}>
+                  <Link to={`/hotels/all`}>
+                  <img
+                    src={ImageUrl(item.hotelImages[0].img)}
+                    style={{ width: "100%", height: "180px" }}
+                    alt="Hotel Images"
+                  />
 
-                <img src={ImageUrl(item.hotelImages[0].img)} style={{width: '100%',height:'180px'}} alt="Hotel Images" />
-                   
-                <PlaceIcon style={{color:'#de7a08'}} className='my-2'/>
-                <span className="text-sm" style={{color:'#787878'}}>{item.city}</span>
-                <h5 style={{color:'white',fontSize:'16px'}}>{item.name}</h5>
-                {/* <h6>7 Days Tour on 2 person</h6> */}
-                <span style={{color:'white'}}>{item.cheapestPrice} PKR</span>
+                  <PlaceIcon style={{ color: "#de7a08" }} className="my-2" />
+                  <span className="text-sm" style={{ color: "#787878" }}>
+                    {item.city}
+                  </span>
+                  <h5 style={{ color: "white", fontSize: "16px" }}>
+                    {item.name}
+                  </h5>
+                  {/* <h6>7 Days Tour on 2 person</h6> */}
+                  <span style={{ color: "white" }}>
+                    {item.cheapestPrice} PKR
+                  </span>
+                  </Link>
                 </div>
-
               </Grid>
             </>
           );

@@ -16,7 +16,7 @@ import HotelIcon from "@mui/icons-material/Hotel";
 import TipsAndUpdatesIcon from "@mui/icons-material/TipsAndUpdates";
 import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
 import { signout } from "../Redux/Actions/authActions";
-import DropdownMenu from "../Components/MaterialUI/DropdownMenu";
+import {DropdownMenu} from "../Components/MaterialUI";
 
 function ChangeColorOnScroll(props) {
   const { children, window } = props;
@@ -187,7 +187,7 @@ const Navbar = (props) => {
                 </li> */}
 
                 <li>
-                  <Link to="/hotels-list">
+                  <Link to="/hotels/all">
                     <HotelIcon style={{ width: "18px", height: "15px" }} />{" "}
                     Hotels
                   </Link>

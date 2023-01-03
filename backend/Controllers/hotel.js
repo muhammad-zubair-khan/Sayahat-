@@ -27,6 +27,7 @@ exports.createHotel = catchAsyncErrors(async (req, res, next) => {
     address,
     category,
     createdBy,
+    featured,
   } = req.body;
 
   let hotelImages = [];
@@ -50,6 +51,7 @@ exports.createHotel = catchAsyncErrors(async (req, res, next) => {
     address,
     title,
     type,
+    featured,
     hotelImages: hotelImages,
     category,
     createdBy: req.user._id,
@@ -119,8 +121,8 @@ exports.getAllHotels = async (req, res) => {
     Hotel.find({
       ...others,
       cheapestPrice: { $gte: min | 1, $lte: max || 99999 },
-      ratings,
-    })
+      // ratings,
+    }).limit(req.query.limit)
   ).filter();
   const hotels = await apiFeature.query;
   res.status(200).json({
@@ -128,6 +130,8 @@ exports.getAllHotels = async (req, res) => {
     hotels,
   });
 };
+
+
 
 
 // Get All Hotel (Admin)
@@ -144,11 +148,6 @@ exports.getAllHotelsAdmin = catchAsyncErrors(async (req, res) => {
 
 //get hotel by slug
 exports.getHotelsBySlug = (req, res) => {
-  // return next(new ErrorHander("this is my temp alert error",500))
-
-  // const resultPerPage = 8;
-  // const productsCount =  Product.countDocuments();
-
   const { slug } = req.params;
   category
     .findOne({ slug: slug })
@@ -175,30 +174,37 @@ exports.getHotelsBySlug = (req, res) => {
             res.status(200).json({
               success: true,
               hotels,
+              priceRange: {
+                under5k: 5000,
+                under10k: 10000,
+                under15k: 15000,
+                under20k: 20000,
+                under30k: 30000,
+              },
               hotelsByPrice: {
                 under5k: hotels.filter((hotel) => hotel.cheapestPrice <= 5000),
-                under6k: hotels.filter(
-                  (hotel) =>
-                    hotel.cheapestPrice > 5000 && hotel.cheapestPrice <= 6000
-                ),
-                under7k: hotels.filter(
-                  (hotel) =>
-                    hotel.cheapestPrice > 6000 && hotel.cheapestPrice <= 7000
-                ),
-                under8k: hotels.filter(
-                  (hotel) =>
-                    hotel.cheapestPrice > 7000 && hotel.cheapestPrice <= 8000
-                ),
-                under9k: hotels.filter(
-                  (hotel) =>
-                    hotel.cheapestPrice > 8000 && hotel.cheapestPrice <= 9000
-                ),
                 under10k: hotels.filter(
                   (hotel) =>
-                    hotel.cheapestPrice > 9000 && hotel.cheapestPrice <= 10000
+                    hotel.cheapestPrice > 5000 && hotel.cheapestPrice <= 10000
                 ),
+                under15k: hotels.filter(
+                  (hotel) =>
+                    hotel.cheapestPrice > 10000 && hotel.cheapestPrice <= 15000
+                ),
+                under20k: hotels.filter(
+                  (hotel) =>
+                    hotel.cheapestPrice > 15000 && hotel.cheapestPrice <= 20000
+                ),
+                under30k: hotels.filter(
+                  (hotel) =>
+                    hotel.cheapestPrice > 20000 && hotel.cheapestPrice <= 30000
+                ),
+                
               },
             });
+          }
+          else{
+            res.status(200).json({ hotels });
           }
         });
       }

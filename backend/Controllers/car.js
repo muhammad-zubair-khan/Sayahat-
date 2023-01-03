@@ -21,6 +21,7 @@ exports.addCar = catchAsyncErrors(async (req, res) => {
     type,
     category,
     gear,
+    featured,
     title,
     city,
     createdBy,
@@ -47,6 +48,7 @@ exports.addCar = catchAsyncErrors(async (req, res) => {
     discount,
     type,
     gear,
+    featured,
     city,
     title,
     category,
@@ -117,12 +119,12 @@ exports.addCar = catchAsyncErrors(async (req, res) => {
 
 
 exports.getAllCars = async (req, res) => {
-  const { min, max, ratings, ...others } = req.query;
+  const { min, max, ...others } = req.query;
   const apiFeature = new ApiFeatures(
     Car.find({
       ...others,
-      price: { $gte: min | 0, $lte: max || 99999 },
-      ratings,
+      price: { $gte: min || 1, $lte: max || 99999 },
+      // ratings,
     })
   ).filter();
   const cars = await apiFeature.query;

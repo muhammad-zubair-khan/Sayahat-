@@ -72,7 +72,7 @@ const hotelSchema = new mongoose.Schema(
     },
     featured:{
       type: Boolean,
-      default: false
+      default:false
     },
   //   reviews: [
   //     {

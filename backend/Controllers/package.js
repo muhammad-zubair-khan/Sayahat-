@@ -20,6 +20,7 @@ exports.createPackage = catchAsyncErrors(async (req, res) => {
     type,
     carPickupDetails,
     product,
+    featured,
     createdBy,
   } = req.body;
 
@@ -44,6 +45,7 @@ exports.createPackage = catchAsyncErrors(async (req, res) => {
     type,
     carPickupDetails,
     product,
+    featured,
     createdBy: req.user._id,
   });
 
@@ -75,14 +77,15 @@ exports.getAllAdminPackages = catchAsyncErrors(async (req, res, next) => {
 
 // Get All Packages
 exports.getAllPackages = async (req, res) => {
-  const { min, max, ratings, ...others } = req.query;
+  const { min, max, ...others } = req.query;
   const apiFeature = new ApiFeatures(
     Package.find({
       ...others,
       price: { $gte: min | 1, $lte: max || 99999 },
-      ratings,
-    })
-  ).filter();
+      // ratings,
+    }).limit(req.query.limit)
+  )
+  .filter();
   const packages = await apiFeature.query;
   res.status(200).json({
     success: true,

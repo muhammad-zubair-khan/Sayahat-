@@ -1,20 +1,16 @@
 import { createStore, combineReducers, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
-import { authReducer, allAdminsReducer } from "./Reducers/authReducers";
+import { authReducer } from "./Reducers/authReducers";
 import { VacationCategoryReducer } from "./Reducers/vacationCategoryReducer";
-import { vacationProductReducer,addCitiesReducer,allCitiesReducer } from "./Reducers/VacationProductReducer";
-import { allHotelsReducer, hotelsReducer, newReviewReducer, hotelReviewsReducer, reviewReducer } from "./Reducers/hotelReducer";
+import { vacationProductReducer,addCitiesReducer } from "./Reducers/VacationProductReducer";
+import { allHotelsReducer, hotelsReducer, newReviewReducer, hotelReviewsReducer, reviewReducer, featuredHotelReducer } from "./Reducers/hotelReducer";
 import { allCarsReducer, carReviewsReducer, newCarReducer, newReviewCarReducer, reviewCarReducer } from "./Reducers/carReducer";
-import { allPackagesReducer, newPackageReducer, newReviewPackageReducer, packageReviewsReducer, reviewPackageReducer } from "./Reducers/packageReducer";
-import { allUsersReducer, userAuthReducer } from "./Reducers/userReducers";
-import { addNewDestinationReducer, destinationReducer } from "./Reducers/topDestinatonsReducer";
+import { allPackagesReducer, featuredPackagesReducer, newPackageReducer, newReviewPackageReducer, packageReviewsReducer, reviewPackageReducer } from "./Reducers/packageReducer";
+// import { addNewDestinationReducer, destinationReducer } from "./Reducers/topDestinatonsReducer";
 
 const reducer = combineReducers({
   auth: authReducer,
-  // allAdmins: allAdminsReducer,
-  // userAuth: userAuthReducer,
-  // allUsers: allUsersReducer,
   Vacationcategory: VacationCategoryReducer,
   vacationProduct: vacationProductReducer,
   newVacation: addCitiesReducer,
@@ -24,8 +20,8 @@ const reducer = combineReducers({
   carsReducer: allCarsReducer,
   addPackageReducer: newPackageReducer,
   packagesReducer: allPackagesReducer,
-  allDestinationReducer: destinationReducer,
-  newDestination: addNewDestinationReducer,
+  // allDestinationReducer: destinationReducer,
+  // newDestination: addNewDestinationReducer,
   newReview: newReviewReducer,
   hotelReviews: hotelReviewsReducer,
   review: reviewReducer,
@@ -35,9 +31,8 @@ const reducer = combineReducers({
   newCarReview:newReviewCarReducer,
   carReview:carReviewsReducer,
   delCarReview:reviewCarReducer,
-  // allVacation: allCitiesReducer,
-  // userLogin: userLoginReducer,
-  // userLogin: userLoginReducer,
+  featureHotels:featuredHotelReducer,
+  featurePackages:featuredPackagesReducer,
 });
 //Login
 

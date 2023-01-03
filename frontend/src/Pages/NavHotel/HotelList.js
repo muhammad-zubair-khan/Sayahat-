@@ -1,81 +1,30 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
 import Footer from '../../Footer/Footer'
+import HotelNav from '../../Navbar/HotelNav/HotelNav'
 import Navbar from '../../Navbar/Navbar'
 import SecNav from '../../Navbar/SecNav'
-import { getAllHotels } from '../../Redux/Actions/hotelAction'
+import {  getHotels } from '../../Redux/Actions/hotelAction'
+import { getAllVacationProduct } from '../../Redux/Actions/vacationProductAction'
 import { ImageUrl } from '../../Redux/UrlConfig'
 
 const HotelList = () => {
   const dispatch = useDispatch()
   const {hotels} = useSelector((state)=> state.hotelReducer)
+  const {products} = useSelector((state)=> state.vacationProduct)
   useEffect(() => {
-   dispatch(getAllHotels())
-  },[]);
-  // let hotels = [
-  //   {
-  //     image: 'https://images.unsplash.com/photo-1517840901100-8179e982acb7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8aG90ZWx8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60',
-  //     city: 'Lahore',
-  //     name: 'Avari Hotel',
-  //     price: 69
-  //   },
-  //   {
-  //     image: 'https://images.unsplash.com/photo-1517840901100-8179e982acb7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8aG90ZWx8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60',
-  //     city: 'Lahore',
-  //     name: 'Avari Hotel',
-  //     price: 69
-  //   },
-  //   {
-  //     image: 'https://images.unsplash.com/photo-1517840901100-8179e982acb7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8aG90ZWx8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60',
-  //     city: 'Lahore',
-  //     name: 'Avari Hotel',
-  //     price: 69
-  //   },
-  //   {
-  //     image: 'https://images.unsplash.com/photo-1517840901100-8179e982acb7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8aG90ZWx8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60',
-  //     city: 'Lahore',
-  //     name: 'Avari Hotel',
-  //     price: 69
-  //   },
-  //   {
-  //     image: 'https://images.unsplash.com/photo-1517840901100-8179e982acb7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8aG90ZWx8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60',
-  //     city: 'Lahore',
-  //     name: 'Avari Hotel',
-  //     price: 69
-  //   },
-  //   {
-  //     image: 'https://images.unsplash.com/photo-1517840901100-8179e982acb7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8aG90ZWx8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60',
-  //     city: 'Lahore',
-  //     name: 'Avari Hotel',
-  //     price: 69
-  //   },
-  //   {
-  //     image: 'https://images.unsplash.com/photo-1517840901100-8179e982acb7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8aG90ZWx8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60',
-  //     city: 'Lahore',
-  //     name: 'Avari Hotel',
-  //     price: 69
-  //   },
-  //   {
-  //     image: 'https://images.unsplash.com/photo-1517840901100-8179e982acb7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8aG90ZWx8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60',
-  //     city: 'Lahore',
-  //     name: 'Avari Hotel',
-  //     price: 69
-  //   },
-  //   {
-  //     image: 'https://images.unsplash.com/photo-1517840901100-8179e982acb7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8aG90ZWx8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60',
-  //     city: 'Lahore',
-  //     name: 'Avari Hotel',
-  //     price: 69
-  //   }
-  // ]
+   dispatch(getHotels())
+   dispatch(getAllVacationProduct())
+  },[dispatch]);
+  
   return (
     <>
       <div style={{ background: "rgb(0, 0, 0)", height: "75px" }}>
         <Navbar />
       </div>
-      <SecNav />
+      <HotelNav />
       <div className="container text-center my-5">
-        {/* start of info of contact about hotel */}
         <div className="row">
           <div className="col-md-3">
             <i className="fa-solid fa-shield-halved text-primary fs-3"></i>
@@ -130,7 +79,7 @@ const HotelList = () => {
           <h1 className='text-start text-primary fw-bold'>Don't miss these hotel deals</h1>
           <div className="container text-center">
             <div className="row">
-              {hotels.map((hotel) => {
+              {hotels && hotels.map((hotel) => {
                 return (
                   <div className="col-md-4 my-3">
                     <div className="card">
@@ -139,7 +88,7 @@ const HotelList = () => {
                         <p className="card-text text-start">{hotel.city}</p>
                         <div className='row'>
                           <h5 className="card-title text-start fw-bold text-dark col-md-8" >{hotel.name}</h5>
-                          <h6 className="card-title text-end text-primary fw-bold col-md-4">From ${hotel.cheapestPrice}</h6>
+                          <h6 className="card-title text-end text-primary fw-bold col-md-4">From PKR {hotel.cheapestPrice}</h6>
                         </div>
                       </div>
                     </div>
@@ -157,48 +106,59 @@ const HotelList = () => {
           <h4 className='text-start text-primary fw-bold'>Top Hotel Deals in the Pakistan</h4>
           <div class="container">
             <div className="row">
-              <div className="col">
+              <div className="col-md-3">
                 <ul className='list-unstyled text-start text-dark lh-lg'>
-                  <li>Lahore Hotel</li>
-                  <li>Karachi Hotel</li>
-                  <li>Islamabad Hotel</li>
-                  <li>Multan Hotel</li>
-                  <li>Peshawar Hotel</li>
-                  <li>Faisalabad Hotel</li>
-                  <li>Gujranwala Hotel</li>
-                  <li>Rawalpindi Hotel</li>
-                  <li>Hyderabad Hotel</li>
-                  <li>Skardu Hotel</li>
+                  {products && products.slice(0,10).map((item,index)=>{
+                    return(
+                      <li key={index}>
+                        {/* <Link to={`/hotelsby/${item.slug}`}> */}
+                          {item.name}
+                        {/* </Link> */}
+                      </li>
+                    )
+                  })}
                 </ul>
               </div>
-              <div className="col">
+              <div className="col-md-3">
                 <ul className='list-unstyled text-start text-dark lh-lg'>
-                  <li>Lahore Hotel</li>
-                  <li>Karachi Hotel</li>
-                  <li>Islamabad Hotel</li>
-                  <li>Multan Hotel</li>
-                  <li>Peshawar Hotel</li>
-                  <li>Faisalabad Hotel</li>
-                  <li>Gujranwala Hotel</li>
-                  <li>Rawalpindi Hotel</li>
-                  <li>Hyderabad Hotel</li>
-                  <li>Skardu Hotel</li>
+                  {products && products.slice(10,20).map((item,index)=>{
+                    return(
+                      <li key={index}>
+                        {/* <Link to={`/hotelsby/${item.slug}`}> */}
+                          {item.name}
+                        {/* </Link> */}
+                      </li>
+                    )
+                  })}
                 </ul>
               </div>
-              <div className="col">
+              <div className="col-md-3">
                 <ul className='list-unstyled text-start text-dark lh-lg'>
-                  <li>Lahore Hotel</li>
-                  <li>Karachi Hotel</li>
-                  <li>Islamabad Hotel</li>
-                  <li>Multan Hotel</li>
-                  <li>Peshawar Hotel</li>
-                  <li>Faisalabad Hotel</li>
-                  <li>Gujranwala Hotel</li>
-                  <li>Rawalpindi Hotel</li>
-                  <li>Hyderabad Hotel</li>
-                  <li>Skardu Hotel</li>
+                  {products && products.slice(20,30).map((item,index)=>{
+                    return(
+                      <li key={index}>
+                        {/* <Link to={`/hotelsby/${item.slug}`}> */}
+                          {item.name}
+                        {/* </Link> */}
+                      </li>
+                    )
+                  })}
                 </ul>
               </div>
+              <div className="col-md-3">
+                <ul className='list-unstyled text-start text-dark lh-lg'>
+                  {products && products.slice(30,40).map((item,index)=>{
+                    return(
+                      <li key={index}>
+                        {/* <Link to={item.slug}> */}
+                          {item.name}
+                        {/* </Link> */}
+                      </li>
+                    )
+                  })}
+                </ul>
+              </div>
+              
             </div>
           </div>
         </div>

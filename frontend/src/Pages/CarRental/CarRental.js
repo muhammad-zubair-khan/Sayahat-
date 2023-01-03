@@ -6,78 +6,24 @@ import CarList from "../Cars/CarList/CarList";
 import { Container, Grid } from '@mui/material';
 import SecNav from '../../Navbar/SecNav';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllCars } from '../../Redux/Actions/carAction';
+import {  getCars } from '../../Redux/Actions/carAction';
 import { ImageUrl } from '../../Redux/UrlConfig';
+import CarNav from '../../Navbar/CarNav/CarNav';
 
 const CarRental = () => {
   const dispatch = useDispatch()
   const {cars} = useSelector((state)=> state.carsReducer)
 
   useEffect(() => {
-    dispatch(getAllCars())
+    dispatch(getCars())
    },[]);
-  // let hotels = [
-  //   {
-  //     image: 'https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8Y2FyfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60',
-  //     city: 'Lahore',
-  //     name: 'Nissan GTR',
-  //     price: 69
-  //   },
-  //   {
-  //     image: 'https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8Y2FyfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60',
-  //     city: 'Lahore',
-  //     name: 'Nissan GTR',
-  //     price: 69
-  //   },
-  //   {
-  //     image: 'https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8Y2FyfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60',
-  //     city: 'Lahore',
-  //     name: 'Nissan GTR',
-  //     price: 69
-  //   },
-  //   {
-  //     image: 'https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8Y2FyfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60',
-  //     city: 'Lahore',
-  //     name: 'Nissan GTR',
-  //     price: 69
-  //   },
-  //   {
-  //     image: 'https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8Y2FyfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60',
-  //     city: 'Lahore',
-  //     name: 'Nissan GTR',
-  //     price: 69
-  //   },
-  //   {
-  //     image: 'https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8Y2FyfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60',
-  //     city: 'Lahore',
-  //     name: 'Nissan GTR',
-  //     price: 69
-  //   },
-  //   {
-  //     image: 'https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8Y2FyfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60',
-  //     city: 'Lahore',
-  //     name: 'Nissan GTR',
-  //     price: 69
-  //   },
-  //   {
-  //     image: 'https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8Y2FyfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60',
-  //     city: 'Lahore',
-  //     name: 'Nissan GTR',
-  //     price: 69
-  //   },
-  //   {
-  //     image: 'https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8Y2FyfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60',
-  //     city: 'Lahore',
-  //     name: 'Nissan GTR',
-  //     price: 69
-  //   }
-  // ]
+ 
   return (
     <>
     <div style={{ background: "rgb(0, 0, 0)", height: "75px" }}>
         <Navbar />
       </div>
-      <SecNav/>
+      <CarNav/>
       <div className="container text-center my-5">
         {/* start of info of contact about car */}
         <div className="row">
@@ -146,7 +92,7 @@ const CarRental = () => {
                         <p className="card-text text-start">{car.city}</p>
                         <div className='row'>
                           <h5 className="card-title text-start fw-bold text-dark col-md-6">{car.name}</h5>
-                          <h6 className="card-title text-end text-primary fw-bold col-md-6">From PKR {car.fare}</h6>
+                          <h6 className="card-title text-end text-primary fw-bold col-md-6">From PKR {car.price}</h6>
                         </div>
                       </div>
                     </div>

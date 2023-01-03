@@ -21,6 +21,9 @@ import {
   NEW_REVIEW_FAIL,
   NEW_REVIEW_REQUEST,
   CLEAR_ERRORS,
+  GET_ALL_FEATURED_HOTELS_REQUEST,
+  GET_ALL_FEATURED_HOTELS_SUCCESS,
+  GET_ALL_FEATURED_HOTELS_FAIL,
 } from "../Constants/hotelConstants";
 import axios from "../helpers/axios";
 
@@ -50,25 +53,26 @@ export const createHotel = (form) => {
   };
 };
 
-// Get All Hotels For Admin
-// export const getAllHotels = () => async (dispatch) => {
-//   try {
-//     dispatch({ type: GET_ALL_HOTELS_REQUEST });
+// Get All Hotels 
+export const getHotels = () => async (dispatch) => {
+  try {
+    dispatch({ type: GET_ALL_HOTELS_REQUEST });
 
-//     const { data } = await axios.get("/all-hotels");
+    const { data } = await axios.get("/all-hotels");
 
-//     dispatch({
-//       type: GET_ALL_HOTELS_SUCCESS,
-//       payload: data.hotels,
-//     });
-//   } catch (error) {
-//     dispatch({
-//       type: GET_ALL_HOTELS_FAIL,
-//       payload: error.response.data.message,
-//     });
-//   }
-// };
+    dispatch({
+      type: GET_ALL_HOTELS_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: GET_ALL_HOTELS_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
 
+// Get Searched Hotel
 export const getAllHotels = (type, min, max, ratings,destination) => async (dispatch) => {
   try {
     dispatch({ type: GET_ALL_HOTELS_REQUEST });
@@ -93,20 +97,39 @@ export const getAllHotels = (type, min, max, ratings,destination) => async (disp
   }
 };
 
+//Get Featured Hotel
+export const getFeaturedHotels = () => async (dispatch) => {
+  try {
+    dispatch({ type: GET_ALL_FEATURED_HOTELS_REQUEST });
+    let link = `/all-hotels?featured=${true}&limit=${4}`;
+    
+    const { data } = await axios.get(link);
+    dispatch({
+      type: GET_ALL_FEATURED_HOTELS_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: GET_ALL_FEATURED_HOTELS_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+
 //get Product by Slug
 export const getHotelBySlug = (slug) => async (dispatch) => {
   try {
     dispatch({ type: GET_HOTEL_BY_SLUG_REQUEST });
     const { data } = await axios.get(`/hotels/${slug}`);
-    console.log(data);
     dispatch({
       type: GET_HOTEL_BY_SLUG_SUCCESS,
-      payload: data.hotels,
+      payload: data,
     });
   } catch (error) {
     dispatch({
       type: GET_HOTEL_BY_SLUG_FAIL,
-      // payload: error.response.data.message,
+      payload: error.response.data.message,
     });
   }
 };

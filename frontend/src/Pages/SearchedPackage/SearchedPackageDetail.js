@@ -69,7 +69,7 @@ function SearchedPackageDetail({ match }) {
         type: "NEW_SEARCH",
         payload: { packageDestination, dates, options },
       });
-      toast.success(`Done! please wait`, {
+      toast.success(`Confirming! please wait`, {
         position: toast.POSITION.BOTTOM_CENTER,
       });
       setTimeout(() => {
@@ -216,66 +216,7 @@ function SearchedPackageDetail({ match }) {
     }
   }, [dispatch, reviewError, success]);
 
-  let pictures = [
-    {
-      image:
-        "https://media.tacdn.com/media/attractions-splice-spp-674x446/0c/e1/ed/7d.jpg",
-    },
-    {
-      image:
-        "https://media.tacdn.com/media/attractions-splice-spp-674x446/0c/e1/ed/7d.jpg",
-    },
-    {
-      image:
-        "https://media.tacdn.com/media/attractions-splice-spp-674x446/0c/e1/ed/7d.jpg",
-    },
-    {
-      image:
-        "https://media.tacdn.com/media/attractions-splice-spp-674x446/0c/e1/ed/7d.jpg",
-    },
-    {
-      image:
-        "https://media.tacdn.com/media/attractions-splice-spp-674x446/0c/e1/ed/7d.jpg",
-    },
-  ];
 
-  let reviews = [
-    {
-      title: "Poor customer service",
-      name: "Martha_B",
-      date: "Dec 2022",
-      comment:
-        "Was ill at the last minute and try to reschedule for the following night. We were told that we could not reschedule and would lose our money. Obviously, we lost our money because we were sick and could not go. We did not ask for a refund we simply asked for a reschedule.",
-    },
-    {
-      title: "Nigh bus tour",
-      name: "Will_R",
-      date: "Oct 2022",
-      comment:
-        "The bus tour was a lot of fun however they pick you up and then head straight to the Excalibur for a bathroom break. That’s the only one, the night time tour needs another stop up by Fremont st for a bathroom break. Everyone on the bus ran off trying to find a bathroom when we finally got done.",
-    },
-    {
-      title: "A must do in Vegas",
-      name: "Torie_L",
-      date: "Oct 2022",
-      comment:
-        "Had a great couple of hours seeing vegas at night, our tour guide and bus driver were excellent great knowledge. Got to stop off at the vegas sign for amazing pictures.",
-    },
-    {
-      title: "Great way to see the sites",
-      name: "Rick_L",
-      date: "Sep 2022",
-      comment:
-        "Learned a lot about Vegas and got to see all the sites!Was fun hearing about movies filmed here and about downtown.",
-    },
-    {
-      title: "Okay tour, but too long",
-      name: "Randy_S",
-      date: "Aug 2022",
-      comment:
-        "It was interesting at first but then went a bit downhill. The biggest issue was it was simply too long. They tried to stretch a 60-minute tour into 90+ minutes.",
-    },
-  ];
   if (Object.keys(packages.package).length === 0) {
     return null;
   }
@@ -316,7 +257,7 @@ function SearchedPackageDetail({ match }) {
           </div>
 
           <div className="col-4 BgPackage p-3 h-100">
-            <h4 className="text-black">From ${packages.package.price}</h4>
+            <h4 className="text-black">From PKR {packages.package.price}</h4>
             <span style={{ color: "#1874A2" }}>Lowest Price Guarantee</span>
             <hr />
             <h4 className="text-black">Select Date and Travelers</h4>

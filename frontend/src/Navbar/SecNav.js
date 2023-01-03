@@ -14,7 +14,7 @@ import { ReactSearchAutocomplete } from "react-search-autocomplete";
 import { useEffect } from "react";
 import { getAllVacationProduct } from "../Redux/Actions/vacationProductAction";
 import Tab from "../Components/Tab/Tab";
-const SecNav = () => {
+const SecNav = (props) => {
   const history = useHistory();
   //Stays
   const [destination, setDestination] = useState("");
@@ -325,7 +325,15 @@ const SecNav = () => {
                               onClick={() => setOpenOptions(!openOptions)}
                             >{`${options.adult} Adult - ${options.children} Children`}</span>
                             {openOptions && (
-                              <div className="options2">
+                              <div className="options2" style={{
+                                position: 'absolute',
+                                top: '111px',
+                                width: '19%',
+                                zIndex: '1000000',
+                                backgroundColor: 'white',
+                                boxShadow: '0px 0px 10px #848484',
+                                padding: '7px 10px',
+                              }}>
                                 <div className="optionItems">
                                   <span
                                     style={{

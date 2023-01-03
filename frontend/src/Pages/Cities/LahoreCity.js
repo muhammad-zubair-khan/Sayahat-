@@ -28,6 +28,7 @@ const LahoreCity = (props) => {
       startDate: new Date(),
       endDate: new Date(),
       key: "selection",
+      autoFocus: new Date(),
     },
   ]);
   const [options, setOptions] = useState({
@@ -192,6 +193,7 @@ const LahoreCity = (props) => {
                           onChange={(item) => setDates([item.selection])}
                           minDate={new Date()}
                           ranges={dates}
+                          
                         />
                       )}
                     </div>
@@ -478,7 +480,7 @@ const LahoreCity = (props) => {
                                 </div>
                                 <div className="col-4 text-end">
                                   <h5 class="card-title text-dark">
-                                    ${data.price}
+                                    PKR {data.price}
                                   </h5>
                                 </div>
                               </div>

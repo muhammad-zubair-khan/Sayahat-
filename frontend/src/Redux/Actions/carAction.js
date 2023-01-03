@@ -48,17 +48,36 @@ export const addCar = (form) => {
   };
 };
 
-// Get All Cars For Admin
+// Get All Cars 
+export const getCars = () => async (dispatch) => {
+  try {
+    dispatch({ type: GET_ALL_CARS_REQUEST });
+
+    const { data } = await axios.get("/cars");
+
+    dispatch({
+      type: GET_ALL_CARS_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: GET_ALL_CARS_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+// Get All Cars 
 export const getAllCars =
-  (type, min, max, ratings, startDestination) => async (dispatch) => {
+  ( min,max,startDestination,carType) => async (dispatch) => {
     try {
       dispatch({ type: GET_ALL_CARS_REQUEST });
-      let link = `/cars?city=${startDestination}&min=${min || 0}&max=${max || 9999
-        }&ratings=${ratings || 0}`;
+      let link = `/cars?city=${startDestination}&min=${min || 0}&max=${max || 99999
+        }`;
 
-      if (type) {
-        link = `/cars?city=${startDestination}&type=${type}&min=${min || 0
-          }&max=${max || 9999}&ratings=${ratings || 0}`;
+      if (carType) {
+        link = `/cars?city=${startDestination}&type=${carType}&min=${min || 0
+          }&max=${max || 99999}`;
       }
       // if(gear) {
       //   link = `/cars?city=${startDestination}&gear=${gear}&min=${

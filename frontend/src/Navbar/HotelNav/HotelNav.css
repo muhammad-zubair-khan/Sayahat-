@@ -1,0 +1,119 @@
+.sec-fh5co-cover,
+.sec-fh5co-hero {
+  position: relative;
+  /* height: 800px; */
+  height: 400px;
+}
+@media screen and (max-width: 768px) {
+  .sec-fh5co-cover,
+  .sec-fh5co-hero {
+    height: 700px;
+  }
+}
+.sec-fh5co-cover .sec-fh5co-overlay,
+.sec-fh5co-hero .sec-fh5co-overlay {
+  position: absolute !important;
+  width: 100%;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 1;
+ /* background-image: url('../Assets/sec-img.jpg'); */
+ background-color: #c2f7ff;
+ filter: brightness(.3);
+ background-repeat: no-repeat;
+ background-size: contain;
+}
+
+.sec-fh5co-cover {
+  background-size: cover;
+  position: relative;
+}
+@media screen and (max-width: 768px) {
+  .sec-fh5co-cover {
+    height: inherit;
+    padding: 3em 0;
+  }
+}
+.sec-fh5co-cover .btn {
+  padding: 1em 2em;
+  opacity: 0.9;
+}
+.sec-fh5co-cover.sec-fh5co-cover_2 {
+  height: 600px;
+}
+@media screen and (max-width: 768px) {
+  .sec-fh5co-cover.sec-fh5co-cover_2 {
+    height: inherit;
+    padding: 3em 0;
+  }
+}
+.sec-fh5co-cover .desc {
+  /* top: 40%; */
+  top: 76%;
+  position: absolute;
+  width: 100%;
+  margin-top: -80px;
+  z-index: 2;
+  color: #fff;
+}
+@media screen and (max-width: 768px) {
+  .sec-fh5co-cover .desc {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+}
+.sec-fh5co-cover .desc h2 {
+  /* color: #fff;
+  font-size: 60px;
+  margin-bottom: 10px;
+  font-weight: 400 !important; */
+  color: #8d8d8d;
+    font-size: 60px;
+    margin-bottom: 10px;
+    font-weight: 900;
+}
+@media screen and (max-width: 768px) {
+  .sec-fh5co-cover .desc h2 {
+    font-size: 40px;
+  }
+}
+.sec-fh5co-cover .desc h3 {
+  color: #fff;
+}
+.sec-fh5co-cover .desc p {
+  display: block;
+  margin-bottom: 30px;
+  font-size: 16px;
+  letter-spacing: 1px;
+  color: rgba(255, 255, 255, 0.7);
+}
+.sec-fh5co-cover .desc p a {
+  color: #fff;
+}
+.sec-fh5co-cover .desc p a:hover,
+.sec-fh5co-cover .desc p a:focus {
+  color: #fff !important;
+}
+.sec-fh5co-cover .desc p a:hover.btn,
+.sec-fh5co-cover .desc p a:focus.btn {
+  border: 2px solid #fff !important;
+  background: transparent !important;
+}
+.sec-fh5co-cover .desc p a.sec-fh5co-site-name {
+  padding-bottom: 2px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.7);
+}
+.sec-fh5co-cover .desc .price {
+  font-size: 60px;
+  font-weight: bold;
+}
+@media screen and (max-width: 768px) {
+  .sec-fh5co-cover .desc .desc2 {
+    display: none;
+  }
+}
+body.sec-fh5co-offcanvas {
+  overflow: hidden;
+}

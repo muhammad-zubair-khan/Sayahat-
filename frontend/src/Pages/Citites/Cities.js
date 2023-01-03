@@ -17,11 +17,11 @@ const Cities = ({ props, history }) => {
   const dispatch = useDispatch();
   const { products } = useSelector((state) => state.vacationProduct);
   // console.log(products)
-  const { destinations } = useSelector((state) => state.allDestinationReducer);
+  // const { destinations } = useSelector((state) => state.allDestinationReducer);
   
   useEffect(() => {
     dispatch(getVacationProductsBySlug(slug));
-    dispatch(getDestinationBySlug(slug));
+    // dispatch(getDestinationBySlug(slug));
   }, [dispatch, slug]);
   return (
     <>
@@ -55,32 +55,7 @@ const Cities = ({ props, history }) => {
                 </>
               );
             })}
-          {destinations &&
-            destinations.map((data, index) => {
-              return (
-                <>
-                  <div className="col-md-4 my-3">
-                    <Link to={`/vacation/${slug}/${data.slug}/${data._id}`}>
-                      {console.log(data)}
-                      <div className="wrapper-cards">
-                        <img
-                          src={data.destinationPicture}
-                          style={{
-                            width: "100%",
-                            height: "300px",
-                            display: "flex",
-                            justifyContent: "center",
-                            alignItems: "center",
-                          }}
-                          alt=""
-                        />
-                        <h3 className="wrapper-text">{data.name}</h3>
-                      </div>
-                    </Link>
-                  </div>
-                </>
-              );
-            })}
+          
         </div>
       </Container>
     </>

@@ -20,15 +20,20 @@ const carSchema = new mongoose.Schema({
         type: Number,
         required: true,
     },
+    featured:{
+      type: Boolean,
+      default:false
+    },
     gear:{
         type:String,
+        required:true
     },
     city:{
         type:String,
         required:true,
     },
     price:{
-        type: String,
+        type: Number,
         required:true,
     },
     mileage:{

@@ -3,9 +3,6 @@ import Header from "../../../components/Header";
 import Sidebar from "../../../components/Sidebar";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
-import FormGroup from "@mui/material/FormGroup";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
 import { TextareaAutosize } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import Paper from "@mui/material/Paper";
@@ -13,10 +10,7 @@ import Grid from "@mui/material/Grid";
 import "./CitiesManagementScreen.css";
 import { Link, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  getAllVacationProduct,
-  getVacationProductsBySlug,
-} from "../../../Redux/Actions/vacationProductAction";
+import { getAllVacationProduct } from "../../../Redux/Actions/vacationProductAction";
 import {
   createHotel,
   getHotelBySlug,
@@ -26,48 +20,22 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import Radio from "@mui/material/Radio";
-import RadioGroup from "@mui/material/RadioGroup";
-// import FormControlLabel from '@mui/material/FormControlLabel';
-// import FormControl from '@mui/material/FormControl';
-import FormLabel from "@mui/material/FormLabel";
 import { addCar } from "../../../Redux/Actions/carAction";
 import { createPackage } from "../../../Redux/Actions/packageAction";
-import { getAllDestinations } from "../../../Redux/Actions/topDestinationAction";
-import Autocomplete from "@mui/material/Autocomplete";
-import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
-import CheckBoxIcon from "@mui/icons-material/CheckBox";
+// import FormGroup from "@mui/material/FormGroup";
+// import FormControlLabel from "@mui/material/FormControlLabel";
+// import Checkbox from "@mui/material/Checkbox";
+// import FormControlLabel from '@mui/material/FormControlLabel';
+// import FormControl from '@mui/material/FormControl';
+// import Radio from "@mui/material/Radio";
+// import RadioGroup from "@mui/material/RadioGroup";
+// import FormLabel from "@mui/material/FormLabel";
+// import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
+// import CheckBoxIcon from "@mui/icons-material/CheckBox";
 
-const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
-const checkedIcon = <CheckBoxIcon fontSize="small" />;
+// const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
+// const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
-// const timeLists = [
-//   { time: "12PM" },
-//   { time: "1PM" },
-//   { time: "2PM" },
-//   { time: "3PM" },
-//   { time: "4PM" },
-//   { time: "5PM" },
-//   { time: "6PM" },
-//   { time: "7PM" },
-//   { time: "8PM" },
-//   { time: "9PM" },
-//   { time: "10PM" },
-//   { time: "11PM" },
-//   { time: "12AM" },
-//   { time: "1AM" },
-//   { time: "2AM" },
-//   { time: "3AM" },
-//   { time: "4AM" },
-//   { time: "5AM" },
-//   { time: "6AM" },
-//   { time: "7AM" },
-//   { time: "8AM" },
-//   { time: "9AM" },
-//   { time: "10AM" },
-//   { time: "11AM" },
-//   { time: "12AM" },
-// ];
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
   ...theme.typography.body2,
@@ -91,9 +59,8 @@ const CitiesManagementScreen = (props) => {
   const [address, setAddress] = useState("");
   const [distance, setDistance] = useState("");
   const [cheapestPrice, setCheapestPrice] = useState("");
-  const [featured, setFeatured] = useState("");
+  const [featuredHotel, setFeaturedHotel] = useState(false);
   const [hotelImages, setHotelImages] = useState([]);
-  // const [hotelImagesPreview, setHotelImagesPreview] = useState([]);
 
   //Car States
   let [carCity, setCarCity] = useState("");
@@ -108,9 +75,9 @@ const CitiesManagementScreen = (props) => {
   const [discount, setDiscount] = useState("");
   const [desc, setDesc] = useState("");
   const [gear, setGear] = useState("");
+  const [featuredCar, setFeaturedCar] = useState(false);
   const [carTitle, setCarTitle] = useState("");
   const [carImages, setCarImages] = useState([]);
-  // const [carImagesPreview, setCarImagesPreview] = useState([]);
 
   //Package States
   let [packageCity, setPackageCity] = useState("");
@@ -120,12 +87,13 @@ const CitiesManagementScreen = (props) => {
   const [duration, setDuration] = useState("");
   const [refundable, setRefundable] = useState("");
   const [product, setProduct] = useState("");
+  const [featuredPackage, setFeaturedPackage] = useState(false);
   const [packageType, setPackageType] = useState("");
   const [carPickupDetails, setCarPickupDetails] = useState("");
   const [packageImages, setPackageImages] = useState([]);
   const [tagValue, setTagValue] = useState("");
   const [tags, setTags] = useState([]);
-  console.log(tags);
+
   const addTags = (e) => {
     if (e.key === "Enter" && tagValue) {
       setTags([...tags, tagValue]);
@@ -137,46 +105,12 @@ const CitiesManagementScreen = (props) => {
     setTags(remainTag);
   };
 
-  // const [timeLists, setTimeLists] = useState([
-  //   { time: "12PM" },
-  //   { time: "1PM" },
-  //   { time: "2PM" },
-  //   { time: "3PM" },
-  //   { time: "4PM" },
-  //   { time: "5PM" },
-  //   { time: "6PM" },
-  //   { time: "7PM" },
-  //   { time: "8PM" },
-  //   { time: "9PM" },
-  //   { time: "10PM" },
-  //   { time: "11PM" },
-  //   { time: "12AM" },
-  //   { time: "1AM" },
-  //   { time: "2AM" },
-  //   { time: "3AM" },
-  //   { time: "4AM" },
-  //   { time: "5AM" },
-  //   { time: "6AM" },
-  //   { time: "7AM" },
-  //   { time: "8AM" },
-  //   { time: "9AM" },
-  //   { time: "10AM" },
-  //   { time: "11AM" },
-  //   { time: "12AM" },
-  // ]);
   const dispatch = useDispatch();
   const { products } = useSelector((state) => state.vacationProduct);
-  console.log(products);
-  const { destinations } = useSelector((state) => state.allDestinationReducer);
-  //   useEffect(() => {
-  //     const { match } = props;
-  //   console.log(props);
-  // }, [dispatch, props]);
+
   useEffect(() => {
     const { match } = props;
-    console.log(props);
     dispatch(getAllVacationProduct());
-    dispatch(getAllDestinations());
     dispatch(getHotelBySlug(match.params.slug));
   }, [dispatch, props]);
 
@@ -205,60 +139,55 @@ const CitiesManagementScreen = (props) => {
     const myForm = new FormData();
 
     myForm.set("name", name);
-    console.log(name);
+    // console.log(name);
 
     myForm.set("description", description);
-    console.log(description);
+    // console.log(description);
 
     myForm.set("city", city);
-    console.log(city);
+    // console.log(city);
 
     myForm.set("type", hotelType);
-    console.log(hotelType);
+    // console.log(hotelType);
 
     myForm.set("distance", distance);
-    console.log(distance);
+    // console.log(distance);
 
     myForm.set("address", address);
-    console.log(address);
+    // console.log(address);
 
     myForm.set("title", hotelTitle);
-    console.log(hotelTitle);
+    // console.log(hotelTitle);
 
     myForm.set("cheapestPrice", cheapestPrice);
-    console.log(cheapestPrice);
+    // console.log(cheapestPrice);
 
     myForm.set("category", category);
-    console.log(category);
+    // console.log(category);
 
     myForm.set("pool", pool);
-    console.log(pool);
+    // console.log(pool);
 
     myForm.set("Breakfast", breakfast);
-    console.log(breakfast);
+    // console.log(breakfast);
 
     myForm.set("Hottub", hotTub);
-    console.log(hotTub);
+    // console.log(hotTub);
+
+    myForm.set("featured", featuredHotel);
+    // console.log(featuredHotel);
 
     myForm.set("FullyRefundable", fullyRefundable);
-    console.log(fullyRefundable);
+    // console.log(fullyRefundable);
 
-    // hotelImages.forEach((image) => {
-    //   myForm.append("images", image);
-    //   console.log("images>>>",image)
-    // });
     Array.from(hotelImages).forEach((item) => {
       myForm.append("hotelImages", item);
     });
 
     dispatch(createHotel(myForm));
-    // console.log(createProduct(myForm));
     history.push(`/hotel/${props.match.params.slug}`);
   };
 
-  // const onChangeFileCar = (e) => {
-  //   setCarImage(e.target.files[0]);
-  // };
   const onValueChange = (event) => {
     setPayAt(event.target.value);
   };
@@ -272,55 +201,55 @@ const CitiesManagementScreen = (props) => {
     const myForm = new FormData();
 
     myForm.set("name", carName);
-    console.log(carName);
+    // console.log(carName);
 
     myForm.set("description", desc);
-    console.log(desc);
+    // console.log(desc);
 
     myForm.set("category", category);
-    console.log(category);
+    // console.log(category);
 
     myForm.set("passenger", passenger);
-    console.log(passenger);
+    // console.log(passenger);
 
     myForm.set("price", fare);
-    console.log(fare);
+    // console.log(fare);
 
     myForm.set("type", type);
-    console.log(type);
+    // console.log(type);
 
     myForm.set("mileage", mileage);
-    console.log(mileage);
+    // console.log(mileage);
 
     myForm.set("refund", refund);
-    console.log(refund);
+    // console.log(refund);
 
     myForm.set("payAt", payAt);
-    console.log(payAt);
+    // console.log(payAt);
 
     myForm.set("shuttle", shuttle);
-    console.log(shuttle);
+    // console.log(shuttle);
 
     myForm.set("discount", discount);
-    console.log(discount);
+    // console.log(discount);
 
     myForm.set("title", carTitle);
-    console.log(carTitle);
+    // console.log(carTitle);
 
     myForm.set("city", carCity);
-    console.log(carCity);
+    // console.log(carCity);
 
     myForm.set("gear", gear);
-    console.log(gear);
+    // console.log(gear);
 
-    // myForm.append("carImage", carImage);
-    // console.log(carImage);
+    myForm.set("featured", featuredCar);
+    // console.log(featuredCar);
+
     Array.from(carImages).forEach((item) => {
       myForm.append("carImages", item);
     });
 
     dispatch(addCar(myForm));
-    // console.log(createProduct(myForm));
     history.push(`/car/${props.match.params.slug}`);
   };
 
@@ -330,35 +259,38 @@ const CitiesManagementScreen = (props) => {
     const myForm = new FormData();
 
     myForm.set("name", packageName);
-    console.log(packageName);
+    // console.log(packageName);
 
     myForm.set("description", packageDescription);
-    console.log(packageDescription);
+    // console.log(packageDescription);
 
     myForm.set("city", packageCity);
-    console.log(packageCity);
+    // console.log(packageCity);
 
     myForm.set("price", price);
-    console.log(price);
+    // console.log(price);
 
     myForm.set("product", product);
-    console.log(product);
+    // console.log(product);
 
     myForm.set("type", packageType);
-    console.log(packageType);
+    // console.log(packageType);
 
     myForm.set("duration", duration);
-    console.log(duration);
+    // console.log(duration);
 
     myForm.set("refundable", refundable);
-    console.log(refundable);
+    // console.log(refundable);
+
+    myForm.set("featured", featuredPackage);
+    // console.log(featuredPackage);
 
     myForm.set("carPickupDetails", carPickupDetails);
-    console.log(carPickupDetails);
+    // console.log(carPickupDetails);
 
     Array.from(tags).forEach((item) => {
       myForm.append("startTime", item);
-      console.log(item);
+      // console.log(item);
     });
 
     Array.from(packageImages).forEach((item) => {
@@ -366,7 +298,6 @@ const CitiesManagementScreen = (props) => {
     });
 
     dispatch(createPackage(myForm));
-    // console.log(createProduct(myForm));
     history.push(`/package/${props.match.params.slug}`);
   };
 
@@ -427,6 +358,7 @@ const CitiesManagementScreen = (props) => {
                 </div>
                 <div>
                   <TextField
+                    autoComplete="off"
                     fullWidth
                     required
                     id="outlined-required"
@@ -438,6 +370,7 @@ const CitiesManagementScreen = (props) => {
 
                 <div>
                   <TextField
+                    autoComplete="off"
                     fullWidth
                     required
                     id="outlined-required"
@@ -449,6 +382,7 @@ const CitiesManagementScreen = (props) => {
 
                 <div>
                   <TextField
+                    autoComplete="off"
                     fullWidth
                     required
                     id="outlined-required"
@@ -460,6 +394,7 @@ const CitiesManagementScreen = (props) => {
 
                 <div>
                   <TextField
+                    autoComplete="off"
                     fullWidth
                     required
                     id="outlined-required"
@@ -471,6 +406,7 @@ const CitiesManagementScreen = (props) => {
 
                 <div>
                   <TextField
+                    autoComplete="off"
                     fullWidth
                     required
                     id="outlined-required"
@@ -482,6 +418,7 @@ const CitiesManagementScreen = (props) => {
 
                 <div>
                   <TextField
+                    autoComplete="off"
                     fullWidth
                     required
                     id="outlined-required"
@@ -509,14 +446,14 @@ const CitiesManagementScreen = (props) => {
                             </MenuItem>
                           );
                         })}
-                      {destinations &&
+                      {/* {destinations &&
                         destinations.map((data, index) => {
                           return (
                             <MenuItem value={data._id} key={index}>
                               {data.name}
                             </MenuItem>
                           );
-                        })}
+                        })} */}
                     </Select>
                   </FormControl>
                 </Box>
@@ -601,6 +538,26 @@ const CitiesManagementScreen = (props) => {
                   No
                 </div>
 
+                <div style={{ display: "flex" }}>
+                  <span style={{ marginRight: "59px" }}>Featured Hotel:</span>
+                  <input
+                    type="radio"
+                    value="true"
+                    checked={featuredHotel === "true"}
+                    onChange={(e) => setFeaturedHotel(e.target.value)}
+                    style={{ width: "auto", margin: "0px 13px" }}
+                  />
+                  Yes
+                  <input
+                    type="radio"
+                    value="false"
+                    checked={featuredHotel === "false"}
+                    onChange={(e) => setFeaturedHotel(e.target.value)}
+                    style={{ width: "auto", margin: "0px 13px" }}
+                  />
+                  No
+                </div>
+
                 <div>
                   <TextareaAutosize
                     placeholder="Description here..."
@@ -677,7 +634,7 @@ const CitiesManagementScreen = (props) => {
                 </div>
                 <div>
                   <TextField
-                  autoComplete="off"
+                    autoComplete="off"
                     fullWidth
                     required
                     id="outlined-required"
@@ -689,7 +646,7 @@ const CitiesManagementScreen = (props) => {
                 </div>
                 <div>
                   <TextField
-                  autoComplete="off"
+                    autoComplete="off"
                     fullWidth
                     required
                     id="outlined-required"
@@ -701,6 +658,7 @@ const CitiesManagementScreen = (props) => {
 
                 <div>
                   <TextField
+                    autoComplete="off"
                     id="outlined-number"
                     fullWidth
                     label="Passengers"
@@ -715,6 +673,7 @@ const CitiesManagementScreen = (props) => {
 
                 <div>
                   <TextField
+                    autoComplete="off"
                     fullWidth
                     required
                     id="outlined-required"
@@ -725,6 +684,7 @@ const CitiesManagementScreen = (props) => {
                 </div>
                 <div>
                   <TextField
+                    autoComplete="off"
                     fullWidth
                     required
                     id="outlined-required"
@@ -736,6 +696,7 @@ const CitiesManagementScreen = (props) => {
 
                 <div>
                   <TextField
+                    autoComplete="off"
                     fullWidth
                     required
                     id="outlined-required"
@@ -763,20 +724,13 @@ const CitiesManagementScreen = (props) => {
                             </MenuItem>
                           );
                         })}
-                      {destinations &&
-                        destinations.map((data, index) => {
-                          return (
-                            <MenuItem value={data._id} key={index}>
-                              {data.name}
-                            </MenuItem>
-                          );
-                        })}
                     </Select>
                   </FormControl>
                 </Box>
 
                 <div>
                   <TextField
+                    autoComplete="off"
                     fullWidth
                     required
                     id="outlined-required"
@@ -840,6 +794,7 @@ const CitiesManagementScreen = (props) => {
                 </div>
                 <div>
                   <TextField
+                    autoComplete="off"
                     fullWidth
                     required
                     id="outlined-required"
@@ -868,8 +823,30 @@ const CitiesManagementScreen = (props) => {
                   />
                   Free cancellation
                 </div>
+
+                <div style={{ display: "flex" }}>
+                  <span style={{ marginRight: "59px" }}>Featured Car:</span>
+                  <input
+                    type="radio"
+                    value="true"
+                    checked={featuredCar === "true"}
+                    onChange={(e) => setFeaturedCar(e.target.value)}
+                    style={{ width: "auto", margin: "0px 13px" }}
+                  />
+                  Yes
+                  <input
+                    type="radio"
+                    value="false"
+                    checked={featuredCar === "false"}
+                    onChange={(e) => setFeaturedCar(e.target.value)}
+                    style={{ width: "auto", margin: "0px 13px" }}
+                  />
+                  No
+                </div>
+
                 <div>
                   <TextField
+                    autoComplete="off"
                     fullWidth
                     required
                     id="outlined-required"
@@ -942,7 +919,7 @@ const CitiesManagementScreen = (props) => {
 
                 <div>
                   <TextField
-                  autoComplete="off"
+                    autoComplete="off"
                     fullWidth
                     required
                     id="outlined-required"
@@ -955,7 +932,7 @@ const CitiesManagementScreen = (props) => {
 
                 <div>
                   <TextField
-                  autoComplete="off"
+                    autoComplete="off"
                     fullWidth
                     required
                     id="outlined-required"
@@ -967,7 +944,7 @@ const CitiesManagementScreen = (props) => {
 
                 <div>
                   <TextField
-                  autoComplete="off"
+                    autoComplete="off"
                     type="number"
                     fullWidth
                     required
@@ -980,7 +957,7 @@ const CitiesManagementScreen = (props) => {
 
                 <div>
                   <TextField
-                  autoComplete="off"
+                    autoComplete="off"
                     fullWidth
                     required
                     id="outlined-required"
@@ -992,7 +969,7 @@ const CitiesManagementScreen = (props) => {
 
                 <div>
                   <TextField
-                  autoComplete="off"
+                    autoComplete="off"
                     fullWidth
                     required
                     id="outlined-required"
@@ -1002,9 +979,29 @@ const CitiesManagementScreen = (props) => {
                   />
                 </div>
 
+                <div style={{ display: "flex" }}>
+                  <span style={{ marginRight: "59px" }}>Featured Package:</span>
+                  <input
+                    type="radio"
+                    value="true"
+                    checked={featuredPackage === "true"}
+                    onChange={(e) => setFeaturedPackage(e.target.value)}
+                    style={{ width: "auto", margin: "0px 13px" }}
+                  />
+                  Yes
+                  <input
+                    type="radio"
+                    value="false"
+                    checked={featuredPackage === "false"}
+                    onChange={(e) => setFeaturedPackage(e.target.value)}
+                    style={{ width: "auto", margin: "0px 13px" }}
+                  />
+                  No
+                </div>
+
                 <div>
                   <TextField
-                  autoComplete="off"
+                    autoComplete="off"
                     fullWidth
                     required
                     id="outlined-required"
@@ -1014,25 +1011,25 @@ const CitiesManagementScreen = (props) => {
                   />
                 </div>
 
-                  <div className="tagInput">
-                    {tags.map((item, index) => {
-                      return (
-                        <button key={index}>
-                          {item}
-                          <span onClick={() => deleteTags(item)}>X</span>
-                        </button>
-                      );
-                    })}
+                <div className="tagInput">
+                  {tags.map((item, index) => {
+                    return (
+                      <button key={index}>
+                        {item}
+                        <span onClick={() => deleteTags(item)}>X</span>
+                      </button>
+                    );
+                  })}
 
-                    <TextField
+                  <TextField
                     autoComplete="off"
                     fullWidth
                     id="outlined-required"
-                      placeholder="select Time"
-                      onChange={(e) => setTagValue(e.target.value)}
-                      onKeyDown={addTags}
-                      value={tagValue}
-                    />
+                    placeholder="select Time"
+                    onChange={(e) => setTagValue(e.target.value)}
+                    onKeyDown={addTags}
+                    value={tagValue}
+                  />
                 </div>
 
                 <div>
@@ -1089,14 +1086,6 @@ const CitiesManagementScreen = (props) => {
                     >
                       {products &&
                         products.map((data, index) => {
-                          return (
-                            <MenuItem value={data._id} key={index}>
-                              {data.name}
-                            </MenuItem>
-                          );
-                        })}
-                      {destinations &&
-                        destinations.map((data, index) => {
                           return (
                             <MenuItem value={data._id} key={index}>
                               {data.name}
