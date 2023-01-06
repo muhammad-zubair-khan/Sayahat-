@@ -7,6 +7,8 @@ import { vacationProductReducer,addCitiesReducer } from "./Reducers/VacationProd
 import { allHotelsReducer, hotelsReducer, newReviewReducer, hotelReviewsReducer, reviewReducer, featuredHotelReducer } from "./Reducers/hotelReducer";
 import { allCarsReducer, carReviewsReducer, newCarReducer, newReviewCarReducer, reviewCarReducer } from "./Reducers/carReducer";
 import { allPackagesReducer, featuredPackagesReducer, newPackageReducer, newReviewPackageReducer, packageReviewsReducer, reviewPackageReducer } from "./Reducers/packageReducer";
+import { contactCheckoutReducer } from "./Reducers/checkoutReducer";
+import { BookPackageReducer, myPackagesReducer, packageDetailsReducer } from "./Reducers/bookPackageReducer";
 // import { addNewDestinationReducer, destinationReducer } from "./Reducers/topDestinatonsReducer";
 
 const reducer = combineReducers({
@@ -33,6 +35,10 @@ const reducer = combineReducers({
   delCarReview:reviewCarReducer,
   featureHotels:featuredHotelReducer,
   featurePackages:featuredPackagesReducer,
+  contactCheckout:contactCheckoutReducer,
+  bookPkg:BookPackageReducer,
+  myPackages:myPackagesReducer,
+  myPackageDetails:packageDetailsReducer,
 });
 //Login
 

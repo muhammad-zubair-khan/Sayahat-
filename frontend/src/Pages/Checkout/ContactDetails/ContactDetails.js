@@ -1,26 +1,44 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Button from "@mui/material/Button";
 import Modal from "react-bootstrap/Modal";
 import TextField from "@mui/material/TextField";
 import axios from "axios";
 import TextareaAutosize from "@mui/material/TextareaAutosize";
-// import "react-phone-number-input/style.css";
-// import PhoneInput from "react-phone-number-input";
-//
-// import "./TechContactForm.css";
-import { Link, useHistory } from "react-router-dom";
+import CheckoutSteps from '../CheckoutSteps'
+import { Link, useHistory, useLocation, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { saveContactInfo } from "../../../Redux/Actions/checkout";
+import { Grid } from "@mui/material";
+import { getPackageDetailById } from "../../../Redux/Actions/packageAction";
+import { ImageUrl } from "../../../Redux/UrlConfig";
 
 const ContactDetails = () => {
-  const [show, setShow] = useState(false);
+  const location = useLocation()
+  const dispatch = useDispatch()
+  const {user} = useSelector((state)=> state.auth)
+  const [dates, setDates] = useState(location.state.state.dates);
+  const [options, setOptions] = useState(location.state.state.options);
+    const [time,setTimes] = useState(location.state.state.time)
+    const [show, setShow] = useState(false);
+
+  const packages = useSelector((state) => state.addPackageReducer);
+    const { id } = useParams();
+    // const { data, loading, error } = useFetch(
+    //   `http://localhost:5000/api/hotel/${id}`
+    // );
+    // console.log(data);
+    useEffect(() => {
+        dispatch(getPackageDetailById(id));
+      }, [dispatch, id]);
 
   const handleClose = () => {
     setShow(false);
     // navigate(0);
   };
   const handleShow = () => {
-    if (!isEmail(values.email)) {
+    if (!isEmail(email)) {
       setShow(false);
-    } else if (isEmail(values.email)) {
+    } else if (isEmail(email)) {
       setShow(true);
     }
   };
@@ -31,45 +49,45 @@ const ContactDetails = () => {
     );
 
     const [errors, setErrors] = useState({});
-  const [values, setValues] = useState({ email: "" });
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState(user.email);
+  const [firstName, setFirstName] = useState(user.firstName);
+  const [lastName, setLastName] = useState(user.lastName);
   const [phone, setPhone] = useState("");
-  // const [email, setEmail] = useState("");
 
-  //   const onChangeFile = (e) => {
-  //     setContactImage(e.target.files[0]);
-  //   };
-
-  const createProductSubmitHandler = (e) => {
+  const SubmitContactInfo = (e) => {
     e.preventDefault();
     const myForm = new FormData();
-
     myForm.set("firstName", firstName);
-
     myForm.set("lastName", lastName);
-
     const errors = {};
-
-    if (!isEmail(values.email)) {
+    if (!isEmail(email)) {
       errors.email = "Invalid email!";
-    } else if (isEmail(values.email)) {
-      myForm.set("email", values.email);
+    } else if (isEmail(email)) {
+      myForm.set("email", email);
     }
     setErrors(errors);
-
     myForm.set("phone", phone);
-
-    // axios
-    //   .post("http://localhost:5000/api/contact/add", myForm)
-    //   .then(function (response) {
-    //     console.log(response);
-    //   });
+    dispatch(
+      saveContactInfo({ firstName, lastName,email, phone })
+    );
+    history.push(`/package/${id}/activitydetails`, {
+      state: { time,dates,options },
+    });
+    
   };
-  const setEmail = (e) => {
-    setValues((values) => ({ ...values, email: e.target.value }));
-  };
+  // const setEmail = (e) => {
+  //   setValues((values) => ({ ...values, email: e.target.value }));
+  // };
+  if (Object.keys(packages.package).length === 0) {
+    return null;
+  }
   return (
+    <>
+      <Grid container style={{ margin: "106px 43px" }}>
+          <Grid lg={7}>
+
+       
+    <CheckoutSteps activeStep={0} />
     <div className="container text-center mt-5">
       <h4 style={{ color: "black" }} className="my-3">
         We'll use this information to send you confirmation and updates about
@@ -83,7 +101,7 @@ const ContactDetails = () => {
       </h5>
       <form
         encType="multipart/form-data"
-        onSubmit={createProductSubmitHandler}
+        onSubmit={SubmitContactInfo}
         className="col-md-6 mt-5"
         style={{ margin: "0 auto" }}
       >
@@ -116,8 +134,8 @@ const ContactDetails = () => {
             required
             id="outlined-required"
             label="Email"
-            value={values.email}
-            onChange={setEmail}
+            value={email}
+            onChange={(e)=>setEmail(e.target.value)}
           />
         </div>
         <div className="my-3 inputField">
@@ -174,19 +192,72 @@ const ContactDetails = () => {
             <span class="send-text">SEND</span>
           </div>
         </Button> */}
+          <input
+              type="submit"
+              value="Continue"
+              className="shippingBtn"
+              // disabled={state ? false : true}
+            />
       </form>
-      <Modal show={show} onHide={handleClose} style={{ marginTop: "100px" }}>
-        <Modal.Header closeButton>
-          {/* <Modal.Title>Modal heading</Modal.Title> */}
-        </Modal.Header>
-        <Modal.Body>Data has been Sent SUCCESSFULLY!</Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-        </Modal.Footer>
-      </Modal>
+
     </div>
+    </Grid>
+    <Grid
+            lg={5}
+            style={{ padding: "57px 78px", backgroundColor: "#f5f5f5" }}
+          >
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-around",
+                alignItems: "center",
+              }}
+            >
+              <span>
+                <img
+                  src={ImageUrl(packages.package.packageImages[0].img)}
+                  style={{ width: "30%" }}
+                  alt=""
+                />
+                <b>{packages.package.name}</b>
+              </span>
+              <span>
+                <b>PKR {packages.package.price}</b>
+              </span>
+            </div>
+            <div
+              style={{
+                marginLeft: "36px",
+                marginBottom: "30px",
+                marginTop: "15px",
+                color: "#929292",
+                display: "flex",
+                flexDirection: "column",
+              }}
+            >
+              {/* <span>Pick-up Time: <span className="siTaxiOp">{pickupTime}</span></span>
+                <span>Drop-off Time: <span className="siTaxiOp">{dropoffTime}</span></span> */}
+              {/* <span>{data.hotel.address}</span> */}
+              <span>{packages.package.title}</span>
+              <hr />
+            </div>
+            <div>
+            <b>Pick-up Time: {time}</b>
+            </div>
+            <div
+              style={{
+                // marginLeft: "36px",
+                display: "flex",
+                justifyContent: "space-between",
+              }}
+            >
+              <b>Total Price</b>
+              <b>PKR {packages.package.price}</b>
+            </div>
+          </Grid>
+      </Grid>
+    </>
+
   );
 };
 

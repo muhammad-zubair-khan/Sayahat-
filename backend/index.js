@@ -42,8 +42,15 @@ app.use("/api", carRoutes);
 const packageRoutes = require("./Routes/package");
 app.use("/api", packageRoutes);
 
+const paymentRoutes = require("./Routes/payment");
+app.use("/api", paymentRoutes);
+
+const checkoutRoutes = require("./Routes/Checkout/contact");
+app.use("/api", checkoutRoutes);
+
+const bookPkgRoutes = require("./Routes/booking/package")
+app.use("/api", bookPkgRoutes);
 // const userRoutes = require("./Routes/user");
-// app.use("/api", userRoutes);
 
 // const destinationRoutes = require("./Routes/destination");
 // app.use("/api", destinationRoutes);

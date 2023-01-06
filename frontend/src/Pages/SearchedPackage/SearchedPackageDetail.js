@@ -48,9 +48,9 @@ function SearchedPackageDetail({ match }) {
   );
   const [openPackageDate, setOpenPackageDate] = useState(false);
   const [dates, setDates] = useState(location.state.state.dates);
+  const [options, setOptions] = useState(location.state.state.options);
 
   const [openOptions, setOpenOptions] = useState(false);
-  const [options, setOptions] = useState(location.state.state.options);
   const handleOption = (name, operation) => {
     setOptions((prev) => {
       return {
@@ -73,7 +73,7 @@ function SearchedPackageDetail({ match }) {
         position: toast.POSITION.BOTTOM_CENTER,
       });
       setTimeout(() => {
-        history.push(`/package/${id}/checkout`, {
+        history.push(`/package/${id}/contactdetails`, {
           state: { packageDestination, dates, time, options },
         });
       }, 3000);

@@ -1,5 +1,5 @@
 import "./App.css";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 // import PrivateRoute from "./Components/Private/PrivateRoute";
 import Home from "./Pages/Home/Home";
@@ -28,21 +28,41 @@ import { isUserLoggedIn } from "../src/Redux/Actions/authActions";
 import HotelList from "./Pages/NavHotel/HotelList";
 import Checkout from "./Pages/Checkout/Checkout";
 import HotelCheckout from "./Pages/Checkout/HotelCheckout";
-import PackageCheckout from "./Pages/Checkout/PackageCheckout.js";
+import PackageCheckout from "./Pages/Checkout/PackageCheckout";
+import Payment from "./Pages/Payment/Payment";
+import axios from "axios";
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
+import ContactDetails from "./Pages/Checkout/ContactDetails/ContactDetails";
+import ActivityDetails from "./Pages/Checkout/ActivityDetails/ActivityDetails";
+import MyPackages from "./Pages/Bookings/Packages/MyPackages";
+import MyPackageDetails from "./Pages/Bookings/Packages/MyPackageDetails";
+import MyProfile from "./Pages/Profile/MyProfile";
+import PackageReserveSuccess from "./Components/Success/PackageReserveSuccess";
 
 function App() {
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
 
+  const [stripeApiKey, setStripeApiKey] = useState("");
+  console.log(stripeApiKey);
+  async function getStripeApiKey() {
+    const { data } = await axios.get(
+      `http://www.localhost:5000/api/stripeapikey`
+    );
+    setStripeApiKey(data.stripeApiKey);
+  }
+
   useEffect(() => {
     if (!auth.authenticate) {
       dispatch(isUserLoggedIn());
     }
+    getStripeApiKey();
     // if (user.authenticate) {
     //   dispatch(getInitialData());
     //   dispatch(getAllVacationsCategory());
     // }
-  }, [dispatch,auth.authenticate]);
+  }, [dispatch, auth.authenticate]);
 
   // useEffect(() => {
   //   // 👇️ scroll to top on page load
@@ -52,11 +72,19 @@ function App() {
   return (
     <Router>
       <Switch>
-        <Route exact path="/"  component={Home} />
+        <Route exact path="/" component={Home} />
         <Route exact path="/vacation/:slug/:slug/:id" component={City} />
-        <Route exact path="/vacation/:slug"  component={Cities} />
-        <Route exact path="/top-destination/:slug/:id"  component={TopDestination} />
-        <Route exact path="/top-destination/:slug/:id/detail"  component={TopDestinationDetail} />
+        <Route exact path="/vacation/:slug" component={Cities} />
+        <Route
+          exact
+          path="/top-destination/:slug/:id"
+          component={TopDestination}
+        />
+        <Route
+          exact
+          path="/top-destination/:slug/:id/detail"
+          component={TopDestinationDetail}
+        />
         {/* <Route exact path="/lahore" component={LahoreCity} /> */}
         <Route exact path="/hotels" component={Hotel} />
         <Route exact path="/hotel/:id" component={HotelDetail} />
@@ -69,15 +97,60 @@ function App() {
         <Route exact path="/packages" component={SearchedPackage} />
         <Route exact path="/package/:id" component={SearchedPackageDetail} />
         {/* <Route exact path="/package/:slug/:id/detail" component={SearchedPackageDetail} /> */}
-        <Route exact path="/vacation/:slug/:slug/:id/detail"  component={PackageDetail}/>
+        <Route
+          exact
+          path="/vacation/:slug/:slug/:id/detail"
+          component={PackageDetail}
+        />
         <Route exact path="/contactus" component={Contactus} />
         <Route exact path="/car/:id/checkout" component={Checkout} />
         <Route exact path="/hotel/:id/checkout" component={HotelCheckout} />
-        <Route exact path="/package/:id/checkout" component={PackageCheckout} />
+        {/* <Route exact path="/package/:id/checkout" component={PackageCheckout} /> */}
+        <Route
+          exact
+          path="/package/:id/contactdetails"
+          component={ContactDetails}
+        />
+        <Route
+          exact
+          path="/package/:id/activitydetails"
+          component={ActivityDetails}
+        />
+        <Route
+          exact
+          path="/package/reserve/success"
+          component={PackageReserveSuccess}
+        />
+        <Route
+          exact
+          path="/myProfile"
+          component={MyProfile}
+        />
+        <Route
+          exact
+          path="/myPackages"
+          component={MyPackages}
+        />
+        <Route
+          exact
+          path="/myPackage/:id"
+          component={MyPackageDetails}
+        />
+        {/* <Route exact path="/package/:id/contectdetails" component={ContactDetails} />
         <Route exact path="/hotels/all" component={HotelList} />
+        {/* <Route exact path="/process/payment" component={Payment} /> */}
         <Route path="/login" component={Login} />
         <Route path="/register" component={SignUp} />
         <Route path="/forgot-password" component={Forgot} />
+        {stripeApiKey && (
+          <Elements stripe={loadStripe(stripeApiKey)}>
+            <Route
+              exact
+              path="/package/:id/process/payment"
+              component={Payment}
+            />
+          </Elements>
+        )}
       </Switch>
       {/* <Footer /> */}
     </Router>

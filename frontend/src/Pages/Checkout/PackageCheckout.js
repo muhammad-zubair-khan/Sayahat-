@@ -22,6 +22,9 @@ import {
 import { useEffect } from "react";
 import {useDispatch,useSelector} from 'react-redux'
 import { getPackageDetailById } from "../../Redux/Actions/packageAction";
+import StripeCheckout from 'react-stripe-checkout';
+import axios from "axios";
+
   const PackageCheckout = () => {
     const dispatch = useDispatch();
     const location = useLocation();
@@ -32,7 +35,6 @@ import { getPackageDetailById } from "../../Redux/Actions/packageAction";
     const [options, setOptions] = useState(location.state.state.options);
     const [time,setTimes] = useState(location.state.state.time)
     const packages = useSelector((state) => state.addPackageReducer);
-  console.log("Mil gya time",time)
     const { id } = useParams();
     // const { data, loading, error } = useFetch(
     //   `http://localhost:5000/api/hotel/${id}`
@@ -41,7 +43,6 @@ import { getPackageDetailById } from "../../Redux/Actions/packageAction";
     useEffect(() => {
         dispatch(getPackageDetailById(id));
       }, [dispatch, id]);
-    console.log(dates);
     const history = useHistory();
     const [show, setShow] = useState(false);
   
@@ -55,52 +56,56 @@ import { getPackageDetailById } from "../../Redux/Actions/packageAction";
         email
       );
     const handleShow = () => {
-      if (!isEmail(values.email)) {
+      if (!isEmail(email)) {
         setShow(false);
-        console.log("galat hai", values.email);
-      } else if (isEmail(values.email)) {
+      } else if (isEmail(email)) {
         setActive(active + 1);
         setShow(true);
-        console.log("sahi hai", values.email);
+
       }
     };
-  
+  const {user} = useSelector((state)=> state.auth)
     const [active, setActive] = useState(1);
-    const [values, setValues] = useState({ email: "" });
-    const [firstName, setFirstName] = useState("");
-    const [lastName, setLastName] = useState("");
+    const [email, setEmail] = useState(user.email);
+    const [firstName, setFirstName] = useState(user.firstName);
+    const [lastName, setLastName] = useState(user.lastName);
     const [phone, setPhone] = useState("");
     const [errors, setErrors] = useState({});
   
+// const procedeToPayment = () =>{
+//   history.push('/process/payment')
+// }
+
     const createFormSubmitHandler = (e) => {
       e.preventDefault();
       const myForm = new FormData();
-  
+      
       myForm.set("firstName", firstName);
-  
+      
       myForm.set("lastName", lastName);
   
       const errors = {};
   
-      if (!isEmail(values.email)) {
+      if (!isEmail(email)) {
         errors.email = "Invalid email!";
-      } else if (isEmail(values.email)) {
-        myForm.set("email", values.email);
+      } else if (isEmail(email)) {
+        myForm.set("email", email);
       }
       setErrors(errors);
   
       myForm.set("phone", phone);
   
-      // axios
-      //   .post("http://localhost:5000/api/contact/add", myForm)
-      //   .then(function (response) {
-      //     console.log(response);
-      //   });
-      console.log(myForm);
+      if(user.token){
+      axios.post("http://localhost:5000/api/checkout/contactdetails", myForm)
+        .then(function (response) {
+          console.log(response);
+        });
+      // console.log(myForm);
+    }
     };
-    const setEmail = (e) => {
-      setValues((values) => ({ ...values, email: e.target.value }));
-    };
+    // const setEmail = (e) => {
+    //   setValues((values) => ({ ...values, email: e.target.value }));
+    // };
   
     const createForm2SubmitHandler = (e) => {
       e.preventDefault();
@@ -110,28 +115,26 @@ import { getPackageDetailById } from "../../Redux/Actions/packageAction";
   
       myForm.set("lastName", lastName);
   
-      // axios
-      //   .post("http://localhost:5000/api/contact/add", myForm)
-      //   .then(function (response) {
-      //     console.log(response);
-      //   });
     };
-    const createForm3SubmitHandler = (e) => {
-      e.preventDefault();
-      const myForm = new FormData();
+    // const createForm3SubmitHandler = (e) => {
+    //   e.preventDefault();
+    //   const myForm = new FormData();
   
-      myForm.set("firstName", firstName);
+    //   myForm.set("firstName", firstName);
   
-      myForm.set("lastName", lastName);
-  
-      // axios
-      //   .post("http://localhost:5000/api/contact/add", myForm)
-      //   .then(function (response) {
-      //     console.log(response);
-      //   });
-    };
+    //   myForm.set("lastName", lastName);
+
+    // };
     if (Object.keys(packages.package).length === 0) {
       return null;
+    }
+
+    async function onToken(token){
+      console.log(token)
+
+      const PackageDetails = {
+
+      }
     }
     return (
       <>
@@ -194,8 +197,9 @@ import { getPackageDetailById } from "../../Redux/Actions/packageAction";
                           required
                           id="outlined-required"
                           label="Email"
-                          value={values.email}
-                          onChange={setEmail}
+                          value={email}
+                          onChange={(e) => setEmail(e.target.value)}
+
                         />
                       </div>
                       {Object.entries(errors).map(([key, error]) => (
@@ -233,7 +237,7 @@ import { getPackageDetailById } from "../../Redux/Actions/packageAction";
                           style={{ float: "right" }}
                           className="send-button"
                           disabled={
-                            !firstName || !lastName || !values.email || !phone
+                            !firstName || !lastName || !email || !phone
                           }
                           onClick={handleShow}
                         >
@@ -393,7 +397,7 @@ import { getPackageDetailById } from "../../Redux/Actions/packageAction";
                           className="send-button"
                           disabled={!firstName || !lastName}
                           onClick={() => {
-                            setActive(active + 1);
+                            setActive(active + 1) 
                           }}
                         >
                           Next
@@ -430,7 +434,7 @@ import { getPackageDetailById } from "../../Redux/Actions/packageAction";
                       </div>
                       <form
                         encType="multipart/form-data"
-                        onSubmit={createForm3SubmitHandler}
+                        // onSubmit={createForm3SubmitHandler}
                         style={{ margin: "0 auto" }}
                       >
                         {active !== 1 && (
@@ -442,22 +446,30 @@ import { getPackageDetailById } from "../../Redux/Actions/packageAction";
                             Previous
                           </Button>
                         )}
-                        {active === 3 && (
+                       
+                        <StripeCheckout
+                        amout={packages.package.price * 100}
+                        token={onToken}
+                        currency="pkr"
+                        stripeKey="pk_test_51MMadlEdXSlragr6SwgB9qHwwXKyE5CKq8RYenOPqKkYzEY69AqjcwjOozCiMG0bFrmdA6f8AE7U2xllOaAV9VBD00pe7Iwpmb"
+                      >
+                         {active === 3 && (
                           <Button
                             variant="contained"
-                            type="submit"
                             style={{ float: "right" }}
                             className="send-button"
                             // disabled={!firstName || !lastName}
-                            onClick={() => {
-                              alert(
-                                "Payment Successfully Done! you'll  recieved a confirmation email shortly"
-                              );
-                            }}
+                            // onClick={() => {
+                            //   alert(
+                            //     "Payment Successfully Done! you'll  recieved a confirmation email shortly"
+                            //   );
+                            // }}
+                            // onClick={procedeToPayment}
                           >
-                            Finish
+                            Pay Now
                           </Button>
                         )}
+                      </StripeCheckout>
                       </form>
                     </div>
                   </div>

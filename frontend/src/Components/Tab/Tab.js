@@ -729,44 +729,7 @@ const Tab = () => {
                         </button>
                       </div>
                     </div>
-                    {/* <div className="optionItems">
-                                    <span
-                                      style={{
-                                        color: "black",
-                                        fontSize: "14px",
-                                      }}
-                                    >
-                                      Room
-                                    </span>
-                                    <div className="optionButton">
-                                      <button
-                                        className="optionbtn"
-                                        style={{ marginRight: "3px" }}
-                                        disabled={options.room <= 1}
-                                        onClick={() =>
-                                          handleOption("room", "decreament")
-                                        }
-                                      >
-                                        -
-                                      </button>
-                                      <span
-                                        style={{
-                                          color: "black",
-                                          fontSize: "14px",
-                                        }}
-                                      >
-                                        {options.room}
-                                      </span>
-                                      <button
-                                        className="optionbtn"
-                                        onClick={() =>
-                                          handleOption("room", "increament")
-                                        }
-                                      >
-                                        +
-                                      </button>
-                                    </div>
-                                  </div> */}
+                    
                   </div>
                 )}
               </div>
