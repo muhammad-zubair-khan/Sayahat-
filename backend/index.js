@@ -48,8 +48,15 @@ app.use("/api", paymentRoutes);
 const checkoutRoutes = require("./Routes/Checkout/contact");
 app.use("/api", checkoutRoutes);
 
+const hotelCheckoutRoutes = require("./Routes/Checkout/hotelContact");
+app.use("/api", hotelCheckoutRoutes);
+
 const bookPkgRoutes = require("./Routes/booking/package")
 app.use("/api", bookPkgRoutes);
+
+const bookHotelRoutes = require("./Routes/booking/hotel")
+app.use("/api", bookHotelRoutes);
+
 // const userRoutes = require("./Routes/user");
 
 // const destinationRoutes = require("./Routes/destination");

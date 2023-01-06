@@ -28,6 +28,9 @@ import {
   GET_ALL_FEATURED_HOTELS_REQUEST,
   GET_ALL_FEATURED_HOTELS_SUCCESS,
   GET_ALL_FEATURED_HOTELS_FAIL,
+  GET_HOTEL_BY_ID_FAIL,
+  GET_HOTEL_BY_ID_SUCCESS,
+  GET_HOTEL_BY_ID_REQUEST,
 } from "../Constants/hotelConstants";
 
 const initialStateHotel = {
@@ -159,6 +162,36 @@ export const hotelsReducer = (state = {}, action) => {
     //     ...state,
     //     error: null,
     //   };
+    default:
+      return state;
+  }
+};
+
+export const hotelReducer = (state = {hotel:{}}, action) => {
+  switch (action.type) {
+    case GET_HOTEL_BY_ID_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case GET_HOTEL_BY_ID_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        hotel: action.payload.hotel,
+      };
+
+    case GET_HOTEL_BY_ID_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
     default:
       return state;
   }

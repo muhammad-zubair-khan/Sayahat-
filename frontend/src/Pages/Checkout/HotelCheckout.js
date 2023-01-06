@@ -7,7 +7,7 @@ import {
   Toolbar,
 } from "@mui/material";
 import Modal from "react-bootstrap/Modal";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { MultiStepForm, Step } from "react-multi-form";
 import ContactDetails from "./ContactDetails/ContactDetails";
 import ActivityDetails from "./ActivityDetails/ActivityDetails";
@@ -19,21 +19,32 @@ import { ImageUrl } from "../../Redux/UrlConfig";
 import Navbar from "../../Navbar/Navbar";
 import logo from "../../Assets/logo/logo-black.png";
 import Footer from "../../Footer/Footer";
+import { getHotelDetailById } from "../../Redux/Actions/hotelAction";
+import { useDispatch, useSelector } from "react-redux";
 const HotelCheckout = () => {
+  const dispatch = useDispatch();
   const location = useLocation();
   const [destination, setDestination] = useState(
     location.state.state.destination
   );
   const [dates, setDates] = useState(location.state.state.dates);
   const [options, setOptions] = useState(location.state.state.options);
-// const [selectedRooms, setSelectedRooms] = useState(location.state.state.selectedRooms)
-// console.log(selectedRooms)
-  const { id } = useParams();
-  const { data, loading, error } = useFetch(
-    `http://localhost:5000/api/hotel/${id}`
+  const { hotel } = useSelector((state) => state.hotelById);
+  const [selectedRooms, setSelectedRooms] = useState(
+    location.state.state.selectedRooms
   );
-  console.log(data);
-  console.log(destination);
+  const { id } = useParams();
+  // const { data, loading, error } = useFetch(
+  //   `http://localhost:5000/api/hotel/${id}`
+  // );
+  const { data, loading, error } = useFetch(
+    `http://localhost:5000/api/room/${id}`
+  );
+
+  useEffect(() => {
+    dispatch(getHotelDetailById(id));
+  }, [id]);
+
   const history = useHistory();
   const [show, setShow] = useState(false);
 
@@ -47,18 +58,16 @@ const HotelCheckout = () => {
       email
     );
   const handleShow = () => {
-    if (!isEmail(values.email)) {
+    if (!isEmail(email)) {
       setShow(false);
-      console.log("galat hai", values.email);
-    } else if (isEmail(values.email)) {
+    } else if (isEmail(email)) {
       setActive(active + 1);
       setShow(true);
-      console.log("sahi hai", values.email);
     }
   };
 
   const [active, setActive] = useState(1);
-  const [values, setValues] = useState({ email: "" });
+  const [email, setEmail] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [phone, setPhone] = useState("");
@@ -74,10 +83,10 @@ const HotelCheckout = () => {
 
     const errors = {};
 
-    if (!isEmail(values.email)) {
+    if (!isEmail(email)) {
       errors.email = "Invalid email!";
-    } else if (isEmail(values.email)) {
-      myForm.set("email", values.email);
+    } else if (isEmail(email)) {
+      myForm.set("email", email);
     }
     setErrors(errors);
 
@@ -90,9 +99,9 @@ const HotelCheckout = () => {
     //   });
     console.log(myForm);
   };
-  const setEmail = (e) => {
-    setValues((values) => ({ ...values, email: e.target.value }));
-  };
+  // const setEmail = (e) => {
+  //   setValues((values) => ({ ...values, email: e.target.value }));
+  // };
 
   const createForm2SubmitHandler = (e) => {
     e.preventDefault();
@@ -122,7 +131,7 @@ const HotelCheckout = () => {
     //     console.log(response);
     //   });
   };
-  if (Object.keys(data).length === 0) {
+  if (Object.keys(hotel).length === 0) {
     return null;
   }
   return (
@@ -186,8 +195,9 @@ const HotelCheckout = () => {
                         required
                         id="outlined-required"
                         label="Email"
-                        value={values.email}
-                        onChange={setEmail}
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+
                       />
                     </div>
                     {Object.entries(errors).map(([key, error]) => (
@@ -224,9 +234,7 @@ const HotelCheckout = () => {
                         type="submit"
                         style={{ float: "right" }}
                         className="send-button"
-                        disabled={
-                          !firstName || !lastName || !values.email || !phone
-                        }
+                        disabled={!firstName || !lastName || !email || !phone}
                         onClick={handleShow}
                       >
                         Next
@@ -244,11 +252,11 @@ const HotelCheckout = () => {
                   }}
                 >
                   <span>
-                    <img src={ImageUrl(data.hotel.hotelImages[0].img)}  alt="" />
-                    <b>{data.hotel.name}</b>
+                    <img src={ImageUrl(hotel.hotelImages[0].img)} alt="" />
+                    <b>{hotel.name}</b>
                   </span>
                   <span>
-                    <b>PKR {data.hotel.cheapestPrice}</b>
+                    <b>PKR {hotel.cheapestPrice}</b>
                   </span>
                 </div>
                 <div
@@ -260,11 +268,11 @@ const HotelCheckout = () => {
                 >
                   {/* <span>Pick-up Time: {pickupTime}</span>
                     <span>Drop-off Time: {dropoffTime}</span> */}
-                  <span className="siTaxiOp mb-1">{data.hotel.address}</span>
-                  <span className="siTaxiOp">{data.hotel.title}</span>
+                  <span className="siTaxiOp mb-1">{hotel.address}</span>
+                  <span className="siTaxiOp">{hotel.title}</span>
 
                   <p style={{ marginTop: "10px" }}>
-                    Total Price: <span>PKR {data.hotel.cheapestPrice}</span>{" "}
+                    Total Price: <span>PKR {hotel.cheapestPrice}</span>{" "}
                   </p>
                 </div>
 
@@ -470,14 +478,14 @@ const HotelCheckout = () => {
           >
             <span>
               <img
-                src={ImageUrl(data.hotel.hotelImages[0].img)}
+                src={ImageUrl(hotel.hotelImages[0].img)}
                 style={{ width: "30%" }}
                 alt=""
               />
-              <b>{data.hotel.name}</b>
+              <b>{hotel.name}</b>
             </span>
             <span>
-              <b>PKR {data.hotel.cheapestPrice}</b>
+              <b>PKR {hotel.cheapestPrice}</b>
             </span>
           </div>
           <div
@@ -490,11 +498,12 @@ const HotelCheckout = () => {
               flexDirection: "column",
             }}
           >
-            {/* <span>Pick-up Time: <span className="siTaxiOp">{pickupTime}</span></span>
-              <span>Drop-off Time: <span className="siTaxiOp">{dropoffTime}</span></span> */}
-            <span>{data.hotel.address}</span>
-            <span>{data.hotel.title}</span>
-            <span >Room no: <span className="siTaxiOp"></span></span>
+            <span>{hotel.address}</span>
+            <span>{hotel.title}</span>
+            {/* <span>
+              Room no:
+              <span className="siTaxiOp">{selectedRooms}</span>
+            </span> */}
 
             <hr />
           </div>
@@ -506,7 +515,7 @@ const HotelCheckout = () => {
             }}
           >
             <b>Total Price</b>
-            <b>PKR {data.hotel.cheapestPrice}</b>
+            <b>PKR {hotel.cheapestPrice}</b>
           </div>
         </Grid>
       </Grid>

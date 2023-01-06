@@ -24,6 +24,9 @@ import {
   GET_ALL_FEATURED_HOTELS_REQUEST,
   GET_ALL_FEATURED_HOTELS_SUCCESS,
   GET_ALL_FEATURED_HOTELS_FAIL,
+  GET_HOTEL_BY_ID_REQUEST,
+  GET_HOTEL_BY_ID_SUCCESS,
+  GET_HOTEL_BY_ID_FAIL,
 } from "../Constants/hotelConstants";
 import axios from "../helpers/axios";
 
@@ -130,6 +133,23 @@ export const getHotelBySlug = (slug) => async (dispatch) => {
     dispatch({
       type: GET_HOTEL_BY_SLUG_FAIL,
       payload: error.response.data.message,
+    });
+  }
+};
+
+// Get Package detail By Id
+export const getHotelDetailById = (id) => async (dispatch) => {
+  try {
+    dispatch({ type: GET_HOTEL_BY_ID_REQUEST });
+    const { data } = await axios.get(`/hotel/${id}`);
+    dispatch({
+      type: GET_HOTEL_BY_ID_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: GET_HOTEL_BY_ID_FAIL,
+      payload: error.response
     });
   }
 };

@@ -1,5 +1,6 @@
 import {
     SAVE_CONTACT_INFO,
+    SAVE_HOTEL_CONTACT_INFO
 } from "../Constants/checkoutConstants";
 
 export const contactCheckoutReducer = (
@@ -18,3 +19,22 @@ export const contactCheckoutReducer = (
         return state;
     }
   };
+
+export const hotelContactCheckoutReducer = (
+    state = { hotelContactInfo: {} },
+    action
+  ) => {
+    switch (action.type) {
+
+      case SAVE_HOTEL_CONTACT_INFO:
+        return {
+          ...state,
+          hotelContactInfo: action.payload,
+        };
+  
+      default:
+        return state;
+    }
+  };
+
+

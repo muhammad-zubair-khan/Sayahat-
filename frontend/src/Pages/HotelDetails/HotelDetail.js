@@ -34,6 +34,7 @@ import { useDispatch } from "react-redux";
 import {
   clearErrors,
   getAllReviews,
+  getHotelDetailById,
   newReview,
 } from "../../Redux/Actions/hotelAction";
 import ReviewCard from "./ReviewCard/ReviewCard";
@@ -58,6 +59,7 @@ const HotelDetail = ({ match }) => {
   const [destination, setDestination] = useState(
     location.state.state.destination
   );
+  const { hotel } = useSelector((state) => state.hotelById);
   const [options, setOptions] = useState(location.state.state.options);
   const [openReview, setOpenReview] = useState(false);
   const { success, error: reviewError } = useSelector(
@@ -65,9 +67,14 @@ const HotelDetail = ({ match }) => {
   );
   // const auth = useSelector((state) => state.auth);
 
-  const { data, loading, error } = useFetch(
-    `http://localhost:5000/api/hotel/${id}`
-  );
+  // const { data, loading, error } = useFetch(
+  //   `http://localhost:5000/api/hotel/${id}`
+  // );
+
+  
+  useEffect(() => {
+    dispatch(getHotelDetailById(id));
+  }, [id]);
 
   const auth = useSelector((state) => state.auth);
 
@@ -78,12 +85,12 @@ const HotelDetail = ({ match }) => {
     return diffDays;
   }
   useEffect(() => {
-    if (error) {
-      toast.error(error, {
-        position: toast.POSITION.BOTTOM_CENTER,
-      });
-      dispatch(clearErrors());
-    }
+    // if (error) {
+    //   toast.error(error, {
+    //     position: toast.POSITION.BOTTOM_CENTER,
+    //   });
+    //   dispatch(clearErrors());
+    // }
 
     if (reviewError) {
       toast.error(reviewError, {
@@ -98,7 +105,7 @@ const HotelDetail = ({ match }) => {
       });
       dispatch({ type: NEW_REVIEW_RESET });
     }
-  }, [dispatch, error, reviewError, success]);
+  }, [dispatch, reviewError, success]);
   // useEffect(() => {
   //   window.localStorage.setItem("endDate", dates[0].endDate);
   //   window.localStorage.setItem("startDate", dates[0].startDate);
@@ -124,6 +131,7 @@ const HotelDetail = ({ match }) => {
     setSlideNumber(newSlideNumber);
   };
 
+  const totalPrice = days * hotel.cheapestPrice * options.room
   const handleClick = () => {
     // if (!user) {
     setOpenModal(true);
@@ -132,7 +140,7 @@ const HotelDetail = ({ match }) => {
     // }
   };
 
-  if (Object.keys(data).length === 0) {
+  if (Object.keys(hotel).length === 0) {
     return null;
   }
   // if (Object.keys(dates[0]).length === 0) {
@@ -172,9 +180,9 @@ const HotelDetail = ({ match }) => {
       </div>
       {/* <Navbar />
       <Header type="list" /> */}
-      {loading ? (
+      {/* {loading ? (
         "loading"
-      ) : (
+      ) : ( */}
         <div
           className="hotelContainer"
           style={{ top: "126px", position: "relative" }}
@@ -193,7 +201,7 @@ const HotelDetail = ({ match }) => {
               />
               <div className="sliderWrapper">
                 <img
-                  src={data.photos[slideNumber]}
+                  src={hotel.photos[slideNumber]}
                   alt=""
                   className="sliderImg"
                 />
@@ -209,20 +217,20 @@ const HotelDetail = ({ match }) => {
             <button className="bookNow" onClick={handleClick}>
               Reserve or Book Now!
             </button>
-            <h1 className="hotelTitle">{data.hotel.name}</h1>
+            <h1 className="hotelTitle">{hotel.name}</h1>
             <div className="hotelAddress">
               <FontAwesomeIcon icon={faLocationDot} />
-              <span>{data.hotel.address}</span>
+              <span>{hotel.address}</span>
             </div>
             <span className="hotelDistance">
-              Excellent location – {data.hotel.distance}
+              Excellent location – {hotel.distance}
             </span>
             <span className="hotelPriceHighlight">
-              Book a stay over PKR {data.hotel.cheapestPrice} at this property and
+              Book a stay over PKR {hotel.cheapestPrice} at this property and
               get a free airport taxi
             </span>
             <div className="hotelImages">
-              {data.hotel.hotelImages?.map((photo, i) => (
+              {hotel.hotelImages?.map((photo, i) => (
                 <div className="hotelImgWrapper" key={i}>
                   <Zoom>
                     <img
@@ -237,22 +245,22 @@ const HotelDetail = ({ match }) => {
             </div>
             <div className="hotelDetails">
               <div className="hotelDetailsTexts">
-                <h1 className="hotelTitle">{data.hotel.title}</h1>
-                <p className="hotelDesc">{data.hotel.description}</p>
+                <h1 className="hotelTitle">{hotel.title}</h1>
+                <p className="hotelDesc">{hotel.description}</p>
                 <p className="siTaxiOp">
-                  {data.hotel.pool ? `Pool is ${data.hotel.pool}` : " "}
+                  {hotel.pool ? `Pool is ${hotel.pool}` : " "}
                 </p>
                 <p className="siTaxiOp">
-                  {data.hotel.Breakfast
-                    ? `Breakfast is ${data.hotel.Breakfast}`
+                  {hotel.Breakfast
+                    ? `Breakfast is ${hotel.Breakfast}`
                     : " "}
                 </p>
                 <p className="siTaxiOp">
-                  {data.hotel.Hottub ? `HotTub is ${data.hotel.Hottub}` : " "}
+                  {hotel.Hottub ? `HotTub is ${hotel.Hottub}` : " "}
                 </p>
                 <p className="siTaxiOp" style={{ padding: "0px" }}>
-                  {data.hotel.FullyRefundable
-                    ? `${data.hotel.FullyRefundable}`
+                  {hotel.FullyRefundable
+                    ? `${hotel.FullyRefundable}`
                     : " "}
                 </p>
               </div>
@@ -262,10 +270,10 @@ const HotelDetail = ({ match }) => {
                   this property has an excellent location score of 9.8!
                 </span>
                 <h6>
-                  <b>PKR{days * data.hotel.cheapestPrice * options.room}</b> (
+                  <b>PKR{totalPrice}</b> (
                   {days} nights)
                   <Tooltip
-                    title={`${data.hotel.cheapestPrice} x ${days} and ${options.adult} Adults - ${options.children} Childrens - ${options.room} Rooms`}
+                    title={`${hotel.cheapestPrice} x ${days} and ${options.adult} Adults - ${options.children} Childrens - ${options.room} Rooms`}
                     placement="top"
                   >
                     <Button>
@@ -402,10 +410,10 @@ const HotelDetail = ({ match }) => {
           </Container> */}
 
           <Container>
-            {data.hotel.reviews && data.hotel.reviews[0] ? (
+            {hotel.reviews && hotel.reviews[0] ? (
               <div className="reviews">
-                {data.hotel.reviews &&
-                  data.hotel.reviews.map((review) => (
+                {hotel.reviews &&
+                  hotel.reviews.map((review) => (
                     <ReviewCard key={review._id} review={review} />
                     // {/* <img src={profilePng} alt="User" /> */}
                   ))}
@@ -420,8 +428,8 @@ const HotelDetail = ({ match }) => {
           <MailList />
           {/* <Footer /> */}
         </div>
-      )}
-      {openModal && <Reserve setOpen={setOpenModal} hotelId={id} />}
+      {/* )} */}
+      {openModal && <Reserve setOpen={setOpenModal} hotelId={id} totalPrice={totalPrice} />}
       <Footer />
     </>
   );

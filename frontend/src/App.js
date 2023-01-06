@@ -29,16 +29,22 @@ import HotelList from "./Pages/NavHotel/HotelList";
 import Checkout from "./Pages/Checkout/Checkout";
 import HotelCheckout from "./Pages/Checkout/HotelCheckout";
 import PackageCheckout from "./Pages/Checkout/PackageCheckout";
-import Payment from "./Pages/Payment/Payment";
 import axios from "axios";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import ContactDetails from "./Pages/Checkout/ContactDetails/ContactDetails";
 import ActivityDetails from "./Pages/Checkout/ActivityDetails/ActivityDetails";
-import MyPackages from "./Pages/Bookings/Packages/MyPackages";
-import MyPackageDetails from "./Pages/Bookings/Packages/MyPackageDetails";
-import MyProfile from "./Pages/Profile/MyProfile";
+import Payment from "./Pages/Payment/Payment";
+import HotelContactDetails from "./Pages/Checkout/Hotel/HotelContactDetails";
+import HotelActivityDetails from "./Pages/Checkout/Hotel/HotelActivityDetails";
+import HotelPayment from "./Pages/Checkout/Hotel/HotelPayment";
 import PackageReserveSuccess from "./Components/Success/PackageReserveSuccess";
+import HotelBookingSuccess from "./Components/Success/HotelBookingSuccess";
+import MyProfile from "./Pages/Profile/MyProfile";
+import MyPackages from "./Pages/Bookings/Packages/MyPackages";
+import MyHotels from "./Pages/Bookings/Hotels/MyHotels";
+import MyPackageDetails from "./Pages/Bookings/Packages/MyPackageDetails";
+import MyHotelDetails from "./Pages/Bookings/Hotels/MyHotelDetails";
 
 function App() {
   const dispatch = useDispatch();
@@ -71,41 +77,59 @@ function App() {
 
   return (
     <Router>
+       
       <Switch>
         <Route exact path="/" component={Home} />
         <Route exact path="/vacation/:slug/:slug/:id" component={City} />
         <Route exact path="/vacation/:slug" component={Cities} />
-        <Route
-          exact
-          path="/top-destination/:slug/:id"
-          component={TopDestination}
-        />
-        <Route
-          exact
-          path="/top-destination/:slug/:id/detail"
-          component={TopDestinationDetail}
-        />
-        {/* <Route exact path="/lahore" component={LahoreCity} /> */}
+
+        {/* Hotels */}
         <Route exact path="/hotels" component={Hotel} />
         <Route exact path="/hotel/:id" component={HotelDetail} />
         <Route exact path="/hotelsby/:slug" component={HotelBySlug} />
+
+        {/* Cars */}
         <Route exact path="/cars" component={Car} />
         <Route exact path="/car/:id" component={CarDetail} />
-        <Route exact path="/aboutus" component={Aboutus} />
         <Route exact path="/car-rentals" component={CarRental} />
-        {/* <Route exact path="/package/:slug" component={SearchedPackage} /> */}
+
+        {/* Packages */}
         <Route exact path="/packages" component={SearchedPackage} />
         <Route exact path="/package/:id" component={SearchedPackageDetail} />
-        {/* <Route exact path="/package/:slug/:id/detail" component={SearchedPackageDetail} /> */}
         <Route
           exact
           path="/vacation/:slug/:slug/:id/detail"
           component={PackageDetail}
         />
+        <Route exact path="/aboutus" component={Aboutus} />
         <Route exact path="/contactus" component={Contactus} />
-        <Route exact path="/car/:id/checkout" component={Checkout} />
-        <Route exact path="/hotel/:id/checkout" component={HotelCheckout} />
+
+        {/* <Route exact path="/car/:id/checkout" component={Checkout} /> */}
+        {/* <Route exact path="/hotel/:id/checkout" component={HotelCheckout} /> */}
+
+        {/* Hotel Booking */}
+        <Route
+          exact
+          path="/hotel/:id/contactDetail"
+          component={HotelContactDetails}
+        />
+        <Route
+          exact
+          path="/hotel/:id/hotelactivityDetail"
+          component={HotelActivityDetails}
+        />
+         <Route
+          exact
+          path="/hotel/booking/success"
+          component={HotelBookingSuccess}
+        />
+        <Route exact path="/myHotels" component={MyHotels} />
+        <Route exact path="/myHotel/:id" component={MyHotelDetails} />
+
+
+
         {/* <Route exact path="/package/:id/checkout" component={PackageCheckout} /> */}
+        {/* Package Booking */}
         <Route
           exact
           path="/package/:id/contactdetails"
@@ -121,28 +145,15 @@ function App() {
           path="/package/reserve/success"
           component={PackageReserveSuccess}
         />
-        <Route
-          exact
-          path="/myProfile"
-          component={MyProfile}
-        />
-        <Route
-          exact
-          path="/myPackages"
-          component={MyPackages}
-        />
-        <Route
-          exact
-          path="/myPackage/:id"
-          component={MyPackageDetails}
-        />
-        {/* <Route exact path="/package/:id/contectdetails" component={ContactDetails} />
+        <Route exact path="/myProfile" component={MyProfile} />
+        <Route exact path="/myPackages" component={MyPackages} />
+        <Route exact path="/myPackage/:id" component={MyPackageDetails} />
         <Route exact path="/hotels/all" component={HotelList} />
-        {/* <Route exact path="/process/payment" component={Payment} /> */}
         <Route path="/login" component={Login} />
         <Route path="/register" component={SignUp} />
         <Route path="/forgot-password" component={Forgot} />
         {stripeApiKey && (
+        <>
           <Elements stripe={loadStripe(stripeApiKey)}>
             <Route
               exact
@@ -150,6 +161,14 @@ function App() {
               component={Payment}
             />
           </Elements>
+          <Elements stripe={loadStripe(stripeApiKey)}>
+            <Route
+              exact
+              path="/hotelBooking/:id/process/payment"
+              component={HotelPayment}
+            />
+          </Elements>
+        </>
         )}
       </Switch>
       {/* <Footer /> */}

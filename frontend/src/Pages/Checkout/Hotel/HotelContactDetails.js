@@ -3,29 +3,36 @@ import TextField from "@mui/material/TextField";
 import CheckoutSteps from "../CheckoutSteps";
 import { Link, useHistory, useLocation, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { saveContactInfo } from "../../../Redux/Actions/checkout";
+import { saveContactInfo, saveHotelContactInfo } from "../../../Redux/Actions/checkout";
 import { Grid } from "@mui/material";
 import { getPackageDetailById } from "../../../Redux/Actions/packageAction";
 import { ImageUrl } from "../../../Redux/UrlConfig";
+import useFetch from "../../../hook/useFetch";
+import { getHotelDetailById } from "../../../Redux/Actions/hotelAction";
 
-const ContactDetails = () => {
+const HotelContactDetails = () => {
   const location = useLocation();
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
+  const [destination, setDestination] = useState(
+    location.state.state.destination
+  );
   const [dates, setDates] = useState(location.state.state.dates);
   const [options, setOptions] = useState(location.state.state.options);
-  const [time, setTimes] = useState(location.state.state.time);
-  const [show, setShow] = useState(false);
+  const [totalPrice, setTotalPrice] = useState(location.state.state.totalPrice);
+  const [selectedRooms, setSelectedRooms] = useState(location.state.state.selectedRooms);
 
-  const packages = useSelector((state) => state.addPackageReducer);
+  const [show, setShow] = useState(false);
+  const { hotel } = useSelector((state) => state.hotelById);
   const { id } = useParams();
-  // const { data, loading, error } = useFetch(
-  //   `http://localhost:5000/api/hotel/${id}`
-  // );
-  // console.log(data);
+
+  const { data, loading, error } = useFetch(
+    `http://localhost:5000/api/room/${id}`
+  );
+
   useEffect(() => {
-    dispatch(getPackageDetailById(id));
-  }, [dispatch, id]);
+    dispatch(getHotelDetailById(id));
+  }, [id]);
 
   const handleClose = () => {
     setShow(false);
@@ -63,21 +70,21 @@ const ContactDetails = () => {
     }
     setErrors(errors);
     myForm.set("phone", phone);
-    dispatch(saveContactInfo({ firstName, lastName, email, phone }));
-    history.push(`/package/${id}/activitydetails`, {
-      state: { time, dates, options },
+    dispatch(saveHotelContactInfo({ firstName, lastName, email, phone }));
+    history.push(`/hotel/${id}/hotelactivityDetail`, {
+      state: { destination, dates, options, totalPrice,selectedRooms },
     });
   };
   // const setEmail = (e) => {
   //   setValues((values) => ({ ...values, email: e.target.value }));
   // };
-  if (Object.keys(packages.package).length === 0) {
+  if (Object.keys(hotel).length === 0) {
     return null;
   }
   return (
     <>
       <Grid container style={{ margin: "106px 43px" }}>
-        <Grid lg={7}>
+        <Grid lg={6}>
           <CheckoutSteps activeStep={0} />
           <div className="container text-center mt-5">
             <h4 style={{ color: "black" }} className="my-3">
@@ -193,7 +200,7 @@ const ContactDetails = () => {
           </div>
         </Grid>
         <Grid
-          lg={5}
+          lg={6}
           style={{ padding: "57px 78px", backgroundColor: "#f5f5f5" }}
         >
           <div
@@ -205,14 +212,14 @@ const ContactDetails = () => {
           >
             <span>
               <img
-                src={ImageUrl(packages.package.packageImages[0].img)}
+                src={ImageUrl(hotel.hotelImages[0].img)}
                 style={{ width: "30%" }}
                 alt=""
               />
-              <b>{packages.package.name}</b>
+              <b>{hotel.name}</b>
             </span>
             <span>
-              <b>PKR {packages.package.price}</b>
+              <b>PKR {totalPrice}</b>
             </span>
           </div>
           <div
@@ -225,24 +232,29 @@ const ContactDetails = () => {
               flexDirection: "column",
             }}
           >
-            {/* <span>Pick-up Time: <span className="siTaxiOp">{pickupTime}</span></span>
-                <span>Drop-off Time: <span className="siTaxiOp">{dropoffTime}</span></span> */}
-            {/* <span>{data.hotel.address}</span> */}
-            <span>{packages.package.title}</span>
+            <span>{hotel.address}</span>
+            {/* <span>{hotel.title}</span> */}
+            <span> Check-in date: {`${dates[0].startDate}`}</span>
+            <span> Check-out date: {`${dates[0].endDate}`}</span>
+            <span>Adults: {options.adult}</span>
+            <span>Children: {options.children}</span>
+            <span>Rooms: {options.room}</span>
+            {/* <span>
+              Room no:
+              <span className="siTaxiOp">{selectedRooms}</span>
+            </span> */}
+
             <hr />
-          </div>
-          <div>
-            <b>Pick-up Time: {time}</b>
           </div>
           <div
             style={{
-              // marginLeft: "36px",
+              marginLeft: "36px",
               display: "flex",
               justifyContent: "space-between",
             }}
           >
             <b>Total Price</b>
-            <b>PKR {packages.package.price}</b>
+            <b>PKR {totalPrice}</b>
           </div>
         </Grid>
       </Grid>
@@ -250,4 +262,4 @@ const ContactDetails = () => {
   );
 };
 
-export default ContactDetails;
+export default HotelContactDetails;

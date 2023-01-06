@@ -5,7 +5,7 @@ import DriveFolderUploadOutlinedIcon from "@mui/icons-material/DriveFolderUpload
 import { useEffect, useState } from "react";
 import { roomInputs } from "../../../formSource";
 import useFetch from "../../../hooks/useFetch";
-import axios from "axios";
+import axios from "../../../Redux/helpers/axios";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllHotels } from "../../../Redux/Actions/hotelAction";
 import { useHistory, useParams } from "react-router-dom";
@@ -39,7 +39,7 @@ const AddRoom = () => {
     e.preventDefault();
     const roomNumbers = rooms.split(",").map((room) => ({ number: room }));
     try {
-      await axios.post(`http://localhost:5000/api/create/${hotelId}`, {
+      await axios.post(`/admin/create/${hotelId}`, {
         ...info,
         roomNumbers,
       });

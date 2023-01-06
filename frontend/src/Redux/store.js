@@ -4,11 +4,12 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import { authReducer } from "./Reducers/authReducers";
 import { VacationCategoryReducer } from "./Reducers/vacationCategoryReducer";
 import { vacationProductReducer,addCitiesReducer } from "./Reducers/VacationProductReducer";
-import { allHotelsReducer, hotelsReducer, newReviewReducer, hotelReviewsReducer, reviewReducer, featuredHotelReducer } from "./Reducers/hotelReducer";
+import { allHotelsReducer, hotelsReducer, newReviewReducer, hotelReviewsReducer, reviewReducer, featuredHotelReducer, hotelReducer } from "./Reducers/hotelReducer";
 import { allCarsReducer, carReviewsReducer, newCarReducer, newReviewCarReducer, reviewCarReducer } from "./Reducers/carReducer";
 import { allPackagesReducer, featuredPackagesReducer, newPackageReducer, newReviewPackageReducer, packageReviewsReducer, reviewPackageReducer } from "./Reducers/packageReducer";
-import { contactCheckoutReducer } from "./Reducers/checkoutReducer";
+import { contactCheckoutReducer, hotelContactCheckoutReducer } from "./Reducers/checkoutReducer";
 import { BookPackageReducer, myPackagesReducer, packageDetailsReducer } from "./Reducers/bookPackageReducer";
+import { hotelDetailsReducer, myHotelsReducer } from "./Reducers/bookHotelReducer";
 // import { addNewDestinationReducer, destinationReducer } from "./Reducers/topDestinatonsReducer";
 
 const reducer = combineReducers({
@@ -17,6 +18,7 @@ const reducer = combineReducers({
   vacationProduct: vacationProductReducer,
   newVacation: addCitiesReducer,
   hotelReducer: allHotelsReducer,
+  hotelById:hotelReducer,
   delhotelReducer: hotelsReducer,
   addCarReducer: newCarReducer,
   carsReducer: allCarsReducer,
@@ -39,6 +41,11 @@ const reducer = combineReducers({
   bookPkg:BookPackageReducer,
   myPackages:myPackagesReducer,
   myPackageDetails:packageDetailsReducer,
+  hotelContactCheckout:hotelContactCheckoutReducer,
+  myHotels:myHotelsReducer,
+  myHotelDetails:hotelDetailsReducer,
+
+
 });
 //Login
 

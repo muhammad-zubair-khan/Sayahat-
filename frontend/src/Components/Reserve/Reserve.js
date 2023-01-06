@@ -10,7 +10,7 @@ import { Redirect, useHistory, useLocation } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const Reserve = ({ setOpen, hotelId }) => {
+const Reserve = ({ setOpen, hotelId,totalPrice }) => {
   const auth = useSelector((state) => state.auth);
   const location = useLocation();
   const id = location.pathname.split("/")[2];
@@ -60,7 +60,6 @@ const Reserve = ({ setOpen, hotelId }) => {
         : selectedRooms.filter((item) => item !== value)
     );
   };
-
   const history = useHistory();
 
   const handleClick = async () => {
@@ -82,8 +81,8 @@ const Reserve = ({ setOpen, hotelId }) => {
           position: toast.POSITION.BOTTOM_CENTER,
         });
         setTimeout(() => {
-          history.push(`/hotel/${id}/checkout`, {
-            state: { destination, dates, options, selectedRooms },
+          history.push(`/hotel/${id}/contactDetail`, {
+            state: { destination, dates, options, selectedRooms,totalPrice },
           });
         }, 3000);
       } catch (err) {}
