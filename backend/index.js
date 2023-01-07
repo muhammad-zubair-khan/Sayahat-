@@ -57,6 +57,9 @@ app.use("/api", bookPkgRoutes);
 const bookHotelRoutes = require("./Routes/booking/hotel")
 app.use("/api", bookHotelRoutes);
 
+const bookCarRoutes = require("./Routes/booking/car")
+app.use("/api", bookCarRoutes);
+
 // const userRoutes = require("./Routes/user");
 
 // const destinationRoutes = require("./Routes/destination");

@@ -17,50 +17,52 @@ import CreditCardIcon from "@mui/icons-material/CreditCard";
 import EventIcon from "@mui/icons-material/Event";
 import VpnKeyIcon from "@mui/icons-material/VpnKey";
 import { useLocation, useParams } from "react-router-dom";
-import { getHotelDetailById } from "../../../Redux/Actions/hotelAction";
-import { bookedHotel } from "../../../Redux/Actions/bookHotelAction";
-// import { createOrder, clearErrors } from "../../actions/orderAction";
+import { getCarById } from "../../../Redux/Actions/carAction";
+import { bookedCar } from "../../../Redux/Actions/bookCarAction";
 
-const HotelPayment = ({ history }) => {
-//   const orderInfo = JSON.parse(sessionStorage.getItem("orderInfo"));
-const location = useLocation()
+const CarPayment = ({history}) => {
+    const location = useLocation()
 const params = useParams()
   const dispatch = useDispatch();
-//   const alert = useAlert();
-const [destination, setDestination] = useState(
-    location.state.state.destination
+  const [totalPrice,setTotalPrice] = useState(location.state.state.totalPrice)
+  const [startDestination, setStartDestination] = useState(
+    location.state.state.startDestination
+  );
+  const [endDestination, setEndDestination] = useState(
+    location.state.state.endDestination
   );
   const [dates, setDates] = useState(location.state.state.dates);
-  const [options, setOptions] = useState(location.state.state.options);
-  const [totalPrice, setTotalPrice] = useState(location.state.state.totalPrice);
-  const [selectedRooms, setSelectedRooms] = useState(location.state.state.selectedRooms);
+  const [pickupTime, setPickupTime] = useState(location.state.state.pickupTime);
+  const [dropoffTime, setDropoffTime] = useState(
+    location.state.state.dropoffTime
+  );
   const stripe = useStripe();
   const elements = useElements();
   const payBtn = useRef(null);
   const { id } = useParams();
-  const { hotel } = useSelector((state) => state.hotelById);
-
+  const { car } = useSelector((state) => state.addCarReducer);
   const {user} = useSelector((state)=> state.auth)
 
   useEffect(() => {
-    dispatch(getHotelDetailById(id));
+    dispatch(getCarById(id));
   }, [dispatch,id]);
 
-  const { hotelContactInfo } = useSelector((state) => state.hotelContactCheckout);
-  //   const { error } = useSelector((state) => state.newOrder);
-  const hotelActivityInfo = JSON.parse(sessionStorage.getItem("hotelActivityInfo"));
+  const { CarContactInfo } = useSelector((state) => state.carContactCheckout);
   const paymentData = {
     amount: Math.round(totalPrice * 100),
   };
 
-  const bookHotel = {
-    name:  hotel.name,
+  const bookCar = {
+    name:  car.name,
     price: totalPrice,
-    city:hotel.city,
-    rooms: selectedRooms,
-    fullyRefundable:hotel.FullyRefundable,
-    hotelContactInfo,
-    hotelActivityInfo,
+    pickupDestination: car.city,
+    From: startDestination,
+    To: endDestination,
+    StartingDate: dates[0].startDate,
+    EndingDate: dates[0].endDate,
+    PickupTime:pickupTime,
+    DropoffTime:dropoffTime,
+    CarContactInfo,
   };
 
   const submitHandler = async (e) => {
@@ -91,7 +93,7 @@ const [destination, setDestination] = useState(
             name: user.name,
             email: user.email,
             address: {
-              city: hotel.city,
+              city: car.city,
             //   line1: shippingInfo.address,
             //   state: shippingInfo.state,
             //   postal_code: shippingInfo.pinCode,
@@ -107,14 +109,14 @@ const [destination, setDestination] = useState(
         alert.error(result.error.message);
       } else {
         if (result.paymentIntent.status === "succeeded") {
-          bookHotel.paymentInfo = {
+          bookCar.paymentInfo = {
             id: result.paymentIntent.id,
             status: result.paymentIntent.status,
           };
 
-          dispatch(bookedHotel(bookHotel));
+          dispatch(bookedCar(bookCar));
 
-          history.push("/hotel/booking/success");
+          history.push("/car/booking/success");
         } else {
           alert.error("There's some issue while processing payment ");
         }
@@ -124,16 +126,9 @@ const [destination, setDestination] = useState(
       // alert.error(error.response.data.message);
     }
   };
-
-//   useEffect(() => {
-//     if (error) {
-//       alert.error(error);
-//       dispatch(clearErrors());
-//     }
-//   }, [dispatch, error, alert]);
-
   return (
-    <Fragment>
+    <>
+  <Fragment>
       {/* <MetaData title="Payment" /> */}
       {/* <CheckoutSteps activeStep={2} /> */}
       <div className="paymentContainer">
@@ -162,7 +157,8 @@ const [destination, setDestination] = useState(
         </form>
       </div>
     </Fragment>
-  );
-};
+    </>
+  )
+}
 
-export default HotelPayment;
+export default CarPayment

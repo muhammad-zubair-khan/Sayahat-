@@ -32,19 +32,30 @@ import PackageCheckout from "./Pages/Checkout/PackageCheckout";
 import axios from "axios";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
+
 import ContactDetails from "./Pages/Checkout/ContactDetails/ContactDetails";
 import ActivityDetails from "./Pages/Checkout/ActivityDetails/ActivityDetails";
 import Payment from "./Pages/Payment/Payment";
+import PackageReserveSuccess from "./Components/Success/PackageReserveSuccess";
+import MyPackages from "./Pages/Bookings/Packages/MyPackages";
+import MyPackageDetails from "./Pages/Bookings/Packages/MyPackageDetails";
+
 import HotelContactDetails from "./Pages/Checkout/Hotel/HotelContactDetails";
 import HotelActivityDetails from "./Pages/Checkout/Hotel/HotelActivityDetails";
 import HotelPayment from "./Pages/Checkout/Hotel/HotelPayment";
-import PackageReserveSuccess from "./Components/Success/PackageReserveSuccess";
 import HotelBookingSuccess from "./Components/Success/HotelBookingSuccess";
-import MyProfile from "./Pages/Profile/MyProfile";
-import MyPackages from "./Pages/Bookings/Packages/MyPackages";
 import MyHotels from "./Pages/Bookings/Hotels/MyHotels";
-import MyPackageDetails from "./Pages/Bookings/Packages/MyPackageDetails";
 import MyHotelDetails from "./Pages/Bookings/Hotels/MyHotelDetails";
+
+import CarContactDetails from "./Pages/Checkout/Car/CarContactDetails";
+import CarPayment from "./Pages/Checkout/Car/CarPayment";
+import CarBookingSuccess from "./Components/Success/CarBookingSuccess";
+import MyCars from "./Pages/Bookings/Cars/MyCars";
+import MyCarDetails from "./Pages/Bookings/Cars/MyCarDetails";
+
+
+import MyProfile from "./Pages/Profile/MyProfile";
+import UpdateProfile from "./Pages/Profile/UpdateProfile";
 
 function App() {
   const dispatch = useDispatch();
@@ -77,7 +88,6 @@ function App() {
 
   return (
     <Router>
-       
       <Switch>
         <Route exact path="/" component={Home} />
         <Route exact path="/vacation/:slug/:slug/:id" component={City} />
@@ -104,9 +114,6 @@ function App() {
         <Route exact path="/aboutus" component={Aboutus} />
         <Route exact path="/contactus" component={Contactus} />
 
-        {/* <Route exact path="/car/:id/checkout" component={Checkout} /> */}
-        {/* <Route exact path="/hotel/:id/checkout" component={HotelCheckout} /> */}
-
         {/* Hotel Booking */}
         <Route
           exact
@@ -118,17 +125,14 @@ function App() {
           path="/hotel/:id/hotelactivityDetail"
           component={HotelActivityDetails}
         />
-         <Route
+        <Route
           exact
           path="/hotel/booking/success"
           component={HotelBookingSuccess}
         />
         <Route exact path="/myHotels" component={MyHotels} />
-        <Route exact path="/myHotel/:id" component={MyHotelDetails} />
+        <Route exact path="/myHotelDetail/:id" component={MyHotelDetails} />
 
-
-
-        {/* <Route exact path="/package/:id/checkout" component={PackageCheckout} /> */}
         {/* Package Booking */}
         <Route
           exact
@@ -145,30 +149,51 @@ function App() {
           path="/package/reserve/success"
           component={PackageReserveSuccess}
         />
-        <Route exact path="/myProfile" component={MyProfile} />
         <Route exact path="/myPackages" component={MyPackages} />
         <Route exact path="/myPackage/:id" component={MyPackageDetails} />
+
+        {/* Car Booking */}
+        <Route
+          exact
+          path="/car/:id/contactdetails"
+          component={CarContactDetails}
+        />
+
+        <Route exact path="/car/booking/success" component={CarBookingSuccess} />
+        <Route exact path="/myCars" component={MyCars} />
+        <Route exact path="/myCar/:id" component={MyCarDetails} />
+
         <Route exact path="/hotels/all" component={HotelList} />
+
+        <Route exact path="/myProfile" component={MyProfile} />
+        <Route exact path="/me/update" component={UpdateProfile} />
         <Route path="/login" component={Login} />
         <Route path="/register" component={SignUp} />
         <Route path="/forgot-password" component={Forgot} />
         {stripeApiKey && (
-        <>
-          <Elements stripe={loadStripe(stripeApiKey)}>
-            <Route
-              exact
-              path="/package/:id/process/payment"
-              component={Payment}
-            />
-          </Elements>
-          <Elements stripe={loadStripe(stripeApiKey)}>
-            <Route
-              exact
-              path="/hotelBooking/:id/process/payment"
-              component={HotelPayment}
-            />
-          </Elements>
-        </>
+          <>
+            <Elements stripe={loadStripe(stripeApiKey)}>
+              <Route
+                exact
+                path="/package/:id/process/payment"
+                component={Payment}
+              />
+            </Elements>
+            <Elements stripe={loadStripe(stripeApiKey)}>
+              <Route
+                exact
+                path="/hotelBooking/:id/process/payment"
+                component={HotelPayment}
+              />
+            </Elements>
+            <Elements stripe={loadStripe(stripeApiKey)}>
+              <Route
+                exact
+                path="/carBooking/:id/process/payment"
+                component={CarPayment}
+              />
+            </Elements>
+          </>
         )}
       </Switch>
       {/* <Footer /> */}

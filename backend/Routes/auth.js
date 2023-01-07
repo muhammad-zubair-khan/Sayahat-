@@ -14,7 +14,7 @@
 // module.exports = router;
 
 const express = require('express');
-const { signup, signin } = require('../Controllers/auth');
+const { signup, signin,updateProfile } = require('../Controllers/auth');
 const { validateSignupRequest, isRequestValidated, validateSigninRequest } = require('../validators/auth');
 const router = express.Router();
 // const { requireSignin } = require('../common-middleware');
@@ -22,6 +22,7 @@ const router = express.Router();
 router.post('/signup',validateSignupRequest, isRequestValidated, signup);
 router.post('/signin',validateSigninRequest, isRequestValidated, signin);
 
+router.route("/me/update").put(validateSigninRequest, isRequestValidated, updateProfile);
 
 // router.post('/profile', requireSignin, (req, res) => {
 //     res.status(200).json({ user: 'profile' })

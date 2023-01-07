@@ -2,6 +2,7 @@ const User = require("../Models/user");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const shortid = require("shortid");
+const catchAsyncErrors = require("../utils/catchAsyncErrors");
 
 const generateJwtToken = (_id, role) => {
   return jwt.sign({ _id, role }, process.env.JWT_SECRET, {
@@ -59,10 +60,10 @@ exports.signin = (req, res) => {
         //   { expiresIn: "1d" }
         // );
         const token = generateJwtToken(user._id, user.role);
-        const { _id, firstName, lastName, email, role, fullName } = user;
+        const { _id, firstName, lastName, email, role, fullName,createdAt } = user;
         res.status(200).json({
           token,
-          user: { _id, firstName, lastName, email, role, fullName },
+          user: { _id, firstName, lastName, email, role, fullName,createdAt },
         });
       } else {
         return res.status(400).json({
@@ -74,3 +75,41 @@ exports.signin = (req, res) => {
     }
   });
 };
+
+
+// update User Profile
+exports.updateProfile = catchAsyncErrors(async (req, res, next) => {
+  const newUserData = {
+    name: req.body.name,
+    email: req.body.email,
+  };
+
+  // if (req.body.avatar !== "") {
+  //   const user = await User.findById(req.user.id);
+
+  //   const imageId = user.avatar.public_id;
+
+  //   await cloudinary.v2.uploader.destroy(imageId);
+
+  //   const myCloud = await cloudinary.v2.uploader.upload(req.body.avatar, {
+  //     folder: "avatars",
+  //     width: 150,
+  //     crop: "scale",
+  //   });
+
+  //   newUserData.avatar = {
+  //     public_id: myCloud.public_id,
+  //     url: myCloud.secure_url,
+  //   };
+  // }
+
+  const user = await User.findByIdAndUpdate(req.user.id, newUserData, {
+    new: true,
+    runValidators: true,
+    useFindAndModify: false,
+  });
+
+  res.status(200).json({
+    success: true,
+  });
+});

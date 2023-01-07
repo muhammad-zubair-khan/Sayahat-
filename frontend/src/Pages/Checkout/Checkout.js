@@ -15,13 +15,13 @@ import logo from "../../Assets/logo/logo-black.png";
 import Footer from "../../Footer/Footer";
 const Checkout = () => {
   const location = useLocation();
-  // const [startDestination, setStartDestination] = useState(
-  //   location.state.state.startDestination
-  // );
-  // const [endDestination, setEndDestination] = useState(
-  //   location.state.state.endDestination
-  // );
-  // const [dates, setDates] = useState(location.state.state.dates);
+  const [startDestination, setStartDestination] = useState(
+    location.state.state.startDestination
+  );
+  const [endDestination, setEndDestination] = useState(
+    location.state.state.endDestination
+  );
+  const [dates, setDates] = useState(location.state.state.dates);
   const [pickupTime, setPickupTime] = useState(location.state.state.pickupTime);
   const [dropoffTime, setDropoffTime] = useState(
     location.state.state.dropoffTime
@@ -30,12 +30,7 @@ const Checkout = () => {
   const { data } = useFetch(
     `http://localhost:5000/api/car-detail/${id}`
   );
-  // const history = useHistory();
   const [show, setShow] = useState(false);
-
-  // const handleClose = () => {
-  //   setShow(false);
-  // };
 
   const isEmail = (email) =>
     /^[-!#$%&'*+\/0-9=?A-Z^_a-z{|}~](\.?[-!#$%&'*+\/0-9=?A-Z^_a-z`{|}~])*@[a-zA-Z0-9](-*\.?[a-zA-Z0-9])*\.[a-zA-Z](-?[a-zA-Z0-9])+$/.test(
@@ -78,12 +73,6 @@ const Checkout = () => {
 
     myForm.set("phone", phone);
 
-    // axios
-    //   .post("http://localhost:5000/api/contact/add", myForm)
-    //   .then(function (response) {
-    //     console.log(response);
-    //   });
-    console.log(myForm);
   };
   const setEmail = (e) => {
     setValues((values) => ({ ...values, email: e.target.value }));

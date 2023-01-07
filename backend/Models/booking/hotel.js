@@ -79,7 +79,7 @@ const bookHotelSchema = new mongoose.Schema({
     type:String,
   },
   fullyRefundable:{
-    type:Boolean,
+    type:String,
   },
   user: {
     type: mongoose.Schema.ObjectId,
@@ -93,7 +93,7 @@ const bookHotelSchema = new mongoose.Schema({
   bookingStatus: {
     type: String,
     required: true,
-    default: "Processing",
+    default: "Booked",
   },
   //   deliveredAt: Date,
   createdAt: {

@@ -56,9 +56,7 @@ const HotelActivityDetails = () => {
         state: { destination, dates, options, totalPrice,selectedRooms },
       });
   };
-  // const setEmail = (e) => {
-  //   setValues((values) => ({ ...values, email: e.target.value }));
-  // };
+ 
   if (Object.keys(hotel).length === 0) {
     return null;
   }

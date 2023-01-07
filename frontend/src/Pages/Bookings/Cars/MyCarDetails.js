@@ -1,16 +1,16 @@
 import React, { Fragment, useEffect } from "react";
-import "./MyPackageDetails.css";
+import "../Packages/MyPackageDetails.css";
 import { useSelector, useDispatch } from "react-redux";
 // import MetaData from "../layout/MetaData";
 import { Link } from "react-router-dom";
 import { Typography } from "@mui/material";
-import { getPackageDetails, clearErrors } from "../../../Redux/Actions/bookPackageAction";
+import { getCarDetails, clearErrors } from "../../../Redux/Actions/bookCarAction";
 // import Loader from "../layout/Loader/Loader";
 // import { useAlert } from "react-alert";
 
-const MyPackageDetails = ({ match }) => {
-  const { error, loading } = useSelector((state) => state.myPackageDetails);
-  const packages = useSelector((state) => state.myPackageDetails);
+const MyCarDetails = ({ match }) => {
+  const { error, loading } = useSelector((state) => state.myCarDetails);
+  const {car} = useSelector((state) => state.myCarDetails);
 
   const dispatch = useDispatch();
 //   const alert = useAlert();
@@ -21,16 +21,15 @@ const MyPackageDetails = ({ match }) => {
       dispatch(clearErrors());
     }
 
-    dispatch(getPackageDetails(match.params.id));
+    dispatch(getCarDetails(match.params.id));
   }, [dispatch,  error, match.params.id]);
 
-  // if (Object.keys(packages.package).length === 0) {
+  // if (Object.keys(cars.car).length === 0) {
   //   return null;
   // }
-  if (Object.keys(packages).length === 0) {
-    return null;
-  }
-
+  // if (Object.keys(car).length === 0) {
+  //   return null;
+  // }
   return (
     <Fragment>
       {loading ? (
@@ -42,24 +41,24 @@ const MyPackageDetails = ({ match }) => {
           <div className="orderDetailsPage">
             <div className="orderDetailsContainer">
               <Typography component="h1">
-                Package # {packages.package && packages.package._id}
+                car # {car && car._id}
               </Typography>
               <Typography>Contact Info</Typography>
               <div className="orderDetailsContainerBox">
                 <div>
                   <p>Name:</p>
-                  <span>{packages.package && packages.package.contactInfo.firstName}</span>
+                  <span>{car && car.CarContactInfo.firstName}</span>
                 </div>
                 <div>
                   <p>Phone:</p>
                   <span>
-                  {packages.package && packages.package.contactInfo.phone}
+                  {car && car.CarContactInfo.phone}
                   </span>
                 </div>
                 <div>
                   <p>Email:</p>
                   <span>
-                  {packages.package && packages.package.contactInfo.email}
+                  {car && car.CarContactInfo.email}
                   </span>
                 </div>
               </div>
@@ -68,14 +67,14 @@ const MyPackageDetails = ({ match }) => {
                 <div>
                   <p
                     className={
-                      packages.package &&
-                      packages.package.paymentInfo.status === "succeeded"
+                      car &&
+                      car.paymentInfo.status === "succeeded"
                         ? "greenColor"
                         : "redColor"
                     }
                   >
-                    { packages.package &&
-                     packages.package.paymentInfo.status === "succeeded"
+                    { car &&
+                     car.paymentInfo.status === "succeeded"
                       ? "PAID"
                       : "NOT PAID"}
                   </p>
@@ -83,32 +82,41 @@ const MyPackageDetails = ({ match }) => {
 
                 <div>
                   <p>Amount:</p>
-                  <span>{packages.package && packages.package.price}</span>
+                  <span>{car && car.price}</span>
                 </div>
               </div>
 
-              <Typography>Package Info</Typography>
+              <Typography>car Info</Typography>
               <div className="orderDetailsContainerBox">
                 <div>
                 <p>Name:</p>
-                  <span>{packages.package && packages.package.name}</span>
+                  <span>{car && car.name}</span>
+                </div>
+                <div>
+                <p>From:</p>
+                  <span>{car && car.From}</span>
+                </div>
+                <div>
+                <p>To:</p>
+                  <span>{car && car.To}</span>
                 </div>
                 <div>
                 <p>Pickup Time:</p>
-                  <span>{packages.package && packages.package.activityInfo.time}</span>
+                  <span>{car && car.PickupTime}</span>
                 </div>
                 <div>
-                <p>Reserved Dates:</p>
-                  <span>{`${packages.package && packages.package.activityInfo.dates[0].startDate} to ${packages.package && packages.package.activityInfo.dates[0].endDate}`}</span>
+                <p>Dropoff Time:</p>
+                  <span>{car && car.DropoffTime}</span>
                 </div>
                 <div>
-                <p>Adult and Chidlren</p>
-                  <span>{`${packages.package && packages.package.activityInfo.options[0].adult} and ${packages.package && packages.package.activityInfo.options[0].children}`}</span>
+                <p>Pickup Date:</p>
+                  <span>{car && car.StartingDate}</span>
                 </div>
                 <div>
-                <p>Refundable?</p>
-                  <span>{packages.package && packages.package.refundable}</span>
+                <p>Dropoff Date:</p>
+                  <span>{car && car.EndingDate}</span>
                 </div>
+                
               </div>
             </div>
 
@@ -117,7 +125,6 @@ const MyPackageDetails = ({ match }) => {
         </Fragment>
       )}
     </Fragment>
-  );
-};
-
-export default MyPackageDetails;
+  )
+}
+export default MyCarDetails;

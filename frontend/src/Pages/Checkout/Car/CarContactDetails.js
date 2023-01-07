@@ -1,54 +1,50 @@
-import React, { useEffect, useState } from "react";
-import TextField from "@mui/material/TextField";
-import CheckoutSteps from "../CheckoutSteps";
-import { Link, useHistory, useLocation, useParams } from "react-router-dom";
+import { Grid, TextField } from "@mui/material";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { saveContactInfo } from "../../../Redux/Actions/checkout";
-import { Grid } from "@mui/material";
-import { getPackageDetailById } from "../../../Redux/Actions/packageAction";
+import { Link, useHistory, useLocation, useParams } from "react-router-dom";
+import { getCarById } from "../../../Redux/Actions/carAction";
+import { saveCarContactInfo } from "../../../Redux/Actions/checkout";
 import { ImageUrl } from "../../../Redux/UrlConfig";
+import CarCheckoutSteps from "../CarCheckoutSteps";
+// import CheckoutSteps from "../CheckoutSteps";
 
-const ContactDetails = () => {
-  const location = useLocation();
+const CarContactDetails = () => {
   const dispatch = useDispatch();
-  const { user } = useSelector((state) => state.auth);
-  const [dates, setDates] = useState(location.state.state.dates);
-  const [options, setOptions] = useState(location.state.state.options);
-  const [time, setTimes] = useState(location.state.state.time);
-  const [show, setShow] = useState(false);
-
-  const packages = useSelector((state) => state.addPackageReducer);
+  const history = useHistory();
+  const location = useLocation();
   const { id } = useParams();
-  // const { data, loading, error } = useFetch(
-  //   `http://localhost:5000/api/hotel/${id}`
-  // );
-  // console.log(data);
+  const { user } = useSelector((state) => state.auth);
+  const [startDestination, setStartDestination] = useState(
+    location.state.state.startDestination
+  );
+  const [endDestination, setEndDestination] = useState(
+    location.state.state.endDestination
+  );
+  const [dates, setDates] = useState(location.state.state.dates);
+  const [pickupTime, setPickupTime] = useState(location.state.state.pickupTime);
+  const [dropoffTime, setDropoffTime] = useState(
+    location.state.state.dropoffTime
+  );
+  const [totalPrice, setTotalPrice] = useState(location.state.state.totalPrice);
+
+  const { car } = useSelector((state) => state.addCarReducer);
+
   useEffect(() => {
-    dispatch(getPackageDetailById(id));
+    dispatch(getCarById(id));
   }, [dispatch, id]);
 
-  const handleClose = () => {
-    setShow(false);
-    // navigate(0);
-  };
-  const handleShow = () => {
-    if (!isEmail(email)) {
-      setShow(false);
-    } else if (isEmail(email)) {
-      setShow(true);
-    }
-  };
-  const history = useHistory();
   const isEmail = (email) =>
     /^[-!#$%&'*+\/0-9=?A-Z^_a-z{|}~](\.?[-!#$%&'*+\/0-9=?A-Z^_a-z`{|}~])*@[a-zA-Z0-9](-*\.?[a-zA-Z0-9])*\.[a-zA-Z](-?[a-zA-Z0-9])+$/.test(
       email
     );
+  // carContactCheckout
 
   const [errors, setErrors] = useState({});
   const [email, setEmail] = useState(user.email);
   const [firstName, setFirstName] = useState(user.firstName);
   const [lastName, setLastName] = useState(user.lastName);
   const [phone, setPhone] = useState("");
+  const [nic, setNic ] = useState("");
 
   const SubmitContactInfo = (e) => {
     e.preventDefault();
@@ -63,33 +59,35 @@ const ContactDetails = () => {
     }
     setErrors(errors);
     myForm.set("phone", phone);
-    dispatch(saveContactInfo({ firstName, lastName, email, phone }));
-    history.push(`/package/${id}/activitydetails`, {
-      state: { time, dates, options },
+    myForm.set("nic", nic);
+    dispatch(saveCarContactInfo({ firstName, lastName, email, phone, nic }));
+    history.push(`/carBooking/${id}/process/payment`, {
+      state: {
+        startDestination,
+        endDestination,
+        pickupTime,
+        dropoffTime,
+        dates,
+        totalPrice,
+      },
     });
   };
-  // const setEmail = (e) => {
-  //   setValues((values) => ({ ...values, email: e.target.value }));
-  // };
-  if (Object.keys(packages.package).length === 0) {
-    return null;
-  }
   return (
     <>
       <Grid container style={{ margin: "106px 43px" }}>
-        <Grid lg={7}>
-          <CheckoutSteps activeStep={0} />
+        <Grid lg={6}>
+          <CarCheckoutSteps activeStep={0} />
           <div className="container text-center mt-5">
             <h4 style={{ color: "black" }} className="my-3">
               We'll use this information to send you confirmation and updates
               about your booking
             </h4>
-            <h5 style={{ color: "black" }} className="mt-3">
+           {!localStorage.token && <h5 style={{ color: "black" }} className="mt-3">
               Already have an account?
               <span>
                 <Link to="/login">Log in</Link>
               </span>
-            </h5>
+            </h5>}
             <form
               encType="multipart/form-data"
               onSubmit={SubmitContactInfo}
@@ -141,6 +139,21 @@ const ContactDetails = () => {
                   onChange={(e) => setPhone(e.target.value)}
                 />
               </div>
+
+              <div className="my-3 inputField">
+                <TextField
+                  autoComplete="off"
+                  type="number"
+                  fullWidth
+                  required
+                  id="outlined-required"
+                  label="CNIC"
+                  // max="13"
+                  // pattern="^\d{5}-\d{8}-\d{1}$"
+                  value={nic}
+                  onChange={(e) => setNic(e.target.value)}
+                />
+              </div>
               {Object.entries(errors).map(([key, error]) => (
                 <span
                   key={`${key}: ${error}`}
@@ -154,7 +167,7 @@ const ContactDetails = () => {
                   {error}
                 </span>
               ))}
-           
+
               <input
                 type="submit"
                 value="Continue"
@@ -165,7 +178,7 @@ const ContactDetails = () => {
           </div>
         </Grid>
         <Grid
-          lg={5}
+          lg={6}
           style={{ padding: "57px 78px", backgroundColor: "#f5f5f5" }}
         >
           <div
@@ -177,14 +190,13 @@ const ContactDetails = () => {
           >
             <span>
               <img
-                src={ImageUrl(packages.package.packageImages[0].img)}
-                style={{ width: "30%" }}
+                src={ImageUrl(car.carImages && car.carImages[0].img)}
                 alt=""
               />
-              <b>{packages.package.name}</b>
+              <b>{car.name}</b>
             </span>
             <span>
-              <b>PKR {packages.package.price}</b>
+              <b>PKR {totalPrice}</b>
             </span>
           </div>
           <div
@@ -197,24 +209,37 @@ const ContactDetails = () => {
               flexDirection: "column",
             }}
           >
-            {/* <span>Pick-up Time: <span className="siTaxiOp">{pickupTime}</span></span>
-                <span>Drop-off Time: <span className="siTaxiOp">{dropoffTime}</span></span> */}
-            {/* <span>{data.hotel.address}</span> */}
-            <span>{packages.package.title}</span>
+            <span>
+              From <span className="siTaxiOp">{startDestination}</span>
+            </span>
+            <span>
+              To: <span className="siTaxiOp">{endDestination}</span>
+            </span>
+
+            <span>
+              Pick-up Time: <span className="siTaxiOp">{pickupTime}</span>
+            </span>
+            <span>
+              Drop-off Time: <span className="siTaxiOp">{dropoffTime}</span>
+            </span>
+
+            <span>
+              Dates:{" "}
+              <span className="siTaxiOp">{`${dates[0].startDate} to ${dates[0].endDate}`}</span>
+            </span>
+            {/* <span>{car.payAt}</span>
+            <span>{car.refund}</span> */}
             <hr />
-          </div>
-          <div>
-            <b>Pick-up Time: {time}</b>
           </div>
           <div
             style={{
-              // marginLeft: "36px",
+              marginLeft: "36px",
               display: "flex",
               justifyContent: "space-between",
             }}
           >
             <b>Total Price</b>
-            <b>PKR {packages.package.price}</b>
+            <b>PKR {totalPrice}</b>
           </div>
         </Grid>
       </Grid>
@@ -222,4 +247,4 @@ const ContactDetails = () => {
   );
 };
 
-export default ContactDetails;
+export default CarContactDetails;

@@ -7,12 +7,31 @@ import {
   SIGNUP_FAILURE,
   SIGNUP_REQUEST,
   SIGNUP_SUCCESS,
+  UPDATE_PROFILE_REQUEST,
+  UPDATE_PROFILE_SUCCESS,
+  UPDATE_PROFILE_FAIL,
+  CLEAR_ERRORS,
+  LOAD_USER_REQUEST,
+  LOAD_USER_SUCCESS,
+  LOAD_USER_FAIL,
+  DELETE_USER_REQUEST,
+  DELETE_USER_SUCCESS,
+  DELETE_USER_FAIL,
+  DELETE_USER_RESET,
+  UPDATE_USER_REQUEST,
+  UPDATE_USER_SUCCESS,
+  UPDATE_USER_FAIL,
+  UPDATE_USER_RESET,
+  UPDATE_PROFILE_RESET,
+  UPDATE_PASSWORD_REQUEST,
+  UPDATE_PASSWORD_SUCCESS,
+  UPDATE_PASSWORD_RESET,
+  UPDATE_PASSWORD_FAIL,
   // ALL_USER_REQUEST,
   // ALL_USER_SUCCESS,
   // ALL_USER_FAIL,
 } from "../Constants/authConstants";
 import axios from "../helpers/axios";
-import { setAlert } from "./alert";
 // new update signup action
 export const signup = (user) => {
   return async (dispatch) => {
@@ -112,6 +131,19 @@ export const login = (user) => {
 // 	}
 // };
 
+// Load User
+export const loadUser = () => async (dispatch) => {
+  try {
+    dispatch({ type: LOAD_USER_REQUEST });
+
+    const { data } = await axios.get(`/api/v1/me`);
+
+    dispatch({ type: LOAD_USER_SUCCESS, payload: data.user });
+  } catch (error) {
+    dispatch({ type: LOAD_USER_FAIL, payload: error.response.data.message });
+  }
+};
+
 
 export const isUserLoggedIn = () => {
   return async (dispatch) => {
@@ -134,6 +166,24 @@ export const isUserLoggedIn = () => {
   };
 };
 
+// Update Profile
+export const updateProfile = (userData) => async (dispatch) => {
+  try {
+    dispatch({ type: UPDATE_PROFILE_REQUEST });
+
+    const config = { headers: { "Content-Type": "multipart/form-data" } };
+
+    const { data } = await axios.put(`/me/update`, userData, config);
+
+    dispatch({ type: UPDATE_PROFILE_SUCCESS, payload: data.success });
+  } catch (error) {
+    dispatch({
+      type: UPDATE_PROFILE_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+
 export const signout = () => {
   return async (dispatch) => {
     dispatch({ type: LOGOUT_REQUEST });
@@ -151,4 +201,10 @@ export const signout = () => {
     //     });
     // }
   };
+};
+
+
+// Clearing Errors
+export const clearErrors = () => async (dispatch) => {
+  dispatch({ type: CLEAR_ERRORS });
 };

@@ -26,7 +26,7 @@ import MailList from "../../Components/MailList/MailList";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ReviewCard from "../HotelDetails/ReviewCard/ReviewCard";
-import { clearErrors, newCarReview } from "../../Redux/Actions/carAction";
+import { clearErrors, getCarById, newCarReview } from "../../Redux/Actions/carAction";
 import { NEW_REVIEW_RESET } from "../../Redux/Constants/carConstants";
 import { useEffect } from "react";
 import {
@@ -61,15 +61,17 @@ const CarDetail = ({match}) => {
   const { success, error: reviewError } = useSelector(
     (state) => state.newCarReview
   );
-  const { data, loading, error } = useFetch(
-    `http://localhost:5000/api/car-detail/${id}`
-  );
-  // console.log(data)
+  // const { data, loading, error } = useFetch(
+  //   `http://localhost:5000/api/car-detail/${id}`
+  // );
+  const {car} = useSelector((state)=> state.addCarReducer)
   const auth = useSelector((state) => state.auth);
-
+useEffect(()=>{
+  dispatch(getCarById(id))
+},[])
   // const { user } = useContext(AuthContext);
   // const { date } = useContext(SearchContext);
-  // console.log(date)
+  
   const MILLISECONDS_PER_DAY = 1000 * 60 * 60 * 24;
   function dayDifference(date1, date2) {
     const timeDiff = Math.abs(date2.getTime() - date1.getTime());
@@ -77,12 +79,12 @@ const CarDetail = ({match}) => {
     return diffDays;
   }
   useEffect(() => {
-    if (error) {
-      toast.error(error, {
-        position: toast.POSITION.BOTTOM_CENTER,
-      });
-      dispatch(clearErrors());
-    }
+    // if (error) {
+    //   toast.error(error, {
+    //     position: toast.POSITION.BOTTOM_CENTER,
+    //   });
+    //   dispatch(clearErrors());
+    // }
 
     if (reviewError) {
       toast.error(reviewError, {
@@ -97,7 +99,7 @@ const CarDetail = ({match}) => {
       });
       dispatch({ type: NEW_REVIEW_RESET });
     }
-  }, [dispatch, error, reviewError, success]);
+  }, [dispatch,  reviewError, success]);
 
   const days = dayDifference(dates[0].endDate, dates[0].startDate);
 
@@ -117,16 +119,17 @@ const CarDetail = ({match}) => {
 
     setSlideNumber(newSlideNumber);
   };
+  const totalPrice = days * car.price
 
   const handleClick = () => {
     if (auth.authenticate) {
-      dispatch({ type: "NEW_SEARCH", payload: { startDestination,endDestination,pickupTime,dropoffTime, dates } });
+      dispatch({ type: "NEW_SEARCH", payload: { startDestination,endDestination,pickupTime,dropoffTime, dates,totalPrice } });
       toast.success(`Booked Successfully`, {
         position: toast.POSITION.BOTTOM_CENTER,
       });
       setTimeout(() => {
-        history.push(`/car/${id}/checkout`,{
-          state: { startDestination,endDestination,pickupTime,dropoffTime, dates },
+        history.push(`/car/${id}/contactdetails`,{
+          state: { startDestination,endDestination,pickupTime,dropoffTime, dates,totalPrice },
         })
       }, 3000);
      
@@ -140,7 +143,8 @@ const CarDetail = ({match}) => {
     }
   };
   // console.log(data);
-  if (Object.keys(data).length === 0) {
+  
+  if (Object.keys(car).length === 0) {
     return null;
   }
   const submitCarReviewToggle = () => {
@@ -177,9 +181,9 @@ const CarDetail = ({match}) => {
       </div>
       {/* <Navbar />
       <Header type="list" /> */}
-      {loading ? (
+      {/* {loading ? (
         "loading"
-      ) : (
+      ) : ( */}
         <div
           className="hotelContainer"
           style={{ top: "126px", position: "relative" }}
@@ -198,7 +202,7 @@ const CarDetail = ({match}) => {
               />
               <div className="sliderWrapper">
                 <img
-                  src={data.photos[slideNumber]}
+                  src={car.photos[slideNumber]}
                   alt=""
                   className="sliderImg"
                 />
@@ -214,17 +218,17 @@ const CarDetail = ({match}) => {
             <button className="bookNow" onClick={handleClick}>
               Book Now!
             </button>
-            <h1 className="hotelTitle">{data.car.name}</h1>
+            <h1 className="hotelTitle">{car.name}</h1>
             <div className="hotelAddress">
               <FontAwesomeIcon icon={faLocationDot} />
-              <span>{data.car.mileage}</span>
+              <span>{car.mileage}</span>
             </div>
-            <span className="hotelDistance">{data.car.title}</span>
+            <span className="hotelDistance">{car.title}</span>
             <span className="hotelPriceHighlight">
-              Fare: PKR{data.car.price}
+              Fare: PKR{car.price}
             </span>
             <div className="hotelImages">
-              {data.car.carImages?.map((photo, i) => (
+              {car.carImages?.map((photo, i) => (
                 <div className="hotelImgWrapper" key={i}>
                   <Zoom>
                     <img
@@ -240,7 +244,7 @@ const CarDetail = ({match}) => {
             <div className="hotelDetails">
               <div className="hotelDetailsTexts">
                 {/* <h1 className="hotelTitle">{data.hotel.title}</h1> */}
-                <p className="hotelDesc">{data.car.description}</p>
+                <p className="hotelDesc">{car.description}</p>
               </div>
               <div className="hotelDetailsPrice">
                 <h1>Perfect for a {days} - day ride</h1>
@@ -248,8 +252,8 @@ const CarDetail = ({match}) => {
                   this property has an excellent location score of 9.8!
                 </span>
                 <h6>
-                  <b>PKR{days * data.car.price}</b> ({days} days)
-                  <Tooltip title={`${data.car.price} x ${days}`} placement="top">
+                  <b>PKR{totalPrice}</b> ({days} days)
+                  <Tooltip title={`${car.price} x ${days}`} placement="top">
                     <Button>
                       <i className="text-dark fs-5 fa-solid fa-circle-info"></i>
                     </Button>
@@ -316,10 +320,10 @@ const CarDetail = ({match}) => {
         
 
           <Container>
-            {data.car.reviews && data.car.reviews[0] ? (
+            {car.reviews && car.reviews[0] ? (
               <div className="reviews">
-                {data.car.reviews &&
-                  data.car.reviews.map((review) => (
+                {car.reviews &&
+                  car.reviews.map((review) => (
                     <ReviewCard key={review._id} review={review} />
                     // {/* <img src={profilePng} alt="User" /> */}
                   ))}
@@ -334,7 +338,7 @@ const CarDetail = ({match}) => {
           <MailList />
           {/* <Footer /> */}
         </div>
-      )}
+      {/* )} */}
       <Footer />
     </>
   );

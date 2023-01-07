@@ -2,17 +2,16 @@ import React, { Fragment, useEffect } from "react";
 import "../Packages/MyPackageDetails.css";
 import { useSelector, useDispatch } from "react-redux";
 // import MetaData from "../layout/MetaData";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { Typography } from "@mui/material";
-// import { getPackageDetails, clearErrors } from "../../../Redux/Actions/bookPackageAction";
 import { getHotelsDetails,clearErrors } from "../../../Redux/Actions/bookHotelAction";
 // import Loader from "../layout/Loader/Loader";
 // import { useAlert } from "react-alert";
 
 const MyHotelDetails = ({ match }) => {
   const { error, loading,hotel } = useSelector((state) => state.myHotelDetails);
-  console.log(hotel)
-//   const packages = useSelector((state) => state.myPackageDetails);
+  const hotels = useSelector((state) => state.myHotelDetails);
+  const {id} = useParams()
 
   const dispatch = useDispatch();
 //   const alert = useAlert();
@@ -23,18 +22,20 @@ const MyHotelDetails = ({ match }) => {
       dispatch(clearErrors());
     }
 
-    dispatch(getHotelsDetails(match.params.id));
-  }, [dispatch,  error, match.params.id]);
+    dispatch(getHotelsDetails(id));
+  }, [dispatch,error,id]);
 
-//   if (Object.keys(hotel).length === 0) {
-//     return null;
-//   }
+  if (Object.keys(hotels).length === 0) {
+    return null;
+  }
+
 
   return (
     <Fragment>
-      {/* {loading ? (
-        <Loader />
-      ) : ( */}
+      {loading ? (
+        // <Loader /> 
+        "loading"
+      ) : (
         <Fragment>
           {/* <MetaData title="Order Details" /> */}
           <div className="orderDetailsPage">
@@ -46,18 +47,18 @@ const MyHotelDetails = ({ match }) => {
               <div className="orderDetailsContainerBox">
                 <div>
                   <p>Name:</p>
-                  <span>{hotel && hotel.hotelContactInfo.firstName}</span>
+                  <span>{hotels.hotel && hotels.hotel.hotelContactInfo.firstName}</span>
                 </div>
                 <div>
                   <p>Phone:</p>
                   <span>
-                  {hotel && hotel.hotelContactInfo.phone}
+                  {hotels.hotel && hotels.hotel.hotelContactInfo.phone}
                   </span>
                 </div>
                 <div>
                   <p>Email:</p>
                   <span>
-                  {hotel && hotel.hotelContactInfo.email}
+                  {hotels.hotel && hotels.hotel.hotelContactInfo.email}
                   </span>
                 </div>
               </div>
@@ -84,7 +85,6 @@ const MyHotelDetails = ({ match }) => {
                   <span>{hotel && hotel.price}</span>
                 </div>
               </div>
-
               <Typography>Package Info</Typography>
               <div className="orderDetailsContainerBox">
                 <div>
@@ -92,8 +92,8 @@ const MyHotelDetails = ({ match }) => {
                   <span>{hotel && hotel.name}</span>
                 </div>
                 <div>
-                <p>Pickup Time:</p>
-                  {/* <span>{hotel && hotel.hotelActivityInfo.time}</span> */}
+                {/* <p>Pickup Time:</p>
+                  <span>{hotel && hotel.hotelActivityInfo.time}</span> */}
                 </div>
                 <div>
                 <p>Reserved Dates:</p>
@@ -108,12 +108,10 @@ const MyHotelDetails = ({ match }) => {
                   <span>{hotel && hotel.FullyRefundable}</span>
                 </div>
               </div>
-            </div>
-
-          
+            </div>          
           </div>
         </Fragment>
-      {/* )} */}
+      )} 
     </Fragment>
   );
 };

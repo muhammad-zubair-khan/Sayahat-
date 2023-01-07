@@ -119,9 +119,10 @@ const MyPackages = () => {
     <Fragment>
       {/* <MetaData title={`${user.name} - Orders`} /> */}
 
-      {/* {loading ? (
-        <Loader />
-      ) : ( */}
+      {loading ? (
+        // <Loader />
+        "Loading"
+      ) : (
         <div className="myOrdersPage">
           <DataGrid
             rows={rows}
@@ -134,7 +135,7 @@ const MyPackages = () => {
 
           <Typography id="myOrdersHeading">{user.fullName}'s Packages</Typography>
         </div>
-      {/* )} */}
+      )} 
     </Fragment>
   );
 };

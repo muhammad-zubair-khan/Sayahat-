@@ -2,66 +2,70 @@ import React, { Fragment, useEffect } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import "../Packages/MyPackages.css";
 import { useSelector, useDispatch } from "react-redux";
-// import { clearErrors, myPackages } from "../../actions/orderAction";
 // import Loader from "../layout/Loader/Loader";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 // import { useAlert } from "react-alert";
 import Typography from "@mui/material/Typography";
 // import MetaData from "../layout/MetaData";
 import LaunchIcon from "@mui/icons-material/Launch";
-import { clearErrors, myHotels } from "../../../Redux/Actions/bookHotelAction";
+import { clearErrors, myCars } from "../../../Redux/Actions/bookCarAction";
 
-const MyHotels = () => {
+const MyCars = () => {
   const dispatch = useDispatch();
-
 //   const alert = useAlert();
 
-  const { loading, error, hotels } = useSelector((state) => state.myHotels);
-  console.log(hotels)
+  const { loading, error, cars } = useSelector((state) => state.myCars);
   const { user } = useSelector((state) => state.auth);
 
   const columns = [
-    { field: "id", headerName: "Hotel ID", minWidth: 200, flex: 0.5 },
+    { field: "id", headerName: "Car ID", minWidth: 300, flex: 1 },
     {
         field: "name",
-        headerName: "Hotel Name",
+        headerName: "Car Name",
         minWidth: 150,
-        flex: 0.3,
+        flex: 0.5,
       },
+    //   {
+    //     field: "From",
+    //     headerName: "From",
+    //     type: "number",
+    //     minWidth: 150,
+    //     flex: 0.3,
+    //   },
+    //   {
+    //       field: "To",
+    //       headerName: "To",
+    //       type: "number",
+    //       minWidth: 150,
+    //       flex: 0.3,
+    //     },
+    // {
+    //     field: "PickupTime",
+    //     headerName: "Pickup Time",
+    //     minWidth: 150,
+    //     flex: 0.5,
+    //   },
+    // {
+    //     field: "DropoffTime",
+    //     headerName: "Drop Off Time",
+    //     minWidth: 150,
+    //     flex: 0.5,
+    //   },
+    
     {
-        field: "adult",
-        headerName: "Adult",
+      field: "pickupDestination",
+      headerName: "City",
       type: "number",
-        minWidth: 150,
-        flex: 0.3,
-      },
-    {
-        field: "children",
-        headerName: "Chidlren",
-      type: "number",
-        minWidth: 150,
-        flex: 0.3,
-      },
-    {
-      field: "rooms",
-      headerName: "Booked Rooms",
-      type: "number",
-      minWidth: 150,
-      flex: 0.3,
-    },
-    {
-      field: "fullyRefundable",
-      headerName: "Refundable",
       minWidth: 150,
       flex: 0.3,
     },
 
     {
-      field: "price",
+      field: "amount",
       headerName: "Amount",
       type: "number",
-      minWidth: 150,
-      flex: 0.3,
+      minWidth: 270,
+      flex: 0.5,
     },
 
     {
@@ -73,7 +77,7 @@ const MyHotels = () => {
       sortable: false,
       renderCell: (params) => {
         return (
-          <Link to={`/myHotelDetail/${params.getValue(params.id, "id")}`}>
+          <Link to={`/myCar/${params.getValue(params.id, "id")}`}>
             <LaunchIcon />
           </Link>
         );
@@ -82,27 +86,27 @@ const MyHotels = () => {
   ];
   const rows = [];
 
-  hotels &&
-    hotels.forEach((item, index) => {
+  cars &&
+  cars.forEach((item, index) => {
         rows.push({
             // itemsQty: item.orderItems.length,
             id: item._id,
             name:item.name,
-            rooms: item.rooms.length,
-            adult:item.hotelActivityInfo.options[0].adult,
-            children:item.hotelActivityInfo.options[0].children,
-            // room:item.hotelActivityInfo.options[0].room,
-            fullyRefundable:item.fullyRefundable,
-            price: item.price,
+            // From: item.From,
+            // To: item.To,
+            // PickupTime: item.PickupTime,
+            // DropoffTime: item.DropoffTime,
+            pickupDestination: item.pickupDestination,
+            amount: item.price,
         });
     });
 
   useEffect(() => {
-    if (error) {
-    //   alert.error(error);
-      dispatch(clearErrors());
-    }
-    dispatch(myHotels());
+    // if (error) {
+    // //   alert.error(error);
+    //   dispatch(clearErrors());
+    // }
+    dispatch(myCars());
   }, []);
 
   return (
@@ -123,11 +127,11 @@ const MyHotels = () => {
             autoHeight
           />
 
-          <Typography id="myOrdersHeading">{user.fullName}'s Hotels</Typography>
+          <Typography id="myOrdersHeading">{user.fullName}'s Cars</Typography>
         </div>
-      )}
+      )} 
     </Fragment>
   );
 };
 
-export default MyHotels;
+export default MyCars;

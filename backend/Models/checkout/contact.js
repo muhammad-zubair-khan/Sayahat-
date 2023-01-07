@@ -20,7 +20,6 @@ const contactSchema = new mongoose.Schema({
         type:Number,
         required:true,
     },
-
     
 });
 

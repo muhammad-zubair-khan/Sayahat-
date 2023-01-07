@@ -2,6 +2,9 @@ import {
   GET_CAR_BY_SLUG_REQUEST,
   GET_CAR_BY_SLUG_SUCCESS,
   GET_CAR_BY_SLUG_FAIL,
+  GET_CAR_BY_ID_REQUEST,
+  GET_CAR_BY_ID_SUCCESS,
+  GET_CAR_BY_ID_FAIL,
   CREATE_NEW_CAR_REQUEST,
   CREATE_NEW_CAR_SUCCESS,
   CREATE_NEW_CAR_FAIL,
@@ -98,6 +101,24 @@ export const getAllCars =
       });
     }
   };
+
+  // Get Car By Id
+export const getCarById = (id) => async (dispatch) => {
+  try {
+    dispatch({ type: GET_CAR_BY_ID_REQUEST });
+    const { data } = await axios.get(`/car-detail/${id}`);
+    dispatch({
+      type: GET_CAR_BY_ID_SUCCESS,
+      payload: data.car,
+    });
+  } catch (error) {
+    dispatch({
+      type: GET_CAR_BY_ID_FAIL,
+      payload: error.response
+    });
+  }
+};
+
 
 //get Car by Slug
 export const getCarBySlug = (slug) => async (dispatch) => {
