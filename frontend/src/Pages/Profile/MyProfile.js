@@ -22,7 +22,21 @@ const MyProfile = ({ history }) => {
           <div className="profileContainer">
             <div>
               <h1>My Profile</h1>
-              <img src="" alt={user.fullName} />
+              {/* <img src="" alt={user.fullName} /> */}
+              <div
+            className="fullName"
+            style={{
+              textTransform: 'uppercase',
+              // background: 'rgb(247, 133, 54)',
+              background: 'rgb(68 68 68)',
+              color: 'white',
+              borderRadius: '100%',
+              padding: '49px',
+              fontSize: '41px',
+            }}
+          >
+            {user.firstName.substring(0,1)}{user.lastName.substring(0,1)}
+          </div>
               <Link to="/me/update">Edit Profile</Link>
             </div>
             <div>

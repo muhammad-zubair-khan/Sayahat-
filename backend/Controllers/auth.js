@@ -17,7 +17,7 @@ exports.signup = (req, res) => {
         error: "User already registered",
       });
 
-    const { firstName, lastName, email, password } = req.body;
+    const { firstName, lastName, email, password,createdAt } = req.body;
     const hash_password = await bcrypt.hash(password, 10);
     const _user = new User({
       firstName,
@@ -25,6 +25,7 @@ exports.signup = (req, res) => {
       email,
       hash_password,
       userName: shortid.generate(),
+      createdAt
     });
 
     _user.save((error, user) => {
@@ -38,10 +39,10 @@ exports.signup = (req, res) => {
 
       if (user) {
         const token = generateJwtToken(user._id, user.role);
-        const { _id, firstName, lastName, email, role, fullName } = user;
+        const { _id, firstName, lastName, email, role, fullName,createdAt } = user;
         return res.status(201).json({
           token,
-          user: { _id, firstName, lastName, email, role, fullName },
+          user: { _id, firstName, lastName, email, role, fullName ,createdAt},
         });
       }
     });
@@ -75,41 +76,3 @@ exports.signin = (req, res) => {
     }
   });
 };
-
-
-// update User Profile
-exports.updateProfile = catchAsyncErrors(async (req, res, next) => {
-  const newUserData = {
-    name: req.body.name,
-    email: req.body.email,
-  };
-
-  // if (req.body.avatar !== "") {
-  //   const user = await User.findById(req.user.id);
-
-  //   const imageId = user.avatar.public_id;
-
-  //   await cloudinary.v2.uploader.destroy(imageId);
-
-  //   const myCloud = await cloudinary.v2.uploader.upload(req.body.avatar, {
-  //     folder: "avatars",
-  //     width: 150,
-  //     crop: "scale",
-  //   });
-
-  //   newUserData.avatar = {
-  //     public_id: myCloud.public_id,
-  //     url: myCloud.secure_url,
-  //   };
-  // }
-
-  const user = await User.findByIdAndUpdate(req.user.id, newUserData, {
-    new: true,
-    runValidators: true,
-    useFindAndModify: false,
-  });
-
-  res.status(200).json({
-    success: true,
-  });
-});

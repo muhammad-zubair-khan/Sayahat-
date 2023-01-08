@@ -190,7 +190,8 @@ background-position-y:bottom;
   top: 40%;
   position: absolute;
   width: 100%;
-  margin-top: -80px;
+  /* margin-top: -80px; */
+  margin-top: -137px;
   z-index: 2;
   color: #fff;
 }

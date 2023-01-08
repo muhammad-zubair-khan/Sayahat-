@@ -121,12 +121,20 @@ const Navbar = (props) => {
           <Link
             className="fullName"
             style={{
-              textTransform: "uppercase",
-              background: "#f78536",
-              color: "white",
+              // textTransform: "uppercase",
+              // background: "#f78536",
+              // color: "white",
+              // borderRadius: '78%',
+              // padding: '13px 13px',
+              textTransform: 'uppercase',
+              background: 'rgb(255 255 255 / 16%)',
+              color: 'white',
+              borderRadius: '78%',
+              padding: '16px 18px',
+              fontSize:'20px'
             }}
           >
-            {user.fullName}
+            {user.firstName.substring(0,1)}{user.lastName.substring(0,1)}
           </Link>
         }
         menus={[

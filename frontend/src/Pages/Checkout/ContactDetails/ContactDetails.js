@@ -206,6 +206,9 @@ const ContactDetails = () => {
           <div>
             <b>Pick-up Time: {time}</b>
           </div>
+          <div>
+            <b>Date: {dates}</b>
+          </div>
           <div
             style={{
               // marginLeft: "36px",

@@ -262,20 +262,25 @@ function SearchedPackageDetail({ match }) {
             <hr />
             <h4 className="text-black">Select Date and Travelers</h4>
             <div className="p-4 lsItem">
-              <span
+              <input type="date" value={dates} onChange={(e)=>setDates(e.target.value)} />
+              {console.log(dates)}
+              {/* <span
                 onClick={() => setOpenPackageDate(!openPackageDate)}
-              >{`${format(dates[0].startDate, "MM/dd/yyyy")} to ${format(
+              >
+                {`${format(dates[0].startDate, "MM/dd/yyyy")} to ${format(
                 dates[0].endDate,
                 "MM/dd/yyyy"
-              )}`}</span>
-              {openPackageDate && (
+              )}`}
+              </span> */}
+              {/* {openPackageDate && (
                 <DateRange
                   onChange={(item) => setDates([item.selection])}
                   minDate={new Date()}
                   ranges={dates}
                 />
-              )}
+              )} */}
             </div>
+
             <div
               className=" col-xxs-12 col-xs-6 mt"
               style={{ textAlign: "center" }}

@@ -132,11 +132,12 @@ export const login = (user) => {
 // };
 
 // Load User
+
 export const loadUser = () => async (dispatch) => {
   try {
     dispatch({ type: LOAD_USER_REQUEST });
 
-    const { data } = await axios.get(`/api/v1/me`);
+    const { data } = await axios.get(`/me`);
 
     dispatch({ type: LOAD_USER_SUCCESS, payload: data.user });
   } catch (error) {

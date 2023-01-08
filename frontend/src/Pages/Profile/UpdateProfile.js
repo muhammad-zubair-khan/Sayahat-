@@ -16,58 +16,61 @@ const UpdateProfile = ({ history }) => {
   const { user } = useSelector((state) => state.auth);
   const { error, isUpdated, loading } = useSelector((state) => state.profile);
 
-  const [name, setName] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
-  const [avatar, setAvatar] = useState();
-  const [avatarPreview, setAvatarPreview] = useState("/Profile.png");
+  // const [avatar, setAvatar] = useState();
+  // const [avatarPreview, setAvatarPreview] = useState("/Profile.png");
 
   const updateProfileSubmit = (e) => {
     e.preventDefault();
 
     const myForm = new FormData();
 
-    myForm.set("name", name);
+    myForm.set("firstName", firstName);
+    myForm.set("lastName", lastName);
     myForm.set("email", email);
-    myForm.set("avatar", avatar);
+    // myForm.set("avatar", avatar);
     dispatch(updateProfile(myForm));
   };
 
-  const updateProfileDataChange = (e) => {
-    const reader = new FileReader();
+  // const updateProfileDataChange = (e) => {
+  //   const reader = new FileReader();
 
-    reader.onload = () => {
-      if (reader.readyState === 2) {
-        setAvatarPreview(reader.result);
-        setAvatar(reader.result);
-      }
-    };
+  //   reader.onload = () => {
+  //     if (reader.readyState === 2) {
+  //       setAvatarPreview(reader.result);
+  //       setAvatar(reader.result);
+  //     }
+  //   };
 
-    reader.readAsDataURL(e.target.files[0]);
-  };
+  //   reader.readAsDataURL(e.target.files[0]);
+  // };
 
   useEffect(() => {
     if (user) {
-      setName(user.name);
+      setFirstName(user.firstName);
+      setLastName(user.lastName);
       setEmail(user.email);
-    //   setAvatarPreview(user.avatar.url);
+      // setAvatarPreview(user.avatar.url);
     }
 
-    if (error) {
-      alert.error(error);
-      dispatch(clearErrors());
-    }
+    // if (error) {
+    //   alert.error(error);
+    //   dispatch(clearErrors());
+    // }
 
     if (isUpdated) {
-      alert.success("Profile Updated Successfully");
+      alert("Profile Updated Successfully");
       dispatch(loadUser());
 
-      history.push("/account");
+      history.push("/myProfile");
 
       dispatch({
         type: UPDATE_PROFILE_RESET,
       });
     }
-  }, [dispatch, error, alert, history, user, isUpdated]);
+  }, [dispatch, error, history, user, isUpdated]);
   return (
     <Fragment>
       {loading ? (
@@ -89,11 +92,22 @@ const UpdateProfile = ({ history }) => {
                   <FaceIcon />
                   <input
                     type="text"
-                    placeholder="Name"
+                    placeholder="First Name"
                     required
-                    name="name"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
+                    name="firstName"
+                    value={firstName}
+                    onChange={(e) => setFirstName(e.target.value)}
+                  />
+                </div>
+                <div className="updateProfileName">
+                  <FaceIcon />
+                  <input
+                    type="text"
+                    placeholder="Last Name"
+                    required
+                    name="lastName"
+                    value={lastName}
+                    onChange={(e) => setLastName(e.target.value)}
                   />
                 </div>
                 <div className="updateProfileEmail">
@@ -108,7 +122,7 @@ const UpdateProfile = ({ history }) => {
                   />
                 </div>
 
-                <div id="updateProfileImage">
+                {/* <div id="updateProfileImage">
                   <img src={avatarPreview} alt="Avatar Preview" />
                   <input
                     type="file"
@@ -116,7 +130,7 @@ const UpdateProfile = ({ history }) => {
                     accept="image/*"
                     onChange={updateProfileDataChange}
                   />
-                </div>
+                </div> */}
                 <input
                   type="submit"
                   value="Update"

@@ -47,10 +47,10 @@ const LahoreCity = (props) => {
   const {product} = useSelector((state) => state.newVacation);
 
   useEffect(() => {
-    // dispatch(getPackageBySlug(params.slug));
+    dispatch(getPackageBySlug(params.slug));
     dispatch(getProductDetailById(id));
-    dispatch(getAllPackages(type, min, max, ratings));
-  }, [dispatch, id,type, min, max, ratings]);
+    // dispatch(getAllPackages(type, min, max, ratings));
+  }, [dispatch, id,params.slug]);
 
   const types = ["Full Day Tour", "Half Day Tour", "One Day Tour"];
   
