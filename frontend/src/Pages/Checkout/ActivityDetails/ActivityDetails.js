@@ -86,12 +86,12 @@ const ActivityDetails = () => {
               margin: "14px 19px",
             }}
           >
-            {/* <span>Pick-up Time: {pickupTime}</span>
-                      <span>Drop-off Time: {dropoffTime}</span> */}
-            <span className="siTaxiOp mb-1">Dates {`${format(dates[0].startDate, "MM/dd/yyyy")} to ${format(
+                  <b>Date: {dates}</b>
+
+            {/* <span className="siTaxiOp mb-1">Dates {`${format(dates[0].startDate, "MM/dd/yyyy")} to ${format(
                 dates[0].endDate,
                 "MM/dd/yyyy"
-              )}`}</span>
+              )}`}</span> */}
             <span className="siTaxiOp mb-1">Adults {options.adult} Children {options.children}</span>
             <span className="siTaxiOp mb-1">Pickup Time {time}</span>
             <span>{packages.package.carPickupDetails}</span>

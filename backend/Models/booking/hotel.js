@@ -100,6 +100,10 @@ const bookHotelSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  view:{
+    type: String,
+    default: "unread",
+}
 });
 
 module.exports = mongoose.model("BookHotel", bookHotelSchema);

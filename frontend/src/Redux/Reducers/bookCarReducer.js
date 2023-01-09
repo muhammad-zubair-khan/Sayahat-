@@ -1,4 +1,4 @@
-import { CLEAR_ERRORS, MY_CAR_FAIL, MY_CAR_REQUEST, MY_CAR_SUCCESS, NEW_CAR_BOOKING_FAIL, NEW_CAR_BOOKING_REQUEST, NEW_CAR_BOOKING_SUCCESS, CAR_DETAILS_FAIL, CAR_DETAILS_REQUEST, CAR_DETAILS_SUCCESS } from "../Constants/bookCarConstants";
+import { CLEAR_ERRORS, MY_CAR_FAIL, MY_CAR_REQUEST, MY_CAR_SUCCESS, NEW_CAR_BOOKING_FAIL, NEW_CAR_BOOKING_REQUEST, NEW_CAR_BOOKING_SUCCESS, CAR_DETAILS_FAIL, CAR_DETAILS_REQUEST, CAR_DETAILS_SUCCESS,ALL_CARS_REQUEST,ALL_CARS_SUCCESS,ALL_CARS_FAIL } from "../Constants/bookCarConstants";
 
 export const BookCarReducer = (state = {}, action) => {
     switch (action.type) {
@@ -73,6 +73,35 @@ export const myCarsReducer = (state = { cars: [] }, action) => {
         };
   
       case CAR_DETAILS_FAIL:
+        return {
+          loading: false,
+          error: action.payload,
+        };
+      case CLEAR_ERRORS:
+        return {
+          ...state,
+          error: null,
+        };
+  
+      default:
+        return state;
+    }
+  };
+
+  export const allBookedCarsReducer = (state = { cars: [] }, action) => {
+    switch (action.type) {
+      case ALL_CARS_REQUEST:
+        return {
+          loading: true,
+        };
+  
+      case ALL_CARS_SUCCESS:
+        return {
+          loading: false,
+          cars: action.payload,
+        };
+  
+      case ALL_CARS_FAIL:
         return {
           loading: false,
           error: action.payload,

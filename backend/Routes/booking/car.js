@@ -1,30 +1,43 @@
 const express = require("express");
 const {
-    newBookCar,
-    myCars,
-  getCarDetail
-//   myOrders,
-//   getAllOrders,
-//   updateOrder,
-//   deleteOrder,
+  newBookCar,
+  myCars,
+  getCarDetail,
+  getAllBookedCars,
+  updateBookedCarDetails,
+  getBookedCarsDetails,
+  //   myOrders,
+  //   getAllOrders,
+  //   updateOrder,
+  //   deleteOrder,
 } = require("../../Controllers/booking/car");
 const router = express.Router();
 
 const {
-    requireSignin,
-    adminMiddleware,
-    userMiddleware,
-  } = require("../../common-middleware");
+  requireSignin,
+  adminMiddleware,
+  userMiddleware,
+} = require("../../common-middleware");
 
-router.route("/book/car").post(requireSignin, newBookCar);
+router.route("/book/car").post(requireSignin, userMiddleware, newBookCar);
 
-router.route("/bookCarDetail/:id").get(requireSignin, getCarDetail);
+router
+  .route("/bookCarDetail/:id")
+  .get(requireSignin, userMiddleware, getCarDetail);
 
-router.route("/bookCar/me").get(requireSignin, myCars);
+router.route("/bookCar/me").get(requireSignin, userMiddleware, myCars);
 
-// router
-//   .route("/admin/orders")
-//   .get(isAuthenticatedUser, authorizeRoles("admin"), getAllOrders);
+router
+  .route("/admin/bookedCars")
+  .get(requireSignin, adminMiddleware, getAllBookedCars);
+  
+router
+  .route("/admin/bookedCar/detail/:id")
+  .get(requireSignin, adminMiddleware, getBookedCarsDetails);
+
+router
+  .route("/admin/bookedCars/update/:id")
+  .patch(updateBookedCarDetails);
 
 // router
 //   .route("/admin/order/:id")

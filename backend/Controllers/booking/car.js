@@ -10,7 +10,8 @@ exports.newBookCar = catchAsyncErrors(async (req, res, next) => {
     EndingDate,
     From,
     To,
-    pickupDestination,paymentInfo } = req.body;
+    view,
+    pickupDestination,paymentInfo, } = req.body;
 
   const bookedCar = await Car.create({
     name,
@@ -24,6 +25,7 @@ exports.newBookCar = catchAsyncErrors(async (req, res, next) => {
     EndingDate,
     From,
     To,
+    view,
     pickupDestination,
     paidAt: Date.now(),
     user: req.user._id,
@@ -61,5 +63,58 @@ exports.getCarDetail = catchAsyncErrors(async (req, res, next) => {
   res.status(200).json({
     success: true,
     car,
+  });
+});
+
+// get all Boooked Cars -- Admin
+exports.getAllBookedCars = catchAsyncErrors(async (req, res, next) => {
+  const bookedCars = await Car.find();
+
+  let totalAmount = 0;
+
+  bookedCars.forEach((car) => {
+    totalAmount += car.price;
+  });
+
+  res.status(200).json({
+    success: true,
+    totalAmount,
+    bookedCars,
+  });
+});
+
+
+exports.updateBookedCarDetails = catchAsyncErrors(async (req, res, next) => {
+  const updatedData = await Car.findByIdAndUpdate(
+    req.params.id,
+    { view: "read" },
+    {
+      new: true,
+      runValidators: true,
+    }
+  );
+  try {
+    res.status(200).json({
+      status: "Success",
+      data: {
+        updatedData,
+      },
+    });
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+
+exports.getBookedCarsDetails = catchAsyncErrors(async (req, res, next) => {
+  const cardetails = await Car.findById(req.params.id)
+
+  if (!cardetails) {
+    return next(new ErrorHandler("Car not found with this Id", 404));
+  }
+
+  res.status(200).json({
+    success: true,
+    cardetails,
   });
 });

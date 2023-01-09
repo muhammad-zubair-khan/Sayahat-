@@ -28,12 +28,14 @@ import AllPackages from "./screens/Vacation/PackageScreen/AllPackages";
 import AllRooms from "./screens/Vacation/RoomScreen/AllRooms";
 import GetPackageBySlug from "./screens/Vacation/PackageScreen/GetPackageBySlug";
 import AddRoom from "./screens/Vacation/RoomScreen/AddRoom";
+import MessageScreen from "./screens/Message/MessageScreen";
+import BookingDetailsScreen from "./screens/Message/BookingDetailsScreen";
+import { getAllBookedCars } from "./Redux/Actions/bookCarAction";
 
 function App() {
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
 
-  
   useEffect(() => {
     if (!auth.authenticate) {
       dispatch(isUserLoggedIn());
@@ -41,8 +43,10 @@ function App() {
     if (auth.authenticate) {
       dispatch(getInitialData());
       dispatch(getAllVacationsCategory());
+      dispatch(getAllBookedCars());
     }
   }, [dispatch, auth.authenticate]);
+
   return (
     <Router>
       <Switch>
@@ -77,11 +81,7 @@ function App() {
           path="/package/:slug"
           component={GetPackageBySlug}
         />
-        <PrivateRoute
-          exact
-          path="/room/create/:hotelId"
-          component={AddRoom}
-        />
+        <PrivateRoute exact path="/room/create/:hotelId" component={AddRoom} />
         <PrivateRoute
           exact
           path="/hotel/:slug/room/create/:hotelId"
@@ -93,6 +93,12 @@ function App() {
         <PrivateRoute exact path="/all-rooms" component={AllRooms} />
         <PrivateRoute exact path="/users" component={UserScreen} />
         <PrivateRoute exact path="/profile" component={ProfileScreen} />
+        <PrivateRoute exact path="/booking" component={MessageScreen} />
+        <PrivateRoute
+          exact
+          path="/booking/details/:id"
+          component={BookingDetailsScreen}
+        />
         <Route exact path="/login" component={Signin} />
         <Route exact path="/signup" component={Signup} />
 

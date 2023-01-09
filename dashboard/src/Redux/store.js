@@ -10,6 +10,9 @@ import { allPackagesReducer, newPackageReducer } from "./Reducers/packageReducer
 import { addNewDestinationReducer, destinationReducer } from "./Reducers/topDestinatonsReducer";
 import { allRoomsReducer } from "./Reducers/roomReducer";
 import { authReducer } from "./Reducers/authReducers";
+import { allBookedCarsReducer, bookedCarDetailReducer } from "./Reducers/bookCarReducer";
+import { allBookedPackagesReducer } from "./Reducers/bookPackageReducer";
+import { allBookedHotelsReducer } from "./Reducers/bookedHotelReducer";
 
 const reducer = combineReducers({
   auth: authReducer,
@@ -28,6 +31,13 @@ const reducer = combineReducers({
   allDestinationReducer: destinationReducer,
   newDestination: addNewDestinationReducer,
   allRooms: allRoomsReducer,
+
+
+  allBookedCars:allBookedCarsReducer,
+  bookedCarDetail:bookedCarDetailReducer,
+
+  allBookedPackages:allBookedPackagesReducer,
+  allBookedHotels:allBookedHotelsReducer,
 
   // allVacation: allCitiesReducer,
   // userLogin: userLoginReducer,

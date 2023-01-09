@@ -5,6 +5,7 @@ const ErrorHandler = require("../../utils/errorhandler");
 // Book Package
 exports.newBookPkg = catchAsyncErrors(async (req, res, next) => {
   const { name,price,contactInfo, activityInfo,city,
+    view,
     refundable, paymentInfo } = req.body;
 
   const bookedPkg = await Package.create({
@@ -17,6 +18,7 @@ exports.newBookPkg = catchAsyncErrors(async (req, res, next) => {
     paymentInfo,
     paidAt: Date.now(),
     user: req.user._id,
+    view,
   });
 
   res.status(201).json({
@@ -52,4 +54,44 @@ exports.getPackageDetail = catchAsyncErrors(async (req, res, next) => {
     success: true,
     package,
   });
+});
+
+
+// get all Boooked Packages -- Admin
+exports.getAllBookedPackages = catchAsyncErrors(async (req, res, next) => {
+  const bookedPackages = await Package.find();
+
+  let totalAmount = 0;
+
+  bookedPackages.forEach((package) => {
+    totalAmount += package.price;
+  });
+
+  res.status(200).json({
+    success: true,
+    totalAmount,
+    bookedPackages,
+  });
+});
+
+
+exports.updateBookedPackageDetails = catchAsyncErrors(async (req, res, next) => {
+  const updatedData = await Package.findByIdAndUpdate(
+    req.params.id,
+    { view: "read" },
+    {
+      new: true,
+      runValidators: true,
+    }
+  );
+  try {
+    res.status(200).json({
+      status: "Success",
+      data: {
+        updatedData,
+      },
+    });
+  } catch (err) {
+    console.log(err);
+  }
 });

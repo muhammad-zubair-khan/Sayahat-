@@ -87,3 +87,4 @@ export const myHotelsReducer = (state = { hotels: [] }, action) => {
         return state;
     }
   };
+

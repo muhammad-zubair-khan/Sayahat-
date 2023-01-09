@@ -27,16 +27,10 @@ const bookPkgSchema = new mongoose.Schema({
     },
   },
   activityInfo: {
-    dates: [
-      {
-        startDate: {
-          type: String,
-        },
-        endDate: {
-          type: String,
-        },
-      },
-    ],
+    dates: {
+      type:String,
+      required:true
+    },
     firstName: {
       type: String,
     },
@@ -95,6 +89,10 @@ const bookPkgSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  view:{
+    type: String,
+    default: "unread",
+}
 });
 
 module.exports = mongoose.model("BookPkg", bookPkgSchema);

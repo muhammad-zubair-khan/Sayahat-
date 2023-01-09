@@ -5,6 +5,7 @@ const ErrorHandler = require("../../utils/errorhandler");
 // Book Hotel
 exports.newBookHotel = catchAsyncErrors(async (req, res, next) => {
   const { name,price,hotelContactInfo, hotelActivityInfo,city,
+    view,
     fullyRefundable,
     rooms, paymentInfo } = req.body;
 
@@ -17,6 +18,7 @@ exports.newBookHotel = catchAsyncErrors(async (req, res, next) => {
     fullyRefundable,
     rooms,
     paymentInfo,
+    view,
     paidAt: Date.now(),
     user: req.user._id,
   });
@@ -53,5 +55,45 @@ exports.getHotelDetail = catchAsyncErrors(async (req, res, next) => {
   res.status(200).json({
     success: true,
     hotel,
+  });
+});
+
+
+exports.updateBookedHotelDetails = catchAsyncErrors(async (req, res, next) => {
+  const updatedData = await Hotel.findByIdAndUpdate(
+    req.params.id,
+    { view: "read" },
+    {
+      new: true,
+      runValidators: true,
+    }
+  );
+  try {
+    res.status(200).json({
+      status: "Success",
+      data: {
+        updatedData,
+      },
+    });
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+
+// get all Boooked Hotels -- Admin
+exports.getAllBookedHotels = catchAsyncErrors(async (req, res, next) => {
+  const bookedHotels = await Hotel.find();
+
+  let totalAmount = 0;
+
+  bookedHotels.forEach((hotel) => {
+    totalAmount += hotel.price;
+  });
+
+  res.status(200).json({
+    success: true,
+    totalAmount,
+    bookedHotels,
   });
 });

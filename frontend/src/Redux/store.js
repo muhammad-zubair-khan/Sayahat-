@@ -8,9 +8,9 @@ import { allHotelsReducer, hotelsReducer, newReviewReducer, hotelReviewsReducer,
 import { allCarsReducer, carReviewsReducer, newCarReducer, newReviewCarReducer, reviewCarReducer } from "./Reducers/carReducer";
 import { allPackagesReducer, featuredPackagesReducer, newPackageReducer, newReviewPackageReducer, packageReviewsReducer, reviewPackageReducer } from "./Reducers/packageReducer";
 import { carContactCheckoutReducer, contactCheckoutReducer, hotelContactCheckoutReducer } from "./Reducers/checkoutReducer";
-import { BookPackageReducer, myPackagesReducer, packageDetailsReducer } from "./Reducers/bookPackageReducer";
-import { hotelDetailsReducer, myHotelsReducer } from "./Reducers/bookHotelReducer";
-import { carDetailsReducer, myCarsReducer } from "./Reducers/bookCarReducer";
+import { allBookedPackagesReducer, BookPackageReducer, myPackagesReducer, packageDetailsReducer } from "./Reducers/bookPackageReducer";
+import { allBookedHotelsReducer, hotelDetailsReducer, myHotelsReducer } from "./Reducers/bookHotelReducer";
+import { allBookedCarsReducer, carDetailsReducer, myCarsReducer } from "./Reducers/bookCarReducer";
 // import { addNewDestinationReducer, destinationReducer } from "./Reducers/topDestinatonsReducer";
 
 const reducer = combineReducers({
@@ -47,6 +47,11 @@ const reducer = combineReducers({
   carContactCheckout:carContactCheckoutReducer,
   myCars:myCarsReducer,
   myCarDetails:carDetailsReducer,
+
+  // //Admin
+  // allBookedCars:allBookedCarsReducer,
+  // allBookedHotels:allBookedHotelsReducer,
+  // allBookedPackages:allBookedPackagesReducer,
 
 });
 //Login

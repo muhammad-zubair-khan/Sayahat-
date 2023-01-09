@@ -130,8 +130,8 @@ const Navbar = (props) => {
               background: 'rgb(255 255 255 / 16%)',
               color: 'white',
               borderRadius: '78%',
-              padding: '16px 18px',
-              fontSize:'20px'
+              // padding: '16px 18px',
+              // fontSize:'20px'
             }}
           >
             {user.firstName.substring(0,1)}{user.lastName.substring(0,1)}

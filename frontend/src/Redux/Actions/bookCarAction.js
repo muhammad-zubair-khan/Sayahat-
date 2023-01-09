@@ -1,5 +1,5 @@
 import axios from "../helpers/axios";
-import { CLEAR_ERRORS, MY_CAR_FAIL, MY_CAR_REQUEST, MY_CAR_SUCCESS, NEW_CAR_BOOKING_FAIL, NEW_CAR_BOOKING_REQUEST, NEW_CAR_BOOKING_SUCCESS, CAR_DETAILS_FAIL, CAR_DETAILS_REQUEST, CAR_DETAILS_SUCCESS } from "../Constants/bookCarConstants";
+import { CLEAR_ERRORS, MY_CAR_FAIL, MY_CAR_REQUEST, MY_CAR_SUCCESS, NEW_CAR_BOOKING_FAIL, NEW_CAR_BOOKING_REQUEST, NEW_CAR_BOOKING_SUCCESS, CAR_DETAILS_FAIL, CAR_DETAILS_REQUEST, CAR_DETAILS_SUCCESS, ALL_CARS_REQUEST, ALL_CARS_SUCCESS, ALL_CARS_FAIL } from "../Constants/bookCarConstants";
 
 // Book Car
 export const bookedCar = (bookCar) => async (dispatch) => {
@@ -37,6 +37,24 @@ export const myCars = () => async (dispatch) => {
     });
   }
 };
+
+
+// Get All Cars (admin)
+export const getAllBookedCars = () => async (dispatch) => {
+  try {
+    dispatch({ type: ALL_CARS_REQUEST });
+
+    const { data } = await axios.get("/admin/bookedCars");
+
+    dispatch({ type: ALL_CARS_SUCCESS, payload: data.bookedCar });
+  } catch (error) {
+    dispatch({
+      type: ALL_CARS_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+
 
 // Get Car Details
 export const getCarDetails = (id) => async (dispatch) => {
