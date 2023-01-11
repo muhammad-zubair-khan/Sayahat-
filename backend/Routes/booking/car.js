@@ -17,13 +17,14 @@ const {
   requireSignin,
   adminMiddleware,
   userMiddleware,
+  superAdminMiddleware
 } = require("../../common-middleware");
 
 router.route("/book/car").post(requireSignin, userMiddleware, newBookCar);
 
-router
-  .route("/bookCarDetail/:id")
-  .get(requireSignin, userMiddleware, getCarDetail);
+// router
+//   .route("/bookCarDetail/:id")
+//   .get(requireSignin, userMiddleware, getCarDetail);
 
 router.route("/bookCar/me").get(requireSignin, userMiddleware, myCars);
 
@@ -33,7 +34,7 @@ router
   
 router
   .route("/admin/bookedCar/detail/:id")
-  .get(requireSignin, adminMiddleware, getBookedCarsDetails);
+  .get(getBookedCarsDetails);
 
 router
   .route("/admin/bookedCars/update/:id")

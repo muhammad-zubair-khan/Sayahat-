@@ -9,11 +9,11 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import LaunchIcon from "@mui/icons-material/Launch";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
-import "./MessageScreen.css";
+import "./BookingScreen.css";
 import { getAllBookedPackages } from "../../Redux/Actions/bookPackageAction";
 import { getAllBookedHotels } from "../../Redux/Actions/bookHotelAction";
 
-const MessageScreen = () => {
+const BookingScreen = () => {
   const history = useHistory();
   let unreadCount = 0;
   // let unreadCount = 0;
@@ -144,6 +144,22 @@ const MessageScreen = () => {
       alert(err);
     }
   };
+  const changeHotelView = (id) => {
+    const changeHotelViewUrl = `http://localhost:5000/api/admin/bookedHotel/update`;
+    try {
+      axios.patch(`${changeHotelViewUrl}/${id}`);
+    } catch (err) {
+      alert(err);
+    }
+  };
+  const changePackageView = (id) => {
+    const changePackageViewUrl = `http://localhost:5000/api/admin/bookedPackage/update`;
+    try {
+      axios.patch(`${changePackageViewUrl}/${id}`);
+    } catch (err) {
+      alert(err);
+    }
+  };
 
   return (
     <>
@@ -209,7 +225,7 @@ const MessageScreen = () => {
                   >
                     <Link
                       to={{
-                        pathname: `/booking/details/${item.id}`,
+                        pathname: `/car/booking/details/${item.id}`,
                         params: { id: item.id },
                       }}
                     >
@@ -287,11 +303,11 @@ const MessageScreen = () => {
                   >
                     <Link
                       to={{
-                        pathname: `/booking/details/${item.id}`,
+                        pathname: `/package/booking/details/${item.id}`,
                         params: { id: item.id },
                       }}
                     >
-                      <Button onClick={() => changeView(item.id)}>
+                      <Button onClick={() => changePackageView(item.id)}>
                         <LaunchIcon />
                       </Button>
                     </Link>
@@ -365,11 +381,11 @@ const MessageScreen = () => {
                   >
                     <Link
                       to={{
-                        pathname: `/booking/details/${item.id}`,
+                        pathname: `/hotel/booking/details/${item.id}`,
                         params: { id: item.id },
                       }}
                     >
-                      <Button onClick={() => changeView(item.id)}>
+                      <Button onClick={() => changeHotelView(item.id)}>
                         <LaunchIcon />
                       </Button>
                     </Link>
@@ -391,4 +407,4 @@ const MessageScreen = () => {
   );
 };
 
-export default MessageScreen;
+export default BookingScreen;

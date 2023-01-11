@@ -168,15 +168,15 @@ export const isUserLoggedIn = () => {
 };
 
 // Update Profile
-export const updateProfile = (userData) => async (dispatch) => {
+export const updateProfile = (userData,id) => async (dispatch) => {
   try {
     dispatch({ type: UPDATE_PROFILE_REQUEST });
 
     const config = { headers: { "Content-Type": "multipart/form-data" } };
 
-    const { data } = await axios.put(`/me/update`, userData, config);
+    const { data } = await axios.put(`/me/update/${id}`, userData, config);
 
-    dispatch({ type: UPDATE_PROFILE_SUCCESS, payload: data.success });
+    dispatch({ type: UPDATE_PROFILE_SUCCESS, payload: data.user });
   } catch (error) {
     dispatch({
       type: UPDATE_PROFILE_FAIL,

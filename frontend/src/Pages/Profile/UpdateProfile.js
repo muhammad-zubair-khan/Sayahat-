@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { clearErrors, updateProfile, loadUser } from "../../Redux/Actions/authActions";
 // import { useAlert } from "react-alert";
 import { UPDATE_PROFILE_RESET } from "../../Redux/Constants/authConstants";
+import { useParams } from "react-router-dom";
 // import MetaData from "../layout/MetaData";
 
 const UpdateProfile = ({ history }) => {
@@ -15,7 +16,7 @@ const UpdateProfile = ({ history }) => {
 
   const { user } = useSelector((state) => state.auth);
   const { error, isUpdated, loading } = useSelector((state) => state.profile);
-
+const {id} = useParams()
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -31,7 +32,7 @@ const UpdateProfile = ({ history }) => {
     myForm.set("lastName", lastName);
     myForm.set("email", email);
     // myForm.set("avatar", avatar);
-    dispatch(updateProfile(myForm));
+    dispatch(updateProfile(id));
   };
 
   // const updateProfileDataChange = (e) => {

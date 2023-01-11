@@ -97,3 +97,16 @@ exports.getAllBookedHotels = catchAsyncErrors(async (req, res, next) => {
     bookedHotels,
   });
 });
+
+exports.getBookedHotelDetail = catchAsyncErrors(async (req, res, next) => {
+  const hoteldetails = await Hotel.findById(req.params.id)
+
+  if (!hoteldetails) {
+    return next(new ErrorHandler("Hotel not found with this Id", 404));
+  }
+
+  res.status(200).json({
+    success: true,
+    hoteldetails,
+  });
+});

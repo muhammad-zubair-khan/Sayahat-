@@ -95,3 +95,17 @@ exports.updateBookedPackageDetails = catchAsyncErrors(async (req, res, next) => 
     console.log(err);
   }
 });
+
+
+exports.getBookedPackageDetail = catchAsyncErrors(async (req, res, next) => {
+  const packagedetails = await Package.findById(req.params.id)
+
+  if (!packagedetails) {
+    return next(new ErrorHandler("Package not found with this Id", 404));
+  }
+
+  res.status(200).json({
+    success: true,
+    packagedetails,
+  });
+});

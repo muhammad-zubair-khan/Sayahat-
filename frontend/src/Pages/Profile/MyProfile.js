@@ -37,7 +37,7 @@ const MyProfile = ({ history }) => {
           >
             {user.firstName.substring(0,1)}{user.lastName.substring(0,1)}
           </div>
-              <Link to="/me/update">Edit Profile</Link>
+              <Link to={`/me/update/${user._id}`}>Edit Profile</Link>
             </div>
             <div>
               <div>

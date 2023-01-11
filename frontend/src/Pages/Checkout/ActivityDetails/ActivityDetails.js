@@ -17,7 +17,7 @@ const ActivityDetails = () => {
   const [options, setOptions] = useState(location.state.state.options);
   const [time, setTimes] = useState(location.state.state.time);
   const [show, setShow] = useState(false);
-
+const [active,setActive] = useState(1)
   const packages = useSelector((state) => state.addPackageReducer);
   const { id } = useParams();
   // const { data, loading, error } = useFetch(
@@ -201,12 +201,27 @@ const ActivityDetails = () => {
                             <span class="send-text">SEND</span>
                           </div>
                         </Button> */}
-              <input
+              {/* <input
                 type="submit"
                 value="Continue"
                 className="shippingBtn"
                 // disabled={state ? false : true}
-              />
+              /> */}
+           
+               {active === 1 && (
+                      <Button
+                        variant="contained"
+                        type="submit"
+                        style={{ float: "right" }}
+                        className="send-button"
+                        disabled={
+                          !firstName || !lastName 
+                        }
+                        // onClick={handleShow}
+                      >
+                        Next
+                      </Button>
+                    )}
             </form>
           </div>
         </Grid>

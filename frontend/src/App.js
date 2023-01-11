@@ -1,6 +1,6 @@
 import "./App.css";
 import React, { useEffect, useState } from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Redirect, Route, Switch } from "react-router-dom";
 // import PrivateRoute from "./Components/Private/PrivateRoute";
 import Home from "./Pages/Home/Home";
 import Hotel from "./Pages/Hotel/Hotel";
@@ -55,20 +55,21 @@ import MyCarDetails from "./Pages/Bookings/Cars/MyCarDetails";
 
 
 import MyProfile from "./Pages/Profile/MyProfile";
-import UpdateProfile from "./Pages/Profile/UpdateProfile";
+// import UpdateProfile from "./Pages/Profile/UpdateProfile";
+import PrivateRoute from "./Components/Private/PrivateRoute";
 
 function App() {
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
 
   const [stripeApiKey, setStripeApiKey] = useState("");
-  console.log(stripeApiKey);
   async function getStripeApiKey() {
     const { data } = await axios.get(
       `http://www.localhost:5000/api/stripeapikey`
     );
     setStripeApiKey(data.stripeApiKey);
   }
+  
 
   useEffect(() => {
     if (!auth.authenticate) {
@@ -115,79 +116,80 @@ function App() {
         <Route exact path="/contactus" component={Contactus} />
 
         {/* Hotel Booking */}
-        <Route
+        <PrivateRoute
           exact
           path="/hotel/:id/contactDetail"
           component={HotelContactDetails}
+        
         />
-        <Route
+        <PrivateRoute
           exact
           path="/hotel/:id/hotelactivityDetail"
           component={HotelActivityDetails}
         />
-        <Route
+        <PrivateRoute
           exact
           path="/hotel/booking/success"
           component={HotelBookingSuccess}
         />
-        <Route exact path="/myHotels" component={MyHotels} />
-        <Route exact path="/myHotelDetail/:id" component={MyHotelDetails} />
+        <PrivateRoute exact path="/myHotels" component={MyHotels} />
+        <PrivateRoute exact path="/myHotelDetail/:id" component={MyHotelDetails} />
 
         {/* Package Booking */}
-        <Route
+        <PrivateRoute
           exact
           path="/package/:id/contactdetails"
           component={ContactDetails}
         />
-        <Route
+        <PrivateRoute
           exact
           path="/package/:id/activitydetails"
           component={ActivityDetails}
         />
-        <Route
+        <PrivateRoute
           exact
           path="/package/reserve/success"
           component={PackageReserveSuccess}
         />
-        <Route exact path="/myPackages" component={MyPackages} />
-        <Route exact path="/myPackage/:id" component={MyPackageDetails} />
+        <PrivateRoute exact path="/myPackages" component={MyPackages} />
+        <PrivateRoute exact path="/myPackage/:id" component={MyPackageDetails} />
 
         {/* Car Booking */}
-        <Route
+        <PrivateRoute
           exact
           path="/car/:id/contactdetails"
           component={CarContactDetails}
         />
 
-        <Route exact path="/car/booking/success" component={CarBookingSuccess} />
-        <Route exact path="/myCars" component={MyCars} />
-        <Route exact path="/myCar/:id" component={MyCarDetails} />
+        <PrivateRoute exact path="/car/booking/success" component={CarBookingSuccess} />
+        <PrivateRoute exact path="/myCars" component={MyCars} />
+        <PrivateRoute exact path="/myCar/:id" component={MyCarDetails} />
 
         <Route exact path="/hotels/all" component={HotelList} />
 
-        <Route exact path="/myProfile" component={MyProfile} />
-        <Route exact path="/me/update" component={UpdateProfile} />
+        <PrivateRoute exact path="/myProfile" component={MyProfile} />
+        {/* <Route exact path="/me/update/:id" component={UpdateProfile} /> */}
         <Route path="/login" component={Login} />
         <Route path="/register" component={SignUp} />
         <Route path="/forgot-password" component={Forgot} />
         {stripeApiKey && (
           <>
             <Elements stripe={loadStripe(stripeApiKey)}>
-              <Route
+              <PrivateRoute
                 exact
                 path="/package/:id/process/payment"
                 component={Payment}
               />
             </Elements>
             <Elements stripe={loadStripe(stripeApiKey)}>
-              <Route
+              <PrivateRoute
                 exact
                 path="/hotelBooking/:id/process/payment"
                 component={HotelPayment}
               />
             </Elements>
             <Elements stripe={loadStripe(stripeApiKey)}>
-              <Route
+              <PrivateRoute
                 exact
                 path="/carBooking/:id/process/payment"
                 component={CarPayment}

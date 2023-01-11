@@ -5,6 +5,7 @@ const {
   getHotelDetail,
   updateBookedHotelDetails,
   getAllBookedHotels,
+  getBookedHotelDetail,
   //   getAllOrders,
   //   updateOrder,
   //   deleteOrder,
@@ -27,9 +28,12 @@ router
   .route("/admin/bookedHotels")
   .get(requireSignin, adminMiddleware, getAllBookedHotels);
 
+  router
+  .route("/admin/bookedHotel/detail/:id")
+  .get(getBookedHotelDetail);
+
 router.patch(
   "/admin/bookedHotel/update/:id",
-  adminMiddleware,
   updateBookedHotelDetails
 );
 

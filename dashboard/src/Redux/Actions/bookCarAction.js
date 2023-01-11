@@ -19,20 +19,20 @@ export const getAllBookedCars = () => async (dispatch) => {
   };
 
 // Get All Booked Car Detail(admin)
-// export const getBookedCarDetail = (id) => async (dispatch) => {
-//   try {
-//     dispatch({ type: GET_BOOKED_CAR_DETAIL_REQUEST });
+export const getBookedCarDetail = (id) => async (dispatch) => {
+  try {
+    dispatch({ type: GET_BOOKED_CAR_DETAIL_REQUEST });
 
-//     const { data } = await axios.get(`/admin/bookedCar/detail/${id}`);
+    const { data } = await axios.get(`/admin/bookedCar/detail/${id}`);
 
-//     dispatch({ type: GET_BOOKED_CAR_DETAIL_SUCCESS, payload: data.bookedCar });
-//   } catch (error) {
-//     dispatch({
-//       type: GET_BOOKED_CAR_DETAIL_FAIL,
-//       payload: error.response.data.message,
-//     });
-//   }
-// };
+    dispatch({ type: GET_BOOKED_CAR_DETAIL_SUCCESS, payload: data.cardetails });
+  } catch (error) {
+    dispatch({
+      type: GET_BOOKED_CAR_DETAIL_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
   
 // Clearing Errors
 export const clearErrors = () => async (dispatch) => {

@@ -1,69 +1,67 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
 // import { getBookedCarDetail } from '../../Redux/Actions/bookCarAction'
 import { Typography } from "@mui/material";
 import axios from "axios";
+import '../CarBookingDetails.css'
 
-const BookingDetailsScreen = (props) => {
-  const dispatch = useDispatch();
-  // const { id } = useParams();
-  // const {bookedCar} = useSelector((state)=> state.bookedCarDetail)
-  // console.log(bookedCar)
+const HotelBookingDetail = (props) => {
   let [responseData, setResponseData] = useState("");
-  const url = `http://localhost:5000/admin/bookedCar/detail`;
+  const url = `http://localhost:5000/api/admin/bookedHotel/detail`;
 
-  const getBookedCarDetail = async () => {
+  // const {id} = useParams()
+  const getBookedHotelDetail = async () => {
     const id = props.location.params.id;
     try {
       const res = await axios.get(`${url}/${id}`);
-      console.log(res)
-      setResponseData(res.data.cardetails);
+      setResponseData(res.data.hoteldetails);
     } catch (err) {
       console.log(err);
-      alert(err);
     }
   };
   useEffect(() => {
-    dispatch(getBookedCarDetail());
+    getBookedHotelDetail();
   }, []);
-
+//  if(Object.keys(responseData).length === 0){
+//       return null
+//   }
   return (
     <>
       {/* <MetaData title="Order Details" /> */}
       <div className="orderDetailsPage">
         <div className="orderDetailsContainer">
-          <Typography component="h1">car # {responseData._id}</Typography>
+          <Typography component="h1">Hotel Booking Details</Typography>
+          <Typography component="h1">hotel # {responseData._id}</Typography>
           <Typography>Contact Info</Typography>
-          {/* <div className="orderDetailsContainerBox">
+          <div className="orderDetailsContainerBox">
             <div>
               <p>Name:</p>
-              <span>{responseData.CarContactInfo.firstName}</span>
+              <span>{responseData && responseData.hotelContactInfo.firstName}</span>
             </div>
             <div>
               <p>Phone:</p>
-              <span>{responseData.CarContactInfo.phone}</span>
+              <span>{responseData && responseData.hotelContactInfo.phone}</span>
             </div>
             <div>
               <p>Email:</p>
-              <span>{responseData.CarContactInfo.email}</span>
+              <span>{responseData && responseData.hotelContactInfo.email}</span>
             </div>
-          </div> */}
+          </div>
+     
           <Typography>Payment</Typography>
           <div className="orderDetailsContainerBox">
-            {/* <div>
+            <div>
               <p
-                className={
+                className={responseData && 
                   responseData.paymentInfo.status === "succeeded"
                     ? "greenColor"
                     : "redColor"
                 }
               >
-                {responseData.paymentInfo.status === "succeeded"
+                {responseData && responseData.paymentInfo.status === "succeeded"
                   ? "PAID"
                   : "NOT PAID"}
               </p>
-            </div> */}
+            </div>
 
             <div>
               <p>Amount:</p>
@@ -71,35 +69,31 @@ const BookingDetailsScreen = (props) => {
             </div>
           </div>
 
-          <Typography>Car Info</Typography>
+          <Typography>Hotel Info</Typography>
           <div className="orderDetailsContainerBox">
             <div>
               <p>Name:</p>
               <span>{responseData.name}</span>
             </div>
             <div>
-              <p>From:</p>
-              <span>{responseData.From}</span>
+            <p>check-in Date:</p>
+              <span>{responseData && responseData.hotelActivityInfo.dates[0].startDate}</span>
             </div>
             <div>
-              <p>To:</p>
-              <span>{responseData.To}</span>
+            <p>check-out Date:</p>
+              <span>{responseData && responseData.hotelActivityInfo.dates[0].endDate}</span>
             </div>
             <div>
-              <p>Pickup Time:</p>
-              <span>{responseData.PickupTime}</span>
+            <p>Adult:</p>
+              <span>{responseData && responseData.hotelActivityInfo.options[0].adult}</span>
             </div>
             <div>
-              <p>Dropoff Time:</p>
-              <span>{responseData.DropoffTime}</span>
+            <p>Children:</p>
+              <span>{responseData && responseData.hotelActivityInfo.options[0].children}</span>
             </div>
             <div>
-              <p>Pickup Date:</p>
-              <span>{responseData.StartingDate}</span>
-            </div>
-            <div>
-              <p>Dropoff Date:</p>
-              <span>{responseData.EndingDate}</span>
+            <p>Room:</p>
+              <span>{responseData && responseData.hotelActivityInfo.options[0].room}</span>
             </div>
           </div>
         </div>
@@ -108,4 +102,4 @@ const BookingDetailsScreen = (props) => {
   );
 };
 
-export default BookingDetailsScreen;
+export default HotelBookingDetail;

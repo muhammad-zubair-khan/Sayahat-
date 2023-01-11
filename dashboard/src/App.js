@@ -28,9 +28,11 @@ import AllPackages from "./screens/Vacation/PackageScreen/AllPackages";
 import AllRooms from "./screens/Vacation/RoomScreen/AllRooms";
 import GetPackageBySlug from "./screens/Vacation/PackageScreen/GetPackageBySlug";
 import AddRoom from "./screens/Vacation/RoomScreen/AddRoom";
-import MessageScreen from "./screens/Message/MessageScreen";
-import BookingDetailsScreen from "./screens/Message/BookingDetailsScreen";
+import MessageScreen from "./screens/Booking/BookingScreen";
+import BookingDetailsScreen from "./screens/Booking/Car/BookingDetailsScreen";
 import { getAllBookedCars } from "./Redux/Actions/bookCarAction";
+import HotelBookingDetail from "./screens/Booking/Hotel/HotelBookingDetail";
+import PackageBookingDetail from "./screens/Booking/Package/PackageBookingDetail";
 
 function App() {
   const dispatch = useDispatch();
@@ -96,8 +98,18 @@ function App() {
         <PrivateRoute exact path="/booking" component={MessageScreen} />
         <PrivateRoute
           exact
-          path="/booking/details/:id"
+          path="/car/booking/details/:id"
           component={BookingDetailsScreen}
+        />
+        <PrivateRoute
+          exact
+          path="/hotel/booking/details/:id"
+          component={HotelBookingDetail}
+        />
+        <PrivateRoute
+          exact
+          path="/package/booking/details/:id"
+          component={PackageBookingDetail}
         />
         <Route exact path="/login" component={Signin} />
         <Route exact path="/signup" component={Signup} />

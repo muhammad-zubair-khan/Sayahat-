@@ -4,7 +4,7 @@ import CheckoutSteps from "../CheckoutSteps";
 import { Link, useHistory, useLocation, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { saveContactInfo } from "../../../Redux/Actions/checkout";
-import { Grid } from "@mui/material";
+import { Button, Grid } from "@mui/material";
 import { getPackageDetailById } from "../../../Redux/Actions/packageAction";
 import { ImageUrl } from "../../../Redux/UrlConfig";
 
@@ -43,6 +43,7 @@ const ContactDetails = () => {
     /^[-!#$%&'*+\/0-9=?A-Z^_a-z{|}~](\.?[-!#$%&'*+\/0-9=?A-Z^_a-z`{|}~])*@[a-zA-Z0-9](-*\.?[a-zA-Z0-9])*\.[a-zA-Z](-?[a-zA-Z0-9])+$/.test(
       email
     );
+    const [active, setActive] = useState(0);
 
   const [errors, setErrors] = useState({});
   const [email, setEmail] = useState(user.email);
@@ -155,12 +156,26 @@ const ContactDetails = () => {
                 </span>
               ))}
            
-              <input
+              {/* <input
                 type="submit"
                 value="Continue"
                 className="shippingBtn"
                 // disabled={state ? false : true}
-              />
+              /> */}
+              {active === 0 && (
+                      <Button
+                        variant="contained"
+                        type="submit"
+                        style={{ float: "right" }}
+                        className="send-button"
+                        disabled={
+                          !firstName || !lastName || !email || !phone
+                        }
+                        // onClick={handleShow}
+                      >
+                        Next
+                      </Button>
+                    )}
             </form>
           </div>
         </Grid>

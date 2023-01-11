@@ -4,7 +4,8 @@ const {
     myPackages,
   getPackageDetail,
   updateBookedPackageDetails,
-  getAllBookedPackages
+  getAllBookedPackages,
+  getBookedPackageDetail
 //   myOrders,
 //   getAllOrders,
 //   updateOrder,
@@ -27,6 +28,10 @@ router.route("/bookPackage/me").get(requireSignin,userMiddleware, myPackages);
 router
   .route("/admin/bookedPackages")
   .get(requireSignin, adminMiddleware, getAllBookedPackages);
+
+  router
+  .route("/admin/bookedPackage/detail/:id")
+  .get(getBookedPackageDetail);
 
 router.patch('/admin/bookedPackage/update/:id',updateBookedPackageDetails);
 
