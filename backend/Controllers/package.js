@@ -77,7 +77,7 @@ exports.getAllAdminPackages = catchAsyncErrors(async (req, res, next) => {
 
 // Get All Packages
 exports.getAllPackages = async (req, res) => {
-  const { min, max, ...others } = req.query;
+  const { min, max,ratings, ...others } = req.query;
   const apiFeature = new ApiFeatures(
     Package.find({
       ...others,

@@ -13,6 +13,7 @@ import Aboutus from "./Pages/About/Aboutus";
 import Contactus from "./Pages/Contact/Contactus";
 import Login from "./Pages/Account/Login";
 import SignUp from "./Pages/Account/SignUp";
+import Reset from "./Pages/Account/Reset";
 import Forgot from "./Pages/Account/Forgot";
 import Cities from "./Pages/Citites/Cities";
 import City from "./Pages/Cities/LahoreCity";
@@ -171,7 +172,8 @@ function App() {
         {/* <Route exact path="/me/update/:id" component={UpdateProfile} /> */}
         <Route path="/login" component={Login} />
         <Route path="/register" component={SignUp} />
-        <Route path="/forgot-password" component={Forgot} />
+        <Route path="/reset-password" component={Reset} />
+        <Route path="/forgotpassword/:id/:token" component={Forgot} />
         {stripeApiKey && (
           <>
             <Elements stripe={loadStripe(stripeApiKey)}>

@@ -45,6 +45,9 @@ const userSchema = new mongoose.Schema(
       default: 'user',
     },
     profilePicture:{type:String},
+    verifyToken:{
+      type:String,
+    }
 
   },
   { timestamps: true }
