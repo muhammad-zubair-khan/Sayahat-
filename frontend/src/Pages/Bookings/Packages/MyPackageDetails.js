@@ -1,65 +1,66 @@
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import "./MyPackageDetails.css";
 import { useSelector, useDispatch } from "react-redux";
 // import MetaData from "../layout/MetaData";
 import { Link } from "react-router-dom";
 import { Typography } from "@mui/material";
 import { getPackageDetails, clearErrors } from "../../../Redux/Actions/bookPackageAction";
+import axios from "axios";
 // import Loader from "../layout/Loader/Loader";
 // import { useAlert } from "react-alert";
 
-const MyPackageDetails = ({ match }) => {
-  const { error, loading } = useSelector((state) => state.myPackageDetails);
-  const packages = useSelector((state) => state.myPackageDetails);
+const MyPackageDetails = (props) => {
+  let [responseData, setResponseData] = useState("");
+  const url = `http://localhost:5000/api/bookPackageDetail`;
 
-  const dispatch = useDispatch();
-//   const alert = useAlert();
-
-  useEffect(() => {
-    if (error) {
-    //   alert.error(error);
-      dispatch(clearErrors());
+  // const {id} = useParams()
+  const getBookedPackageDetail = async () => {
+    const id = props.location.params.id;
+    console.log(id)
+    try {
+      const res = await axios.get(`${url}/${id}`);
+      setResponseData(res.data.packageDetails);
+    } catch (err) {
+      console.log(err);
     }
+  };
+  useEffect(() => {
+    getBookedPackageDetail();
+  }, []);
 
-    dispatch(getPackageDetails(match.params.id));
-  }, [dispatch,  error, match.params.id]);
-
-  // if (Object.keys(packages.package).length === 0) {
+  // if (Object.keys(packages).length === 0) {
   //   return null;
   // }
-  if (Object.keys(packages).length === 0) {
-    return null;
-  }
 
   return (
     <Fragment>
-      {loading ? (
+      {/* {loading ? (
         // <Loader />
         "Loading"
-      ) : (
+      ) : ( */}
         <Fragment>
           {/* <MetaData title="Order Details" /> */}
           <div className="orderDetailsPage">
             <div className="orderDetailsContainer">
               <Typography component="h1">
-                Package # {packages.package && packages.package._id}
+                {/* Package # {responseData.package._id} */}
               </Typography>
               <Typography>Contact Info</Typography>
               <div className="orderDetailsContainerBox">
                 <div>
                   <p>Name:</p>
-                  <span>{packages.package && packages.package.contactInfo.firstName}</span>
+                  <span>{responseData && responseData.contactInfo.firstName}</span>
                 </div>
                 <div>
                   <p>Phone:</p>
                   <span>
-                  {packages.package && packages.package.contactInfo.phone}
+                  {responseData && responseData.contactInfo.phone}
                   </span>
                 </div>
                 <div>
                   <p>Email:</p>
                   <span>
-                  {packages.package && packages.package.contactInfo.email}
+                  {responseData && responseData.contactInfo.email}
                   </span>
                 </div>
               </div>
@@ -68,14 +69,14 @@ const MyPackageDetails = ({ match }) => {
                 <div>
                   <p
                     className={
-                      packages.package &&
-                      packages.package.paymentInfo.status === "succeeded"
+                      responseData &&
+                      responseData.paymentInfo.status === "succeeded"
                         ? "greenColor"
                         : "redColor"
                     }
                   >
-                    { packages.package &&
-                     packages.package.paymentInfo.status === "succeeded"
+                    {responseData &&
+                     responseData.paymentInfo.status === "succeeded"
                       ? "PAID"
                       : "NOT PAID"}
                   </p>
@@ -83,7 +84,7 @@ const MyPackageDetails = ({ match }) => {
 
                 <div>
                   <p>Amount:</p>
-                  <span>{packages.package && packages.package.price}</span>
+                  <span>{responseData && responseData.price}</span>
                 </div>
               </div>
 
@@ -91,23 +92,23 @@ const MyPackageDetails = ({ match }) => {
               <div className="orderDetailsContainerBox">
                 <div>
                 <p>Name:</p>
-                  <span>{packages.package && packages.package.name}</span>
+                  <span>{responseData && responseData.name}</span>
                 </div>
                 <div>
                 <p>Pickup Time:</p>
-                  <span>{packages.package && packages.package.activityInfo.time}</span>
+                  <span>{responseData && responseData.activityInfo.time}</span>
                 </div>
                 <div>
-                <p>Reserved Dates:</p>
-                  <span>{`${packages.package && packages.package.activityInfo.dates[0].startDate} to ${packages.package && packages.package.activityInfo.dates[0].endDate}`}</span>
+                <p>Reserved Date:</p>
+                  <span>{`${responseData && responseData.activityInfo.dates}`}</span>
                 </div>
                 <div>
                 <p>Adult and Chidlren</p>
-                  <span>{`${packages.package && packages.package.activityInfo.options[0].adult} and ${packages.package && packages.package.activityInfo.options[0].children}`}</span>
+                  <span>{`${responseData && responseData.activityInfo.options[0].adult} and ${responseData && responseData.activityInfo.options[0].children}`}</span>
                 </div>
                 <div>
                 <p>Refundable?</p>
-                  <span>{packages.package && packages.package.refundable}</span>
+                  <span>{responseData && responseData.refundable}</span>
                 </div>
               </div>
             </div>
@@ -115,7 +116,7 @@ const MyPackageDetails = ({ match }) => {
           
           </div>
         </Fragment>
-      )}
+      {/* )} */}
     </Fragment>
   );
 };

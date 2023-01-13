@@ -24,10 +24,10 @@ const Package = (props) => {
   const [openPackageDate, setOpenPackageDate] = useState(false);
   const [type, setType] = useState("");
   const [price, setPrice] = useState([0, 95000]);
-  const [ratings, setRatings] = useState(0);
   const { packages } = useSelector((state) => state.packagesReducer);
   const [min, setMin] = useState(undefined);
   const [max, setMax] = useState(undefined);
+  const [ratings, setRatings] = useState(0);
   // const [minRat, setMinRat] = useState(undefined);
   // const [maxRat, setMaxRat] = useState(undefined);
 

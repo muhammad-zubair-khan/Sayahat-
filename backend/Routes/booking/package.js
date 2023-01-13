@@ -21,7 +21,7 @@ const {
 
 router.route("/book/package").post(requireSignin, newBookPkg);
 
-router.route("/bookPackageDetail/:id").get(requireSignin, getPackageDetail);
+router.route("/bookPackageDetail/:id").get(getPackageDetail);
 
 router.route("/bookPackage/me").get(requireSignin,userMiddleware, myPackages);
 

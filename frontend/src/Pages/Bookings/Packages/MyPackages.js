@@ -82,9 +82,16 @@ const MyPackages = () => {
       sortable: false,
       renderCell: (params) => {
         return (
-          <Link to={`/myPackage/${params.getValue(params.id, "id")}`}>
-            <LaunchIcon />
+          // <Link to={{`/myPackage/${params.getValue(params.id, "id")}`}}
+          // >
+          <Link  to={{
+            pathname: `/myPackage/${params.getValue(params.id,"id")}`,
+            params: { id: params.getValue(params.id,"id") },
+          }}
+          >
+          <LaunchIcon />
           </Link>
+          // {params: { id: params.getValue(params.id, "id") }}
         );
       },
     },

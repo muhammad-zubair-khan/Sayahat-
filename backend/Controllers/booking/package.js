@@ -41,18 +41,15 @@ exports.myPackages = catchAsyncErrors(async (req, res, next) => {
 
 // get Package Detail
 exports.getPackageDetail = catchAsyncErrors(async (req, res, next) => {
-  const package = await Package.findById(req.params.id).populate(
-    "user",
-    "name email"
-  );
+  const packageDetails = await Package.findById(req.params.id)
 
-  if (!package) {
+  if (!packageDetails) {
     return next(new ErrorHandler("Package not found with this Id", 404));
   }
 
   res.status(200).json({
     success: true,
-    package,
+    packageDetails,
   });
 });
 
