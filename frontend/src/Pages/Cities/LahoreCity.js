@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useHistory, useLocation, useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import Navbar from "../../Navbar/Navbar";
 import "./StyleCity.css";
 import Button from "@mui/material/Button";

@@ -40,7 +40,7 @@ const Navbar = (props) => {
   }, [dispatch]);
 
   const [prevScrollPos, setPrevScrollPos] = useState(0);
-  const [setVisible] = useState(true);
+  const [visible,setVisible] = useState(true);
 
   const handleScroll = () => {
     const currentScrollPos = window.scrollY;
