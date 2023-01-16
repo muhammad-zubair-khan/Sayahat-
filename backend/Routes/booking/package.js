@@ -6,6 +6,7 @@ const {
   updateBookedPackageDetails,
   getAllBookedPackages,
   getBookedPackageDetail,
+  deleteBookedPackage,
 } = require("../../Controllers/booking/package");
 const router = express.Router();
 
@@ -21,6 +22,13 @@ router.route("/bookPackageDetail/:id").get(getPackageDetail);
 
 router.route("/bookPackage/me").get(requireSignin, userMiddleware, myPackages);
 
+router.delete(
+  "/bookedPackage/delete/:id",
+  requireSignin,
+  userMiddleware,
+  deleteBookedPackage
+);
+
 router
   .route("/admin/bookedPackages")
   .get(requireSignin, adminMiddleware, getAllBookedPackages);
@@ -28,5 +36,8 @@ router
 router.route("/admin/bookedPackage/detail/:id").get(getBookedPackageDetail);
 
 router.patch("/admin/bookedPackage/update/:id", updateBookedPackageDetails);
+
+//For Admin
+router.delete("/admin/bookedPackage/delete/:id", deleteBookedPackage);
 
 module.exports = router;

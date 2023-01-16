@@ -3,6 +3,9 @@ import {
   ALL_BOOKED_HOTELS_REQUEST,
   ALL_BOOKED_HOTELS_SUCCESS,
   ALL_BOOKED_HOTELS_FAIL,
+  DELETE_BOOKED_HOTEL_REQUEST,
+  DELETE_BOOKED_HOTEL_SUCCESS,
+  DELETE_BOOKED_HOTEL_FAIL,
 } from "../Constants/bookHotelConstants";
 export const allBookedHotelsReducer = (
   state = { bookedHotels: [] },
@@ -34,6 +37,36 @@ export const allBookedHotelsReducer = (
       return state;
   }
 };
+
+export const deleteBookedHotelReducer = (
+  state = { bookedHotle: {} },
+  action
+) => {
+  switch (action.type) {
+    case DELETE_BOOKED_HOTEL_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case DELETE_BOOKED_HOTEL_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        bookedHotel: action.payload,
+        isDeleted: action.payload,
+      };
+
+    case DELETE_BOOKED_HOTEL_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+    default:
+      return state;
+  }
+};
+
 
 // export const bookedCarDetailReducer = (state = { bookedCar: {} }, action) => {
 //     switch (action.type) {

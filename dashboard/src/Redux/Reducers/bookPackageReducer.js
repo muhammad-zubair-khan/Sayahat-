@@ -3,6 +3,9 @@ import {
   ALL_BOOKED_PACKAGES_REQUEST,
   ALL_BOOKED_PACKAGES_SUCCESS,
   ALL_BOOKED_PACKAGES_FAIL,
+  DELETE_BOOKED_PACKAGE_REQUEST,
+  DELETE_BOOKED_PACKAGE_SUCCESS,
+  DELETE_BOOKED_PACKAGE_FAIL,
 } from "../Constants/bookPackageConstants";
 export const allBookedPackagesReducer = (
   state = { bookedPackages: [] },
@@ -31,6 +34,35 @@ export const allBookedPackagesReducer = (
         error: null,
       };
 
+    default:
+      return state;
+  }
+};
+
+export const deleteBookedPackageReducer = (
+  state = { bookedPackage: {} },
+  action
+) => {
+  switch (action.type) {
+    case DELETE_BOOKED_PACKAGE_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case DELETE_BOOKED_PACKAGE_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        bookedPackage: action.payload,
+        isDeleted: action.payload,
+      };
+
+    case DELETE_BOOKED_PACKAGE_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
     default:
       return state;
   }

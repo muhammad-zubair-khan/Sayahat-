@@ -20,7 +20,6 @@ const MyPackages = () => {
 
   const { loading, error, packages } = useSelector((state) => state.myPackages);
   const { user } = useSelector((state) => state.auth);
-
   const columns = [
     { field: "id", headerName: "Package ID", minWidth: 300, flex: 1 },
     {
@@ -80,21 +79,19 @@ const MyPackages = () => {
       flex: 0.3,
       headerName: "Actions",
       minWidth: 150,
-      type: "number",
       sortable: false,
       renderCell: (params) => {
         return (
-          // <Link to={{`/myPackage/${params.getValue(params.id, "id")}`}}
-          // >
-          <Link
-            to={{
-              pathname: `/myPackage/${params.getValue(params.id, "id")}`,
-              params: { id: params.getValue(params.id, "id") },
-            }}
-          >
-            <LaunchIcon />
-          </Link>
-          // {params: { id: params.getValue(params.id, "id") }}
+          <>
+            <Link
+              to={{
+                pathname: `/myPackage/${params.getValue(params.id, "id")}`,
+                params: { id: params.getValue(params.id, "id") },
+              }}
+            >
+              <LaunchIcon />
+            </Link>
+          </>
         );
       },
     },
@@ -113,14 +110,13 @@ const MyPackages = () => {
         amount: item.price,
       });
     });
-
   useEffect(() => {
     // if (error) {
     // //   alert.error(error);
     //   dispatch(clearErrors());
     // }
     dispatch(myPackages());
-  }, []);
+  }, [dispatch]);
 
   return (
     <Fragment>
@@ -135,6 +131,7 @@ const MyPackages = () => {
             rows={rows}
             columns={columns}
             pageSize={10}
+            rowsPerPageOptions={[10]}
             disableSelectionOnClick
             className="myOrdersTable"
             autoHeight

@@ -46,23 +46,6 @@ exports.myHotels = catchAsyncErrors(async (req, res, next) => {
   });
 });
 
-// get Hotel Detail
-exports.getHotelDetail = catchAsyncErrors(async (req, res, next) => {
-  const hotel = await Hotel.findById(req.params.id).populate(
-    "user",
-    "name email"
-  );
-
-  if (!hotel) {
-    return next(new ErrorHandler("Hotel not found with this Id", 404));
-  }
-
-  res.status(200).json({
-    success: true,
-    hotel,
-  });
-});
-
 exports.updateBookedHotelDetails = catchAsyncErrors(async (req, res, next) => {
   const updatedData = await Hotel.findByIdAndUpdate(
     req.params.id,
@@ -111,5 +94,20 @@ exports.getBookedHotelDetail = catchAsyncErrors(async (req, res, next) => {
   res.status(200).json({
     success: true,
     hoteldetails,
+  });
+});
+
+// Delete Booked Hotel
+exports.deleteBookedHotel = catchAsyncErrors(async (req, res) => {
+  const bookedHotel = await Hotel.findById(req.params.id);
+  if (!bookedHotel) {
+    return next(new ErrorHandler("Booked Hotel not found", 404));
+  }
+
+  await bookedHotel.remove();
+
+  res.status(200).json({
+    success: true,
+    message: "Booking Deleted Successfully",
   });
 });

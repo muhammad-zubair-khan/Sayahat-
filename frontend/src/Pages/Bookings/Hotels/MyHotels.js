@@ -68,7 +68,12 @@ const MyHotels = () => {
       sortable: false,
       renderCell: (params) => {
         return (
-          <Link to={`/myHotelDetail/${params.getValue(params.id, "id")}`}>
+          <Link 
+          to={{
+            pathname: `/myHotelDetail/${params.getValue(params.id, "id")}`,
+            params: { id: params.getValue(params.id, "id") },
+          }}
+          >
             <LaunchIcon />
           </Link>
         );

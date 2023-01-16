@@ -9,6 +9,9 @@ import {
   HOTEL_DETAILS_FAIL,
   HOTEL_DETAILS_REQUEST,
   HOTEL_DETAILS_SUCCESS,
+  DELETE_BOOKED_HOTEL_REQUEST,
+  DELETE_BOOKED_HOTEL_SUCCESS,
+  DELETE_BOOKED_HOTEL_FAIL,
 } from "../Constants/bookHotelConstants";
 
 export const BookHotelReducer = (state = {}, action) => {
@@ -94,6 +97,35 @@ export const hotelDetailsReducer = (state = { hotel: {} }, action) => {
         error: null,
       };
 
+    default:
+      return state;
+  }
+};
+
+export const deleteBookedHotelReducer = (
+  state = { bookedHotel: {} },
+  action
+) => {
+  switch (action.type) {
+    case DELETE_BOOKED_HOTEL_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case DELETE_BOOKED_HOTEL_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        bookedHotel: action.payload,
+        isDeleted: action.payload,
+      };
+
+    case DELETE_BOOKED_HOTEL_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
     default:
       return state;
   }

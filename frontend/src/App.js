@@ -80,7 +80,11 @@ function App() {
         <Route exact path="/" component={Home} />
         <Route exact path="/vacation/:slug/:slug/:id" component={City} />
         <Route exact path="/vacation/:slug" component={Cities} />
-        <Route exact path="/top-destination/:slug/:id"  component={TopDestination} />
+        <Route
+          exact
+          path="/top-destination/:slug/:id"
+          component={TopDestination}
+        />
 
         {/* Hotels */}
         <Route exact path="/hotels" component={Hotel} />

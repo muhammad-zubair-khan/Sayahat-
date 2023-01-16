@@ -10,6 +10,9 @@ import {
   PACKAGE_DETAILS_FAIL,
   PACKAGE_DETAILS_REQUEST,
   PACKAGE_DETAILS_SUCCESS,
+  DELETE_BOOKED_PACKAGE_REQUEST,
+  DELETE_BOOKED_PACKAGE_SUCCESS,
+  DELETE_BOOKED_PACKAGE_FAIL,
 } from "../Constants/bookPackageConstants";
 
 // Book Package
@@ -68,4 +71,24 @@ export const getPackageDetails = (id) => async (dispatch) => {
 // Clearing Errors
 export const clearErrors = () => async (dispatch) => {
   dispatch({ type: CLEAR_ERRORS });
+};
+
+
+// Delete Booked Package
+export const deleteBookedPackage = (id) => async (dispatch) => {
+  try {
+    dispatch({ type: DELETE_BOOKED_PACKAGE_REQUEST });
+
+    const { data } = await axios.delete(`/bookedPackage/delete/${id}`);
+
+    dispatch({
+      type: DELETE_BOOKED_PACKAGE_SUCCESS,
+      payload: data.success,
+    });
+  } catch (error) {
+    dispatch({
+      type: DELETE_BOOKED_PACKAGE_FAIL,
+      payload: error.response.data.message,
+    });
+  }
 };

@@ -48,7 +48,12 @@ const MyCars = () => {
       sortable: false,
       renderCell: (params) => {
         return (
-          <Link to={`/myCar/${params.getValue(params.id, "id")}`}>
+          <Link 
+          to={{
+            pathname: `/myCar/${params.getValue(params.id, "id")}`,
+            params: { id: params.getValue(params.id, "id") },
+          }}
+          >
             <LaunchIcon />
           </Link>
         );

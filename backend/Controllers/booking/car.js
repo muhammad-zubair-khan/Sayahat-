@@ -54,20 +54,6 @@ exports.myCars = catchAsyncErrors(async (req, res, next) => {
   });
 });
 
-// get Car Detail
-exports.getCarDetail = catchAsyncErrors(async (req, res, next) => {
-  const car = await Car.findById(req.params.id).populate("user", "name email");
-
-  if (!car) {
-    return next(new ErrorHandler("Car not found with this Id", 404));
-  }
-
-  res.status(200).json({
-    success: true,
-    car,
-  });
-});
-
 // get all Boooked Cars -- Admin
 exports.getAllBookedCars = catchAsyncErrors(async (req, res, next) => {
   const bookedCars = await Car.find();
@@ -116,5 +102,20 @@ exports.getBookedCarsDetails = catchAsyncErrors(async (req, res, next) => {
   res.status(200).json({
     success: true,
     cardetails,
+  });
+});
+
+// Delete Booked Car
+exports.deleteBookedCar = catchAsyncErrors(async (req, res) => {
+  const bookedCar = await Car.findById(req.params.id);
+  if (!bookedCar) {
+    return next(new ErrorHandler("Booked Car not found", 404));
+  }
+
+  await bookedCar.remove();
+
+  res.status(200).json({
+    success: true,
+    message: "Booking Deleted Successfully",
   });
 });

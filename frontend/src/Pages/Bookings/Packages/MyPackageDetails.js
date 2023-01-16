@@ -3,8 +3,15 @@ import "./MyPackageDetails.css";
 // import MetaData from "../layout/MetaData";
 import { Typography } from "@mui/material";
 import axios from "axios";
+import { Button } from "@mui/material";
+import { useHistory,useParams } from "react-router-dom";
+import {useDispatch,useSelector} from 'react-redux';
+import {deleteBookedPackage} from '../../../Redux/Actions/bookPackageAction'
 
 const MyPackageDetails = (props) => {
+  const {id} = useParams()
+  const dispatch = useDispatch()
+  const history = useHistory()
   let [responseData, setResponseData] = useState("");
   const url = `http://localhost:5000/api/bookPackageDetail`;
 
@@ -14,8 +21,22 @@ const MyPackageDetails = (props) => {
     try {
       const res = await axios.get(`${url}/${id}`);
       setResponseData(res.data.packageDetails);
-    } catch (err) {}
+    } catch (err) {console.log(err)}
   };
+
+  const cancelBooking = () =>{
+    var txt;
+    // eslint-disable-next-line no-restricted-globals
+    if (confirm("Are you sure you want to cancel booking?")) {
+      txt = "Deleted Successfully";
+      dispatch(deleteBookedPackage(id))
+      alert(txt)
+      history.push('/myPackages')
+    }else{
+      history.push('/myPackages')
+    } 
+  }
+
   useEffect(() => {
     getBookedPackageDetail();
   }, []);
@@ -105,6 +126,16 @@ const MyPackageDetails = (props) => {
               <div>
                 <p>Refundable?</p>
                 <span>{responseData && responseData.refundable}</span>
+                <span>
+                  {responseData &&
+                  responseData.refundable === "Free cancellation available" ? (
+                    <Button onClick={cancelBooking} variant="contained" color="error">
+                      Cancel Booking
+                    </Button>
+                  ) : (
+                    ""
+                  )}
+                </span>
               </div>
             </div>
           </div>

@@ -5,6 +5,8 @@ const {
   getAllBookedCars,
   updateBookedCarDetails,
   getBookedCarsDetails,
+  deleteBookedCar,
+  getCarDetail,
 } = require("../../Controllers/booking/car");
 const router = express.Router();
 
@@ -17,9 +19,7 @@ const {
 
 router.route("/book/car").post(requireSignin, userMiddleware, newBookCar);
 
-// router
-//   .route("/bookCarDetail/:id")
-//   .get(requireSignin, userMiddleware, getCarDetail);
+router.route("/bookCarDetail/:id").get(getBookedCarsDetails);
 
 router.route("/bookCar/me").get(requireSignin, userMiddleware, myCars);
 
@@ -30,5 +30,15 @@ router
 router.route("/admin/bookedCar/detail/:id").get(getBookedCarsDetails);
 
 router.route("/admin/bookedCars/update/:id").patch(updateBookedCarDetails);
+
+//For Admin
+router.delete("/admin/bookedCar/delete/:id", deleteBookedCar);
+
+router.delete(
+  "/bookedCar/delete/:id",
+  requireSignin,
+  userMiddleware,
+  deleteBookedCar
+);
 
 module.exports = router;

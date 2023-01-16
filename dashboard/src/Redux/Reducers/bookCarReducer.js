@@ -6,6 +6,9 @@ import {
   GET_BOOKED_CAR_DETAIL_REQUEST,
   GET_BOOKED_CAR_DETAIL_SUCCESS,
   GET_BOOKED_CAR_DETAIL_FAIL,
+  DELETE_BOOKED_CAR_SUCCESS,
+  DELETE_BOOKED_CAR_FAIL,
+  DELETE_BOOKED_CAR_REQUEST,
 } from "../Constants/bookCarConstants";
 
 export const allBookedCarsReducer = (state = { bookedCars: [] }, action) => {
@@ -51,6 +54,36 @@ export const bookedCarDetailReducer = (state = { bookedCar: {} }, action) => {
       };
     case GET_BOOKED_CAR_DETAIL_FAIL:
       return {
+        loading: false,
+        error: action.payload,
+      };
+    default:
+      return state;
+  }
+};
+
+
+export const deleteBookedCarReducer = (
+  state = { bookedCar: {} },
+  action
+) => {
+  switch (action.type) {
+    case DELETE_BOOKED_CAR_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case DELETE_BOOKED_CAR_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        bookedCar: action.payload,
+        isDeleted: action.payload,
+      };
+
+    case DELETE_BOOKED_CAR_FAIL:
+      return {
+        ...state,
         loading: false,
         error: action.payload,
       };

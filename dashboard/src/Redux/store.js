@@ -10,7 +10,7 @@ import { allPackagesReducer, newPackageReducer } from "./Reducers/packageReducer
 import { allRoomsReducer } from "./Reducers/roomReducer";
 import { authReducer } from "./Reducers/authReducers";
 import { allBookedCarsReducer, bookedCarDetailReducer } from "./Reducers/bookCarReducer";
-import { allBookedPackagesReducer } from "./Reducers/bookPackageReducer";
+import { allBookedPackagesReducer, deleteBookedPackageReducer } from "./Reducers/bookPackageReducer";
 import { allBookedHotelsReducer } from "./Reducers/bookedHotelReducer";
 
 const reducer = combineReducers({
@@ -27,6 +27,7 @@ const reducer = combineReducers({
   carsReducer: allCarsReducer,
   addPackageReducer: newPackageReducer,
   packagesReducer: allPackagesReducer,
+  delBookedPackageReducer:deleteBookedPackageReducer,
   allRooms: allRoomsReducer,
 
 

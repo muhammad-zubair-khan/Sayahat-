@@ -1,17 +1,21 @@
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 // import MetaData from "../../../components/layouts/MetaData";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllBookedCars } from "../../Redux/Actions/bookCarAction";
-import {  Button } from "@mui/material";
+import { deleteBookedCar, getAllBookedCars } from "../../Redux/Actions/bookCarAction";
+import { Button } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import LaunchIcon from "@mui/icons-material/Launch";
 import axios from "axios";
 import "./BookingScreen.css";
-import { getAllBookedPackages } from "../../Redux/Actions/bookPackageAction";
-import { getAllBookedHotels } from "../../Redux/Actions/bookHotelAction";
+import {
+  deleteBookedPackage,
+  getAllBookedPackages,
+} from "../../Redux/Actions/bookPackageAction";
+import { deleteBookedHotel, getAllBookedHotels } from "../../Redux/Actions/bookHotelAction";
 
 const BookingScreen = () => {
+  const history = useHistory();
   let unreadCount = 0;
   const dispatch = useDispatch();
   const { bookedCars } = useSelector((state) => state.allBookedCars);
@@ -22,9 +26,18 @@ const BookingScreen = () => {
     dispatch(getAllBookedPackages());
     dispatch(getAllBookedHotels());
   }, [dispatch]);
-  const deleteMessageHandler = (id) => {
-    // dispatch(deleteCar(id));
-    // history.go(0);
+
+  const deleteHotelHandler = (id) => {
+    dispatch(deleteBookedHotel(id));
+    history.go(0);
+  };
+  const deleteCarHandler = (id) => {
+    dispatch(deleteBookedCar(id));
+    history.go(0);
+  };
+  const deletePackageHandler = (id) => {
+    dispatch(deleteBookedPackage(id));
+    history.go(0);
   };
 
   const rows = [];
@@ -43,37 +56,37 @@ const BookingScreen = () => {
       }
     });
 
-    const rows1 = [];
-    bookedPackages &&
-      bookedPackages.forEach((item) => {
-        rows1.splice(0, 0, {
-          id: item._id,
-          user: item.user,
-          firstName: item.contactInfo.firstName,
-          price: item.price,
-          paidAt: item.paidAt,
-          view: item.view,
-        });
-        if (item.view === "unread") {
-          unreadCount = unreadCount + 1;
-        }
+  const rows1 = [];
+  bookedPackages &&
+    bookedPackages.forEach((item) => {
+      rows1.splice(0, 0, {
+        id: item._id,
+        user: item.user,
+        firstName: item.contactInfo.firstName,
+        price: item.price,
+        paidAt: item.paidAt,
+        view: item.view,
       });
-     
-      const rows2 = [];
-      bookedHotels &&
-        bookedHotels.forEach((item) => {
-          rows2.splice(0, 0, {
-            id: item._id,
-            user: item.user,
-            firstName: item.hotelContactInfo.firstName,
-            price: item.price,
-            paidAt: item.paidAt,
-            view: item.view,
-          });
-          if (item.view === "unread") {
-            unreadCount = unreadCount + 1;
-          }
-        });
+      if (item.view === "unread") {
+        unreadCount = unreadCount + 1;
+      }
+    });
+
+  const rows2 = [];
+  bookedHotels &&
+    bookedHotels.forEach((item) => {
+      rows2.splice(0, 0, {
+        id: item._id,
+        user: item.user,
+        firstName: item.hotelContactInfo.firstName,
+        price: item.price,
+        paidAt: item.paidAt,
+        view: item.view,
+      });
+      if (item.view === "unread") {
+        unreadCount = unreadCount + 1;
+      }
+    });
   const changeView = (id) => {
     const changeViewUrl = `http://localhost:5000/api/admin/bookedCars/update`;
     try {
@@ -173,7 +186,7 @@ const BookingScreen = () => {
                     </Link>
                   </td>
                   <td>
-                    <Button onClick={() => deleteMessageHandler(item.id)}>
+                    <Button onClick={() => deleteCarHandler(item.id)}>
                       <DeleteIcon />
                     </Button>
                   </td>
@@ -250,7 +263,7 @@ const BookingScreen = () => {
                     </Link>
                   </td>
                   <td>
-                    <Button onClick={() => deleteMessageHandler(item.id)}>
+                    <Button onClick={() => deletePackageHandler(item.id)}>
                       <DeleteIcon />
                     </Button>
                   </td>
@@ -327,7 +340,7 @@ const BookingScreen = () => {
                     </Link>
                   </td>
                   <td>
-                    <Button onClick={() => deleteMessageHandler(item.id)}>
+                    <Button onClick={() => deleteHotelHandler(item.id)}>
                       <DeleteIcon />
                     </Button>
                   </td>
@@ -335,7 +348,6 @@ const BookingScreen = () => {
               ))}
             </tbody>
           </table>
-          
         </div>
       </div>
     </>

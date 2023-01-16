@@ -110,3 +110,19 @@ exports.getBookedPackageDetail = catchAsyncErrors(async (req, res, next) => {
     packagedetails,
   });
 });
+
+
+// Delete Booked Package
+exports.deleteBookedPackage = catchAsyncErrors(async (req, res) => {
+  const bookedPackage = await Package.findById(req.params.id);
+  if (!bookedPackage) {
+    return next(new ErrorHandler("Booked Package not found", 404));
+  }
+
+  await bookedPackage.remove();
+
+  res.status(200).json({
+    success: true,
+    message: "Booking Deleted Successfully",
+  });
+});
