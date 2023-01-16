@@ -4,11 +4,6 @@ import {
   GET_ALL_ROOMS_FAIL,
 } from "../Constants/roomConstants";
 
-const initialStateRoom = {
-  room: {},
-  loading: false,
-};
-
 export const allRoomsReducer = (state = { rooms: [] }, action) => {
   switch (action.type) {
     case GET_ALL_ROOMS_REQUEST:

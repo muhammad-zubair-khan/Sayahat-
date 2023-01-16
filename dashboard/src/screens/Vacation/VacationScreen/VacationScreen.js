@@ -13,8 +13,8 @@ import IndeterminateCheckBoxIcon from "@mui/icons-material/IndeterminateCheckBox
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 import Button from "@mui/material/Button";
-import AddIcon from '@mui/icons-material/Add';
-import EditIcon from '@mui/icons-material/Edit';
+import AddIcon from "@mui/icons-material/Add";
+import EditIcon from "@mui/icons-material/Edit";
 import Typography from "@mui/material/Typography";
 import {
   createVacationCategory,
@@ -28,10 +28,8 @@ import UpdateVacationCategoryModal from "../../../components/Modal/UpdateVacatio
 
 const VacationScreen = () => {
   const [categoryName, setCategoryName] = useState("");
-  const [categoryImage, setCategoryImage] = useState("");
   const [parentCategoryId, setParentCategoryId] = useState("");
   const vacation = useSelector((state) => state.Vacationcategory);
-  // const category = useSelector((state) => state.category);
   const [show, setShow] = useState(false);
   const [checked, setChecked] = useState([]);
   const [expanded, setExpanded] = useState([]);
@@ -122,7 +120,7 @@ const VacationScreen = () => {
       });
     setCheckedArray(checkedArray);
     setExpandedArray(expandedArray);
-    console.log({ checked, expanded, categories, checkedArray, expandedArray });
+    // console.log({ checked, expanded, categories, checkedArray, expandedArray });
   };
 
   const handleCategoryInput = (key, value, index, type) => {
@@ -164,12 +162,12 @@ const VacationScreen = () => {
     const checkedIdsArray = checkedArray.map((item, index) => ({
       _id: item.value,
     }));
-    const expandedIdsArray = expandedArray.map((item, index) => ({
-      _id: item.value,
-    }));
+    // const expandedIdsArray = expandedArray.map((item, index) => ({
+    //   _id: item.value,
+    // }));
 
-    const idsArray = expandedIdsArray.concat(checkedIdsArray);
-    console.log(idsArray)
+    // const idsArray = expandedIdsArray.concat(checkedIdsArray);
+    // console.log(idsArray);
 
     if (checkedIdsArray.length > 0) {
       dispatch(deleteCategoriesAction(checkedIdsArray)).then((result) => {
@@ -221,24 +219,23 @@ const VacationScreen = () => {
       <Sidebar>
         <Header />
 
-        <div style={{width:'50%'}}>
+        <div style={{ width: "50%" }}>
           <Grid container>
             <Grid item xs={12}>
-              <Box style={{ display: "flex",margin: '23px 6px' }}>
+              <Box style={{ display: "flex", margin: "23px 6px" }}>
                 <Typography variant="h4" component="h1">
                   Vacation Categories
                 </Typography>
                 <Button
                   style={{
                     marginLeft: "auto",
-                    
                   }}
                   variant="contained"
                   onClick={handleShow}
                 >
-                  Add Vacations <span>
-                  <AddIcon/>
-
+                  Add Vacations{" "}
+                  <span>
+                    <AddIcon />
                   </span>
                 </Button>
               </Box>
@@ -267,8 +264,17 @@ const VacationScreen = () => {
           </Grid>
           <Grid>
             <Grid item xs={12}>
-              <Button onClick={updateCategory} variant="contained" >Edit <EditIcon/></Button>
-              <Button onClick={deleteCategory} variant="contained" color="error" style={{margin: '13px 16px'}}>Delete <DeleteIcon/></Button>
+              <Button onClick={updateCategory} variant="contained">
+                Edit <EditIcon />
+              </Button>
+              <Button
+                onClick={deleteCategory}
+                variant="contained"
+                color="error"
+                style={{ margin: "13px 16px" }}
+              >
+                Delete <DeleteIcon />
+              </Button>
             </Grid>
           </Grid>
 

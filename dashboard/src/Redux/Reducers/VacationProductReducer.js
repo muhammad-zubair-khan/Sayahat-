@@ -9,9 +9,6 @@ import {
   NEW_VACATION_PRODUCT_SUCCESS,
   NEW_VACATION_PRODUCT_FAIL,
   NEW_VACATION_PRODUCT_RESET,
-  GET_ALL_VACATIONS_REQUEST,
-  GET_ALL_VACATIONS_SUCCESS,
-  GET_ALL_VACATIONS_FAIL
 } from "../Constants/vacationProductConstants";
 
 export const vacationProductReducer = (state = { products: [] }, action) => {
@@ -100,16 +97,19 @@ export const vacationProductReducer = (state = { products: [] }, action) => {
 // };
 
 const initialStateVacationProduct = {
-  product:{},
-  loading:false
-}
+  product: {},
+  loading: false,
+};
 
-export const addCitiesReducer = (state = initialStateVacationProduct, action) => {
+export const addCitiesReducer = (
+  state = initialStateVacationProduct,
+  action
+) => {
   switch (action.type) {
     case NEW_VACATION_PRODUCT_REQUEST:
       return {
         // ...state,
-        product:{},
+        product: {},
         loading: false,
       };
     case NEW_VACATION_PRODUCT_SUCCESS:

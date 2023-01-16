@@ -6,7 +6,6 @@ import { getAllPackages } from "../../../Redux/Actions/packageAction";
 import { DataGrid } from "@mui/x-data-grid";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Button from "@mui/material/Button";
-// import "./GetHotelBySlug.css";
 import Zoom from "react-medium-image-zoom";
 import "react-medium-image-zoom/dist/styles.css";
 import { deletePackage } from "../../../Redux/Actions/packageAction";
@@ -14,7 +13,7 @@ import { useHistory } from "react-router-dom";
 import { ImageUrl } from "../../../Redux/UrlConfig";
 
 const AllPackages = (props) => {
-    const history = useHistory();
+  const history = useHistory();
   const dispatch = useDispatch();
   const { packages } = useSelector((state) => state.packagesReducer);
 
@@ -25,6 +24,7 @@ const AllPackages = (props) => {
 
   useEffect(() => {
     dispatch(getAllPackages());
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const columns = [
@@ -35,7 +35,6 @@ const AllPackages = (props) => {
       minHeight: 200,
       flex: 0.5,
       renderCell: (params) => {
-        console.log("params>>>", params);
         return (
           <div style={{ textAlign: "center" }}>
             <Zoom>
@@ -107,7 +106,6 @@ const AllPackages = (props) => {
             <Button onClick={() => deletePackageHandler(params.id)}>
               <DeleteIcon />
             </Button>
-            {/* {console.log("ye wali>>>>>>>>>>>>>>>>>", params.id)} */}
           </>
         );
       },

@@ -13,10 +13,9 @@ import { useHistory } from "react-router-dom";
 import { ImageUrl } from "../../../Redux/UrlConfig";
 
 const GetHotelBySlug = (props) => {
-  const history = useHistory()
+  const history = useHistory();
   const dispatch = useDispatch();
   const { cars } = useSelector((state) => state.carsReducer);
-console.log(cars)
   const deleteCarHandler = (id) => {
     dispatch(deleteCar(id));
     history.go(0);
@@ -24,7 +23,6 @@ console.log(cars)
 
   useEffect(() => {
     const { match } = props;
-  console.log(props);
     dispatch(getCarBySlug(match.params.slug));
   }, [dispatch, props]);
 
@@ -36,7 +34,6 @@ console.log(cars)
       minHeight: 200,
       flex: 0.5,
       renderCell: (params) => {
-        console.log("params>>>", params);
         return (
           <div style={{ textAlign: "center" }}>
             <Zoom>
@@ -115,7 +112,6 @@ console.log(cars)
             <Button onClick={() => deleteCarHandler(params.id)}>
               <DeleteIcon />
             </Button>
-            {/* {console.log("ye wali>>>>>>>>>>>>>>>>>", params.id)} */}
           </>
         );
       },
@@ -135,7 +131,7 @@ console.log(cars)
         price: item.price,
         mileage: item.mileage,
         passenger: item.passenger,
-        shuttle:item.shuttle,
+        shuttle: item.shuttle,
         // category:item.category
       });
     });

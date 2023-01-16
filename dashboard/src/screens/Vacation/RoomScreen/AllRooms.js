@@ -8,9 +8,7 @@ import Button from "@mui/material/Button";
 // import "./GetHotelBySlug.css";
 import Zoom from "react-medium-image-zoom";
 import "react-medium-image-zoom/dist/styles.css";
-import { deletePackage } from "../../../Redux/Actions/packageAction";
 import { useHistory } from "react-router-dom";
-import { ImageUrl } from "../../../Redux/UrlConfig";
 import { getAllRooms } from "../../../Redux/Actions/roomAction";
 
 const AllRooms = (props) => {
@@ -25,6 +23,7 @@ const AllRooms = (props) => {
 
   useEffect(() => {
     dispatch(getAllRooms());
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const columns = [
@@ -35,7 +34,6 @@ const AllRooms = (props) => {
       minHeight: 200,
       flex: 0.5,
       renderCell: (params) => {
-        console.log("params>>>", params);
         return (
           <div style={{ textAlign: "center" }}>
             <Zoom>
@@ -83,7 +81,6 @@ const AllRooms = (props) => {
       minWidth: 270,
       flex: 0.5,
       renderCell: (params) => {
-        console.log("params>>>", params);
         return (
           <div style={{ textAlign: "center" }}>
             {params.row.roomNumbers.map((item,index) => (
@@ -116,7 +113,6 @@ const AllRooms = (props) => {
             <Button onClick={() => deleteRoomHandler(params.id)}>
               <DeleteIcon />
             </Button>
-            {/* {console.log("ye wali>>>>>>>>>>>>>>>>>", params.id)} */}
           </>
         );
       },

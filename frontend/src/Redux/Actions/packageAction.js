@@ -38,13 +38,13 @@ export const createPackage = (form) => {
       const res = await axios.post("/package/create", form);
       // console.log("res......", res);
       // if (res.status === 201) {
-        dispatch({
-          type: CREATE_NEW_PACKAGE_SUCCESS,
-          payload: res.data.package,
-        });
+      dispatch({
+        type: CREATE_NEW_PACKAGE_SUCCESS,
+        payload: res.data.package,
+      });
       // } else {
-        // }
-      } catch (error) {
+      // }
+    } catch (error) {
       dispatch({
         type: CREATE_NEW_PACKAGE_FAIL,
         payload: error.response.data.message,
@@ -175,22 +175,34 @@ export const getAllFeaturedPackages = () => async (dispatch) => {
 };
 
 //get Package by Slug
-export const getPackageBySlug = (slug) => async (dispatch) => {
-  try {
-    dispatch({ type: GET_PACKAGE_BY_SLUG_REQUEST });
-    const { data } = await axios.get(`/package/${slug}`);
-    // console.log(data);
-    dispatch({
-      type: GET_PACKAGE_BY_SLUG_SUCCESS,
-      payload: data.packages,
-    });
-  } catch (error) {
-    dispatch({
-      type: GET_PACKAGE_BY_SLUG_FAIL,
-      payload: error.response.data.message,
-    });
-  }
-};
+export const getPackageBySlug =
+  (slug, type, min, max, ratings) => async (dispatch) => {
+    try {
+      dispatch({ type: GET_PACKAGE_BY_SLUG_REQUEST });
+
+      let link = `/package/${slug}?min=${min || 0}&max=${max || 9999}&ratings=${
+        ratings || 0
+      }`;
+
+      if (type) {
+        link = `/package/${slug}?type=${type}&min=${min || 0}&max=${
+          max || 9999
+        }&ratings=${ratings || 0}`;
+      }
+
+      const { data } = await axios.get(link);
+      // console.log(data);
+      dispatch({
+        type: GET_PACKAGE_BY_SLUG_SUCCESS,
+        payload: data.packages,
+      });
+    } catch (error) {
+      dispatch({
+        type: GET_PACKAGE_BY_SLUG_FAIL,
+        payload: error.response.data.message,
+      });
+    }
+  };
 
 // Get Package detail By Id
 export const getPackageDetailById = (id) => async (dispatch) => {

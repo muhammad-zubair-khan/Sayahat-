@@ -58,7 +58,7 @@ export const createProduct = (form) => {
         });
       }
     } catch (error) {
-      console.log(error.response);
+      // console.log(error.response);
     }
   };
 };
@@ -87,7 +87,6 @@ export const getVacationProductsBySlug = (slug) => async (dispatch) => {
   try {
     dispatch({ type: GET_VACATION_PRODUCTS_BY_SLUG_REQUEST });
     const { data } = await axios.get(`/admin/vacations/${slug}`);
-    console.log(data);
     dispatch({
       type: GET_VACATION_PRODUCTS_BY_SLUG_SUCCESS,
       payload: data.product,

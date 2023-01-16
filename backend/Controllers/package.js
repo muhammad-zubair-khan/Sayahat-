@@ -95,6 +95,7 @@ exports.getAllPackages = async (req, res) => {
 //get package by slug
 exports.getPackageBySlug = (req, res) => {
   const { slug } = req.params;
+  const {min,max, ...others } = req.query;
   product
     .findOne({ slug: slug })
     .select("_id")
@@ -109,7 +110,9 @@ exports.getPackageBySlug = (req, res) => {
         });
       }
       if (product) {
-        Package.find({ product: product._id }).exec((error, packages) => {
+        Package.find({ product: product._id,
+          price: { $gte: min | 1, $lte: max || 99999 },
+          ...others }).exec((error, packages) => {
           if (error) {
             return res.status(400).json({
               error,

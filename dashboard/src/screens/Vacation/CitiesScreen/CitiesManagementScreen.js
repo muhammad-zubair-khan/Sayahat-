@@ -22,20 +22,6 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { addCar } from "../../../Redux/Actions/carAction";
 import { createPackage } from "../../../Redux/Actions/packageAction";
-// import FormGroup from "@mui/material/FormGroup";
-// import FormControlLabel from "@mui/material/FormControlLabel";
-// import Checkbox from "@mui/material/Checkbox";
-// import FormControlLabel from '@mui/material/FormControlLabel';
-// import FormControl from '@mui/material/FormControl';
-// import Radio from "@mui/material/Radio";
-// import RadioGroup from "@mui/material/RadioGroup";
-// import FormLabel from "@mui/material/FormLabel";
-// import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
-// import CheckBoxIcon from "@mui/icons-material/CheckBox";
-
-// const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
-// const checkedIcon = <CheckBoxIcon fontSize="small" />;
-
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
   ...theme.typography.body2,
@@ -139,47 +125,19 @@ const CitiesManagementScreen = (props) => {
     const myForm = new FormData();
 
     myForm.set("name", name);
-    // console.log(name);
-
     myForm.set("description", description);
-    // console.log(description);
-
     myForm.set("city", city);
-    // console.log(city);
-
     myForm.set("type", hotelType);
-    // console.log(hotelType);
-
     myForm.set("distance", distance);
-    // console.log(distance);
-
     myForm.set("address", address);
-    // console.log(address);
-
     myForm.set("title", hotelTitle);
-    // console.log(hotelTitle);
-
     myForm.set("cheapestPrice", cheapestPrice);
-    // console.log(cheapestPrice);
-
     myForm.set("category", category);
-    // console.log(category);
-
     myForm.set("pool", pool);
-    // console.log(pool);
-
     myForm.set("Breakfast", breakfast);
-    // console.log(breakfast);
-
     myForm.set("Hottub", hotTub);
-    // console.log(hotTub);
-
     myForm.set("featured", featuredHotel);
-    // console.log(featuredHotel);
-
     myForm.set("FullyRefundable", fullyRefundable);
-    // console.log(fullyRefundable);
-
     Array.from(hotelImages).forEach((item) => {
       myForm.append("hotelImages", item);
     });
@@ -201,50 +159,20 @@ const CitiesManagementScreen = (props) => {
     const myForm = new FormData();
 
     myForm.set("name", carName);
-    // console.log(carName);
-
     myForm.set("description", desc);
-    // console.log(desc);
-
     myForm.set("category", category);
-    // console.log(category);
-
     myForm.set("passenger", passenger);
-    // console.log(passenger);
-
     myForm.set("price", fare);
-    // console.log(fare);
-
     myForm.set("type", type);
-    // console.log(type);
-
     myForm.set("mileage", mileage);
-    // console.log(mileage);
-
     myForm.set("refund", refund);
-    // console.log(refund);
-
     myForm.set("payAt", payAt);
-    // console.log(payAt);
-
     myForm.set("shuttle", shuttle);
-    // console.log(shuttle);
-
     myForm.set("discount", discount);
-    // console.log(discount);
-
     myForm.set("title", carTitle);
-    // console.log(carTitle);
-
     myForm.set("city", carCity);
-    // console.log(carCity);
-
     myForm.set("gear", gear);
-    // console.log(gear);
-
     myForm.set("featured", featuredCar);
-    // console.log(featuredCar);
-
     Array.from(carImages).forEach((item) => {
       myForm.append("carImages", item);
     });
@@ -259,38 +187,17 @@ const CitiesManagementScreen = (props) => {
     const myForm = new FormData();
 
     myForm.set("name", packageName);
-    // console.log(packageName);
-
     myForm.set("description", packageDescription);
-    // console.log(packageDescription);
-
     myForm.set("city", packageCity);
-    // console.log(packageCity);
-
     myForm.set("price", price);
-    // console.log(price);
-
     myForm.set("product", product);
-    // console.log(product);
-
     myForm.set("type", packageType);
-    // console.log(packageType);
-
     myForm.set("duration", duration);
-    // console.log(duration);
-
     myForm.set("refundable", refundable);
-    // console.log(refundable);
-
     myForm.set("featured", featuredPackage);
-    // console.log(featuredPackage);
-
     myForm.set("carPickupDetails", carPickupDetails);
-    // console.log(carPickupDetails);
-
     Array.from(tags).forEach((item) => {
       myForm.append("startTime", item);
-      // console.log(item);
     });
 
     Array.from(packageImages).forEach((item) => {

@@ -10,7 +10,7 @@ import videoplayback from "../Assets/videoplayback.mp4";
 import ReactPlayer from "react-player";
 import CardSlider from "../CardSlider";
 import "../CardSlider.css";
-import { TopDes } from "../TopDes";
+import TopDes from "../TopDes";
 import Footer from "../Footer/Footer";
 import "react-date-range/dist/styles.css"; // main style file
 import "react-date-range/dist/theme/default.css"; // theme css file

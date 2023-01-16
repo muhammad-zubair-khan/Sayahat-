@@ -24,12 +24,13 @@ const responsive = {
   },
 };
 
-export const TopDes = (props) => {
+ const TopDes = (props) => {
   const dispatch = useDispatch();
   const { products } = useSelector((state) => state.vacationProduct);
 
   useEffect(() => {
     dispatch(getAllVacationProduct());
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -50,15 +51,15 @@ export const TopDes = (props) => {
         removeArrowOnDeviceType={["tablet", "mobile"]}
         style={{ marginTop: "10px" }}
         // showDots={true}
-        // ssr={true} // means to render carousel on server-side.
+        ssr={true} // means to render carousel on server-side.
         // autoPlay={this.props.deviceType !== "mobile" ? true : false}
         // keyBoardControl={true}
-        // customTransition="all .5"
-        // transitionDuration={500}
-        // containerClass="carousel-container"
+        customTransition="all 1s"
+        transitionDuration={1000}
+        containerClass="carousel-container"
         // deviceType={this.props.deviceType}
         // dotListClass="custom-dot-list-style"
-        // itemClass="carousel-item-padding-40-px"
+        itemClass="carousel-item-padding-40-px"
       >
         {products &&
           products.map((data, index) => {
@@ -81,3 +82,5 @@ export const TopDes = (props) => {
     </>
   );
 };
+
+export default TopDes;

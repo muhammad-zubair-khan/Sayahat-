@@ -1,10 +1,6 @@
 import "./AddRoom.css";
-// import Sidebar from "../../components/sidebar/Sidebar";
-// import Navbar from "../../components/navbar/Navbar";
-import DriveFolderUploadOutlinedIcon from "@mui/icons-material/DriveFolderUploadOutlined";
 import { useEffect, useState } from "react";
 import { roomInputs } from "../../../formSource";
-import useFetch from "../../../hooks/useFetch";
 import axios from "../../../Redux/helpers/axios";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllHotels } from "../../../Redux/Actions/hotelAction";
@@ -16,17 +12,11 @@ import { TextareaAutosize } from "@mui/material";
 const AddRoom = () => {
   const history = useHistory();
   const params = useParams();
-  // const {hotelId} = params
   const dispatch = useDispatch();
   const [info, setInfo] = useState({});
   const [hotelId, setHotelId] = useState(params.hotelId);
   const [rooms, setRooms] = useState([]);
-  console.log(hotelId);
-  //   const { data, loading, error } = useFetch(
-  //     "http://localhost:5000/api/all-hotels"
-  //   );
   const { hotels } = useSelector((state) => state.hotelReducer);
-  console.log(hotels);
   useEffect(() => {
     dispatch(getAllHotels());
   }, [dispatch]);
@@ -44,7 +34,7 @@ const AddRoom = () => {
         roomNumbers,
       });
     } catch (err) {
-      console.log(err);
+      // console.log(err);
     }
     alert("Room Added Successfully");
     history.push("/all-rooms");

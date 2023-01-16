@@ -112,6 +112,7 @@ const Navbar = (props) => {
       <DropdownMenu
         menu={
           <Link
+          to="#"
             className="fullName"
             style={{
               // textTransform: "uppercase",
@@ -157,7 +158,7 @@ const Navbar = (props) => {
           <nav>
             <input type="checkbox" id="show-search" />
             <input type="checkbox" id="show-menu" />
-            <label for="show-menu" className="menu-icon">
+            <label htmlFor="show-menu" className="menu-icon">
               <i className="fas fa-bars"></i>
             </label>
             <div className="content">

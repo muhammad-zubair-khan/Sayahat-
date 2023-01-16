@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from "react";
-// import { getBookedCarDetail } from '../../Redux/Actions/bookCarAction'
 import { Typography } from "@mui/material";
 import axios from "axios";
-import '../CarBookingDetails.css'
+import "../CarBookingDetails.css";
 
 const BookingDetailsScreen = (props) => {
   let [responseData, setResponseData] = useState("");
-  console.log(responseData)
   const url = `http://localhost:5000/api/admin/bookedCar/detail`;
 
   // const {id} = useParams()
@@ -16,15 +14,16 @@ const BookingDetailsScreen = (props) => {
       const res = await axios.get(`${url}/${id}`);
       setResponseData(res.data.cardetails);
     } catch (err) {
-      console.log(err);
+      // console.log(err);
     }
   };
   useEffect(() => {
     getBookedCarDetail();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-//  if(Object.keys(responseData).length === 0){
-//       return null
-//   }
+  //  if(Object.keys(responseData).length === 0){
+  //       return null
+  //   }
   return (
     <>
       {/* <MetaData title="Order Details" /> */}
@@ -36,7 +35,9 @@ const BookingDetailsScreen = (props) => {
           <div className="orderDetailsContainerBox">
             <div>
               <p>Name:</p>
-              <span>{responseData && responseData.CarContactInfo.firstName}</span>
+              <span>
+                {responseData && responseData.CarContactInfo.firstName}
+              </span>
             </div>
             <div>
               <p>Phone:</p>
@@ -51,12 +52,13 @@ const BookingDetailsScreen = (props) => {
               <span>{responseData && responseData.CarContactInfo.nic}</span>
             </div>
           </div>
-     
+
           <Typography>Payment</Typography>
           <div className="orderDetailsContainerBox">
             <div>
               <p
-                className={responseData && 
+                className={
+                  responseData &&
                   responseData.paymentInfo.status === "succeeded"
                     ? "greenColor"
                     : "redColor"

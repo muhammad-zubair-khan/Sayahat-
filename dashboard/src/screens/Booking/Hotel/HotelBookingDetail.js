@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
-// import { getBookedCarDetail } from '../../Redux/Actions/bookCarAction'
 import { Typography } from "@mui/material";
 import axios from "axios";
-import '../CarBookingDetails.css'
+import "../CarBookingDetails.css";
 
 const HotelBookingDetail = (props) => {
   let [responseData, setResponseData] = useState("");
@@ -15,15 +14,16 @@ const HotelBookingDetail = (props) => {
       const res = await axios.get(`${url}/${id}`);
       setResponseData(res.data.hoteldetails);
     } catch (err) {
-      console.log(err);
+      // console.log(err);
     }
   };
   useEffect(() => {
     getBookedHotelDetail();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-//  if(Object.keys(responseData).length === 0){
-//       return null
-//   }
+  //  if(Object.keys(responseData).length === 0){
+  //       return null
+  //   }
   return (
     <>
       {/* <MetaData title="Order Details" /> */}
@@ -35,7 +35,9 @@ const HotelBookingDetail = (props) => {
           <div className="orderDetailsContainerBox">
             <div>
               <p>Name:</p>
-              <span>{responseData && responseData.hotelContactInfo.firstName}</span>
+              <span>
+                {responseData && responseData.hotelContactInfo.firstName}
+              </span>
             </div>
             <div>
               <p>Phone:</p>
@@ -46,12 +48,13 @@ const HotelBookingDetail = (props) => {
               <span>{responseData && responseData.hotelContactInfo.email}</span>
             </div>
           </div>
-     
+
           <Typography>Payment</Typography>
           <div className="orderDetailsContainerBox">
             <div>
               <p
-                className={responseData && 
+                className={
+                  responseData &&
                   responseData.paymentInfo.status === "succeeded"
                     ? "greenColor"
                     : "redColor"
@@ -76,24 +79,38 @@ const HotelBookingDetail = (props) => {
               <span>{responseData.name}</span>
             </div>
             <div>
-            <p>check-in Date:</p>
-              <span>{responseData && responseData.hotelActivityInfo.dates[0].startDate}</span>
+              <p>check-in Date:</p>
+              <span>
+                {responseData &&
+                  responseData.hotelActivityInfo.dates[0].startDate}
+              </span>
             </div>
             <div>
-            <p>check-out Date:</p>
-              <span>{responseData && responseData.hotelActivityInfo.dates[0].endDate}</span>
+              <p>check-out Date:</p>
+              <span>
+                {responseData &&
+                  responseData.hotelActivityInfo.dates[0].endDate}
+              </span>
             </div>
             <div>
-            <p>Adult:</p>
-              <span>{responseData && responseData.hotelActivityInfo.options[0].adult}</span>
+              <p>Adult:</p>
+              <span>
+                {responseData &&
+                  responseData.hotelActivityInfo.options[0].adult}
+              </span>
             </div>
             <div>
-            <p>Children:</p>
-              <span>{responseData && responseData.hotelActivityInfo.options[0].children}</span>
+              <p>Children:</p>
+              <span>
+                {responseData &&
+                  responseData.hotelActivityInfo.options[0].children}
+              </span>
             </div>
             <div>
-            <p>Room:</p>
-              <span>{responseData && responseData.hotelActivityInfo.options[0].room}</span>
+              <p>Room:</p>
+              <span>
+                {responseData && responseData.hotelActivityInfo.options[0].room}
+              </span>
             </div>
           </div>
         </div>

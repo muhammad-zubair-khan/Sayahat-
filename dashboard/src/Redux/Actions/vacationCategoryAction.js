@@ -32,7 +32,7 @@ export const createVacationCategory = (form) => {
         });
       }
     } catch (error) {
-      console.log(error.response);
+      // console.log(error.response);
     }
   };
 };

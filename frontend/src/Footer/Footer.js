@@ -85,22 +85,22 @@ const Footer = () => {
             <h5 style={{ padding: "0px 15px" }}>Quick Link</h5>
             <List>
               <ListItem>
-                <Link style={{ color: "#848484" }}>Home</Link>
+                <Link to="#" style={{ color: "#848484" }}>Home</Link>
               </ListItem>
               <ListItem>
-                <Link style={{ color: "#848484" }}>Vacations</Link>
+                <Link to="#" style={{ color: "#848484" }}>Vacations</Link>
               </ListItem>
               <ListItem>
-                <Link style={{ color: "#848484" }}>Hotels</Link>
+                <Link to="#" style={{ color: "#848484" }}>Hotels</Link>
               </ListItem>
               <ListItem>
-                <Link style={{ color: "#848484" }}>Cars</Link>
+                <Link to="#" style={{ color: "#848484" }}>Cars</Link>
               </ListItem>
               <ListItem>
-                <Link style={{ color: "#848484" }}>About us</Link>
+                <Link to="#" style={{ color: "#848484" }}>About us</Link>
               </ListItem>
               <ListItem>
-                <Link style={{ color: "#848484" }}>Contact us</Link>
+                <Link to="#" style={{ color: "#848484" }}>Contact us</Link>
               </ListItem>
             </List>
           </Grid>

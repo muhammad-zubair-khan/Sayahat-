@@ -18,11 +18,11 @@ const AllCars = (props) => {
 
   const deleteCarHandler = (id) => {
     dispatch(deleteCar(id));
-    // history.go(0);
   };
 
   useEffect(() => {
     dispatch(getAllCars());
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const columns = [
@@ -33,7 +33,6 @@ const AllCars = (props) => {
       minHeight: 200,
       flex: 0.5,
       renderCell: (params) => {
-        console.log("params>>>", params);
         return (
           <div style={{ textAlign: "center" }}>
             <Zoom>
@@ -55,47 +54,46 @@ const AllCars = (props) => {
       flex: 1,
     },
     {
-        field: "type",
-        headerName: "Type",
-        minWidth: 300,
-        flex: 1,
-      },
-      // {
-      //   field: "category",
-      //   headerName: "Category",
-      //   minWidth: 300,
-      //   flex: 1,
-      // },
-      {
-        field: "description",
-        headerName: "Description",
-        // type: "number",
-        minWidth: 150,
-        flex: 0.3,
-      },
-  
-      {
-        field: "price",
-        headerName: "Fare",
-        // type: "number",
-        minWidth: 270,
-        flex: 0.5,
-      },
-      {
-        field: "mileage",
-        headerName: "Mileage",
-        // type: "number",
-        minWidth: 270,
-        flex: 0.5,
-      },
-      {
-        field: "shuttle",
-        headerName: "Shuttle",
-        // type: "number",
-        minWidth: 270,
-        flex: 0.5,
-      },
-  
+      field: "type",
+      headerName: "Type",
+      minWidth: 300,
+      flex: 1,
+    },
+    // {
+    //   field: "category",
+    //   headerName: "Category",
+    //   minWidth: 300,
+    //   flex: 1,
+    // },
+    {
+      field: "description",
+      headerName: "Description",
+      // type: "number",
+      minWidth: 150,
+      flex: 0.3,
+    },
+
+    {
+      field: "price",
+      headerName: "Fare",
+      // type: "number",
+      minWidth: 270,
+      flex: 0.5,
+    },
+    {
+      field: "mileage",
+      headerName: "Mileage",
+      // type: "number",
+      minWidth: 270,
+      flex: 0.5,
+    },
+    {
+      field: "shuttle",
+      headerName: "Shuttle",
+      // type: "number",
+      minWidth: 270,
+      flex: 0.5,
+    },
 
     {
       field: "action",
@@ -113,7 +111,6 @@ const AllCars = (props) => {
             <Button onClick={() => deleteCarHandler(params.id)}>
               <DeleteIcon />
             </Button>
-            {/* {console.log("ye wali>>>>>>>>>>>>>>>>>", params.id)} */}
           </>
         );
       },
@@ -133,7 +130,7 @@ const AllCars = (props) => {
         price: item.price,
         mileage: item.mileage,
         passenger: item.passenger,
-        shuttle:item.shuttle,
+        shuttle: item.shuttle,
         // category:item.category
       });
     });

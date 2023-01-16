@@ -1,29 +1,28 @@
 import React, { useEffect, useState } from "react";
-// import { getBookedCarDetail } from '../../Redux/Actions/bookCarAction'
 import { Typography } from "@mui/material";
 import axios from "axios";
-import '../CarBookingDetails.css'
+import "../CarBookingDetails.css";
 
 const PackageBookingDetail = (props) => {
   let [responseData, setResponseData] = useState("");
   const url = `http://localhost:5000/api/admin/bookedPackage/detail`;
 
-  // const {id} = useParams()
   const getBookedPackageDetail = async () => {
     const id = props.location.params.id;
     try {
       const res = await axios.get(`${url}/${id}`);
       setResponseData(res.data.packagedetails);
     } catch (err) {
-      console.log(err);
+      // console.log(err);
     }
   };
   useEffect(() => {
     getBookedPackageDetail();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-//  if(Object.keys(responseData).length === 0){
-//       return null
-//   }
+  //  if(Object.keys(responseData).length === 0){
+  //       return null
+  //   }
   return (
     <>
       {/* <MetaData title="Order Details" /> */}
@@ -45,14 +44,14 @@ const PackageBookingDetail = (props) => {
               <p>Email:</p>
               <span>{responseData && responseData.contactInfo.email}</span>
             </div>
-            
           </div>
-     
+
           <Typography>Payment</Typography>
           <div className="orderDetailsContainerBox">
             <div>
               <p
-                className={responseData && 
+                className={
+                  responseData &&
                   responseData.paymentInfo.status === "succeeded"
                     ? "greenColor"
                     : "redColor"
@@ -90,11 +89,15 @@ const PackageBookingDetail = (props) => {
             </div>
             <div>
               <p>Adult:</p>
-              <span>{responseData && responseData.activityInfo.options[0].adult}</span>
+              <span>
+                {responseData && responseData.activityInfo.options[0].adult}
+              </span>
             </div>
             <div>
               <p>Children:</p>
-              <span>{responseData && responseData.activityInfo.options[0].children}</span>
+              <span>
+                {responseData && responseData.activityInfo.options[0].children}
+              </span>
             </div>
           </div>
         </div>

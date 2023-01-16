@@ -1,9 +1,7 @@
-import React from 'react'
+import React from "react";
 
 const SavedScreen = () => {
-  return (
-    <div>SavedScreen</div>
-  )
-}
+  return <div>SavedScreen</div>;
+};
 
-export default SavedScreen
+export default SavedScreen;

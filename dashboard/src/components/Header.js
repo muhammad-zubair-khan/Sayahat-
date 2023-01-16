@@ -29,7 +29,6 @@ const Header = () => {
     dispatch(getAllBookedCars());
     dispatch(getAllBookedPackages());
     dispatch(getAllBookedHotels());
-
   }, [theme, dispatch]);
   const logoutt = () => {
     dispatch(signout());
@@ -49,42 +48,42 @@ const Header = () => {
         paidAt: item.paidAt,
         view: item.view,
       });
-      if (item.view == "unread") {
+      if (item.view === "unread") {
         unreadCount = unreadCount + 1;
       }
     });
-    // let unreadCount = 0;
-    const rows1 = [];
-    bookedPackages &&
+  // let unreadCount = 0;
+  const rows1 = [];
+  bookedPackages &&
     bookedPackages.forEach((item) => {
-        rows1.push({
-          id: item._id,
-          user: item.user,
-          firstName: item.contactInfo.firstName,
-          price: item.price,
-          paidAt: item.paidAt,
-          view: item.view,
-        });
-        if (item.view == "unread") {
-          unreadCount = unreadCount + 1;
-        }
+      rows1.push({
+        id: item._id,
+        user: item.user,
+        firstName: item.contactInfo.firstName,
+        price: item.price,
+        paidAt: item.paidAt,
+        view: item.view,
       });
-    // let unreadCount = 0;
-    const rows2 = [];
-    bookedHotels &&
+      if (item.view === "unread") {
+        unreadCount = unreadCount + 1;
+      }
+    });
+  // let unreadCount = 0;
+  const rows2 = [];
+  bookedHotels &&
     bookedHotels.forEach((item) => {
-        rows2.push({
-          id: item._id,
-          user: item.user,
-          firstName: item.hotelContactInfo.firstName,
-          price: item.price,
-          paidAt: item.paidAt,
-          view: item.view,
-        });
-        if (item.view == "unread") {
-          unreadCount = unreadCount + 1;
-        }
+      rows2.push({
+        id: item._id,
+        user: item.user,
+        firstName: item.hotelContactInfo.firstName,
+        price: item.price,
+        paidAt: item.paidAt,
+        view: item.view,
       });
+      if (item.view === "unread") {
+        unreadCount = unreadCount + 1;
+      }
+    });
   // useEffect(() => {
   //   dispatch(getAllBookedCars());
   // }, [dispatch]);

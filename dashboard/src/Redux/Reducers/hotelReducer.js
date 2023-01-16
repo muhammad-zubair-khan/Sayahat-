@@ -1,7 +1,4 @@
 import {
-  GET_ALL_VACATION_PRODUCTS_REQUEST,
-  GET_ALL_VACATION_PRODUCTS_SUCCESS,
-  GET_ALL_VACATION_PRODUCTS_FAIL,
   GET_HOTEL_BY_SLUG_REQUEST,
   GET_HOTEL_BY_SLUG_SUCCESS,
   GET_HOTEL_BY_SLUG_FAIL,
@@ -23,11 +20,6 @@ import {
   GET_HOTEL_DETAILS_SUCCESS,
   GET_HOTEL_DETAILS_FAIL,
 } from "../Constants/hotelConstants";
-
-const initialStateHotel = {
-  hotel: {},
-  loading: false,
-};
 
 export const newHotelReducer = (state = { hotel: {} }, action) => {
   switch (action.type) {
@@ -55,21 +47,21 @@ export const newHotelReducer = (state = { hotel: {} }, action) => {
         hotel: {},
         success: false,
       };
-      case GET_HOTEL_DETAILS_REQUEST:
-        return {
-          loading: true,
-          ...state
-        };
-      case GET_HOTEL_DETAILS_SUCCESS:
-        return {
-          loading: false,
-          hotel: action.payload,
-        };
-      case GET_HOTEL_DETAILS_FAIL:
-        return {
-          loading: false,
-          error: action.payload,
-        };
+    case GET_HOTEL_DETAILS_REQUEST:
+      return {
+        loading: true,
+        ...state,
+      };
+    case GET_HOTEL_DETAILS_SUCCESS:
+      return {
+        loading: false,
+        hotel: action.payload,
+      };
+    case GET_HOTEL_DETAILS_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
     default:
       return state;
   }

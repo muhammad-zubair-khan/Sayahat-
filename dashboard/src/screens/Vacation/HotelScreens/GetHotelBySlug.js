@@ -2,7 +2,9 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Header from "../../../components/Header";
 import Sidebar from "../../../components/Sidebar";
-import { getHotelBySlug, getTopDesHotelBySlug } from "../../../Redux/Actions/hotelAction";
+import {
+  getHotelBySlug,
+} from "../../../Redux/Actions/hotelAction";
 import { DataGrid } from "@mui/x-data-grid";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Button from "@mui/material/Button";
@@ -11,12 +13,11 @@ import "react-medium-image-zoom/dist/styles.css";
 import { deleteHotel } from "../../../Redux/Actions/hotelAction";
 import { Link, useHistory, useParams } from "react-router-dom";
 import { ImageUrl } from "../../../Redux/UrlConfig";
-import AddIcon from '@mui/icons-material/Add';
+import AddIcon from "@mui/icons-material/Add";
 
 const GetHotelBySlug = (props) => {
-  const params = useParams()
-  const {slug} = params
-  console.log(slug)
+  const params = useParams();
+  const { slug } = params;
   const history = useHistory();
   const dispatch = useDispatch();
   const { hotels } = useSelector((state) => state.hotelReducer);
@@ -28,9 +29,7 @@ const GetHotelBySlug = (props) => {
 
   useEffect(() => {
     const { match } = props;
-    console.log(props);
     dispatch(getHotelBySlug(match.params.slug));
-    // dispatch(getTopDesHotelBySlug(match.params.slug));
   }, [dispatch, props]);
 
   const columns = [
@@ -41,7 +40,6 @@ const GetHotelBySlug = (props) => {
       minHeight: 200,
       flex: 0.5,
       renderCell: (params) => {
-        console.log("params>>>", params);
         return (
           <div style={{ textAlign: "center" }}>
             <Zoom>
@@ -113,14 +111,21 @@ const GetHotelBySlug = (props) => {
       renderCell: (params) => {
         return (
           <>
-            <Link style={{textDecoration:'none'}} title="Add New Rooms" to={`/hotel/${slug}/room/create/${params.getValue(params.id, "id")}`}>
-              <AddIcon />Room
+            <Link
+              style={{ textDecoration: "none" }}
+              title="Add New Rooms"
+              to={`/hotel/${slug}/room/create/${params.getValue(
+                params.id,
+                "id"
+              )}`}
+            >
+              <AddIcon />
+              Room
             </Link>
 
             <Button onClick={() => deleteHotelHandler(params.id)}>
               <DeleteIcon />
             </Button>
-            {/* {console.log("ye wali>>>>>>>>>>>>>>>>>", params.id)} */}
           </>
         );
       },

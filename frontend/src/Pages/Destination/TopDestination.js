@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import Navbar from "../../Navbar/Navbar";
-import "./StyleCity.css";
+// import "./StyleCity.css";
 import Button from "@mui/material/Button";
 import Offcanvas from "react-bootstrap/Offcanvas";
 import Footer from "../../Footer/Footer";
@@ -13,8 +13,10 @@ import { format } from "date-fns";
 import { DateRange } from "react-date-range";
 import { Slider, Typography } from "@mui/material";
 
-const LahoreCity = (props) => {
+const TopDestination = (props) => {
+  // window.scroll(0,0)
   const params = useParams();
+  const { slug } = params;
   let { id } = useParams();
   const history = useHistory();
   const [packageDestination, setPackageDestination] = useState("");
@@ -41,9 +43,9 @@ const LahoreCity = (props) => {
   const { product } = useSelector((state) => state.newVacation);
 
   useEffect(() => {
-    dispatch(getPackageBySlug(params.slug, type, min, max, ratings));
+    dispatch(getPackageBySlug(slug, type, min, max, ratings));
     dispatch(getProductDetailById(id));
-  }, [dispatch, id, params.slug, type, min, max, ratings]);
+  }, [dispatch, slug, type, id, min, max, ratings]);
 
   const types = [
     "Full Day Tour",
@@ -276,17 +278,17 @@ const LahoreCity = (props) => {
                         {packages.map((item) => {
                           return (
                             <>
-                              <li class="list-group-item border-0">
-                                <div class="form-check">
+                              <li className="list-group-item border-0">
+                                <div className="form-check">
                                   <input
-                                    class="form-check-input"
+                                    className="form-check-input"
                                     type="checkbox"
                                     value=""
                                     id="flexCheckDefault"
                                   />
                                   <label
-                                    class="form-check-label"
-                                    for="flexCheckDefault"
+                                    className="form-check-label"
+                                    htmlFor="flexCheckDefault"
                                   >
                                     {item.duration}
                                   </label>
@@ -316,41 +318,41 @@ const LahoreCity = (props) => {
 
                     <div className="p-4">
                       <p className="fw-bold text-dark">Time of Day</p>
-                      <ul class="list-group">
-                        <li class="list-group-item border-0">
-                          <div class="form-check">
+                      <ul className="list-group">
+                        <li className="list-group-item border-0">
+                          <div className="form-check">
                             <input
-                              class="form-check-input"
+                              className="form-check-input"
                               type="checkbox"
                               value=""
                               id="flexCheckDefault"
                             />
                             <label
-                              class="form-check-label"
-                              for="flexCheckDefault"
+                              className="form-check-label"
+                              htmlFor="flexCheckDefault"
                             >
                               6am—12pm
                             </label>
                           </div>
                         </li>
-                        <li class="list-group-item border-0">
-                          <div class="form-check">
+                        <li className="list-group-item border-0">
+                          <div className="form-check">
                             <input
-                              class="form-check-input"
+                              className="form-check-input"
                               type="checkbox"
                               value=""
                               id="flexCheckDefault"
                             />
                             <label
-                              class="form-check-label"
-                              for="flexCheckDefault"
+                              className="form-check-label"
+                              htmlFor="flexCheckDefault"
                             >
                               12pm—5pm
                             </label>
                           </div>
                         </li>
-                        <li class="list-group-item border-0">
-                          <div class="form-check">
+                        <li className="list-group-item border-0">
+                          <div className="form-check">
                             <input
                               class="form-check-input"
                               type="checkbox"
@@ -358,8 +360,8 @@ const LahoreCity = (props) => {
                               id="flexCheckDefault"
                             />
                             <label
-                              class="form-check-label"
-                              for="flexCheckDefault"
+                              className="form-check-label"
+                              htmlFor="flexCheckDefault"
                             >
                               5pm—12am
                             </label>
@@ -370,82 +372,82 @@ const LahoreCity = (props) => {
 
                     <div className="p-4">
                       <p className="fw-bold text-dark">Specials</p>
-                      <ul class="list-group">
-                        <li class="list-group-item border-0">
-                          <div class="form-check">
+                      <ul className="list-group">
+                        <li className="list-group-item border-0">
+                          <div className="form-check">
                             <input
-                              class="form-check-input"
+                              className="form-check-input"
                               type="checkbox"
                               value=""
                               id="flexCheckDefault"
                             />
                             <label
-                              class="form-check-label"
-                              for="flexCheckDefault"
+                              className="form-check-label"
+                              htmlFor="flexCheckDefault"
                             >
                               Deals & Discounts
                             </label>
                           </div>
                         </li>
-                        <li class="list-group-item border-0">
-                          <div class="form-check">
+                        <li className="list-group-item border-0">
+                          <div className="form-check">
                             <input
-                              class="form-check-input"
+                              className="form-check-input"
                               type="checkbox"
                               value=""
                               id="flexCheckDefault"
                             />
                             <label
-                              class="form-check-label"
-                              for="flexCheckDefault"
+                              className="form-check-label"
+                              htmlFor="flexCheckDefault"
                             >
                               Free Cancellation
                             </label>
                           </div>
                         </li>
-                        <li class="list-group-item border-0">
-                          <div class="form-check">
+                        <li className="list-group-item border-0">
+                          <div className="form-check">
                             <input
-                              class="form-check-input"
+                              className="form-check-input"
                               type="checkbox"
                               value=""
                               id="flexCheckDefault"
                             />
                             <label
-                              class="form-check-label"
-                              for="flexCheckDefault"
+                              className="form-check-label"
+                              htmlFor="flexCheckDefault"
                             >
                               Likely to Sell Out
                             </label>
                           </div>
                         </li>
-                        <li class="list-group-item border-0">
-                          <div class="form-check">
+                        <li className="list-group-item border-0">
+                          <div className="form-check">
                             <input
-                              class="form-check-input"
+                              className="form-check-input"
                               type="checkbox"
                               value=""
                               id="flexCheckDefault"
                             />
                             <label
-                              class="form-check-label"
-                              for="flexCheckDefault"
+                              className="form-check-label"
+                              htmlFor="flexCheckDefault"
                             >
                               Skip-The-Line
                             </label>
                           </div>
                         </li>
-                        <li class="list-group-item border-0">
-                          <div class="form-check">
+                        <li className="list-group-item border-0">
+                          <div className="form-check">
                             <input
-                              class="form-check-input"
+                              className="form-check-input"
                               type="checkbox"
                               value=""
                               id="flexCheckDefault"
                             />
                             <label
-                              class="form-check-label"
-                              for="flexCheckDefault"
+                              className="form-check-label"
+                              htmlFor="flexCheckDefault"
                             >
                               Private Tour
                             </label>
@@ -583,4 +585,4 @@ const LahoreCity = (props) => {
   );
 };
 
-export default LahoreCity;
+export default TopDestination;

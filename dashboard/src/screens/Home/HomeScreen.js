@@ -5,30 +5,29 @@ import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
 import CategoryIcon from "@mui/icons-material/Category";
 import HotelIcon from "@mui/icons-material/Hotel";
-import TimeToLeaveIcon from '@mui/icons-material/TimeToLeave';
-import TourIcon from '@mui/icons-material/Tour';
+import TimeToLeaveIcon from "@mui/icons-material/TimeToLeave";
+import TourIcon from "@mui/icons-material/Tour";
 import { getAllVacationsCategory } from "../../Redux/Actions/vacationCategoryAction";
 import "./HomeScreen.css";
-import { Modal, Button } from "react-bootstrap";
+import { Modal } from "react-bootstrap";
 import { getAllHotels } from "../../Redux/Actions/hotelAction";
 import { getAllCars } from "../../Redux/Actions/carAction";
 import { getAllPackages } from "../../Redux/Actions/packageAction";
 import { getAllRooms } from "../../Redux/Actions/roomAction";
-import { Grid } from "@mui/material";
 
 const HomeScreen = () => {
   const dispatch = useDispatch();
-  const {categories} = useSelector((state) => state.Vacationcategory);
-  const {hotels} = useSelector((state) => state.hotelReducer);
+  const { categories } = useSelector((state) => state.Vacationcategory);
+  const { hotels } = useSelector((state) => state.hotelReducer);
   const { cars } = useSelector((state) => state.carsReducer);
-  const {packages} = useSelector((state)=> state.packagesReducer);
-  const {rooms} = useSelector((state) => state.allRooms)
+  const { packages } = useSelector((state) => state.packagesReducer);
+  const { rooms } = useSelector((state) => state.allRooms);
   useEffect(() => {
-    dispatch(getAllHotels())
+    dispatch(getAllHotels());
     dispatch(getAllVacationsCategory());
-    dispatch(getAllCars())
-    dispatch(getAllPackages())
-    dispatch(getAllRooms())
+    dispatch(getAllCars());
+    dispatch(getAllPackages());
+    dispatch(getAllRooms());
   }, [dispatch]);
 
   const [lgShow, setLgShow] = useState(false);
@@ -42,50 +41,35 @@ const HomeScreen = () => {
             <Link to="/vacations/add">
               <CategoryIcon />
               <p className="para">Vacations</p>
-              <p>
-                {categories[0] &&
-                 categories[0].children.length}
-              </p>
+              <p>{categories[0] && categories[0].children.length}</p>
             </Link>
           </div>
           <div className="dashboardSummaryBox2">
-            <Link to='/all-hotels'>
+            <Link to="/all-hotels">
               <HotelIcon />
               <p className="para">Hotels</p>
-              <p>
-                {hotels &&
-                  hotels.length}
-              </p>
+              <p>{hotels && hotels.length}</p>
             </Link>
           </div>
           <div className="dashboardSummaryBox2">
-            <Link to='/all-cars'>
+            <Link to="/all-cars">
               <TimeToLeaveIcon />
               <p className="para">Cars</p>
-              <p>
-                {cars &&
-                  cars.length}
-              </p>
+              <p>{cars && cars.length}</p>
             </Link>
           </div>
           <div className="dashboardSummaryBox2">
-            <Link to='/all-packages'>
+            <Link to="/all-packages">
               <TourIcon />
               <p className="para">Packages</p>
-              <p>
-                {packages &&
-                  packages.length}
-              </p>
+              <p>{packages && packages.length}</p>
             </Link>
           </div>
           <div className="dashboardSummaryBox2">
-            <Link to='/all-rooms'>
+            <Link to="/all-rooms">
               <TourIcon />
               <p className="para">Rooms</p>
-              <p>
-                {rooms &&
-                  rooms.length}
-              </p>
+              <p>{rooms && rooms.length}</p>
             </Link>
           </div>
         </div>

@@ -44,6 +44,7 @@ import MyCars from "./Pages/Bookings/Cars/MyCars";
 import MyCarDetails from "./Pages/Bookings/Cars/MyCarDetails";
 import MyProfile from "./Pages/Profile/MyProfile";
 import PrivateRoute from "./Components/Private/PrivateRoute";
+import TopDestination from "./Pages/Destination/TopDestination";
 
 function App() {
   const dispatch = useDispatch();
@@ -79,6 +80,7 @@ function App() {
         <Route exact path="/" component={Home} />
         <Route exact path="/vacation/:slug/:slug/:id" component={City} />
         <Route exact path="/vacation/:slug" component={Cities} />
+        <Route exact path="/top-destination/:slug/:id"  component={TopDestination} />
 
         {/* Hotels */}
         <Route exact path="/hotels" component={Hotel} />

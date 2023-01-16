@@ -1,134 +1,14 @@
-// import React, { useState } from "react";
-// import { Link, NavLink } from "react-router-dom";
-// import logo from "../assets/logo/logo-black.png";
-// const Sidebar = () => {
-
-//   return (
-//     <div>
-//       <aside className="navbar-aside" id="offcanvas_aside">
-//         <div className="aside-top">
-//           <Link to="/" className="brand-wrap">
-//             <img
-//               src={logo}
-//               alt="Sayahat logo"
-//               className="logo"
-//               style={{ height: "46px" }}
-//             />
-//           </Link>
-//         </div>
-
-//         <div>
-//           <button className="btn btn-icon btn-aside-minimize" >
-//             <i className="text-muted fas fa-stream"></i>
-//           </button>
-//         </div>
-
-//         <nav>
-//           <ul className="menu-aside">
-//             <li className="menu-item">
-//               <NavLink
-//                 activeClassName="active"
-//                 className="menu-link"
-//                 to="/"
-//                 exact={true}
-//               >
-//                 <i className="icon fas fa-home"></i>
-//                 <span className="text">Dashboard</span>
-//               </NavLink>
-//             </li>
-//             <li className="menu-item">
-//               <NavLink
-//                 activeClassName="active"
-//                 className="menu-link"
-//                 to="/products"
-//               >
-//                 <i className="icon fas fa-shopping-bag"></i>
-//                 <span className="text">Products</span>
-//               </NavLink>
-//             </li>
-//             <li className="menu-item">
-//               <NavLink
-//                 activeClassName="active"
-//                 className="menu-link"
-//                 to="/addproduct"
-//               >
-//                 <i className="icon fas fa-cart-plus"></i>
-//                 <span className="text">Add product</span>
-//               </NavLink>
-//             </li>
-//             <li className="menu-item">
-//               <NavLink
-//                 activeClassName="active"
-//                 className="menu-link"
-//                 to="/category"
-//               >
-//                 <i className="icon fas fa-list"></i>
-//                 <span className="text">Categories</span>
-//               </NavLink>
-//             </li>
-//             <li className="menu-item">
-//               <NavLink
-//                 activeClassName="active"
-//                 className="menu-link"
-//                 to="/orders"
-//               >
-//                 <i className="icon fas fa-bags-shopping"></i>
-//                 <span className="text">Orders</span>
-//               </NavLink>
-//             </li>
-//             <li className="menu-item">
-//               <NavLink
-//                 activeClassName="active"
-//                 className="menu-link"
-//                 to="/users"
-//               >
-//                 <i className="icon fas fa-user"></i>
-//                 <span className="text">Users</span>
-//               </NavLink>
-//             </li>
-//             <li className="menu-item">
-//               <NavLink
-//                 activeClassName="active"
-//                 className="menu-link disabled"
-//                 to="/sellers"
-//               >
-//                 <i className="icon fas fa-store-alt"></i>
-//                 <span className="text">sellers</span>
-//               </NavLink>
-//             </li>
-//             <li className="menu-item">
-//               <NavLink
-//                 activeClassName="active"
-//                 className="menu-link disabled"
-//                 to="/transaction"
-//               >
-//                 <i className="icon fas fa-usd-circle"></i>
-//                 <span className="text">Transactions</span>
-//               </NavLink>
-//             </li>
-//           </ul>
-//           <br />
-//           <br />
-//         </nav>
-//       </aside>
-
-//     </div>
-//   );
-// };
-
-// export default Sidebar;
-
 import React, { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { FaBars, FaHome, FaLock, FaMoneyBill, FaUser } from "react-icons/fa";
-import { AiFillHeart, AiTwotoneFileExclamation } from "react-icons/ai";
+import { AiTwotoneFileExclamation } from "react-icons/ai";
 import { BsCartCheck } from "react-icons/bs";
 import { AnimatePresence, motion } from "framer-motion";
 import SidebarMenu from "./SidebarMenu";
 import logo from "../assets/logo/logo-no-background.png";
 import { useDispatch, useSelector } from "react-redux";
 import { signout } from "../Redux/Actions/authActions";
-import AccountBoxIcon from '@mui/icons-material/AccountBox';
+import AccountBoxIcon from "@mui/icons-material/AccountBox";
 const routes = [
   {
     path: "/",
@@ -177,25 +57,6 @@ const routes = [
     name: "Users",
     icon: <BsCartCheck />,
   },
-  // {
-  //   path: "/settings",
-  //   name: "Settings",
-  //   icon: <BiCog />,
-  //   exact: true,
-  //   subRoutes: [
-  //     {
-  //       path: "/settings/profile",
-  //       name: "Profile ",
-  //       icon: <FaUser />,
-  //     },
-  //     {
-  //       path: "/settings/inbox",
-  //       name: "Inbox ",
-  //       icon: <FaUser />,
-  //     },
-
-  //   ],
-  // },
   {
     path: "/profile",
     name: "Profile",
@@ -210,23 +71,6 @@ const Sidebar = ({ children, history }) => {
   };
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
-  // const inputAnimation = {
-  //   hidden: {
-  //     width: 0,
-  //     padding: 0,
-  //     transition: {
-  //       duration: 0.2,
-  //     },
-  //   },
-  //   show: {
-  //     width: "140px",
-  //     padding: "5px 15px",
-  //     transition: {
-  //       duration: 0.2,
-  //     },
-  //   },
-  // };
-
   const showAnimation = {
     hidden: {
       width: 0,
@@ -291,8 +135,8 @@ const Sidebar = ({ children, history }) => {
                   marginBottom: "10px",
                 }}
               />
-              <h5 style={{marginBottom: '0'}}>{user.fullName}</h5>
-              <span style={{marginBottom: '15px'}}>{user.email}</span>
+              <h5 style={{ marginBottom: "0" }}>{user.fullName}</h5>
+              <span style={{ marginBottom: "15px" }}>{user.email}</span>
               <span
                 style={{
                   color: "#2874f0",

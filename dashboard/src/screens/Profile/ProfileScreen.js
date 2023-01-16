@@ -1,14 +1,12 @@
 import { Button } from "@mui/material";
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
 import EditIcon from "@mui/icons-material/Edit";
 
 const ProfileScreen = () => {
-  const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
-  console.log(user);
   return (
     <>
       <Sidebar>
@@ -34,9 +32,7 @@ const ProfileScreen = () => {
                       Status: <b>{user.role}</b>
                     </p>
 
-                    <p>
-                      {user.email}
-                    </p>
+                    <p>{user.email}</p>
                   </div>
                   <Button variant="contained">
                     Edit Profile <EditIcon />

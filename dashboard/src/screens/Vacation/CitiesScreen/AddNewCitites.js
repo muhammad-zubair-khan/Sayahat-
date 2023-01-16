@@ -22,9 +22,6 @@ const AddNewCitites = () => {
   const [productVacationPicture, setProductVacationPicture] = useState("");
   const category = useSelector((state) => state.Vacationcategory);
 
-  // const { loading } = useSelector((state) => state.newVacation);
-  // console.log(loading);
-
   const onChangeFile = (e) => {
     setProductVacationPicture(e.target.files[0]);
   };
@@ -44,19 +41,16 @@ const AddNewCitites = () => {
     const myForm = new FormData();
 
     myForm.set("name", name);
-    // console.log(name);
 
     myForm.set("category", categoryId);
-    // console.log(categoryId);
 
     myForm.set("description", description);
-    // console.log(categoryId);
 
     myForm.append("productVacationPicture", productVacationPicture);
 
     dispatch(createProduct(myForm));
 
-    history.push('/all-cities')
+    history.push("/all-cities");
   };
 
   return (
@@ -74,7 +68,7 @@ const AddNewCitites = () => {
 
               <div>
                 <TextField
-                autoComplete="off"
+                  autoComplete="off"
                   fullWidth
                   required
                   id="outlined-required"
@@ -110,16 +104,16 @@ const AddNewCitites = () => {
               </div>
 
               <div>
-                  <TextareaAutosize
-                    placeholder="Description here..."
-                    required
-                    id="outlined-required"
-                    style={{ width: 1200, height: 100 }}
-                    className="text-area"
-                      value={description}
-                      onChange={(e) => setDescription(e.target.value)}
-                  />
-                </div>
+                <TextareaAutosize
+                  placeholder="Description here..."
+                  required
+                  id="outlined-required"
+                  style={{ width: 1200, height: 100 }}
+                  className="text-area"
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                />
+              </div>
 
               {/* {productPictures.length > 0
                 ? productPictures.map((pic, item) => (
@@ -157,7 +151,6 @@ const AddNewCitites = () => {
                 variant="contained"
                 color="primary"
                 // disabled={loading ? false : true}
-                
               >
                 Create
               </Button>

@@ -38,7 +38,6 @@ const menuItemAnimation = {
 
 const SidebarMenu = ({ route, showAnimation, isOpen, setIsOpen }) => {
   const vacationCategory = useSelector((state) => state.Vacationcategory);
-  // console.log(vacationCategory.categories[0]);
 
   const dispatch = useDispatch();
   useEffect(() => {

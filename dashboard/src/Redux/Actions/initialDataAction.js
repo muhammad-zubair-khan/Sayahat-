@@ -1,7 +1,5 @@
 import axios from "../helpers/axios";
-import {
-  GET_ALL_VACATION_CATEGORIES_SUCCESS
-} from "../Constants/vacationCategoryConstants";
+import { GET_ALL_VACATION_CATEGORIES_SUCCESS } from "../Constants/vacationCategoryConstants";
 
 export const getInitialData = () => {
   return async (dispatch) => {
@@ -13,6 +11,6 @@ export const getInitialData = () => {
         payload: { categories },
       });
     }
-    console.log(res);
+    // console.log(res);
   };
 };

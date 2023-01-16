@@ -3,28 +3,20 @@ import { Link } from "react-router-dom";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllBookedCars } from "../../Redux/Actions/bookCarAction";
-import { DataGrid } from "@mui/x-data-grid";
-import { Box, Button } from "@mui/material";
+import {  Button } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import LaunchIcon from "@mui/icons-material/Launch";
 import axios from "axios";
-import { useHistory } from "react-router-dom";
 import "./BookingScreen.css";
 import { getAllBookedPackages } from "../../Redux/Actions/bookPackageAction";
 import { getAllBookedHotels } from "../../Redux/Actions/bookHotelAction";
 
 const BookingScreen = () => {
-  const history = useHistory();
   let unreadCount = 0;
-  // let unreadCount = 0;
   const dispatch = useDispatch();
   const { bookedCars } = useSelector((state) => state.allBookedCars);
-  console.log("car>>",bookedCars);
   const { bookedPackages } = useSelector((state) => state.allBookedPackages);
-  console.log("packages>>",bookedPackages);
   const { bookedHotels } = useSelector((state) => state.allBookedHotels);
-  console.log("hotels>>",bookedHotels);
-
   useEffect(() => {
     dispatch(getAllBookedCars());
     dispatch(getAllBookedPackages());
@@ -34,60 +26,6 @@ const BookingScreen = () => {
     // dispatch(deleteCar(id));
     // history.go(0);
   };
-  const LaunchMessageHandler = (id) => {
-    // dispatch(deleteCar(id));
-    // history.go(0);
-  };
-
-  // const columns = [
-  //   { field: "id", headerName: "ID", width: 100 },
-  //   {
-  //     field: "user",
-  //     headerName: "User",
-  //     minWidth: 100,
-  //     flex: 1,
-  //   },
-  //   {
-  //     field: "firstName",
-  //     headerName: "User Name",
-  //     minWidth: 200,
-  //     flex: 1,
-  //   },
-  //   {
-  //     field: "price",
-  //     headerName: "Amount",
-  //     // type: "number",
-  //     minWidth: 200,
-  //     flex: 0.5,
-  //   },
-  //   {
-  //     field: "paidAt",
-  //     headerName: "Paid At",
-  //     // type: "number",
-  //     minWidth: 150,
-  //     flex: 0.3,
-  //   },
-  //   {
-  //     field: "action",
-  //     flex: 0.3,
-  //     headerName: "Action",
-  //     minWidth: 150,
-
-  //     renderCell: (params) => {
-  //       return (
-  //         <>
-  //           <Button onClick={() => changeView(params.id)}>
-  //             <LaunchIcon />
-  //           </Button>
-
-  //           <Button onClick={() => deleteMessageHandler(params.id)}>
-  //             <DeleteIcon />
-  //           </Button>
-  //         </>
-  //       );
-  //     },
-  //   },
-  // ];
 
   const rows = [];
   bookedCars &&
@@ -100,7 +38,7 @@ const BookingScreen = () => {
         paidAt: item.paidAt,
         view: item.view,
       });
-      if (item.view == "unread") {
+      if (item.view === "unread") {
         unreadCount = unreadCount + 1;
       }
     });
@@ -116,7 +54,7 @@ const BookingScreen = () => {
           paidAt: item.paidAt,
           view: item.view,
         });
-        if (item.view == "unread") {
+        if (item.view === "unread") {
           unreadCount = unreadCount + 1;
         }
       });
@@ -132,7 +70,7 @@ const BookingScreen = () => {
             paidAt: item.paidAt,
             view: item.view,
           });
-          if (item.view == "unread") {
+          if (item.view === "unread") {
             unreadCount = unreadCount + 1;
           }
         });
@@ -242,7 +180,6 @@ const BookingScreen = () => {
                 </tr>
               ))}
             </tbody>
-            {/* {console.log(UnreadRow, ReadRow, rows)} */}
           </table>
           <h1 id="productListHeading">All Packages Bookings</h1>
           {/* <h6>Unread Message(s): {unreadCount}</h6> */}
@@ -320,7 +257,6 @@ const BookingScreen = () => {
                 </tr>
               ))}
             </tbody>
-            {/* {console.log(UnreadRow, ReadRow, rows)} */}
           </table>
           <h1 id="productListHeading">All Hotels Bookings</h1>
           {/* <h6>Unread Message(s): {unreadCount}</h6> */}
@@ -398,7 +334,6 @@ const BookingScreen = () => {
                 </tr>
               ))}
             </tbody>
-            {/* {console.log(UnreadRow, ReadRow, rows)} */}
           </table>
           
         </div>

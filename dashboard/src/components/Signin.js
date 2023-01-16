@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../Redux/Actions/authActions";
 import { Link, Redirect } from "react-router-dom";
@@ -7,7 +7,6 @@ import { Form } from "react-bootstrap";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { Container } from "@mui/material";
-// import logo from "../assets/logo/logo-black.png";
 import logo from "../assets/logo/logo.png";
 
 const Signin = () => {
@@ -43,7 +42,7 @@ const Signin = () => {
           <img
             src={logo}
             alt="SAYAHAT"
-            style={{ width: "-webkit-fill-available"}}
+            style={{ width: "-webkit-fill-available" }}
           />
         </Col>
         <Col md={6} style={{ marginTop: "150px" }}>
@@ -74,15 +73,15 @@ const Signin = () => {
             <Button variant="contained" type="submit">
               Login
             </Button>
-             <Link to='/signup' style={{marginLeft:'10px'}}>
-            <Button variant="contained" type="submit">
-              Signup
-            </Button>
-             </Link>
+            <Link to="/signup" style={{ marginLeft: "10px" }}>
+              <Button variant="contained" type="submit">
+                Signup
+              </Button>
+            </Link>
           </Form>
         </Col>
       </Row>
-      </Container> 
+    </Container>
   );
 };
 

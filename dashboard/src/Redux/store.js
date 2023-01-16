@@ -3,11 +3,10 @@ import thunk from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
 import { allAdminsReducer, registerAdminReducer } from "./Reducers/adminReducers";
 import { VacationCategoryReducer } from "./Reducers/vacationCategoryReducer";
-import { vacationProductReducer,addCitiesReducer,allCitiesReducer } from "./Reducers/VacationProductReducer";
+import { vacationProductReducer,addCitiesReducer } from "./Reducers/VacationProductReducer";
 import { allHotelsReducer, hotelsReducer, newHotelReducer } from "./Reducers/hotelReducer";
 import { allCarsReducer, newCarReducer } from "./Reducers/carReducer";
 import { allPackagesReducer, newPackageReducer } from "./Reducers/packageReducer";
-import { addNewDestinationReducer, destinationReducer } from "./Reducers/topDestinatonsReducer";
 import { allRoomsReducer } from "./Reducers/roomReducer";
 import { authReducer } from "./Reducers/authReducers";
 import { allBookedCarsReducer, bookedCarDetailReducer } from "./Reducers/bookCarReducer";
@@ -28,8 +27,6 @@ const reducer = combineReducers({
   carsReducer: allCarsReducer,
   addPackageReducer: newPackageReducer,
   packagesReducer: allPackagesReducer,
-  allDestinationReducer: destinationReducer,
-  newDestination: addNewDestinationReducer,
   allRooms: allRoomsReducer,
 
 

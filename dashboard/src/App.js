@@ -13,13 +13,11 @@ import ProfileScreen from "./screens/Profile/ProfileScreen";
 import { isUserLoggedIn } from "./Redux/Actions/authActions";
 import VacationScreen from "./screens/Vacation/VacationScreen/VacationScreen";
 import AddNewCitites from "./screens/Vacation/CitiesScreen/AddNewCitites";
-import CreateTopDestinations from "./screens/Destination/CreateTopDestinations";
 import CitiesScreen from "./screens/Vacation/CitiesScreen/CitiesScreen";
 import CitiesManagementScreen from "./screens/Vacation/CitiesScreen/CitiesManagementScreen";
 import { getAllVacationsCategory } from "./Redux/Actions/vacationCategoryAction";
 import { getInitialData } from "./Redux/Actions/initialDataAction";
 import AllCities from "./screens/Vacation/CitiesScreen/AllCities";
-import AllDestinations from "./screens/Destination/AllDestinations";
 import AllHotels from "./screens/Vacation/HotelScreens/AllHotels";
 import AllCars from "./screens/Vacation/CarScreen/AllCars";
 import GetHotelBySlug from "./screens/Vacation/HotelScreens/GetHotelBySlug";
@@ -65,17 +63,7 @@ function App() {
           path="/create-vacations"
           component={AddNewCitites}
         />
-        {/* <PrivateRoute
-          exact
-          path="/create-top-destinations"
-          component={CreateTopDestinations}
-        /> */}
         <PrivateRoute exact path="/all-cities" component={AllCities} />
-        {/* <PrivateRoute
-          exact
-          path="/all-top-destinations"
-          component={AllDestinations}
-        /> */}
         <PrivateRoute exact path="/hotel/:slug" component={GetHotelBySlug} />
         <PrivateRoute exact path="/car/:slug" component={GetCarBySlug} />
         <PrivateRoute

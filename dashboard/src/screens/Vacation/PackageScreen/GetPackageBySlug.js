@@ -2,11 +2,10 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Header from "../../../components/Header";
 import Sidebar from "../../../components/Sidebar";
-import { getPackageBySlug, getTopDesPackageBySlug } from "../../../Redux/Actions/packageAction";
+import { getPackageBySlug } from "../../../Redux/Actions/packageAction";
 import { DataGrid } from "@mui/x-data-grid";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Button from "@mui/material/Button";
-// import "./GetHotelBySlug.css";
 import Zoom from "react-medium-image-zoom";
 import "react-medium-image-zoom/dist/styles.css";
 import { deletePackage } from "../../../Redux/Actions/packageAction";
@@ -25,9 +24,7 @@ const GetPackageBySlug = (props) => {
 
   useEffect(() => {
     const { match } = props;
-  console.log(props);
     dispatch(getPackageBySlug(match.params.slug));
-    // dispatch(getTopDesPackageBySlug(match.params.slug));
   }, [dispatch, props]);
 
   const columns = [
@@ -38,10 +35,6 @@ const GetPackageBySlug = (props) => {
       minHeight: 200,
       flex: 0.5,
       renderCell: (params) => {
-        // console.log("params>>>", params.row.packageImage[0].img);
-        // if(Object.keys(packages.package).length === 0){
-        //   return null;
-        // }
         return (
           <div style={{ textAlign: "center" }}>
             <Zoom>
@@ -113,7 +106,6 @@ const GetPackageBySlug = (props) => {
             <Button onClick={() => deletePackageHandler(params.id)}>
               <DeleteIcon />
             </Button>
-            {/* {console.log("ye wali>>>>>>>>>>>>>>>>>", params.id)} */}
           </>
         );
       },

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { signup } from "../Redux/Actions/adminActions";
 import { Link, Redirect } from "react-router-dom";
@@ -7,7 +7,6 @@ import { Form } from "react-bootstrap";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { Container } from "@mui/material";
-// import logo from "../assets/logo/logo-black.png";
 import logo from "../assets/logo/logo.png";
 
 

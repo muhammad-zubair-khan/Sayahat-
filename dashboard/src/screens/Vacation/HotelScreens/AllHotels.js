@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Header from "../../../components/Header";
 import Sidebar from "../../../components/Sidebar";
-import { getAllHotels, getHotelBySlug } from "../../../Redux/Actions/hotelAction";
+import { getAllHotels } from "../../../Redux/Actions/hotelAction";
 import { DataGrid } from "@mui/x-data-grid";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Button from "@mui/material/Button";
@@ -11,19 +11,18 @@ import "react-medium-image-zoom/dist/styles.css";
 import { deleteHotel } from "../../../Redux/Actions/hotelAction";
 import { ImageUrl } from "../../../Redux/UrlConfig";
 import { Link } from "react-router-dom";
-import AddIcon from '@mui/icons-material/Add';
+import AddIcon from "@mui/icons-material/Add";
 
 const AllHotels = (props) => {
   const dispatch = useDispatch();
-  const { hotels} = useSelector((state) => state.hotelReducer);
-console.log(hotels)
+  const { hotels } = useSelector((state) => state.hotelReducer);
   const deleteHotelHandler = (id) => {
     dispatch(deleteHotel(id));
-    // history.go(0);
   };
 
   useEffect(() => {
     dispatch(getAllHotels());
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const columns = [
@@ -34,7 +33,6 @@ console.log(hotels)
       minHeight: 200,
       flex: 0.5,
       renderCell: (params) => {
-        console.log("params>>>", params);
         return (
           <div style={{ textAlign: "center" }}>
             <Zoom>
@@ -109,13 +107,15 @@ console.log(hotels)
             {/* <Link to={`/product/update/${params.getValue(params.id, "id")}`}>
               <MdModeEditOutline />
             </Link> */}
-            <Link title="Add New Rooms" to={`/room/create/${params.getValue(params.id, "id")}`}>
-            <AddIcon/>
+            <Link
+              title="Add New Rooms"
+              to={`/room/create/${params.getValue(params.id, "id")}`}
+            >
+              <AddIcon />
             </Link>
             <Button onClick={() => deleteHotelHandler(params.id)}>
               <DeleteIcon />
             </Button>
-            {/* {console.log("ye wali>>>>>>>>>>>>>>>>>", params.id)} */}
           </>
         );
       },
