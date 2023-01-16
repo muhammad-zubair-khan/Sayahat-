@@ -5,13 +5,7 @@ const catchAsyncErrors = require("../../utils/catchAsyncErrors");
 
 // Save Hotel Contact Info
 exports.saveCarContactDetail = catchAsyncErrors(async (req, res, next) => {
-  const {
-    firstName,
-    lastName,
-    email,
-    phone,
-    nic,
-  } = req.body;
+  const { firstName, lastName, email, phone, nic } = req.body;
 
   const carContactInfo = await new ContactInfoModel({
     firstName,

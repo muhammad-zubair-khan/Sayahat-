@@ -1,4 +1,4 @@
-import { Grid, TextField } from "@mui/material";
+import { Button, Grid, TextField } from "@mui/material";
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory, useLocation, useParams } from "react-router-dom";
@@ -37,6 +37,7 @@ const CarContactDetails = () => {
     /^[-!#$%&'*+\/0-9=?A-Z^_a-z{|}~](\.?[-!#$%&'*+\/0-9=?A-Z^_a-z`{|}~])*@[a-zA-Z0-9](-*\.?[a-zA-Z0-9])*\.[a-zA-Z](-?[a-zA-Z0-9])+$/.test(
       email
     );
+    const [active,setActive] = useState(0);
   // carContactCheckout
 
   const [errors, setErrors] = useState({});
@@ -168,12 +169,26 @@ const CarContactDetails = () => {
                 </span>
               ))}
 
-              <input
+              {/* <input
                 type="submit"
                 value="Continue"
                 className="shippingBtn"
                 // disabled={state ? false : true}
-              />
+              /> */}
+              {active === 0 && (
+                      <Button
+                        variant="contained"
+                        type="submit"
+                        style={{ float: "right" }}
+                        className="send-button"
+                        disabled={
+                          !firstName || !lastName || !email || !phone || !nic
+                        }
+                        // onClick={handleShow}
+                      >
+                        Next
+                      </Button>
+                    )}
             </form>
           </div>
         </Grid>

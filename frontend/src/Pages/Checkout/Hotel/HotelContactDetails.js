@@ -4,7 +4,7 @@ import CheckoutSteps from "../CheckoutSteps";
 import { Link, useHistory, useLocation, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { saveContactInfo, saveHotelContactInfo } from "../../../Redux/Actions/checkout";
-import { Grid } from "@mui/material";
+import { Button, Grid } from "@mui/material";
 import { getPackageDetailById } from "../../../Redux/Actions/packageAction";
 import { ImageUrl } from "../../../Redux/UrlConfig";
 import useFetch from "../../../hook/useFetch";
@@ -51,6 +51,7 @@ const HotelContactDetails = () => {
       email
     );
 
+    const [active,setActive]= useState(0)
   const [errors, setErrors] = useState({});
   const [email, setEmail] = useState(user.email);
   const [firstName, setFirstName] = useState(user.firstName);
@@ -161,41 +162,20 @@ const HotelContactDetails = () => {
                   {error}
                 </span>
               ))}
-              {/* <div className="my-3 inputField">
-          <label>
-            <i className="fa fa-phone" aria-hidden="true"></i> Phone number
-            <span style={{ color: "red" }}>*</span>
-          </label>
-          <input
-          autoComplete="off"
-            type="number"
-            className="form-control"
-            placeholder="your Phone no"
-            value={phone}
-            onChange={(e) => setPhone(e.target.value)}
-          />
-        </div> */}
-
-              {/* <Button
-          id="createProductBtn"
-          type="submit"
-          variant="contained"
-          color="primary"
-          disabled={!firstName || !lastName || !values.email || !phone}
-          className="send-button"
-          onClick={handleShow}
-        >
-          <div class="alt-send-button">
-            <i class="fa fa-paper-plane"></i>
-            <span class="send-text">SEND</span>
-          </div>
-        </Button> */}
-              <input
-                type="submit"
-                value="Continue"
-                className="shippingBtn"
-                // disabled={state ? false : true}
-              />
+              
+              {active === 0 && (
+                      <Button
+                        variant="contained"
+                        type="submit"
+                        style={{ float: "right" }}
+                        className="send-button"
+                        disabled={
+                          !firstName || !lastName || !email || !phone
+                        }
+                      >
+                        Next
+                      </Button>
+                    )}
             </form>
           </div>
         </Grid>

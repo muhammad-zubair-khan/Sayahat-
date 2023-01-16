@@ -17,7 +17,7 @@ const express = require("express");
 const {
   signup,
   signin,
-  updateProfile,
+  // updateProfile,
   // getUserDetails,
   forgotPassword,
   sendPasswordLink,
@@ -38,7 +38,7 @@ router.post("/signin", validateSigninRequest, isRequestValidated, signin);
 
 router.post("/sendpasswordlink",sendPasswordLink)
 router.get("/forgotpassword/:id/:token",forgotPassword)
-// router.post("/:id/:token",saveNewPass)
+router.post("/save/:id/:token",saveNewPass)
 
 // router.post("/sendpasswordlink", async (req, res) => {
 //   console.log(req.body);

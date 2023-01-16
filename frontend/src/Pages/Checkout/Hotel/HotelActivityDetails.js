@@ -7,13 +7,14 @@ import {
   saveContactInfo,
   saveHotelContactInfo,
 } from "../../../Redux/Actions/checkout";
-import { Grid } from "@mui/material";
+import { Button, Grid } from "@mui/material";
 import { getPackageDetailById } from "../../../Redux/Actions/packageAction";
 import { ImageUrl } from "../../../Redux/UrlConfig";
 import useFetch from "../../../hook/useFetch";
 import { getHotelDetailById } from "../../../Redux/Actions/hotelAction";
 
 const HotelActivityDetails = () => {
+  const [active,setActive] = useState(0);
   const location = useLocation();
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
@@ -128,81 +129,19 @@ const HotelActivityDetails = () => {
                 />
               </div>
 
-              {/* {options.adult >= 2 && (
-                      <>
-                        Adult 2
-                        <div className="my-3 inputField">
-                          <TextField
-                            autoComplete="off"
-                            fullWidth
-                            required
-                            id="outlined-required"
-                            label="First Name"
-                            value={firstName}
-                            onChange={(e) => setFirstName(e.target.value)}
-                          />
-                        </div>
-                        <div className="my-3 inputField">
-                          <TextField
-                            autoComplete="off"
-                            fullWidth
-                            required
-                            id="outlined-required"
-                            label="Last Name"
-                            value={lastName}
-                            onChange={(e) => setLastName(e.target.value)}
-                          />
-                        </div>
-                      </>
-                    )}
-                    {console.log(options)}
-                    {options.adult >= 3 && (
-                      <>
-                        Adult 3
-                        <div className="my-3 inputField">
-                          <TextField
-                            autoComplete="off"
-                            fullWidth
-                            required
-                            id="outlined-required"
-                            label="First Name"
-                            value={firstName}
-                            onChange={(e) => setFirstName(e.target.value)}
-                          />
-                        </div>
-                        <div className="my-3 inputField">
-                          <TextField
-                            autoComplete="off"
-                            fullWidth
-                            required
-                            id="outlined-required"
-                            label="Last Name"
-                            value={lastName}
-                            onChange={(e) => setLastName(e.target.value)}
-                          />
-                        </div>
-                      </>
-                    )} */}
-
-              {/* <Button
-                        id="createProductBtn"
-                        type="submit"
+              {active === 0 && (
+                      <Button
                         variant="contained"
-                        color="primary"
-                        disabled={!firstName || !lastName}
+                        type="submit"
+                        style={{ float: "right" }}
                         className="send-button"
+                        disabled={
+                          !firstName || !lastName 
+                        }
                       >
-                        <div class="alt-send-button">
-                          <i class="fa fa-paper-plane"></i>
-                          <span class="send-text">SEND</span>
-                        </div>
-                      </Button> */}
-              <input
-                type="submit"
-                value="Continue"
-                className="shippingBtn"
-                // disabled={state ? false : true}
-              />
+                        Next
+                      </Button>
+                    )}
             </form>
           </div>
         </Grid>

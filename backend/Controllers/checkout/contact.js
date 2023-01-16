@@ -6,12 +6,7 @@ const catchAsyncErrors = require("../../utils/catchAsyncErrors");
 
 // Create Hotel -- Admin
 exports.saveContactDetail = catchAsyncErrors(async (req, res, next) => {
-  const {
-    firstName,
-    lastName,
-    email,
-    phone
-  } = req.body;
+  const { firstName, lastName, email, phone } = req.body;
 
   const contact = await new Contact({
     firstName,

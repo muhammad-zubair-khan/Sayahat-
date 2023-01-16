@@ -83,15 +83,15 @@ exports.signout = (req, res) => {
   });
 };
 
-exports.allAdmins = async(req, res) => {
-  const user = await User.find()
+exports.allAdmins = async (req, res) => {
+  const user = await User.find();
   res.status(200).json({
-   success:true,
-   user
+    success: true,
+    user,
   });
 };
 
-exports.deleteUser = async(req, res, next) => {
+exports.deleteUser = async (req, res, next) => {
   const result = await User.findById(req.params.id);
   if (!result) {
     return res.status(400).json({

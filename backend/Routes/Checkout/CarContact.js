@@ -5,7 +5,9 @@ const {
   adminMiddleware,
   userMiddleware,
 } = require("../../common-middleware");
-const { saveCarContactDetail } = require("../../Controllers/checkout/carContact");
+const {
+  saveCarContactDetail,
+} = require("../../Controllers/checkout/carContact");
 
 //For user
 router.post(
@@ -14,8 +16,5 @@ router.post(
   userMiddleware,
   saveCarContactDetail
 );
-//For Admin
-// router.get("/getContactDetail/:id", requireSignin,
-// userMiddleware,getContactDetail);
 
 module.exports = router;

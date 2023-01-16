@@ -30,7 +30,7 @@ exports.signup = (req, res) => {
         error: "User already registered",
       });
 
-    const { firstName, lastName, email, password,createdAt } = req.body;
+    const { firstName, lastName, email, password, createdAt } = req.body;
     const hash_password = await bcrypt.hash(password, 10);
     const _user = new User({
       firstName,
@@ -38,24 +38,24 @@ exports.signup = (req, res) => {
       email,
       hash_password,
       userName: shortid.generate(),
-      createdAt
+      createdAt,
     });
 
     _user.save((error, user) => {
       if (error) {
         return res.status(400).json({
           message: "Something went wrong",
-          error
+          error,
         });
       }
-      
 
       if (user) {
         const token = generateJwtToken(user._id, user.role);
-        const { _id, firstName, lastName, email, role, fullName,createdAt } = user;
+        const { _id, firstName, lastName, email, role, fullName, createdAt } =
+          user;
         return res.status(201).json({
           token,
-          user: { _id, firstName, lastName, email, role, fullName ,createdAt},
+          user: { _id, firstName, lastName, email, role, fullName, createdAt },
         });
       }
     });
@@ -68,16 +68,12 @@ exports.signin = (req, res) => {
     if (user) {
       const isPassword = await user.authenticate(req.body.password);
       if (isPassword && user.role === "user") {
-        // const token = jwt.sign(
-        //   { _id: user._id, role: user.role },
-        //   process.env.JWT_SECRET,
-        //   { expiresIn: "1d" }
-        // );
         const token = generateJwtToken(user._id, user.role);
-        const { _id, firstName, lastName, email, role, fullName,createdAt } = user;
+        const { _id, firstName, lastName, email, role, fullName, createdAt } =
+          user;
         res.status(200).json({
           token,
-          user: { _id, firstName, lastName, email, role, fullName,createdAt },
+          user: { _id, firstName, lastName, email, role, fullName, createdAt },
         });
       } else {
         return res.status(400).json({
@@ -90,57 +86,56 @@ exports.signin = (req, res) => {
   });
 };
 
+exports.sendPasswordLink = async (req, res) => {
+  // console.log(req.body);
+  const { email } = req.body;
+  if (!email) {
+    res.status(401).json({
+      status: 401,
+      message: "Enter your Email",
+    });
+  }
+  try {
+    const userFind = await User.findOne({ email: email });
+    // console.log("userFind",userFind)
 
-exports.sendPasswordLink = async(req,res)=>{
-    // console.log(req.body);
-    const { email } = req.body;
-    if (!email) {
-      res.status(401).json({
-        status: 401,
-        message: "Enter your Email",
+    //generate token
+    const token = jwt.sign({ _id: userFind._id }, keySecret, {
+      expiresIn: "1d",
+    });
+
+    // console.log("token",token)
+
+    const userToken = await User.findByIdAndUpdate(
+      { _id: userFind._id },
+      { verifyToken: token },
+      { new: true }
+    );
+    // console.log("userToken",userToken)
+
+    if (userToken) {
+      const mailOptions = {
+        from: "mzk112000@gmail.com",
+        to: email,
+        subject: "Sending Email For password Reset",
+        text: `This Link Valid For 2 MINUTES http://localhost:3000/forgotpassword/${userFind.id}/${userToken.verifyToken}`,
+      };
+
+      transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+          console.log("error", error);
+          res.status(401).json({ status: 401, message: "email not send" });
+        } else {
+          console.log("Email sent", info.response);
+          res
+            .status(201)
+            .json({ status: 201, message: "Email sent Succsfully" });
+        }
       });
-    }  
-    try {
-      const userFind = await User.findOne({ email: email });
-      // console.log("userFind",userFind)
-  
-      //generate token
-      const token = jwt.sign({ _id: userFind._id }, keySecret, {
-        expiresIn: "1d",
-      });
-  
-      // console.log("token",token)
-  
-      const userToken = await User.findByIdAndUpdate(
-        { _id: userFind._id },
-        { verifyToken: token },
-        { new: true }
-      );
-      // console.log("userToken",userToken)
-  
-      if (userToken) {
-        const mailOptions = {
-          from: "mzk112000@gmail.com",
-          to: email,
-          subject: "Sending Email For password Reset",
-          text: `This Link Valid For 2 MINUTES http://localhost:3000/forgotpassword/${userFind.id}/${userToken.verifyToken}`,
-        };
-  
-        transporter.sendMail(mailOptions, (error, info) => {
-          if (error) {
-            console.log("error", error);
-            res.status(401).json({ status: 401, message: "email not send" });
-          } else {
-            console.log("Email sent", info.response);
-            res
-              .status(201)
-              .json({ status: 201, message: "Email sent Succsfully" });
-          }
-        });
-      }
-    } catch (error) {}
-}
-exports.forgotPassword = async(req, res) => {
+    }
+  } catch (error) {}
+};
+exports.forgotPassword = async (req, res) => {
   const { id, token } = req.params;
 
   try {
@@ -158,9 +153,9 @@ exports.forgotPassword = async(req, res) => {
   } catch (error) {
     res.status(401).json({ status: 401, error });
   }
-}
+};
 
-exports.saveNewPass = async(req, res) => {
+exports.saveNewPass = async (req, res) => {
   const { id, token } = req.params;
 
   const { password } = req.body;
@@ -188,7 +183,7 @@ exports.saveNewPass = async(req, res) => {
   } catch (error) {
     res.status(401).json({ status: 401, error });
   }
-}
+};
 // update User Profile
 // exports.updateProfile = catchAsyncErrors(async (req, res, next) => {
 //   const newUserData = {

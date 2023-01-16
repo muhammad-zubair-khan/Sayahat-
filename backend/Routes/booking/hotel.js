@@ -6,9 +6,6 @@ const {
   updateBookedHotelDetails,
   getAllBookedHotels,
   getBookedHotelDetail,
-  //   getAllOrders,
-  //   updateOrder,
-  //   deleteOrder,
 } = require("../../Controllers/booking/hotel");
 const router = express.Router();
 
@@ -28,22 +25,8 @@ router
   .route("/admin/bookedHotels")
   .get(requireSignin, adminMiddleware, getAllBookedHotels);
 
-  router
-  .route("/admin/bookedHotel/detail/:id")
-  .get(getBookedHotelDetail);
+router.route("/admin/bookedHotel/detail/:id").get(getBookedHotelDetail);
 
-router.patch(
-  "/admin/bookedHotel/update/:id",
-  updateBookedHotelDetails
-);
-
-// router
-//   .route("/admin/orders")
-//   .get(isAuthenticatedUser, authorizeRoles("admin"), getAllOrders);
-
-// router
-//   .route("/admin/order/:id")
-//   .put(isAuthenticatedUser, authorizeRoles("admin"), updateOrder)
-//   .delete(isAuthenticatedUser, authorizeRoles("admin"), deleteOrder);
+router.patch("/admin/bookedHotel/update/:id", updateBookedHotelDetails);
 
 module.exports = router;

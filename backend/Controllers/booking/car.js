@@ -4,14 +4,21 @@ const ErrorHandler = require("../../utils/errorhandler");
 
 // Book Car
 exports.newBookCar = catchAsyncErrors(async (req, res, next) => {
-  const { name,price,CarContactInfo,city, PickupTime,
+  const {
+    name,
+    price,
+    CarContactInfo,
+    city,
+    PickupTime,
     DropoffTime,
     StartingDate,
     EndingDate,
     From,
     To,
     view,
-    pickupDestination,paymentInfo, } = req.body;
+    pickupDestination,
+    paymentInfo,
+  } = req.body;
 
   const bookedCar = await Car.create({
     name,
@@ -37,7 +44,6 @@ exports.newBookCar = catchAsyncErrors(async (req, res, next) => {
   });
 });
 
-
 // get logged in user Cars
 exports.myCars = catchAsyncErrors(async (req, res, next) => {
   const cars = await Car.find({ user: req.user._id });
@@ -48,13 +54,9 @@ exports.myCars = catchAsyncErrors(async (req, res, next) => {
   });
 });
 
-
 // get Car Detail
 exports.getCarDetail = catchAsyncErrors(async (req, res, next) => {
-  const car = await Car.findById(req.params.id).populate(
-    "user",
-    "name email"
-  );
+  const car = await Car.findById(req.params.id).populate("user", "name email");
 
   if (!car) {
     return next(new ErrorHandler("Car not found with this Id", 404));
@@ -83,7 +85,6 @@ exports.getAllBookedCars = catchAsyncErrors(async (req, res, next) => {
   });
 });
 
-
 exports.updateBookedCarDetails = catchAsyncErrors(async (req, res, next) => {
   const updatedData = await Car.findByIdAndUpdate(
     req.params.id,
@@ -105,9 +106,8 @@ exports.updateBookedCarDetails = catchAsyncErrors(async (req, res, next) => {
   }
 });
 
-
 exports.getBookedCarsDetails = catchAsyncErrors(async (req, res, next) => {
-  const cardetails = await Car.findById(req.params.id)
+  const cardetails = await Car.findById(req.params.id);
 
   if (!cardetails) {
     return next(new ErrorHandler("Car not found with this Id", 404));

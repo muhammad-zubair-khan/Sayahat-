@@ -4,10 +4,17 @@ const ErrorHandler = require("../../utils/errorhandler");
 
 // Book Hotel
 exports.newBookHotel = catchAsyncErrors(async (req, res, next) => {
-  const { name,price,hotelContactInfo, hotelActivityInfo,city,
+  const {
+    name,
+    price,
+    hotelContactInfo,
+    hotelActivityInfo,
+    city,
     view,
     fullyRefundable,
-    rooms, paymentInfo } = req.body;
+    rooms,
+    paymentInfo,
+  } = req.body;
 
   const bookedHotel = await Hotel.create({
     name,
@@ -29,7 +36,6 @@ exports.newBookHotel = catchAsyncErrors(async (req, res, next) => {
   });
 });
 
-
 // get logged in user Hotels
 exports.myHotels = catchAsyncErrors(async (req, res, next) => {
   const hotels = await Hotel.find({ user: req.user._id });
@@ -39,7 +45,6 @@ exports.myHotels = catchAsyncErrors(async (req, res, next) => {
     hotels,
   });
 });
-
 
 // get Hotel Detail
 exports.getHotelDetail = catchAsyncErrors(async (req, res, next) => {
@@ -57,7 +62,6 @@ exports.getHotelDetail = catchAsyncErrors(async (req, res, next) => {
     hotel,
   });
 });
-
 
 exports.updateBookedHotelDetails = catchAsyncErrors(async (req, res, next) => {
   const updatedData = await Hotel.findByIdAndUpdate(
@@ -80,7 +84,6 @@ exports.updateBookedHotelDetails = catchAsyncErrors(async (req, res, next) => {
   }
 });
 
-
 // get all Boooked Hotels -- Admin
 exports.getAllBookedHotels = catchAsyncErrors(async (req, res, next) => {
   const bookedHotels = await Hotel.find();
@@ -99,7 +102,7 @@ exports.getAllBookedHotels = catchAsyncErrors(async (req, res, next) => {
 });
 
 exports.getBookedHotelDetail = catchAsyncErrors(async (req, res, next) => {
-  const hoteldetails = await Hotel.findById(req.params.id)
+  const hoteldetails = await Hotel.findById(req.params.id);
 
   if (!hoteldetails) {
     return next(new ErrorHandler("Hotel not found with this Id", 404));

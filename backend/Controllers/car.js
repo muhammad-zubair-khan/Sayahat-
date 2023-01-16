@@ -1,8 +1,6 @@
-// createVacationProduct
 const Car = require("../models/car");
 const Product = require("../models/vacationProduct");
 const slugify = require("slugify");
-const path = require("path");
 const ErrorHandler = require("../utils/errorhandler");
 const catchAsyncErrors = require("../utils/catchAsyncErrors");
 const ApiFeatures = require("../utils/apifeatures");
@@ -70,7 +68,7 @@ exports.addCar = catchAsyncErrors(async (req, res) => {
   });
 });
 
-// Get All Car 
+// Get All Car
 // exports.getAllCars = async (req, res) => {
 //   // const hotels = await Hotel.find();
 //   // const { min, max, ...others } = req.query;
@@ -116,7 +114,6 @@ exports.addCar = catchAsyncErrors(async (req, res) => {
 //     // },
 //   });
 // };
-
 
 exports.getAllCars = async (req, res) => {
   const { min, max, ...others } = req.query;
@@ -214,7 +211,6 @@ exports.deleteCar = catchAsyncErrors(async (req, res, next) => {
     message: "Car Delete Successfully",
   });
 });
-
 
 // ------------------------------------------Review-Section---------------
 // Create New Review or Update the review

@@ -11,8 +11,6 @@ const {
 } = require("../Controllers/vacationCategory");
 const {
   requireSignin,
-  adminMiddleware,
-  userMiddleware,
   superAdminMiddleware,
 } = require("../common-middleware");
 

@@ -54,8 +54,8 @@ const Forgot = () => {
     } else {
     const data = {password} 
 
-      const res = await axios(`/${id}/${token}`, {
-        method: "post",
+      const res = await axios(`/save/${id}/${token}`, {
+        method: "POST",
         config: { headers: { "Content-Type": "application/json" } },
         // body: JSON.stringify({ password }),
         data:data

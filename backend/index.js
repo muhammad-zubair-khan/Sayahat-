@@ -4,8 +4,7 @@ const cors = require("cors");
 app.use(cors());
 const bodyParser = require("body-parser");
 const env = require("dotenv");
-// env.config();
-env.config({path: './.env'})
+env.config({ path: "./.env" });
 require("./Database/Connection");
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -51,31 +50,23 @@ app.use("/api", checkoutRoutes);
 const hotelCheckoutRoutes = require("./Routes/Checkout/hotelContact");
 app.use("/api", hotelCheckoutRoutes);
 
-const bookPkgRoutes = require("./Routes/booking/package")
+const bookPkgRoutes = require("./Routes/booking/package");
 app.use("/api", bookPkgRoutes);
 
-const bookHotelRoutes = require("./Routes/booking/hotel")
+const bookHotelRoutes = require("./Routes/booking/hotel");
 app.use("/api", bookHotelRoutes);
 
-const bookCarRoutes = require("./Routes/booking/car")
+const bookCarRoutes = require("./Routes/booking/car");
 app.use("/api", bookCarRoutes);
-
-// const userRoutes = require("./Routes/user");
-
-// const destinationRoutes = require("./Routes/destination");
-// app.use("/api", destinationRoutes);
 
 const initialDataRoutes = require("./Routes/Admin/initialData");
 app.use("/api", initialDataRoutes);
 
 app.use("/public", express.static(path.join(__dirname, "uploads")));
 
-
-  // if(process.env.NODE_ENV == "production"){
-  //     app.use(express.static("frontend/build"))
-  // }
-  
-
+// if(process.env.NODE_ENV == "production"){
+//     app.use(express.static("frontend/build"))
+// }
 
 const PORT = process.env.PORT || 5001;
 app.listen(process.env.PORT, () => {

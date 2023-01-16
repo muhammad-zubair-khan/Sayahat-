@@ -3,9 +3,7 @@ const Hotel = require("../models/hotel");
 const User = require("../Models/user");
 const RoomModal = require("../Models/room");
 const category = require("../models/vacationProduct");
-const topDest = require("../Models/destination");
 const slugify = require("slugify");
-const path = require("path");
 const ApiFeatures = require("../utils/apifeatures");
 const ErrorHandler = require("../utils/errorhandler");
 const catchAsyncErrors = require("../utils/catchAsyncErrors");
@@ -95,24 +93,6 @@ exports.createHotel = catchAsyncErrors(async (req, res, next) => {
 //   });
 // };
 
-// Get All Hotel
-// exports.getAllHotels = async (req, res) => {
-//   // const hotels = await Hotel.find();
-//   const { min, max, ...others } = req.query;
-//   // const hotelsCount = await Hotel.countDocuments();
-
-//   const hotels = await Hotel.find({
-//     ...others,
-//     cheapestPrice: { $gt: min | 1, $lt: max || 99999 },
-//   });
-//   // if(!hotels){
-//   // return next(new ErrorHandler("Hotel not found", 404));
-
-//   // }
-//   res.status(200).json({
-//     hotels,
-//   });
-// };
 
 
 exports.getAllHotels = async (req, res) => {
@@ -130,9 +110,6 @@ exports.getAllHotels = async (req, res) => {
     hotels,
   });
 };
-
-
-
 
 // Get All Hotel (Admin)
 exports.getAllHotelsAdmin = catchAsyncErrors(async (req, res) => {
@@ -199,52 +176,15 @@ exports.getHotelsBySlug = (req, res) => {
                   (hotel) =>
                     hotel.cheapestPrice > 20000 && hotel.cheapestPrice <= 30000
                 ),
-                
               },
             });
-          }
-          else{
+          } else {
             res.status(200).json({ hotels });
           }
         });
       }
     });
 };
-
-//get Top Des hotel by slug
-// exports.getTopDesHotelsBySlug = (req, res) => {
-//   const { slug } = req.params;
-//   // category.findOne({ slug: slug })
-//   topDest
-//     .findOne({ slug: slug })
-//     .select("_id")
-//     .exec((err, category) => {
-//       if (err) {
-//         return res.status(400).json({ err });
-//       }
-//       if (!category) {
-//         return res.status(400).json({
-//           success: false,
-//           message: "No Hotel Found",
-//         });
-//       }
-//       if (category) {
-//         Hotel.find({ category: category._id }).exec((error, hotel) => {
-//           if (error) {
-//             return res.status(400).json({
-//               error,
-//             });
-//           } else {
-//             res.status(200).json({
-//               success: true,
-//               hotel,
-//               // productsCount,
-//             });
-//           }
-//         });
-//       }
-//     });
-// };
 
 // Delete Hotel
 exports.deleteHotel = catchAsyncErrors(async (req, res) => {
@@ -278,47 +218,25 @@ exports.GetHotelById = catchAsyncErrors(async (req, res) => {
   });
 });
 
-exports.getHotelRooms = async(req, res) => {
+exports.getHotelRooms = async (req, res) => {
   const hotel = await Hotel.findById(req.params.id);
   if (!hotel) {
     // return next(new ErrorHandler("Hotel not found", 404));
-    console.log("hotel not found")
+    console.log("hotel not found");
   }
   const list = await Promise.all(
     hotel.rooms.map((room) => {
       return RoomModal.findById(room);
     })
-    );
- 
-    // console.log("list>>",list)
-    // res.status(200).json(list);
+  );
+
+  // console.log("list>>",list)
+  // res.status(200).json(list);
   res.status(200).json({
     success: true,
     list,
   });
 };
-
-// exports.countByType = async (req, res, next) => {
-//   try {
-//     const hotelCount = await Hotel.countDocuments({ type: "hotel" });
-//     const apartmentCount = await Hotel.countDocuments({ type: "apartment" });
-//     const resortCount = await Hotel.countDocuments({ type: "resort" });
-//     const villaCount = await Hotel.countDocuments({ type: "villa" });
-//     const cabinCount = await Hotel.countDocuments({ type: "cabin" });
-
-//     res.status(200).json([
-//       { type: "hotel", count: hotelCount },
-//       { type: "apartments", count: apartmentCount },
-//       { type: "resorts", count: resortCount },
-//       { type: "villas", count: villaCount },
-//       { type: "cabins", count: cabinCount },
-//     ]);
-//   } catch (err) {
-//     next(err);
-//   }
-// };
-
-
 
 // ------------------------------------------Review-Section---------------
 // Create New Review or Update the review

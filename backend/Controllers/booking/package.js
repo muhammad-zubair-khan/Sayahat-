@@ -4,9 +4,16 @@ const ErrorHandler = require("../../utils/errorhandler");
 
 // Book Package
 exports.newBookPkg = catchAsyncErrors(async (req, res, next) => {
-  const { name,price,contactInfo, activityInfo,city,
+  const {
+    name,
+    price,
+    contactInfo,
+    activityInfo,
+    city,
     view,
-    refundable, paymentInfo } = req.body;
+    refundable,
+    paymentInfo,
+  } = req.body;
 
   const bookedPkg = await Package.create({
     name,
@@ -27,7 +34,6 @@ exports.newBookPkg = catchAsyncErrors(async (req, res, next) => {
   });
 });
 
-
 // get logged in user Packages
 exports.myPackages = catchAsyncErrors(async (req, res, next) => {
   const packages = await Package.find({ user: req.user._id });
@@ -38,10 +44,9 @@ exports.myPackages = catchAsyncErrors(async (req, res, next) => {
   });
 });
 
-
 // get Package Detail
 exports.getPackageDetail = catchAsyncErrors(async (req, res, next) => {
-  const packageDetails = await Package.findById(req.params.id)
+  const packageDetails = await Package.findById(req.params.id);
 
   if (!packageDetails) {
     return next(new ErrorHandler("Package not found with this Id", 404));
@@ -52,7 +57,6 @@ exports.getPackageDetail = catchAsyncErrors(async (req, res, next) => {
     packageDetails,
   });
 });
-
 
 // get all Boooked Packages -- Admin
 exports.getAllBookedPackages = catchAsyncErrors(async (req, res, next) => {
@@ -71,31 +75,31 @@ exports.getAllBookedPackages = catchAsyncErrors(async (req, res, next) => {
   });
 });
 
-
-exports.updateBookedPackageDetails = catchAsyncErrors(async (req, res, next) => {
-  const updatedData = await Package.findByIdAndUpdate(
-    req.params.id,
-    { view: "read" },
-    {
-      new: true,
-      runValidators: true,
+exports.updateBookedPackageDetails = catchAsyncErrors(
+  async (req, res, next) => {
+    const updatedData = await Package.findByIdAndUpdate(
+      req.params.id,
+      { view: "read" },
+      {
+        new: true,
+        runValidators: true,
+      }
+    );
+    try {
+      res.status(200).json({
+        status: "Success",
+        data: {
+          updatedData,
+        },
+      });
+    } catch (err) {
+      console.log(err);
     }
-  );
-  try {
-    res.status(200).json({
-      status: "Success",
-      data: {
-        updatedData,
-      },
-    });
-  } catch (err) {
-    console.log(err);
   }
-});
-
+);
 
 exports.getBookedPackageDetail = catchAsyncErrors(async (req, res, next) => {
-  const packagedetails = await Package.findById(req.params.id)
+  const packagedetails = await Package.findById(req.params.id);
 
   if (!packagedetails) {
     return next(new ErrorHandler("Package not found with this Id", 404));

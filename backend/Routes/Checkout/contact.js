@@ -14,8 +14,5 @@ router.post(
   userMiddleware,
   saveContactDetail
 );
-//For Admin
-// router.get("/getContactDetail/:id", requireSignin,
-// userMiddleware,getContactDetail);
 
 module.exports = router;
