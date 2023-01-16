@@ -1,45 +1,21 @@
-import { Link, useHistory, useLocation } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import "./SearchItem.css";
 import { SearchContext } from "../../Context/SearchContext";
 import { useContext, useState } from "react";
-import useFetch from "../../hook/useFetch";
 import { ImageUrl } from "../../Redux/UrlConfig";
 
 const SearchItem = ({ item }) => {
-  // const [destination, setDestination] = useState("");
-  // const [openDate, setOpenDate] = useState(false);
-  // const [dates, setDates] = useState([
-  //   {
-  //     startDate: new Date(),
-  //     endDate: new Date(),
-  //     key: "selection",
-  //   },
-  // ]);
-  // const [options, setOptions] = useState({
-  //   adult: 1,
-  //   children: 0,
-  //   room: 1,
-  // });
   const location = useLocation();
   const [destination, setDestination] = useState(
     location.state.state.destination
   );
-  // console.log(location.state.state.destination)
   const [dates, setDates] = useState(location.state.state.dates);
   const [openDate, setOpenDate] = useState(false);
   const [options, setOptions] = useState(location.state.state.options);
-  const [min, setMin] = useState(undefined);
-  const [max, setMax] = useState(undefined);
 
   const { dispatch } = useContext(SearchContext);
   const history = useHistory();
-  // console.log(item)
-
-  // const { data, loading, error, reFetch } = useFetch(
-  //   `http://localhost:5000/api/hotels?city=${destination}&min=${min || 0}&max=${
-  //     max || 99999
-  //   }`
-  // );
+  
 
   const handleSearch = () => {
     dispatch({ type: "NEW_SEARCH", payload: { destination, dates, options } });

@@ -2,9 +2,7 @@ import { Link, useHistory, useLocation } from "react-router-dom";
 import "./CarSearchItem.css";
 import { SearchContext } from "../../Context/SearchContext";
 import { useContext, useState } from "react";
-import useFetch from "../../hook/useFetch";
 import { ImageUrl } from "../../Redux/UrlConfig";
-import { Col } from "react-bootstrap";
 import Zoom from "react-medium-image-zoom";
 import "react-medium-image-zoom/dist/styles.css";
 import {
@@ -12,7 +10,6 @@ import {
   Grid,
   List,
   ListItem,
-  ListItemButton,
   ListItemIcon,
   ListItemText,
   Typography,
@@ -23,20 +20,6 @@ import AutoAwesomeIcon from "@mui/icons-material/AutoAwesome";
 import AirplaneTicketIcon from "@mui/icons-material/AirplaneTicket";
 
 const CarSearchItem = ({ item }) => {
-  // const [destination, setDestination] = useState("");
-  // const [openDate, setOpenDate] = useState(false);
-  // const [dates, setDates] = useState([
-  //   {
-  //     startDate: new Date(),
-  //     endDate: new Date(),
-  //     key: "selection",
-  //   },
-  // ]);
-  // const [options, setOptions] = useState({
-  //   adult: 1,
-  //   children: 0,
-  //   room: 1,
-  // });
   const location = useLocation();
   const [startDestination, setStartDestination] = useState(
     location.state.state.startDestination
@@ -44,7 +27,6 @@ const CarSearchItem = ({ item }) => {
   const [endDestination, setEndDestination] = useState(
     location.state.state.endDestination
   );
-  // console.log(location.state.state.destination)
   const [dates, setDates] = useState(location.state.state.dates);
   const [openDate, setOpenDate] = useState(false);
   const [pickupTime, setPickupTime] = useState(location.state.state.pickupTime);
@@ -54,11 +36,6 @@ const CarSearchItem = ({ item }) => {
 
   const { dispatch } = useContext(SearchContext);
   const history = useHistory();
-
-  // const { data, loading, error, reFetch } = useFetch(
-  //   `http://localhost:5000/api/cars?city=${startDestination}`
-  // );
-  //   console.log("item>>>",data.carsByFare.under5k.length);
 
   const handleSearch = () => {
     dispatch({

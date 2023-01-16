@@ -1,60 +1,58 @@
 import {
-    GET_PACKAGE_BY_SLUG_REQUEST,
-    GET_PACKAGE_BY_SLUG_SUCCESS,
-    GET_PACKAGE_BY_SLUG_FAIL,
-    GET_PACKAGE_DETAIL_BY_ID_REQUEST,
-    GET_PACKAGE_DETAIL_BY_ID_SUCCESS,
-    GET_PACKAGE_DETAIL_BY_ID_FAIL,
-    CREATE_NEW_PACKAGE_REQUEST,
-    CREATE_NEW_PACKAGE_SUCCESS,
-    CREATE_NEW_PACKAGE_FAIL,
-    CREATE_NEW_PACKAGE_RESET,
-    GET_ALL_PACKAGES_REQUEST,
-    GET_ALL_PACKAGES_SUCCESS,
-    GET_ALL_PACKAGES_FAIL,
-    DELETE_PACKAGE_REQUEST,
-    DELETE_PACKAGE_SUCCESS,
-    DELETE_PACKAGE_FAIL,
-    NEW_REVIEW_REQUEST,
-    NEW_REVIEW_SUCCESS,
-    NEW_REVIEW_FAIL,
-    ALL_REVIEW_REQUEST,
-    ALL_REVIEW_SUCCESS,
-    ALL_REVIEW_FAIL,
-    DELETE_REVIEW_REQUEST,
-    DELETE_REVIEW_SUCCESS,
-    DELETE_REVIEW_FAIL,
-    CLEAR_ERRORS,
-    GET_ALL_FEATURED_PACKAGES_REQUEST,
-    GET_ALL_FEATURED_PACKAGES_SUCCESS,
-    GET_ALL_FEATURED_PACKAGES_FAIL,
-  } from "../Constants/packageConstants";
-  import axios from "../helpers/axios";
+  GET_PACKAGE_BY_SLUG_REQUEST,
+  GET_PACKAGE_BY_SLUG_SUCCESS,
+  GET_PACKAGE_BY_SLUG_FAIL,
+  GET_PACKAGE_DETAIL_BY_ID_REQUEST,
+  GET_PACKAGE_DETAIL_BY_ID_SUCCESS,
+  GET_PACKAGE_DETAIL_BY_ID_FAIL,
+  CREATE_NEW_PACKAGE_REQUEST,
+  CREATE_NEW_PACKAGE_SUCCESS,
+  CREATE_NEW_PACKAGE_FAIL,
+  GET_ALL_PACKAGES_REQUEST,
+  GET_ALL_PACKAGES_SUCCESS,
+  GET_ALL_PACKAGES_FAIL,
+  DELETE_PACKAGE_REQUEST,
+  DELETE_PACKAGE_SUCCESS,
+  DELETE_PACKAGE_FAIL,
+  NEW_REVIEW_REQUEST,
+  NEW_REVIEW_SUCCESS,
+  NEW_REVIEW_FAIL,
+  ALL_REVIEW_REQUEST,
+  ALL_REVIEW_SUCCESS,
+  ALL_REVIEW_FAIL,
+  DELETE_REVIEW_REQUEST,
+  DELETE_REVIEW_SUCCESS,
+  DELETE_REVIEW_FAIL,
+  CLEAR_ERRORS,
+  GET_ALL_FEATURED_PACKAGES_REQUEST,
+  GET_ALL_FEATURED_PACKAGES_SUCCESS,
+  GET_ALL_FEATURED_PACKAGES_FAIL,
+} from "../Constants/packageConstants";
+import axios from "../helpers/axios";
 
 // Create New Pacakge
 export const createPackage = (form) => {
-  return async dispatch => {
-    dispatch({ type:  CREATE_NEW_PACKAGE_REQUEST });
+  return async (dispatch) => {
+    dispatch({ type: CREATE_NEW_PACKAGE_REQUEST });
     try {
       const res = await axios.post("/package/create", form);
-      console.log("res......",res)
-      if (res.status === 201) {
+      // console.log("res......", res);
+      // if (res.status === 201) {
         dispatch({
           type: CREATE_NEW_PACKAGE_SUCCESS,
           payload: res.data.package,
         });
-      } else {
-        dispatch({
-          type: CREATE_NEW_PACKAGE_FAIL,
-          payload: res.data.error,
-        });
-      }
-    } catch (error) {
-      console.log(error.message);
-    //   if(e instance of BSONTypeError){
-    //  }
+      // } else {
+        // }
+      } catch (error) {
+      dispatch({
+        type: CREATE_NEW_PACKAGE_FAIL,
+        payload: error.response.data.message,
+      });
+      // console.log(error.message);
+      //   if(e instance of BSONTypeError){
+      //  }
     }
-
   };
 };
 // Get All Products
@@ -73,7 +71,7 @@ export const createPackage = (form) => {
 //       else if(ratings){
 //         link = `/all-packages?ratings=${ratings}`
 //       }
-    
+
 //       const { data } = await axios.get(link);
 
 //       dispatch({
@@ -87,9 +85,6 @@ export const createPackage = (form) => {
 //       });
 //     }
 //   };
-
-
-
 
 // Get All Packages For Admin
 // export const getAllPackages = () => async (dispatch) => {
@@ -126,36 +121,41 @@ export const getPackages = () => async (dispatch) => {
   }
 };
 
-export const getAllPackages = (type,min,max,packageDestination,ratings) => async (dispatch) => {
-  try {
-    dispatch({ type: GET_ALL_PACKAGES_REQUEST });
-    // if(ratings==0){
-    //   var link = `/all-packages?city=${packageDestination}&min=${min || 0}&max=${max || 9999}&ratings=${ratings===0}`;
-    // }
-    // else{
-    //   link = `/all-packages?city=${packageDestination}&min=${min || 0}&max=${max || 9999}&ratings=${ratings}`;
-    // }
-    let link = `/all-packages?city=${packageDestination}&min=${min || 0}&max=${max || 9999}&ratings=${ratings}`;
+export const getAllPackages =
+  (type, min, max, packageDestination, ratings) => async (dispatch) => {
+    try {
+      dispatch({ type: GET_ALL_PACKAGES_REQUEST });
+      // if(ratings==0){
+      //   var link = `/all-packages?city=${packageDestination}&min=${min || 0}&max=${max || 9999}&ratings=${ratings===0}`;
+      // }
+      // else{
+      //   link = `/all-packages?city=${packageDestination}&min=${min || 0}&max=${max || 9999}&ratings=${ratings}`;
+      // }
+      let link = `/all-packages?city=${packageDestination}&min=${
+        min || 0
+      }&max=${max || 9999}&ratings=${ratings}`;
 
-    if (type) {
-      link = `/all-packages?city=${packageDestination}&type=${type}&min=${min || 0}&max=${max || 9999}&ratings=${ratings || 0}`;
+      if (type) {
+        link = `/all-packages?city=${packageDestination}&type=${type}&min=${
+          min || 0
+        }&max=${max || 9999}&ratings=${ratings || 0}`;
+      }
+      // if (type) {
+      //   link = `/all-packages?type=${type}&min=${min || 0}&max=${max || 9999}&ratings=${ratings || 0}`;
+      // }
+      const { data } = await axios.get(link);
+
+      dispatch({
+        type: GET_ALL_PACKAGES_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: GET_ALL_PACKAGES_FAIL,
+        payload: error.response.data.message,
+      });
     }
-    // if (type) {
-    //   link = `/all-packages?type=${type}&min=${min || 0}&max=${max || 9999}&ratings=${ratings || 0}`;
-    // }
-    const { data } = await axios.get(link);
-
-    dispatch({
-      type: GET_ALL_PACKAGES_SUCCESS,
-      payload: data,
-    });
-  } catch (error) {
-    dispatch({
-      type: GET_ALL_PACKAGES_FAIL,
-      payload: error.response.data.message,
-    });
-  }
-};
+  };
 
 export const getAllFeaturedPackages = () => async (dispatch) => {
   try {
@@ -174,13 +174,12 @@ export const getAllFeaturedPackages = () => async (dispatch) => {
   }
 };
 
-
 //get Package by Slug
 export const getPackageBySlug = (slug) => async (dispatch) => {
   try {
     dispatch({ type: GET_PACKAGE_BY_SLUG_REQUEST });
     const { data } = await axios.get(`/package/${slug}`);
-    console.log(data);
+    // console.log(data);
     dispatch({
       type: GET_PACKAGE_BY_SLUG_SUCCESS,
       payload: data.packages,
@@ -205,12 +204,12 @@ export const getPackageDetailById = (id) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: GET_PACKAGE_DETAIL_BY_ID_FAIL,
-      payload: error.response
+      payload: error.response,
     });
   }
 };
- // Delete Package
- export const deletePackage = (id) => async (dispatch) => {
+// Delete Package
+export const deletePackage = (id) => async (dispatch) => {
   try {
     dispatch({ type: DELETE_PACKAGE_REQUEST });
 
@@ -222,7 +221,7 @@ export const getPackageDetailById = (id) => async (dispatch) => {
     });
     dispatch({
       type: GET_ALL_PACKAGES_SUCCESS,
-    })
+    });
   } catch (error) {
     dispatch({
       type: DELETE_PACKAGE_FAIL,
@@ -230,7 +229,6 @@ export const getPackageDetailById = (id) => async (dispatch) => {
     });
   }
 };
-
 
 // NEW REVIEW
 export const newPackageReview = (reviewData) => async (dispatch) => {

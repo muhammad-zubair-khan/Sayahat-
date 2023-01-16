@@ -17,12 +17,12 @@ import MailIcon from "@mui/icons-material/Mail";
 import PhoneIcon from "@mui/icons-material/Phone";
 const Footer = () => {
   return (
-    <div style={{backgroundColor:'#e3e3e3',padding:'20px 0px'}}>
+    <div style={{ backgroundColor: "#e3e3e3", padding: "20px 0px" }}>
       <Container>
         <Grid container>
           <Grid xs={12} lg={3}>
-            <Link to='/'>
-            <img src={logo} width="200px" alt="Sayahat" />
+            <Link to="/">
+              <img src={logo} width="200px" alt="Sayahat" />
             </Link>
             <p className="mt-4">
               We believe brand interaction is key in commu- nication. Real
@@ -51,7 +51,7 @@ const Footer = () => {
             </Box>
           </Grid>
           <Grid xs={12} lg={3}>
-            <h5 style={{padding:'0px 20px'}}>Contact us</h5>
+            <h5 style={{ padding: "0px 20px" }}>Contact us</h5>
             <Box>
               <List>
                 <ListItem disablePadding>
@@ -82,30 +82,30 @@ const Footer = () => {
             </Box>
           </Grid>
           <Grid xs={12} lg={3}>
-            <h5 style={{padding:'0px 15px'}}>Quick Link</h5>
+            <h5 style={{ padding: "0px 15px" }}>Quick Link</h5>
             <List>
               <ListItem>
-                <Link style={{color:'#848484'}}>Home</Link>
+                <Link style={{ color: "#848484" }}>Home</Link>
               </ListItem>
               <ListItem>
-                <Link style={{color:'#848484'}}>Vacations</Link>
+                <Link style={{ color: "#848484" }}>Vacations</Link>
               </ListItem>
               <ListItem>
-                <Link style={{color:'#848484'}}>Hotels</Link>
+                <Link style={{ color: "#848484" }}>Hotels</Link>
               </ListItem>
               <ListItem>
-                <Link style={{color:'#848484'}}>Cars</Link>
+                <Link style={{ color: "#848484" }}>Cars</Link>
               </ListItem>
               <ListItem>
-                <Link style={{color:'#848484'}}>About us</Link>
+                <Link style={{ color: "#848484" }}>About us</Link>
               </ListItem>
               <ListItem>
-                <Link style={{color:'#848484'}}>Contact us</Link>
+                <Link style={{ color: "#848484" }}>Contact us</Link>
               </ListItem>
             </List>
           </Grid>
           <Grid xs={12} lg={3}>
-            <h5 style={{padding:'0px 15px'}}>Help</h5>
+            <h5 style={{ padding: "0px 15px" }}>Help</h5>
             <List>
               <ListItem>
                 <span>Support</span>

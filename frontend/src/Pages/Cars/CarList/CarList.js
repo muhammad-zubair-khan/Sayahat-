@@ -1,13 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./CarList.css";
 import { useLocation } from "react-router-dom";
-import {
-  Button,
-  Grid,
-  Slider,
-  Typography,
-} from "@mui/material";
-// import useFetch from "../../../hook/useFetch";
+import { Button, Grid, Slider, Typography } from "@mui/material";
 import { format } from "date-fns";
 import { DateRange } from "react-date-range";
 import CarSearchItem from "../../../Components/CarSearchItem/CarSearchItem.js";
@@ -31,29 +25,15 @@ const CarList = () => {
     location.state.state.dropoffTime
   );
   const [carType, setCarType] = useState("");
-  const [gear, setGear] = useState("");
   const [ratings, setRatings] = useState(0);
   const { cars } = useSelector((state) => state.carsReducer);
   const [min, setMin] = useState(undefined);
   const [max, setMax] = useState(undefined);
-  // const { data, loading, error, reFetch } = useFetch(
-  //   `http://localhost:5000/api/cars?city=${startDestination}&min=${
-  //     min || 0
-  //   }&max=${max || 99999}`
-  // );
 
-  // const handleClick = () => {
-  //   reFetch();
-  // };
   const types = ["SUV", "Van", "Mercedes", "Mini-Van"];
-  // const gears = [
-  //   "Automatic",
-  //   "Manual"
-  // ];
-
   useEffect(() => {
-    dispatch(getAllCars(min, max, startDestination,carType));
-  }, [dispatch, min, max, startDestination,carType]);
+    dispatch(getAllCars(min, max, startDestination, carType));
+  }, [dispatch, min, max, startDestination, carType]);
 
   const [show, setShow] = useState(false);
 
@@ -200,240 +180,9 @@ const CarList = () => {
                     })}
                   </ul>
                 </div>
-                {/* <div className="px-4">
-                      <p className="fw-bold text-dark mt-4">Gear</p>
-                      <ul className="list-group">
-                        {gears.map((gear) => {
-                          return (
-                            <>
-                              <li className="list-group-item border-0" style={{cursor:'pointer'}} key={gear} 
-                                onClick={(e) => setGear(gear)}
-                              >
-                                 {gear}
-                              </li>
-                            </>
-                          );
-                        })}
-                     
-                      </ul>
-                    </div> */}
-                {/* <div className="p-4">
-                <fieldset>
-                  <Typography component="legend">Ratings Above</Typography>
-                  <Slider
-                    value={ratings}
-                    onChange={(e, newRating) => {
-                      setRatings(newRating);
-                    }}
-                    aria-labelledby="continuous-slider"
-                    valueLabelDisplay="auto"
-                    default={packages.map((item) => {
-                      return item.ratings;
-                    })}
-                    min={0}
-                    max={5}
-                  />
-                </fieldset>
-              </div> */}
-
-                {/* <div className="px-4">
-                <p className="fw-bold text-dark">Duration</p>
-                <ul class="list-group">
-                  {packages.map((item) => {
-                    return (
-                      <>
-                        <li class="list-group-item border-0">
-                          <div class="form-check">
-                            <input
-                              class="form-check-input"
-                              type="checkbox"
-                              value=""
-                              id="flexCheckDefault"
-                            />
-                            <label
-                              class="form-check-label"
-                              for="flexCheckDefault"
-                            >
-                              {item.duration}
-                            </label>
-                          </div>
-                        </li>
-                      </>
-                    );
-                  })}
-               
-                </ul>
-              </div> */}
-
-                {/* <div className="p-4">
-                <p className="fw-bold text-dark">Time of Day</p>
-                <ul class="list-group">
-                  <li class="list-group-item border-0">
-                    <div class="form-check">
-                      <input
-                        class="form-check-input"
-                        type="checkbox"
-                        value=""
-                        id="flexCheckDefault"
-                      />
-                      <label class="form-check-label" for="flexCheckDefault">
-                        6am—12pm
-                      </label>
-                    </div>
-                  </li>
-                  <li class="list-group-item border-0">
-                    <div class="form-check">
-                      <input
-                        class="form-check-input"
-                        type="checkbox"
-                        value=""
-                        id="flexCheckDefault"
-                      />
-                      <label class="form-check-label" for="flexCheckDefault">
-                        12pm—5pm
-                      </label>
-                    </div>
-                  </li>
-                  <li class="list-group-item border-0">
-                    <div class="form-check">
-                      <input
-                        class="form-check-input"
-                        type="checkbox"
-                        value=""
-                        id="flexCheckDefault"
-                      />
-                      <label class="form-check-label" for="flexCheckDefault">
-                        5pm—12am
-                      </label>
-                    </div>
-                  </li>
-                </ul>
-              </div> */}
-
-                {/* <div className="p-4">
-                <p className="fw-bold text-dark">Specials</p>
-                <ul class="list-group">
-                  <li class="list-group-item border-0">
-                    <div class="form-check">
-                      <input
-                        class="form-check-input"
-                        type="checkbox"
-                        value=""
-                        id="flexCheckDefault"
-                      />
-                      <label class="form-check-label" for="flexCheckDefault">
-                        Deals & Discounts
-                      </label>
-                    </div>
-                  </li>
-                  <li class="list-group-item border-0">
-                    <div class="form-check">
-                      <input
-                        class="form-check-input"
-                        type="checkbox"
-                        value=""
-                        id="flexCheckDefault"
-                      />
-                      <label class="form-check-label" for="flexCheckDefault">
-                        Free Cancellation
-                      </label>
-                    </div>
-                  </li>
-                  <li class="list-group-item border-0">
-                    <div class="form-check">
-                      <input
-                        class="form-check-input"
-                        type="checkbox"
-                        value=""
-                        id="flexCheckDefault"
-                      />
-                      <label class="form-check-label" for="flexCheckDefault">
-                        Likely to Sell Out
-                      </label>
-                    </div>
-                  </li>
-                  <li class="list-group-item border-0">
-                    <div class="form-check">
-                      <input
-                        class="form-check-input"
-                        type="checkbox"
-                        value=""
-                        id="flexCheckDefault"
-                      />
-                      <label class="form-check-label" for="flexCheckDefault">
-                        Skip-The-Line
-                      </label>
-                    </div>
-                  </li>
-                  <li class="list-group-item border-0">
-                    <div class="form-check">
-                      <input
-                        class="form-check-input"
-                        type="checkbox"
-                        value=""
-                        id="flexCheckDefault"
-                      />
-                      <label class="form-check-label" for="flexCheckDefault">
-                        Private Tour
-                      </label>
-                    </div>
-                  </li>
-                </ul>
-              </div> */}
               </div>
             </Offcanvas.Body>
           </Offcanvas>
-          {/* <div className="listSearch">
-            <div className="lsItem">
-              <label>From</label>
-              <input
-                placeholder={location.state.state.startDestination}
-                onChange={(e) => setStartDestination(e.target.value)}
-                type="text"
-              />
-            </div>
-            <div className="lsItem">
-              <label>To</label>
-              <input
-                placeholder={location.state.state.endDestination}
-                onChange={(e) => setEndDestination(e.target.value)}
-                type="text"
-              />
-            </div>
-            <div className="lsItem">
-              <label for="from">Pick-up Time</label>
-              <input
-                type="time"
-                className="form-control"
-                value={pickupTime}
-                onChange={(e) => setPickupTime(e.target.value)}
-              />
-            </div>
-            <div className="lsItem">
-              <label for="from">Drop-off Time</label>
-              <input
-                type="time"
-                className="form-control"
-                value={dropoffTime}
-                onChange={(e) => setDropoffTime(e.target.value)}
-              />
-            </div>
-            <div className="lsItem">
-              <label>Check-in Date</label>
-              <span onClick={() => setOpenCarDate(!openCarDate)}>{`${format(
-                dates[0].startDate,
-                "MM/dd/yyyy"
-              )} to ${format(dates[0].endDate, "MM/dd/yyyy")}`}</span>
-              {openCarDate && (
-                <DateRange
-                  onChange={(item) => setDates([item.selection])}
-                  minDate={new Date()}
-                  ranges={dates}
-                />
-              )}
-            </div>
-
-          </div> */}
         </Grid>
 
         {/* {loading ? (

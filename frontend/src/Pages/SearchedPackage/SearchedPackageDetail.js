@@ -2,20 +2,14 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Footer from "../../Footer/Footer";
 import Navbar from "../../Navbar/Navbar";
-import {
-  getPackageBySlug,
-  getPackageDetailById,
-} from "../../Redux/Actions/packageAction";
+import { getPackageDetailById } from "../../Redux/Actions/packageAction";
 import { useLocation, useParams, useHistory } from "react-router-dom";
 import { ImageUrl } from "../../Redux/UrlConfig";
 import { Button } from "@mui/material";
-import { format } from "date-fns";
 import Zoom from "react-medium-image-zoom";
 import "react-medium-image-zoom/dist/styles.css";
-import { DateRange, DateRangePicker } from "react-date-range";
 import {
   clearErrors,
-  getAllPackageReviews,
   newPackageReview,
 } from "../../Redux/Actions/packageAction";
 import ReviewCard from "../HotelDetails/ReviewCard/ReviewCard";
@@ -92,28 +86,27 @@ function SearchedPackageDetail({ match }) {
       : setOpenPackageReview(true);
   };
   const packageReviewSubmitHandler = () => {
-    if(auth.authenticate){
-
+    if (auth.authenticate) {
       const myForm = new FormData();
-      
+
       myForm.set("rating", rating);
-    myForm.set("comment", comment);
-    myForm.set("id", match.params.id);
+      myForm.set("comment", comment);
+      myForm.set("id", match.params.id);
 
-    dispatch(newPackageReview(myForm));
-    // dispatch({type:GET_ALL_REVIEWS})
+      dispatch(newPackageReview(myForm));
+      // dispatch({type:GET_ALL_REVIEWS})
 
-    setOpenPackageReview(false);
-    history.go(0);
-  }else if(!localStorage.token){
-    toast.error("Login First", {
-      position: toast.POSITION.BOTTOM_CENTER,
-    });
-    setOpenPackageReview(false)
-    setTimeout(() => {
-      history.push('/login')
-    }, 3000);
-  }
+      setOpenPackageReview(false);
+      history.go(0);
+    } else if (!localStorage.token) {
+      toast.error("Login First", {
+        position: toast.POSITION.BOTTOM_CENTER,
+      });
+      setOpenPackageReview(false);
+      setTimeout(() => {
+        history.push("/login");
+      }, 3000);
+    }
   };
 
   const Results = () => (
@@ -149,21 +142,6 @@ function SearchedPackageDetail({ match }) {
                 style={{ margin: "14px 13px" }}
               />
               {item}
-
-              {/* {show && (
-              <>
-                <p>{packages.package.name}</p>
-                <p>{packages.package.description}</p>
-                <p>
-                  Free Cancellation Untill{" "}
-                  <span className="siTaxiOp">
-                    {`${format(dates[0].startDate - 2, "MM/dd/yyyy")} `}
-                  </span>{" "}
-                </p>
-
-                <Button variant="contained">Book Now</Button>
-              </>
-            )} */}
             </>
           );
         })}
@@ -174,21 +152,13 @@ function SearchedPackageDetail({ match }) {
       </Button>
     </div>
   );
-  const params = useParams();
-  //   console.log(params);
   let { id } = useParams();
 
   const dispatch = useDispatch();
   const packages = useSelector((state) => state.addPackageReducer);
-  // console.log("pack", packages.package.packageImages);
-  // console.log("picc>>>>>>>>",packages.package.packageImage)
   useEffect(() => {
     dispatch(getPackageDetailById(id));
   }, [dispatch, id]);
-  // const {packages} = useSelector((state) => state.packagesReducer);
-  // console.log(packages)
-  // const {product} = useSelector((state) => state.newVacation);
-  // console.log("products>>>", product);
   const [openPackageReview, setOpenPackageReview] = useState(false);
   const { success, error: reviewError } = useSelector(
     (state) => state.newPackageReview
@@ -215,7 +185,6 @@ function SearchedPackageDetail({ match }) {
       dispatch({ type: NEW_REVIEW_RESET });
     }
   }, [dispatch, reviewError, success]);
-
 
   if (Object.keys(packages.package).length === 0) {
     return null;
@@ -262,23 +231,11 @@ function SearchedPackageDetail({ match }) {
             <hr />
             <h4 className="text-black">Select Date and Travelers</h4>
             <div className="p-4 lsItem">
-              <input type="date" value={dates} onChange={(e)=>setDates(e.target.value)} />
-              {console.log(dates)}
-              {/* <span
-                onClick={() => setOpenPackageDate(!openPackageDate)}
-              >
-                {`${format(dates[0].startDate, "MM/dd/yyyy")} to ${format(
-                dates[0].endDate,
-                "MM/dd/yyyy"
-              )}`}
-              </span> */}
-              {/* {openPackageDate && (
-                <DateRange
-                  onChange={(item) => setDates([item.selection])}
-                  minDate={new Date()}
-                  ranges={dates}
-                />
-              )} */}
+              <input
+                type="date"
+                value={dates}
+                onChange={(e) => setDates(e.target.value)}
+              />
             </div>
 
             <div
@@ -388,44 +345,6 @@ function SearchedPackageDetail({ match }) {
                         </button>
                       </div>
                     </div>
-                    {/* <div className="optionItems">
-                                    <span
-                                      style={{
-                                        color: "black",
-                                        fontSize: "14px",
-                                      }}
-                                    >
-                                      Room
-                                    </span>
-                                    <div className="optionButton">
-                                      <button
-                                        className="optionbtn"
-                                        style={{ marginRight: "3px" }}
-                                        disabled={options.room <= 1}
-                                        onClick={() =>
-                                          handleOption("room", "decreament")
-                                        }
-                                      >
-                                        -
-                                      </button>
-                                      <span
-                                        style={{
-                                          color: "black",
-                                          fontSize: "14px",
-                                        }}
-                                      >
-                                        {options.room}
-                                      </span>
-                                      <button
-                                        className="optionbtn"
-                                        onClick={() =>
-                                          handleOption("room", "increament")
-                                        }
-                                      >
-                                        +
-                                      </button>
-                                    </div>
-                                  </div> */}
                   </div>
                 )}
               </section>
@@ -439,7 +358,7 @@ function SearchedPackageDetail({ match }) {
             >
               {buttonText}
             </button>
-            
+
             <small className="fw-bold">Reserve Now & Pay Later</small>
             <br />
             <small>Secure your spot while staying flexible</small>
@@ -469,23 +388,7 @@ function SearchedPackageDetail({ match }) {
           {/* start of detials about package */}
           <h3 className="text-black fw-bold">Overview</h3>
           <p className="text-black">{packages.package.description}</p>
-          {/* <ul className="text-black ms-5">
-            <li>
-              Viator Exclusive Las Vegas late-night tour isnt available anywhere
-              else
-            </li>
-            <li className="mt-3">
-              A prime viewing location—see the Las Vegas Strip from an open-top
-              bus
-            </li>
-            <li className="mt-3">
-              A guide shares stories about the city as you take in the bright
-              lights
-            </li>
-            <li className="mt-3">
-              Stop at the Welcome to Fabulous Las Vegas Sign for fun photo ops
-            </li>
-          </ul> */}
+
           <hr />
           <h3 className="text-black fw-bold my-4">What's Included</h3>
           <div className="row">
@@ -694,7 +597,6 @@ function SearchedPackageDetail({ match }) {
           </Dialog>
 
           <ToastContainer />
-        
 
           <Container>
             {packages.package.reviews && packages.package.reviews[0] ? (

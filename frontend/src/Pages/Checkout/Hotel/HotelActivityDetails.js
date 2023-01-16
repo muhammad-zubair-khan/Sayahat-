@@ -1,41 +1,32 @@
 import React, { useEffect, useState } from "react";
 import TextField from "@mui/material/TextField";
 import CheckoutSteps from "../CheckoutSteps";
-import { Link, useHistory, useLocation, useParams } from "react-router-dom";
+import { useHistory, useLocation, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  saveContactInfo,
-  saveHotelContactInfo,
-} from "../../../Redux/Actions/checkout";
 import { Button, Grid } from "@mui/material";
-import { getPackageDetailById } from "../../../Redux/Actions/packageAction";
 import { ImageUrl } from "../../../Redux/UrlConfig";
 import useFetch from "../../../hook/useFetch";
 import { getHotelDetailById } from "../../../Redux/Actions/hotelAction";
 
 const HotelActivityDetails = () => {
-  const [active,setActive] = useState(0);
+  const [active, setActive] = useState(0);
   const location = useLocation();
   const dispatch = useDispatch();
-  const { user } = useSelector((state) => state.auth);
   const [destination, setDestination] = useState(
     location.state.state.destination
   );
   const [dates, setDates] = useState(location.state.state.dates);
   const [options, setOptions] = useState(location.state.state.options);
   const [totalPrice, setTotalPrice] = useState(location.state.state.totalPrice);
-  const [selectedRooms, setSelectedRooms] = useState(location.state.state.selectedRooms);
-  const [show, setShow] = useState(false);
+  const [selectedRooms, setSelectedRooms] = useState(
+    location.state.state.selectedRooms
+  );
   const { hotel } = useSelector((state) => state.hotelById);
   const { id } = useParams();
 
-  const { data, loading, error } = useFetch(
-    `http://localhost:5000/api/room/${id}`
-  );
-
   useEffect(() => {
     dispatch(getHotelDetailById(id));
-  }, [dispatch,id]);
+  }, [dispatch, id]);
 
   const history = useHistory();
 
@@ -43,7 +34,6 @@ const HotelActivityDetails = () => {
   const [lastName, setLastName] = useState("");
 
   const SubmitHotelContactInfo = (e) => {
-   
     const data = {
       destination,
       firstName,
@@ -54,10 +44,10 @@ const HotelActivityDetails = () => {
 
     sessionStorage.setItem("hotelActivityInfo", JSON.stringify(data));
     history.push(`/hotelBooking/${id}/process/payment`, {
-        state: { destination, dates, options, totalPrice,selectedRooms },
-      });
+      state: { destination, dates, options, totalPrice, selectedRooms },
+    });
   };
- 
+
   if (Object.keys(hotel).length === 0) {
     return null;
   }
@@ -74,7 +64,11 @@ const HotelActivityDetails = () => {
             }}
           >
             <span>
-              <img src={ImageUrl(hotel.hotelImages[0].img)} style={{width:"35%"}} alt="" />
+              <img
+                src={ImageUrl(hotel.hotelImages[0].img)}
+                style={{ width: "35%" }}
+                alt=""
+              />
               <b>{hotel.name}</b>
             </span>
             <span>
@@ -130,18 +124,16 @@ const HotelActivityDetails = () => {
               </div>
 
               {active === 0 && (
-                      <Button
-                        variant="contained"
-                        type="submit"
-                        style={{ float: "right" }}
-                        className="send-button"
-                        disabled={
-                          !firstName || !lastName 
-                        }
-                      >
-                        Next
-                      </Button>
-                    )}
+                <Button
+                  variant="contained"
+                  type="submit"
+                  style={{ float: "right" }}
+                  className="send-button"
+                  disabled={!firstName || !lastName}
+                >
+                  Next
+                </Button>
+              )}
             </form>
           </div>
         </Grid>

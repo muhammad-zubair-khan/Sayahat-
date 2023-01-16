@@ -1,9 +1,6 @@
 import React, { Fragment, useEffect, useRef, useState } from "react";
-// import CheckoutSteps from "../Cart/CheckoutSteps";
 import { useSelector, useDispatch } from "react-redux";
-// import MetaData from "../layout/MetaData";
 import { Typography } from "@mui/material";
-// import { useAlert } from "react-alert";
 import {
   CardNumberElement,
   CardCvcElement,
@@ -23,39 +20,34 @@ import { bookPackage } from "../../Redux/Actions/bookPackageAction";
 // import { createOrder, clearErrors } from "../../actions/orderAction";
 
 const Payment = ({ history }) => {
-//   const orderInfo = JSON.parse(sessionStorage.getItem("orderInfo"));
-const location = useLocation()
-const params = useParams()
+  const location = useLocation();
   const dispatch = useDispatch();
-//   const alert = useAlert();
-const [time,setTimes] = useState(location.state.state.time)
+  const [time, setTimes] = useState(location.state.state.time);
   const stripe = useStripe();
   const elements = useElements();
   const payBtn = useRef(null);
   const { id } = useParams();
   const packages = useSelector((state) => state.addPackageReducer);
-  const {user} = useSelector((state)=> state.auth)
+  const { user } = useSelector((state) => state.auth);
 
   useEffect(() => {
     dispatch(getPackageDetailById(id));
   }, [dispatch, id]);
-// const {}
+  // const {}
   const { contactInfo } = useSelector((state) => state.contactCheckout);
-//   const { user } = useSelector((state) => state.user);
-//   const { error } = useSelector((state) => state.newOrder);
-const activityInfo = JSON.parse(sessionStorage.getItem("activityInfo"));
+  const activityInfo = JSON.parse(sessionStorage.getItem("activityInfo"));
   const paymentData = {
     amount: Math.round(packages.package.price * 100),
   };
 
   const bookPkg = {
-    name:  packages.package.name,
+    name: packages.package.name,
     price: packages.package.price,
     pickUpTime: time,
-    city:packages.package.city,
-    refundable:packages.package.refundable,
+    city: packages.package.city,
+    refundable: packages.package.refundable,
     contactInfo,
-    activityInfo
+    activityInfo,
   };
 
   const submitHandler = async (e) => {
@@ -87,10 +79,10 @@ const activityInfo = JSON.parse(sessionStorage.getItem("activityInfo"));
             email: user.email,
             address: {
               city: packages.package.city,
-            //   line1: shippingInfo.address,
-            //   state: shippingInfo.state,
-            //   postal_code: shippingInfo.pinCode,
-            //   country: shippingInfo.country,
+              //   line1: shippingInfo.address,
+              //   state: shippingInfo.state,
+              //   postal_code: shippingInfo.pinCode,
+              //   country: shippingInfo.country,
             },
           },
         },
@@ -120,12 +112,12 @@ const activityInfo = JSON.parse(sessionStorage.getItem("activityInfo"));
     }
   };
 
-//   useEffect(() => {
-//     if (error) {
-//       alert.error(error);
-//       dispatch(clearErrors());
-//     }
-//   }, [dispatch, error, alert]);
+  //   useEffect(() => {
+  //     if (error) {
+  //       alert.error(error);
+  //       dispatch(clearErrors());
+  //     }
+  //   }, [dispatch, error, alert]);
 
   return (
     <Fragment>

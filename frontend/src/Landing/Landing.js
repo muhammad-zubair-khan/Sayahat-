@@ -1,235 +1,28 @@
-import React, { useState, useContext } from "react";
-import {
-  Link,
-  Redirect,
-  useHistory,
-  useLocation,
-  useParams,
-} from "react-router-dom";
+import React, { useEffect, useContext } from "react";
+import { Link } from "react-router-dom";
 import "react-multi-carousel/lib/styles.css";
 import "./Landing.css";
 import MyCard from "../MyCard";
-import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
-import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
-import { Button, Container } from "@mui/material";
+import { Container } from "@mui/material";
 import videoplayback from "../Assets/videoplayback.mp4";
 import ReactPlayer from "react-player";
 import CardSlider from "../CardSlider";
 import "../CardSlider.css";
 import { TopDes } from "../TopDes";
 import Footer from "../Footer/Footer";
-import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
-import { DateRangePicker } from "react-date-range";
-import { format } from "date-fns";
 import "react-date-range/dist/styles.css"; // main style file
 import "react-date-range/dist/theme/default.css"; // theme css file
-import { useDispatch, useSelector } from "react-redux";
-import { getAllHotels } from "../Redux/Actions/hotelAction";
 import { SearchContext } from "../Context/SearchContext";
-import { ReactSearchAutocomplete } from "react-search-autocomplete";
-import { useEffect } from "react";
 import { getAllVacationProduct } from "../Redux/Actions/vacationProductAction";
 import VillaIcon from "@mui/icons-material/Villa";
 import Tab from "../Components/Tab/Tab";
 const Landing = ({ type }) => {
-  const history = useHistory();
-  //Stays
-  const [destination, setDestination] = useState("");
-  const [openDate, setOpenDate] = useState(false);
-  const [dates, setDates] = useState([
-    {
-      startDate: new Date(),
-      endDate: new Date(),
-      key: "selection",
-    },
-  ]);
-  const [openOptions, setOpenOptions] = useState(false);
-  const [options, setOptions] = useState({
-    adult: 1,
-    children: 0,
-    room: 1,
-  });
-
-  //Car
-  const [startDestination, setStartDestination] = useState("");
-  const [endDestination, setEndDestination] = useState("");
-  const [openCarDate, setOpenCarDate] = useState(false);
-  const [pickupTime, setPickupTime] = useState(null);
-  const [dropoffTime, setDropoffTime] = useState(null);
-  const [date, setDate] = useState([
-    {
-      startDate: new Date(),
-      endDate: new Date(),
-      key: "selection",
-    },
-  ]);
-  const [options3, setOptions3] = useState({
-    adult: 1,
-    children: 0,
-    room: 1,
-  });
-
-  //Hotel
-  const handleOption = (name, operation) => {
-    setOptions((prev) => {
-      return {
-        ...prev,
-        [name]:
-          operation === "increament" ? options[name] + 1 : options[name] - 1,
-      };
-    });
-  };
-
-  //Package
-  const [openPackageDate, setOpenPackageDate] = useState(false);
-  const [packageDate, setPackageDate] = useState([
-    {
-      startDate: new Date(),
-      endDate: new Date(),
-      key: "selection",
-    },
-  ]);
-
-  //package
-  const [packageDestination, setPackageDestination] = useState("");
-  const [openOptions2, setOpenOptions2] = useState(false);
-  const [options2, setOptions2] = useState({
-    adult: 1,
-    children: 0,
-    room: 1,
-  });
-  //Package
-  const handleOption2 = (name, operation) => {
-    setOptions2((prev) => {
-      return {
-        ...prev,
-        [name]:
-          operation === "increament" ? options2[name] + 1 : options2[name] - 1,
-      };
-    });
-  };
   const { dispatch } = useContext(SearchContext);
-  const handleSearch = () => {
-    dispatch({ type: "NEW_SEARCH", payload: { destination, dates, options } });
-    history.push("/hotels", { state: { destination, dates, options } });
-  };
-  const handlePackageSearch = () => {
-    dispatch({
-      type: "NEW_SEARCH",
-      payload: { packageDestination, dates, options },
-    });
-    history.push("/packages", {
-      state: { packageDestination, dates, options },
-    });
-  };
-  const handleCarSearch = () => {
-    dispatch({
-      type: "NEW_SEARCH",
-      payload: {
-        startDestination,
-        endDestination,
-        pickupTime,
-        dropoffTime,
-        dates,
-        options,
-      },
-    });
-    history.push(
-      `/cars?from=${startDestination}&to=${endDestination}&pickup-Time=${pickupTime}&dropoff-time=${dropoffTime}`,
-      {
-        state: {
-          startDestination,
-          endDestination,
-          pickupTime,
-          dropoffTime,
-          dates,
-        },
-      }
-    );
-  };
-  const { products } = useSelector((state) => state.vacationProduct);
   useEffect(() => {
     dispatch(getAllVacationProduct());
-  }, []);
-
-  // const handleOnSearch = (string, results) => {
-  //   // onSearch will have as the first callback parameter
-  //   // the string searched and for the second the results.
-  //   console.log(string, results)
-  // }
-
-  //Car Functions
-  const CarhandleOnHover = (result) => {
-    // the item hovered
-    console.log(result);
-  };
-
-  const CarhandleOnSelect = (product) => {
-    // the item selected
-    setStartDestination(product.name);
-    // console.log(product);
-  };
-  const CarEndhandleOnSelect = (product) => {
-    // the item selected
-    setEndDestination(product.name);
-    console.log(product);
-  };
-
-  const CarhandleOnFocus = () => {
-    console.log("Focused");
-  };
-
-  const CarformatResult = (product) => {
-    return (
-      <>
-        <span style={{ textAlign: "left", display: "none" }}>
-          id: {product._id}
-        </span>
-        <span style={{ display: "block", textAlign: "left" }}>
-          {product.name}
-        </span>
-      </>
-    );
-  };
-
-  //Stays Function
-  const handleOnStayHover = (result) => {
-    // the item hovered
-    console.log(result);
-  };
-
-  const handleOnStaySelect = (product) => {
-    setDestination(product.name);
-  };
-
-  //Package Functions
-  const handleOnHover = (result) => {
-    // the item hovered
-    console.log(result);
-  };
-
-  const handleOnSelect = (product) => {
-    setPackageDestination(product.name);
-  };
-
-  const handleOnFocus = () => {
-    console.log("Focused");
-  };
-
-  const formatResult = (product) => {
-    return (
-      <>
-        <span style={{ textAlign: "left", display: "none" }}>
-          id: {product._id}
-        </span>
-        <span style={{ display: "block", textAlign: "left" }}>
-          {product.name}
-        </span>
-      </>
-    );
-  };
+  }, [dispatch]);
 
   return (
     <>
@@ -267,7 +60,7 @@ const Landing = ({ type }) => {
                   </div>
                 </div>
                 <div className="col-sm-12 col-md-12 col-lg-12">
-                  <Tab/>
+                  <Tab />
                 </div>
               </div>
             </div>

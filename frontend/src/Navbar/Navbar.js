@@ -7,8 +7,6 @@ import React, { useState, useEffect } from "react";
 import "./Navbar.css";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllVacationsCategory } from "../Redux/Actions/vacationCategoryAction";
-import Dropdown from "react-bootstrap/Dropdown";
-import DropdownButton from "react-bootstrap/DropdownButton";
 import PermIdentityIcon from "@mui/icons-material/PermIdentity";
 import PhoneIcon from "@mui/icons-material/Phone";
 import HouseboatIcon from "@mui/icons-material/Houseboat";
@@ -16,7 +14,7 @@ import HotelIcon from "@mui/icons-material/Hotel";
 import TipsAndUpdatesIcon from "@mui/icons-material/TipsAndUpdates";
 import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
 import { signout } from "../Redux/Actions/authActions";
-import {DropdownMenu} from "../Components/MaterialUI";
+import { DropdownMenu } from "../Components/MaterialUI";
 
 function ChangeColorOnScroll(props) {
   const { children, window } = props;
@@ -35,7 +33,6 @@ const Navbar = (props) => {
   const { user } = useSelector((state) => state.auth);
   const auth = useSelector((state) => state.auth);
   const vacationCategory = useSelector((state) => state.Vacationcategory);
-  console.log(vacationCategory);
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -43,7 +40,6 @@ const Navbar = (props) => {
   }, [dispatch]);
 
   const [prevScrollPos, setPrevScrollPos] = useState(0);
-  // const [visible, setVisible] = useState(true);
   const [setVisible] = useState(true);
 
   const handleScroll = () => {
@@ -69,10 +65,7 @@ const Navbar = (props) => {
   };
 
   const theme = useTheme();
-  // console.log(theme);
   const isMatch = useMediaQuery(theme.breakpoints.down("md"));
-  // console.log(isMatch);
-
   const displayCategories = (categories) => {
     let myCategories = [];
     for (let category of categories) {
@@ -126,15 +119,16 @@ const Navbar = (props) => {
               // color: "white",
               // borderRadius: '78%',
               // padding: '13px 13px',
-              textTransform: 'uppercase',
-              background: 'rgb(255 255 255 / 16%)',
-              color: 'white',
-              borderRadius: '78%',
+              textTransform: "uppercase",
+              background: "rgb(255 255 255 / 16%)",
+              color: "white",
+              borderRadius: "78%",
               // padding: '16px 18px',
               // fontSize:'20px'
             }}
           >
-            {user.firstName.substring(0,1)}{user.lastName.substring(0,1)}
+            {user.firstName.substring(0, 1)}
+            {user.lastName.substring(0, 1)}
           </Link>
         }
         menus={[

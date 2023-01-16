@@ -15,53 +15,24 @@ import {
   GET_PRODUCT_DETAIL_BY_ID_FAIL,
 } from "../Constants/vacationProductConstants";
 
-// Create Product
-// export const createProduct = (form) => async(dispatch) => {
-//   try {
-//     dispatch({ type: NEW_VACATION_PRODUCT_REQUEST });
-    
-//     const config = {
-//       headers: { "Content-Type": "application/json" },
-//     };
-    
-//     const { data } = await axios.post(
-//       `/admin/VacationProduct/new`,
-//       form,
-//       config
-//       );
-//       // console.log("data>>>>",myForm)
-
-//     dispatch({
-//       type: NEW_VACATION_PRODUCT_SUCCESS,
-//       payload: data.product,
-//     });
-//     console.log(data)
-//   } catch (error) {
-//     dispatch({
-//       type: NEW_VACATION_PRODUCT_FAIL,
-//       payload: error.response.data.message,
-//     });
-//   }
-// };
-
 export const createProduct = (form) => {
-  return async dispatch => {
-    dispatch({ type:  NEW_VACATION_PRODUCT_REQUEST });
+  return async (dispatch) => {
+    dispatch({ type: NEW_VACATION_PRODUCT_REQUEST });
     try {
       const res = await axios.post("/admin/VacationProduct/new", form);
-      if (res.status === 201) {
-        dispatch({
-          type: NEW_VACATION_PRODUCT_SUCCESS,
-          payload: res.data.product,
-        });
-      } else {
-        dispatch({
-          type: NEW_VACATION_PRODUCT_FAIL,
-          payload: res.data.error,
-        });
-      }
+      // if (res.status === 201) {
+      dispatch({
+        type: NEW_VACATION_PRODUCT_SUCCESS,
+        payload: res.data.product,
+      });
+      // } else {
+      // }
     } catch (error) {
-      console.log(error.response);
+      dispatch({
+        type: NEW_VACATION_PRODUCT_FAIL,
+        payload: error.response.data.message,
+      });
+      // console.log(error.response);
     }
   };
 };
@@ -90,7 +61,7 @@ export const getVacationProductsBySlug = (slug) => async (dispatch) => {
   try {
     dispatch({ type: GET_VACATION_PRODUCTS_BY_SLUG_REQUEST });
     const { data } = await axios.get(`/vacations/${slug}`);
-    console.log(data);
+    // console.log(data);
     dispatch({
       type: GET_VACATION_PRODUCTS_BY_SLUG_SUCCESS,
       payload: data.product,

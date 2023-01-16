@@ -5,7 +5,6 @@ import "./MyProfile.css";
 
 const MyProfile = ({ history }) => {
   const { user, loading, authenticate } = useSelector((state) => state.auth);
-  console.log(user);
   useEffect(() => {
     if (authenticate === false) {
       history.push("/login");
@@ -24,20 +23,21 @@ const MyProfile = ({ history }) => {
               <h1>My Profile</h1>
               {/* <img src="" alt={user.fullName} /> */}
               <div
-            className="fullName"
-            style={{
-              textTransform: 'uppercase',
-              // background: 'rgb(247, 133, 54)',
-              background: 'rgb(68 68 68)',
-              color: 'white',
-              borderRadius: '100%',
-              padding: '49px',
-              fontSize: '41px',
-            }}
-          >
-            {user.firstName.substring(0,1)}{user.lastName.substring(0,1)}
-          </div>
-              <Link to={`/me/update/${user._id}`}>Edit Profile</Link>
+                className="fullName"
+                style={{
+                  textTransform: "uppercase",
+                  // background: 'rgb(247, 133, 54)',
+                  background: "rgb(68 68 68)",
+                  color: "white",
+                  borderRadius: "100%",
+                  padding: "49px",
+                  fontSize: "41px",
+                }}
+              >
+                {user.firstName.substring(0, 1)}
+                {user.lastName.substring(0, 1)}
+              </div>
+              {/* <Link to={`/me/update/${user._id}`}>Edit Profile</Link> */}
             </div>
             <div>
               <div>

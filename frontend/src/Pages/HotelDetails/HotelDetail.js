@@ -1,6 +1,4 @@
 import "./HotelDetail.css";
-// import MailList from "../../components/mailList/MailList";
-// import Footer from "../../components/footer/Footer";
 import { Button } from "@mui/material";
 import {
   Dialog,
@@ -8,7 +6,7 @@ import {
   DialogContent,
   DialogTitle,
 } from "@mui/material";
-import { Grid, Container, Rating } from "@mui/material";
+import {  Container, Rating } from "@mui/material";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCircleArrowLeft,
@@ -16,14 +14,11 @@ import {
   faCircleXmark,
   faLocationDot,
 } from "@fortawesome/free-solid-svg-icons";
-import { useContext, useEffect, useState } from "react";
-import useFetch from "../../hook/useFetch";
-import { useHistory, useLocation, useParams } from "react-router-dom";
-import { SearchContext } from "../../Context/SearchContext";
+import { useEffect, useState } from "react";
+import { useHistory, useLocation } from "react-router-dom";
 import Navbar from "../../Navbar/Navbar";
 import Footer from "../../Footer/Footer";
 import { useSelector } from "react-redux";
-// import { AuthContext } from "../../context/AuthContext";
 import Reserve from "../../Components/Reserve/Reserve";
 import { ImageUrl } from "../../Redux/UrlConfig";
 import Zoom from "react-medium-image-zoom";
@@ -33,7 +28,6 @@ import MailList from "../../Components/MailList/MailList";
 import { useDispatch } from "react-redux";
 import {
   clearErrors,
-  getAllReviews,
   getHotelDetailById,
   newReview,
 } from "../../Redux/Actions/hotelAction";
@@ -49,29 +43,17 @@ const HotelDetail = ({ match }) => {
   const id = location.pathname.split("/")[2];
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
-  // const [rating,setRating] = useState(0)
-  // console.log(id)
-  // console.log("location>>",location)
   const [slideNumber, setSlideNumber] = useState(0);
   const [open, setOpen] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const [dates, setDates] = useState(location.state.state.dates);
-  const [destination, setDestination] = useState(
-    location.state.state.destination
-  );
   const { hotel } = useSelector((state) => state.hotelById);
   const [options, setOptions] = useState(location.state.state.options);
   const [openReview, setOpenReview] = useState(false);
   const { success, error: reviewError } = useSelector(
     (state) => state.newReview
   );
-  // const auth = useSelector((state) => state.auth);
 
-  // const { data, loading, error } = useFetch(
-  //   `http://localhost:5000/api/hotel/${id}`
-  // );
-
-  
   useEffect(() => {
     dispatch(getHotelDetailById(id));
   }, [id]);
@@ -111,13 +93,7 @@ const HotelDetail = ({ match }) => {
   //   window.localStorage.setItem("startDate", dates[0].startDate);
   // }, [dates]);
   const days = dayDifference(dates[0].endDate, dates[0].startDate);
-  // console.log(options)
-  // console.log(parseInt(localStorage.getItem('endDate')))
 
-  const handleOpen = (i) => {
-    setSlideNumber(i);
-    setOpen(true);
-  };
 
   const handleMove = (direction) => {
     let newSlideNumber;
@@ -131,7 +107,7 @@ const HotelDetail = ({ match }) => {
     setSlideNumber(newSlideNumber);
   };
 
-  const totalPrice = days * hotel.cheapestPrice * options.room
+  const totalPrice = days * hotel.cheapestPrice * options.room;
   const handleClick = () => {
     // if (!user) {
     setOpenModal(true);
@@ -150,27 +126,27 @@ const HotelDetail = ({ match }) => {
     openReview ? setOpenReview(false) : setOpenReview(true);
   };
   const reviewSubmitHandler = () => {
-    if(auth.authenticate){
-    const myForm = new FormData();
+    if (auth.authenticate) {
+      const myForm = new FormData();
 
-    myForm.set("rating", rating);
-    myForm.set("comment", comment);
-    myForm.set("id", match.params.id);
+      myForm.set("rating", rating);
+      myForm.set("comment", comment);
+      myForm.set("id", match.params.id);
 
-    dispatch(newReview(myForm));
-    // dispatch({type:GET_ALL_REVIEWS})
+      dispatch(newReview(myForm));
+      // dispatch({type:GET_ALL_REVIEWS})
 
-    setOpenReview(false);
-    history.go(0)
-  }else if(!localStorage.token){
-    toast.error("Login First", {
-      position: toast.POSITION.BOTTOM_CENTER,
-    });
-    setOpenReview(false)
-    setTimeout(() => {
-      history.push('/login')
-    }, 3000);
-  }
+      setOpenReview(false);
+      history.go(0);
+    } else if (!localStorage.token) {
+      toast.error("Login First", {
+        position: toast.POSITION.BOTTOM_CENTER,
+      });
+      setOpenReview(false);
+      setTimeout(() => {
+        history.push("/login");
+      }, 3000);
+    }
   };
 
   return (
@@ -183,160 +159,152 @@ const HotelDetail = ({ match }) => {
       {/* {loading ? (
         "loading"
       ) : ( */}
-        <div
-          className="hotelContainer"
-          style={{ top: "126px", position: "relative" }}
-        >
-          {open && (
-            <div className="slider">
-              <FontAwesomeIcon
-                icon={faCircleXmark}
-                className="close"
-                onClick={() => setOpen(false)}
-              />
-              <FontAwesomeIcon
-                icon={faCircleArrowLeft}
-                className="arrow"
-                onClick={() => handleMove("l")}
-              />
-              <div className="sliderWrapper">
-                <img
-                  src={hotel.photos[slideNumber]}
-                  alt=""
-                  className="sliderImg"
-                />
-              </div>
-              <FontAwesomeIcon
-                icon={faCircleArrowRight}
-                className="arrow"
-                onClick={() => handleMove("r")}
+      <div
+        className="hotelContainer"
+        style={{ top: "126px", position: "relative" }}
+      >
+        {open && (
+          <div className="slider">
+            <FontAwesomeIcon
+              icon={faCircleXmark}
+              className="close"
+              onClick={() => setOpen(false)}
+            />
+            <FontAwesomeIcon
+              icon={faCircleArrowLeft}
+              className="arrow"
+              onClick={() => handleMove("l")}
+            />
+            <div className="sliderWrapper">
+              <img
+                src={hotel.photos[slideNumber]}
+                alt=""
+                className="sliderImg"
               />
             </div>
-          )}
-          <div className="hotelWrapper">
-            <button className="bookNow" onClick={handleClick}>
-              Reserve or Book Now!
-            </button>
-            <h1 className="hotelTitle">{hotel.name}</h1>
-            <div className="hotelAddress">
-              <FontAwesomeIcon icon={faLocationDot} />
-              <span>{hotel.address}</span>
-            </div>
-            <span className="hotelDistance">
-              Excellent location – {hotel.distance}
-            </span>
-            <span className="hotelPriceHighlight">
-              Book a stay over PKR {hotel.cheapestPrice} at this property and
-              get a free airport taxi
-            </span>
-            <div className="hotelImages">
-              {hotel.hotelImages?.map((photo, i) => (
-                <div className="hotelImgWrapper" key={i}>
-                  <Zoom>
-                    <img
-                      // onClick={() => handleOpen(i)}
-                      src={ImageUrl(photo.img)}
-                      alt="images"
-                      className="hotelImg"
-                    />
-                  </Zoom>
-                </div>
-              ))}
-            </div>
-            <div className="hotelDetails">
-              <div className="hotelDetailsTexts">
-                <h1 className="hotelTitle">{hotel.title}</h1>
-                <p className="hotelDesc">{hotel.description}</p>
-                <p className="siTaxiOp">
-                  {hotel.pool ? `Pool is ${hotel.pool}` : " "}
-                </p>
-                <p className="siTaxiOp">
-                  {hotel.Breakfast
-                    ? `Breakfast is ${hotel.Breakfast}`
-                    : " "}
-                </p>
-                <p className="siTaxiOp">
-                  {hotel.Hottub ? `HotTub is ${hotel.Hottub}` : " "}
-                </p>
-                <p className="siTaxiOp" style={{ padding: "0px" }}>
-                  {hotel.FullyRefundable
-                    ? `${hotel.FullyRefundable}`
-                    : " "}
-                </p>
+            <FontAwesomeIcon
+              icon={faCircleArrowRight}
+              className="arrow"
+              onClick={() => handleMove("r")}
+            />
+          </div>
+        )}
+        <div className="hotelWrapper">
+          <button className="bookNow" onClick={handleClick}>
+            Reserve or Book Now!
+          </button>
+          <h1 className="hotelTitle">{hotel.name}</h1>
+          <div className="hotelAddress">
+            <FontAwesomeIcon icon={faLocationDot} />
+            <span>{hotel.address}</span>
+          </div>
+          <span className="hotelDistance">
+            Excellent location – {hotel.distance}
+          </span>
+          <span className="hotelPriceHighlight">
+            Book a stay over PKR {hotel.cheapestPrice} at this property and get
+            a free airport taxi
+          </span>
+          <div className="hotelImages">
+            {hotel.hotelImages?.map((photo, i) => (
+              <div className="hotelImgWrapper" key={i}>
+                <Zoom>
+                  <img
+                    // onClick={() => handleOpen(i)}
+                    src={ImageUrl(photo.img)}
+                    alt="images"
+                    className="hotelImg"
+                  />
+                </Zoom>
               </div>
-              <div className="hotelDetailsPrice">
-                <h1>Perfect for a {days}-night stay!</h1>
-                <span>
-                  this property has an excellent location score of 9.8!
-                </span>
-                <h6>
-                  <b>PKR{totalPrice}</b> (
-                  {days} nights)
-                  <Tooltip
-                    title={`${hotel.cheapestPrice} x ${days} and ${options.adult} Adults - ${options.children} Childrens - ${options.room} Rooms`}
-                    placement="top"
-                  >
-                    <Button>
-                      <i className="text-dark fs-5 fa-solid fa-circle-info"></i>
-                    </Button>
-                  </Tooltip>
-                </h6>
-                <button onClick={handleClick}>Reserve or Book Now!</button>
-                <button onClick={submitReviewToggle} className="submitReview">
-                  Submit Review
-                </button>
-              </div>
+            ))}
+          </div>
+          <div className="hotelDetails">
+            <div className="hotelDetailsTexts">
+              <h1 className="hotelTitle">{hotel.title}</h1>
+              <p className="hotelDesc">{hotel.description}</p>
+              <p className="siTaxiOp">
+                {hotel.pool ? `Pool is ${hotel.pool}` : " "}
+              </p>
+              <p className="siTaxiOp">
+                {hotel.Breakfast ? `Breakfast is ${hotel.Breakfast}` : " "}
+              </p>
+              <p className="siTaxiOp">
+                {hotel.Hottub ? `HotTub is ${hotel.Hottub}` : " "}
+              </p>
+              <p className="siTaxiOp" style={{ padding: "0px" }}>
+                {hotel.FullyRefundable ? `${hotel.FullyRefundable}` : " "}
+              </p>
+            </div>
+            <div className="hotelDetailsPrice">
+              <h1>Perfect for a {days}-night stay!</h1>
+              <span>this property has an excellent location score of 9.8!</span>
+              <h6>
+                <b>PKR{totalPrice}</b> ({days} nights)
+                <Tooltip
+                  title={`${hotel.cheapestPrice} x ${days} and ${options.adult} Adults - ${options.children} Childrens - ${options.room} Rooms`}
+                  placement="top"
+                >
+                  <Button>
+                    <i className="text-dark fs-5 fa-solid fa-circle-info"></i>
+                  </Button>
+                </Tooltip>
+              </h6>
+              <button onClick={handleClick}>Reserve or Book Now!</button>
+              <button onClick={submitReviewToggle} className="submitReview">
+                Submit Review
+              </button>
             </div>
           </div>
+        </div>
 
-          {/* ----------------------------Review-Section-Start----------------------- */}
-          <h3 className="reviewsHeading">REVIEWS</h3>
-          <Dialog
-            aria-labelledby="simple-dialog-title"
-            open={openReview}
-            onClose={submitReviewToggle}
+        {/* ----------------------------Review-Section-Start----------------------- */}
+        <h3 className="reviewsHeading">REVIEWS</h3>
+        <Dialog
+          aria-labelledby="simple-dialog-title"
+          open={openReview}
+          onClose={submitReviewToggle}
+        >
+          <DialogTitle>Submit Review</DialogTitle>
+          <DialogContent
+            className="submitDialog"
+            style={{ display: "flex", flexDirection: "column" }}
           >
-            <DialogTitle>Submit Review</DialogTitle>
-            <DialogContent
-              className="submitDialog"
-              style={{ display: "flex", flexDirection: "column" }}
-            >
-              <Rating
-                onChange={(e) => setRating(e.target.value)}
-                value={rating}
-                size="large"
-                
-              />
+            <Rating
+              onChange={(e) => setRating(e.target.value)}
+              value={rating}
+              size="large"
+            />
 
-              <textarea
+            <textarea
               required
-                className="submitDialogTextArea"
-                cols="40"
-                rows="5"
-                value={comment}
-                onChange={(e) => setComment(e.target.value)}
-              ></textarea>
-            </DialogContent>
-            <DialogActions>
-              <Button
-                onClick={submitReviewToggle}
-                variant="outlined"
-                color="secondary"
-              >
-                Cancel
-              </Button>
-              <Button
-                onClick={reviewSubmitHandler}
-                variant="outlined"
-                color="primary"
-              >
-                Submit
-              </Button>
-            </DialogActions>
-          </Dialog>
+              className="submitDialogTextArea"
+              cols="40"
+              rows="5"
+              value={comment}
+              onChange={(e) => setComment(e.target.value)}
+            ></textarea>
+          </DialogContent>
+          <DialogActions>
+            <Button
+              onClick={submitReviewToggle}
+              variant="outlined"
+              color="secondary"
+            >
+              Cancel
+            </Button>
+            <Button
+              onClick={reviewSubmitHandler}
+              variant="outlined"
+              color="primary"
+            >
+              Submit
+            </Button>
+          </DialogActions>
+        </Dialog>
 
-          <ToastContainer />
-          {/* <Container className="my-2">
+        <ToastContainer />
+        {/* <Container className="my-2">
             <Grid container>
               <Grid xs={12} md={12}>
                 <div
@@ -409,27 +377,29 @@ const HotelDetail = ({ match }) => {
             </Grid>
           </Container> */}
 
-          <Container>
-            {hotel.reviews && hotel.reviews[0] ? (
-              <div className="reviews">
-                {hotel.reviews &&
-                  hotel.reviews.map((review) => (
-                    <ReviewCard key={review._id} review={review} />
-                    // {/* <img src={profilePng} alt="User" /> */}
-                  ))}
-              </div>
-            ) : (
-              <p className="noReviews">No Reviews Yet</p>
-            )}
-          </Container>
+        <Container>
+          {hotel.reviews && hotel.reviews[0] ? (
+            <div className="reviews">
+              {hotel.reviews &&
+                hotel.reviews.map((review) => (
+                  <ReviewCard key={review._id} review={review} />
+                  // {/* <img src={profilePng} alt="User" /> */}
+                ))}
+            </div>
+          ) : (
+            <p className="noReviews">No Reviews Yet</p>
+          )}
+        </Container>
 
-          {/* ----------------------------Review-Section-End----------------------- */}
+        {/* ----------------------------Review-Section-End----------------------- */}
 
-          <MailList />
-          {/* <Footer /> */}
-        </div>
+        <MailList />
+        {/* <Footer /> */}
+      </div>
       {/* )} */}
-      {openModal && <Reserve setOpen={setOpenModal} hotelId={id} totalPrice={totalPrice} />}
+      {openModal && (
+        <Reserve setOpen={setOpenModal} hotelId={id} totalPrice={totalPrice} />
+      )}
       <Footer />
     </>
   );

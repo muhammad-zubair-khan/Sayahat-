@@ -1,7 +1,6 @@
 import "./App.css";
 import React, { useEffect, useState } from "react";
-import { BrowserRouter as Router, Redirect, Route, Switch } from "react-router-dom";
-// import PrivateRoute from "./Components/Private/PrivateRoute";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Home from "./Pages/Home/Home";
 import Hotel from "./Pages/Hotel/Hotel";
 import HotelDetail from "./Pages/HotelDetails/HotelDetail";
@@ -17,46 +16,33 @@ import Reset from "./Pages/Account/Reset";
 import Forgot from "./Pages/Account/Forgot";
 import Cities from "./Pages/Citites/Cities";
 import City from "./Pages/Cities/LahoreCity";
-import TopDestination from "./Pages/Destination/TopDestination";
-import TopDestinationDetail from "./Pages/Destination/TopDestinationDetail";
 import PackageDetail from "./Pages/PackageDetails/PackageDetail";
 import SearchedPackage from "./Pages/SearchedPackage/SearchedPackage";
 import SearchedPackageDetail from "./Pages/SearchedPackage/SearchedPackageDetail";
 import { useDispatch, useSelector } from "react-redux";
 import { isUserLoggedIn } from "../src/Redux/Actions/authActions";
-// import { getAllVacationsCategory } from "./Redux/Actions/vacationCategoryAction";
-// import { getInitialData } from "../src/Redux/Actions/initialDataAction";
 import HotelList from "./Pages/NavHotel/HotelList";
-import Checkout from "./Pages/Checkout/Checkout";
-import HotelCheckout from "./Pages/Checkout/HotelCheckout";
-import PackageCheckout from "./Pages/Checkout/PackageCheckout";
 import axios from "axios";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
-
 import ContactDetails from "./Pages/Checkout/ContactDetails/ContactDetails";
 import ActivityDetails from "./Pages/Checkout/ActivityDetails/ActivityDetails";
 import Payment from "./Pages/Payment/Payment";
 import PackageReserveSuccess from "./Components/Success/PackageReserveSuccess";
 import MyPackages from "./Pages/Bookings/Packages/MyPackages";
 import MyPackageDetails from "./Pages/Bookings/Packages/MyPackageDetails";
-
 import HotelContactDetails from "./Pages/Checkout/Hotel/HotelContactDetails";
 import HotelActivityDetails from "./Pages/Checkout/Hotel/HotelActivityDetails";
 import HotelPayment from "./Pages/Checkout/Hotel/HotelPayment";
 import HotelBookingSuccess from "./Components/Success/HotelBookingSuccess";
 import MyHotels from "./Pages/Bookings/Hotels/MyHotels";
 import MyHotelDetails from "./Pages/Bookings/Hotels/MyHotelDetails";
-
 import CarContactDetails from "./Pages/Checkout/Car/CarContactDetails";
 import CarPayment from "./Pages/Checkout/Car/CarPayment";
 import CarBookingSuccess from "./Components/Success/CarBookingSuccess";
 import MyCars from "./Pages/Bookings/Cars/MyCars";
 import MyCarDetails from "./Pages/Bookings/Cars/MyCarDetails";
-
-
 import MyProfile from "./Pages/Profile/MyProfile";
-// import UpdateProfile from "./Pages/Profile/UpdateProfile";
 import PrivateRoute from "./Components/Private/PrivateRoute";
 
 function App() {
@@ -70,7 +56,6 @@ function App() {
     );
     setStripeApiKey(data.stripeApiKey);
   }
-  
 
   useEffect(() => {
     if (!auth.authenticate) {
@@ -121,7 +106,6 @@ function App() {
           exact
           path="/hotel/:id/contactDetail"
           component={HotelContactDetails}
-        
         />
         <PrivateRoute
           exact
@@ -134,7 +118,11 @@ function App() {
           component={HotelBookingSuccess}
         />
         <PrivateRoute exact path="/myHotels" component={MyHotels} />
-        <PrivateRoute exact path="/myHotelDetail/:id" component={MyHotelDetails} />
+        <PrivateRoute
+          exact
+          path="/myHotelDetail/:id"
+          component={MyHotelDetails}
+        />
 
         {/* Package Booking */}
         <PrivateRoute
@@ -153,7 +141,11 @@ function App() {
           component={PackageReserveSuccess}
         />
         <PrivateRoute exact path="/myPackages" component={MyPackages} />
-        <PrivateRoute exact path="/myPackage/:id" component={MyPackageDetails} />
+        <PrivateRoute
+          exact
+          path="/myPackage/:id"
+          component={MyPackageDetails}
+        />
 
         {/* Car Booking */}
         <PrivateRoute
@@ -162,7 +154,11 @@ function App() {
           component={CarContactDetails}
         />
 
-        <PrivateRoute exact path="/car/booking/success" component={CarBookingSuccess} />
+        <PrivateRoute
+          exact
+          path="/car/booking/success"
+          component={CarBookingSuccess}
+        />
         <PrivateRoute exact path="/myCars" component={MyCars} />
         <PrivateRoute exact path="/myCar/:id" component={MyCarDetails} />
 

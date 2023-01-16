@@ -1,9 +1,7 @@
 import { Rating } from "@mui/material";
 import React from "react";
-// import profilePng from "../../images/Profile.png";
 
 const ReviewCard = ({ review }) => {
-    
   const options = {
     value: review.rating,
     readOnly: true,
@@ -15,7 +13,12 @@ const ReviewCard = ({ review }) => {
       {/* <img src={profilePng} alt="User" /> */}
       <p>{review.name}</p>
       <Rating {...options} />
-      <span className="reviewCardComment" style={{fontWeight:'bold',fontSize:'16px'}}>{review.comment}</span>
+      <span
+        className="reviewCardComment"
+        style={{ fontWeight: "bold", fontSize: "16px" }}
+      >
+        {review.comment}
+      </span>
     </div>
   );
 };

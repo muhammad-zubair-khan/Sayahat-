@@ -1,22 +1,10 @@
 // import { authConstants } from "../actions/constants";
 
 import { CLEAR_ERRORS, LOAD_USER_FAIL, LOAD_USER_REQUEST, LOAD_USER_SUCCESS, LOGIN_FAILURE, LOGIN_REQUEST, LOGIN_SUCCESS, LOGOUT_FAILURE, LOGOUT_REQUEST, LOGOUT_SUCCESS, SIGNUP_FAILURE, SIGNUP_REQUEST, SIGNUP_SUCCESS,
-  DELETE_USER_REQUEST,
-  DELETE_USER_SUCCESS,
-  DELETE_USER_FAIL,
-  DELETE_USER_RESET,
-  UPDATE_USER_REQUEST,
-  UPDATE_USER_SUCCESS,
-  UPDATE_USER_FAIL,
-  UPDATE_USER_RESET,
   UPDATE_PROFILE_REQUEST,
   UPDATE_PROFILE_SUCCESS,
   UPDATE_PROFILE_FAIL,
   UPDATE_PROFILE_RESET,
-  UPDATE_PASSWORD_REQUEST,
-  UPDATE_PASSWORD_SUCCESS,
-  UPDATE_PASSWORD_RESET,
-  UPDATE_PASSWORD_FAIL,
 } from "../Constants/authConstants";
 
 const initState = {
@@ -35,7 +23,6 @@ const initState = {
 };
 
 export const authReducer = (state = initState, action) => {
-  // console.log(action);
   // eslint-disable-next-line default-case
   switch (action.type) {
     case LOGIN_REQUEST:
@@ -165,16 +152,3 @@ export const profileReducer = (state = {}, action) => {
       return state;
   }
 };
-// export const allAdminsReducer = (state = { admins: [] }, action) => {
-//   switch (action.type) {
-//     case ALL_ADMIN_REQUEST:
-//       return { loading: true, admins: [] };
-//     case ALL_ADMIN_SUCCESS:
-//       // console.log("acojaikjd",action.payload)
-//       return { loading: false, admins: action.payload };
-//     case ALL_ADMIN_FAIL:
-//       return { loading: false, admins: action.payload };
-//     default:
-//       return state;
-//   }
-// };

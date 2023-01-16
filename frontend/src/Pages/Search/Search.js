@@ -12,7 +12,6 @@ const Search = () => {
   const [endDestination, setEndDestination] = useState(
     location.state.state.endDestination
   );
-  // console.log('location1111111>>>',location.state.state.startdestination)
   const [openDate, setOpenDate] = useState(false); //Car
 
   //Car
@@ -30,7 +29,7 @@ const Search = () => {
                   className="form-control"
                   id="from-place"
                   placeholder={startdestination}
-                //   onChange={(e) => setStartDestination(e.target.value)}
+                  //   onChange={(e) => setStartDestination(e.target.value)}
                 />
               </div>
             </div>
@@ -59,11 +58,13 @@ const Search = () => {
                     date[0].endDate,
                     "MM/dd/yyyy"
                   )}`} */}
-                  {`${format(location.state.state.date[0].startDate, "MM/dd/yyyy")} to ${format(
+                  {`${format(
+                    location.state.state.date[0].startDate,
+                    "MM/dd/yyyy"
+                  )} to ${format(
                     location.state.state.date[0].endDate,
                     "MM/dd/yyyy"
                   )}`}
-                {/* {console.log("aaaaaaa",location.state.state.date[0].startDate)} */}
                 </span>
                 {openDate && (
                   <DateRangePicker

@@ -1,6 +1,4 @@
 import "./CarDetail.css";
-// import MailList from "../../components/mailList/MailList";
-// import Footer from "../../components/footer/Footer";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCircleArrowLeft,
@@ -8,15 +6,11 @@ import {
   faCircleXmark,
   faLocationDot,
 } from "@fortawesome/free-solid-svg-icons";
-import { useContext, useState } from "react";
-import useFetch from "../../hook/useFetch";
-import { useHistory, useLocation, useParams } from "react-router-dom";
-import { SearchContext } from "../../Context/SearchContext";
+import { useState } from "react";
+import { useHistory, useLocation } from "react-router-dom";
 import Navbar from "../../Navbar/Navbar";
 import Footer from "../../Footer/Footer";
 import { useDispatch, useSelector } from "react-redux";
-// import { AuthContext } from "../../context/AuthContext";
-import Reserve from "../../Components/Reserve/Reserve";
 import { ImageUrl } from "../../Redux/UrlConfig";
 import Zoom from "react-medium-image-zoom";
 import "react-medium-image-zoom/dist/styles.css";
@@ -26,7 +20,11 @@ import MailList from "../../Components/MailList/MailList";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ReviewCard from "../HotelDetails/ReviewCard/ReviewCard";
-import { clearErrors, getCarById, newCarReview } from "../../Redux/Actions/carAction";
+import {
+  clearErrors,
+  getCarById,
+  newCarReview,
+} from "../../Redux/Actions/carAction";
 import { NEW_REVIEW_RESET } from "../../Redux/Constants/carConstants";
 import { useEffect } from "react";
 import {
@@ -37,8 +35,8 @@ import {
 } from "@mui/material";
 import { Container, Rating } from "@mui/material";
 
-const CarDetail = ({match}) => {
-  const dispatch = useDispatch()
+const CarDetail = ({ match }) => {
+  const dispatch = useDispatch();
   const history = useHistory();
   const location = useLocation();
   const id = location.pathname.split("/")[2];
@@ -46,7 +44,6 @@ const CarDetail = ({match}) => {
   const [open, setOpen] = useState(false);
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
-  const [openModal, setOpenModal] = useState(false);
   const [startDestination, setStartDestination] = useState(
     location.state.state.startDestination
   );
@@ -55,23 +52,19 @@ const CarDetail = ({match}) => {
   );
   const [dates, setDates] = useState(location.state.state.dates);
   const [pickupTime, setPickupTime] = useState(location.state.state.pickupTime);
-  const [dropoffTime, setDropoffTime] = useState(location.state.state.dropoffTime);
-  // const [options, setOptions] = useState(location.state.state.options);
+  const [dropoffTime, setDropoffTime] = useState(
+    location.state.state.dropoffTime
+  );
   const [openCarReview, setOpenCarReview] = useState(false);
   const { success, error: reviewError } = useSelector(
     (state) => state.newCarReview
   );
-  // const { data, loading, error } = useFetch(
-  //   `http://localhost:5000/api/car-detail/${id}`
-  // );
-  const {car} = useSelector((state)=> state.addCarReducer)
+
+  const { car } = useSelector((state) => state.addCarReducer);
   const auth = useSelector((state) => state.auth);
-useEffect(()=>{
-  dispatch(getCarById(id))
-},[])
-  // const { user } = useContext(AuthContext);
-  // const { date } = useContext(SearchContext);
-  
+  useEffect(() => {
+    dispatch(getCarById(id));
+  }, []);
   const MILLISECONDS_PER_DAY = 1000 * 60 * 60 * 24;
   function dayDifference(date1, date2) {
     const timeDiff = Math.abs(date2.getTime() - date1.getTime());
@@ -99,7 +92,7 @@ useEffect(()=>{
       });
       dispatch({ type: NEW_REVIEW_RESET });
     }
-  }, [dispatch,  reviewError, success]);
+  }, [dispatch, reviewError, success]);
 
   const days = dayDifference(dates[0].endDate, dates[0].startDate);
 
@@ -119,20 +112,36 @@ useEffect(()=>{
 
     setSlideNumber(newSlideNumber);
   };
-  const totalPrice = days * car.price
+  const totalPrice = days * car.price;
 
   const handleClick = () => {
     if (auth.authenticate) {
-      dispatch({ type: "NEW_SEARCH", payload: { startDestination,endDestination,pickupTime,dropoffTime, dates,totalPrice } });
+      dispatch({
+        type: "NEW_SEARCH",
+        payload: {
+          startDestination,
+          endDestination,
+          pickupTime,
+          dropoffTime,
+          dates,
+          totalPrice,
+        },
+      });
       toast.success(`Booked Successfully`, {
         position: toast.POSITION.BOTTOM_CENTER,
       });
       setTimeout(() => {
-        history.push(`/car/${id}/contactdetails`,{
-          state: { startDestination,endDestination,pickupTime,dropoffTime, dates,totalPrice },
-        })
+        history.push(`/car/${id}/contactdetails`, {
+          state: {
+            startDestination,
+            endDestination,
+            pickupTime,
+            dropoffTime,
+            dates,
+            totalPrice,
+          },
+        });
       }, 3000);
-     
     } else {
       toast.error(`Booking is Failed please login first`, {
         position: toast.POSITION.BOTTOM_CENTER,
@@ -142,8 +151,7 @@ useEffect(()=>{
       }, 2000);
     }
   };
-  // console.log(data);
-  
+
   if (Object.keys(car).length === 0) {
     return null;
   }
@@ -151,28 +159,27 @@ useEffect(()=>{
     openCarReview ? setOpenCarReview(false) : setOpenCarReview(true);
   };
   const carReviewSubmitHandler = () => {
-    if(auth.authenticate){
-
+    if (auth.authenticate) {
       const myForm = new FormData();
-      
-    myForm.set("rating", rating);
-    myForm.set("comment", comment);
-    myForm.set("id", match.params.id);
 
-    dispatch(newCarReview(myForm));
-    // dispatch({type:GET_ALL_REVIEWS})
-    
-    setOpenCarReview(false);
-    history.go(0)
-  }else if(!localStorage.token){
-    toast.error("Login First", {
-      position: toast.POSITION.BOTTOM_CENTER,
-    });
-    setOpenCarReview(false)
-    setTimeout(() => {
-      history.push('/login')
-    }, 3000);
-  }
+      myForm.set("rating", rating);
+      myForm.set("comment", comment);
+      myForm.set("id", match.params.id);
+
+      dispatch(newCarReview(myForm));
+      // dispatch({type:GET_ALL_REVIEWS})
+
+      setOpenCarReview(false);
+      history.go(0);
+    } else if (!localStorage.token) {
+      toast.error("Login First", {
+        position: toast.POSITION.BOTTOM_CENTER,
+      });
+      setOpenCarReview(false);
+      setTimeout(() => {
+        history.push("/login");
+      }, 3000);
+    }
   };
   return (
     <>
@@ -184,160 +191,154 @@ useEffect(()=>{
       {/* {loading ? (
         "loading"
       ) : ( */}
-        <div
-          className="hotelContainer"
-          style={{ top: "126px", position: "relative" }}
-        >
-          {open && (
-            <div className="slider">
-              <FontAwesomeIcon
-                icon={faCircleXmark}
-                className="close"
-                onClick={() => setOpen(false)}
-              />
-              <FontAwesomeIcon
-                icon={faCircleArrowLeft}
-                className="arrow"
-                onClick={() => handleMove("l")}
-              />
-              <div className="sliderWrapper">
-                <img
-                  src={car.photos[slideNumber]}
-                  alt=""
-                  className="sliderImg"
-                />
-              </div>
-              <FontAwesomeIcon
-                icon={faCircleArrowRight}
-                className="arrow"
-                onClick={() => handleMove("r")}
-              />
+      <div
+        className="hotelContainer"
+        style={{ top: "126px", position: "relative" }}
+      >
+        {open && (
+          <div className="slider">
+            <FontAwesomeIcon
+              icon={faCircleXmark}
+              className="close"
+              onClick={() => setOpen(false)}
+            />
+            <FontAwesomeIcon
+              icon={faCircleArrowLeft}
+              className="arrow"
+              onClick={() => handleMove("l")}
+            />
+            <div className="sliderWrapper">
+              <img src={car.photos[slideNumber]} alt="" className="sliderImg" />
             </div>
-          )}
-          <div className="hotelWrapper">
-            <button className="bookNow" onClick={handleClick}>
-              Book Now!
-            </button>
-            <h1 className="hotelTitle">{car.name}</h1>
-            <div className="hotelAddress">
-              <FontAwesomeIcon icon={faLocationDot} />
-              <span>{car.mileage}</span>
-            </div>
-            <span className="hotelDistance">{car.title}</span>
-            <span className="hotelPriceHighlight">
-              Fare: PKR{car.price}
-            </span>
-            <div className="hotelImages">
-              {car.carImages?.map((photo, i) => (
-                <div className="hotelImgWrapper" key={i}>
-                  <Zoom>
-                    <img
-                      // onClick={() => handleOpen(i)}
-                      src={ImageUrl(photo.img)}
-                      alt="images"
-                      className="carImg"
-                    />
-                  </Zoom>
-                </div>
-              ))}
-            </div>
-            <div className="hotelDetails">
-              <div className="hotelDetailsTexts">
-                {/* <h1 className="hotelTitle">{data.hotel.title}</h1> */}
-                <p className="hotelDesc">{car.description}</p>
+            <FontAwesomeIcon
+              icon={faCircleArrowRight}
+              className="arrow"
+              onClick={() => handleMove("r")}
+            />
+          </div>
+        )}
+        <div className="hotelWrapper">
+          <button className="bookNow" onClick={handleClick}>
+            Book Now!
+          </button>
+          <h1 className="hotelTitle">{car.name}</h1>
+          <div className="hotelAddress">
+            <FontAwesomeIcon icon={faLocationDot} />
+            <span>{car.mileage}</span>
+          </div>
+          <span className="hotelDistance">{car.title}</span>
+          <span className="hotelPriceHighlight">Fare: PKR{car.price}</span>
+          <div className="hotelImages">
+            {car.carImages?.map((photo, i) => (
+              <div className="hotelImgWrapper" key={i}>
+                <Zoom>
+                  <img
+                    // onClick={() => handleOpen(i)}
+                    src={ImageUrl(photo.img)}
+                    alt="images"
+                    className="carImg"
+                  />
+                </Zoom>
               </div>
-              <div className="hotelDetailsPrice">
-                <h1>Perfect for a {days} - day ride</h1>
-                <span>
-                  this property has an excellent location score of 9.8!
-                </span>
-                <h6>
-                  <b>PKR{totalPrice}</b> ({days} days)
-                  <Tooltip title={`${car.price} x ${days}`} placement="top">
-                    <Button>
-                      <i className="text-dark fs-5 fa-solid fa-circle-info"></i>
-                    </Button>
-                  </Tooltip>
-                  <b className="my-2">From:</b> {startDestination}<br/>
-                  <b className="my-2">To: </b> {endDestination}<br/>
-                  <b className="my-2">pick-up Time</b> {pickupTime}<br/>
-                  <b className="my-2">drop-off Time</b> {dropoffTime}<br/>
-                </h6>
-                <button onClick={handleClick}>Book Now!</button>
-                <button onClick={submitCarReviewToggle} className="submitReview">
-                  Submit Review
-                </button>
-              </div>
+            ))}
+          </div>
+          <div className="hotelDetails">
+            <div className="hotelDetailsTexts">
+              {/* <h1 className="hotelTitle">{data.hotel.title}</h1> */}
+              <p className="hotelDesc">{car.description}</p>
+            </div>
+            <div className="hotelDetailsPrice">
+              <h1>Perfect for a {days} - day ride</h1>
+              <span>this property has an excellent location score of 9.8!</span>
+              <h6>
+                <b>PKR{totalPrice}</b> ({days} days)
+                <Tooltip title={`${car.price} x ${days}`} placement="top">
+                  <Button>
+                    <i className="text-dark fs-5 fa-solid fa-circle-info"></i>
+                  </Button>
+                </Tooltip>
+                <b className="my-2">From:</b> {startDestination}
+                <br />
+                <b className="my-2">To: </b> {endDestination}
+                <br />
+                <b className="my-2">pick-up Time</b> {pickupTime}
+                <br />
+                <b className="my-2">drop-off Time</b> {dropoffTime}
+                <br />
+              </h6>
+              <button onClick={handleClick}>Book Now!</button>
+              <button onClick={submitCarReviewToggle} className="submitReview">
+                Submit Review
+              </button>
             </div>
           </div>
-          {/* ----------------------------Review-Section-Start----------------------- */}
-          <h3 className="reviewsHeading">REVIEWS</h3>
-          <Dialog
-            aria-labelledby="simple-dialog-title"
-            open={openCarReview}
-            onClose={submitCarReviewToggle}
-          >
-            <DialogTitle>Submit Review</DialogTitle>
-            <DialogContent
-              className="submitDialog"
-              style={{ display: "flex", flexDirection: "column" }}
-            >
-              <Rating
-                onChange={(e) => setRating(e.target.value)}
-                value={rating}
-                size="large"
-                
-              />
-
-              <textarea
-              required
-                className="submitDialogTextArea"
-                cols="40"
-                rows="5"
-                value={comment}
-                onChange={(e) => setComment(e.target.value)}
-              ></textarea>
-            </DialogContent>
-            <DialogActions>
-              <Button
-                onClick={submitCarReviewToggle}
-                variant="outlined"
-                color="secondary"
-              >
-                Cancel
-              </Button>
-              <Button
-                onClick={carReviewSubmitHandler}
-                variant="outlined"
-                color="primary"
-              >
-                Submit
-              </Button>
-            </DialogActions>
-          </Dialog>
-
-          <ToastContainer />
-        
-
-          <Container>
-            {car.reviews && car.reviews[0] ? (
-              <div className="reviews">
-                {car.reviews &&
-                  car.reviews.map((review) => (
-                    <ReviewCard key={review._id} review={review} />
-                    // {/* <img src={profilePng} alt="User" /> */}
-                  ))}
-              </div>
-            ) : (
-              <p className="noReviews">No Reviews Yet</p>
-            )}
-          </Container>
-
-          {/* ----------------------------Review-Section-End----------------------- */}
-
-          <MailList />
-          {/* <Footer /> */}
         </div>
+        {/* ----------------------------Review-Section-Start----------------------- */}
+        <h3 className="reviewsHeading">REVIEWS</h3>
+        <Dialog
+          aria-labelledby="simple-dialog-title"
+          open={openCarReview}
+          onClose={submitCarReviewToggle}
+        >
+          <DialogTitle>Submit Review</DialogTitle>
+          <DialogContent
+            className="submitDialog"
+            style={{ display: "flex", flexDirection: "column" }}
+          >
+            <Rating
+              onChange={(e) => setRating(e.target.value)}
+              value={rating}
+              size="large"
+            />
+
+            <textarea
+              required
+              className="submitDialogTextArea"
+              cols="40"
+              rows="5"
+              value={comment}
+              onChange={(e) => setComment(e.target.value)}
+            ></textarea>
+          </DialogContent>
+          <DialogActions>
+            <Button
+              onClick={submitCarReviewToggle}
+              variant="outlined"
+              color="secondary"
+            >
+              Cancel
+            </Button>
+            <Button
+              onClick={carReviewSubmitHandler}
+              variant="outlined"
+              color="primary"
+            >
+              Submit
+            </Button>
+          </DialogActions>
+        </Dialog>
+
+        <ToastContainer />
+
+        <Container>
+          {car.reviews && car.reviews[0] ? (
+            <div className="reviews">
+              {car.reviews &&
+                car.reviews.map((review) => (
+                  <ReviewCard key={review._id} review={review} />
+                  // {/* <img src={profilePng} alt="User" /> */}
+                ))}
+            </div>
+          ) : (
+            <p className="noReviews">No Reviews Yet</p>
+          )}
+        </Container>
+
+        {/* ----------------------------Review-Section-End----------------------- */}
+
+        <MailList />
+        {/* <Footer /> */}
+      </div>
       {/* )} */}
       <Footer />
     </>

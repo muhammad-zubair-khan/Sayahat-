@@ -1,7 +1,4 @@
 import {
-  GET_ALL_VACATION_PRODUCTS_REQUEST,
-  GET_ALL_VACATION_PRODUCTS_SUCCESS,
-  GET_ALL_VACATION_PRODUCTS_FAIL,
   GET_PACKAGE_BY_SLUG_REQUEST,
   GET_PACKAGE_BY_SLUG_SUCCESS,
   GET_PACKAGE_BY_SLUG_FAIL,
@@ -110,7 +107,6 @@ export const allPackagesReducer = (state = { packages: [] }, action) => {
       return {
         loading: true,
         packages: [],
-        
       };
     case GET_PACKAGE_BY_SLUG_SUCCESS:
       return {

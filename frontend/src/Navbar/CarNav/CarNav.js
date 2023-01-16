@@ -8,7 +8,7 @@ import { DateRangePicker } from "react-date-range";
 import { format } from "date-fns";
 import "react-date-range/dist/styles.css"; // main style file
 import "react-date-range/dist/theme/default.css"; // theme css file
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { SearchContext } from "../../Context/SearchContext";
 import { ReactSearchAutocomplete } from "react-search-autocomplete";
 import { useEffect } from "react";
@@ -28,7 +28,6 @@ const CarNav = (props) => {
       key: "selection",
     },
   ]);
-  const [openOptions, setOpenOptions] = useState(false);
   const [options, setOptions] = useState({
     adult: 1,
     children: 0,
@@ -63,31 +62,12 @@ const CarNav = (props) => {
     dispatch(getAllVacationProduct());
   }, []);
 
-  // const handleOnSearch = (string, results) => {
-  //   // onSearch will have as the first callback parameter
-  //   // the string searched and for the second the results.
-  //   console.log(string, results)
-  // }
-
-  //Car Functions
-  const CarhandleOnHover = (result) => {
-    // the item hovered
-    console.log(result);
-  };
-
   const CarhandleOnSelect = (product) => {
-    // the item selected
     setStartDestination(product.name);
-    // console.log(product);
   };
   const CarEndhandleOnSelect = (product) => {
     // the item selected
     setEndDestination(product.name);
-    console.log(product);
-  };
-
-  const CarhandleOnFocus = () => {
-    console.log("Focused");
   };
 
   const CarformatResult = (product) => {
@@ -107,7 +87,10 @@ const CarNav = (props) => {
     <>
       <div className="sec-fh5co-hero">
         <div className="sec-fh5co-overlay"></div>
-        <div className="car-sec-fh5co-cover" data-stellar-background-ratio="0.5">
+        <div
+          className="car-sec-fh5co-cover"
+          data-stellar-background-ratio="0.5"
+        >
           <div className="car-desc">
             <div className="container">
               <div className="row">
@@ -151,11 +134,7 @@ const CarNav = (props) => {
                               <div>
                                 <ReactSearchAutocomplete
                                   items={products}
-                                  // onSearch={handleOnSearch}
-                                  onHover={CarhandleOnHover}
                                   onSelect={CarhandleOnSelect}
-                                  // onFocus={handleOnFocus}
-                                  // autoFocus
                                   formatResult={CarformatResult}
                                   value={startDestination}
                                   onChange={(e) =>
@@ -172,11 +151,7 @@ const CarNav = (props) => {
                               <div>
                                 <ReactSearchAutocomplete
                                   items={products}
-                                  // onSearch={handleOnSearch}
-                                  onHover={CarhandleOnHover}
                                   onSelect={CarEndhandleOnSelect}
-                                  // onFocus={handleOnFocus}
-                                  // autoFocus
                                   formatResult={CarformatResult}
                                   value={endDestination}
                                   onChange={(e) =>
@@ -221,55 +196,60 @@ const CarNav = (props) => {
                             </div>
                           </div>
                           <div className="row">
-                <div
-                  className="col-xxs-12 col-xs-6 col-md-3 col-lg-3 mt"
-                  style={{
-                    margin: "15px 0px",
-                    width: "fit-content",
-                  }}
-                >
-                  <div className="input-field search-item">
-                    <CalendarMonthIcon style={{ color: "white" }} />
-                    <span
-                      style={{
-                        color: "rgba(255, 255, 255, 0.8)",
-                        fontSize: "14px",
-                      }}
-                      onClick={() => setOpenCarDate(!openCarDate)}
-                    >
-                      {`${format(dates[0].startDate, "MM/dd/yyyy")} to ${format(
-                        dates[0].endDate,
-                        "MM/dd/yyyy"
-                      )}`}
-                    </span>
-                    {openCarDate && (
-                      <DateRangePicker
-                        editableDateInputs={true}
-                        ranges={dates}
-                        moveRangeOnFirstSelection={false}
-                        onChange={(item) => setDates([item.selection])}
-                        className="date"
-                        minDate={new Date()}
-                      />
-                    )}
-                  </div>
-                </div>
-                <div
-                  className="col-xxs-12 col-xs-6 col-md-9 col-lg-9"
-                  style={{ textAlign: "end" }}
-                >
-                  <Button
-                    style={{
-                      backgroundColor: "transparent",
-                      color: "white",
-                      border: "1px solid white",
-                    }}
-                    onClick={handleCarSearch}
-                  >
-                    Search Cars
-                  </Button>
-                </div>
-              </div>
+                            <div
+                              className="col-xxs-12 col-xs-6 col-md-3 col-lg-3 mt"
+                              style={{
+                                margin: "15px 0px",
+                                width: "fit-content",
+                              }}
+                            >
+                              <div className="input-field search-item">
+                                <CalendarMonthIcon style={{ color: "white" }} />
+                                <span
+                                  style={{
+                                    color: "rgba(255, 255, 255, 0.8)",
+                                    fontSize: "14px",
+                                  }}
+                                  onClick={() => setOpenCarDate(!openCarDate)}
+                                >
+                                  {`${format(
+                                    dates[0].startDate,
+                                    "MM/dd/yyyy"
+                                  )} to ${format(
+                                    dates[0].endDate,
+                                    "MM/dd/yyyy"
+                                  )}`}
+                                </span>
+                                {openCarDate && (
+                                  <DateRangePicker
+                                    editableDateInputs={true}
+                                    ranges={dates}
+                                    moveRangeOnFirstSelection={false}
+                                    onChange={(item) =>
+                                      setDates([item.selection])
+                                    }
+                                    className="date"
+                                    minDate={new Date()}
+                                  />
+                                )}
+                              </div>
+                            </div>
+                            <div
+                              className="col-xxs-12 col-xs-6 col-md-9 col-lg-9"
+                              style={{ textAlign: "end" }}
+                            >
+                              <Button
+                                style={{
+                                  backgroundColor: "transparent",
+                                  color: "white",
+                                  border: "1px solid white",
+                                }}
+                                onClick={handleCarSearch}
+                              >
+                                Search Cars
+                              </Button>
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </div>

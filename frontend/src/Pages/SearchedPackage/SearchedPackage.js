@@ -8,7 +8,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { ImageUrl } from "../../Redux/UrlConfig";
 import { format } from "date-fns";
 import { DateRange, DateRangePicker } from "react-date-range";
-// import useFetch from "../../hook/useFetch";
 import { getAllPackages } from "../../Redux/Actions/packageAction";
 import { Slider, Typography } from "@mui/material";
 
@@ -28,21 +27,11 @@ const Package = (props) => {
   const [min, setMin] = useState(undefined);
   const [max, setMax] = useState(undefined);
   const [ratings, setRatings] = useState(0);
-  // const [minRat, setMinRat] = useState(undefined);
-  // const [maxRat, setMaxRat] = useState(undefined);
 
-  // const { data, loading, error, reFetch } = useFetch(
-  //   `http://localhost:5000/api/all-packages?city=${packageDestination}&min=${
-  //     min || 0
-  //   }&max=${max || 99999}&type=${type || "Full Day Tour"}`
-  // );
   useEffect(() => {
     dispatch(getAllPackages(type, min, max, packageDestination, ratings));
   }, [dispatch, type, min, max, packageDestination, ratings]);
 
-  // const handleClick = () => {
-  //   reFetch();
-  // };
 
   const types = [
     "Full Day Tour",
@@ -486,7 +475,10 @@ const Package = (props) => {
                                   </h5>
                                 </div>
                                 <div className="col-4 text-end">
-                                  <h5 class="card-title text-dark" style={{fontWeight:'bolder'}}>
+                                  <h5
+                                    class="card-title text-dark"
+                                    style={{ fontWeight: "bolder" }}
+                                  >
                                     PKR {data.price}
                                   </h5>
                                 </div>
@@ -494,7 +486,10 @@ const Package = (props) => {
                               {data.reviews.length > 0 ? (
                                 <p
                                   className="text-data"
-                                  style={{ fontWeight: "bolder",fontSize:'small' }}
+                                  style={{
+                                    fontWeight: "bolder",
+                                    fontSize: "small",
+                                  }}
                                 >
                                   {data.ratings}/5 ({data.numOfReviews}){" "}
                                   {data.numOfReviews >= 1
@@ -502,9 +497,7 @@ const Package = (props) => {
                                     : "Reviews"}
                                 </p>
                               ) : (
-                                <p style={{ fontSize: "small" }}>
-                                  No Reviews
-                                </p>
+                                <p style={{ fontSize: "small" }}>No Reviews</p>
                               )}
                               <small class="text-dark">
                                 <div>

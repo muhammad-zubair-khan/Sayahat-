@@ -8,17 +8,14 @@ import { DateRangePicker } from "react-date-range";
 import { format } from "date-fns";
 import "react-date-range/dist/styles.css"; // main style file
 import "react-date-range/dist/theme/default.css"; // theme css file
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { SearchContext } from "../Context/SearchContext";
 import { ReactSearchAutocomplete } from "react-search-autocomplete";
 import { useEffect } from "react";
 import { getAllVacationProduct } from "../Redux/Actions/vacationProductAction";
-import Tab from "../Components/Tab/Tab";
 const SecNav = (props) => {
   const history = useHistory();
   //Stays
-  const [destination, setDestination] = useState("");
-  const [openDate, setOpenDate] = useState(false);
   const [dates, setDates] = useState([
     {
       startDate: new Date(),
@@ -28,25 +25,6 @@ const SecNav = (props) => {
   ]);
   const [openOptions, setOpenOptions] = useState(false);
   const [options, setOptions] = useState({
-    adult: 1,
-    children: 0,
-    room: 1,
-  });
-
-  //Car
-  const [startDestination, setStartDestination] = useState("");
-  const [endDestination, setEndDestination] = useState("");
-  const [openCarDate, setOpenCarDate] = useState(false);
-  const [pickupTime, setPickupTime] = useState(null);
-  const [dropoffTime, setDropoffTime] = useState(null);
-  const [date, setDate] = useState([
-    {
-      startDate: new Date(),
-      endDate: new Date(),
-      key: "selection",
-    },
-  ]);
-  const [options3, setOptions3] = useState({
     adult: 1,
     children: 0,
     room: 1,
@@ -63,39 +41,12 @@ const SecNav = (props) => {
     });
   };
 
-  //Package
-  const [openPackageDate, setOpenPackageDate] = useState(false);
-  const [packageDate, setPackageDate] = useState([
-    {
-      startDate: new Date(),
-      endDate: new Date(),
-      key: "selection",
-    },
-  ]);
-
   //package
+  const [openPackageDate, setOpenPackageDate] = useState(false);
   const [packageDestination, setPackageDestination] = useState("");
-  const [openOptions2, setOpenOptions2] = useState(false);
-  const [options2, setOptions2] = useState({
-    adult: 1,
-    children: 0,
-    room: 1,
-  });
-  //Package
-  const handleOption2 = (name, operation) => {
-    setOptions2((prev) => {
-      return {
-        ...prev,
-        [name]:
-          operation === "increament" ? options2[name] + 1 : options2[name] - 1,
-      };
-    });
-  };
+
   const { dispatch } = useContext(SearchContext);
-  const handleSearch = () => {
-    dispatch({ type: "NEW_SEARCH", payload: { destination, dates, options } });
-    history.push("/hotels", { state: { destination, dates, options } });
-  };
+
   const handlePackageSearch = () => {
     dispatch({
       type: "NEW_SEARCH",
@@ -105,114 +56,20 @@ const SecNav = (props) => {
       state: { packageDestination, dates, options },
     });
   };
-  const handleCarSearch = () => {
-    dispatch({
-      type: "NEW_SEARCH",
-      payload: {
-        startDestination,
-        endDestination,
-        pickupTime,
-        dropoffTime,
-        dates,
-        options,
-      },
-    });
-    history.push(`/cars`, {
-      state: {
-        startDestination,
-        endDestination,
-        pickupTime,
-        dropoffTime,
-        dates,
-      },
-    });
-  };
+
   const { products } = useSelector((state) => state.vacationProduct);
   useEffect(() => {
     dispatch(getAllVacationProduct());
-  }, []);
-
-  // const handleOnSearch = (string, results) => {
-  //   // onSearch will have as the first callback parameter
-  //   // the string searched and for the second the results.
-  //   console.log(string, results)
-  // }
-
-  //Car Functions
-  const CarhandleOnHover = (result) => {
-    // the item hovered
-    console.log(result);
-  };
-
-  const CarhandleOnSelect = (product) => {
-    // the item selected
-    setStartDestination(product.name);
-    // console.log(product);
-  };
-  const CarEndhandleOnSelect = (product) => {
-    // the item selected
-    setEndDestination(product.name);
-    console.log(product);
-  };
-
-  const CarhandleOnFocus = () => {
-    console.log("Focused");
-  };
-
-  const CarformatResult = (product) => {
-    return (
-      <>
-        <span style={{ textAlign: "left", display: "none" }}>
-          id: {product._id}
-        </span>
-        <span style={{ display: "block", textAlign: "left" }}>
-          {product.name}
-        </span>
-      </>
-    );
-  };
-
-  //Stays Function
-  const handleOnStayHover = (result) => {
-    // the item hovered
-    console.log(result);
-  };
-
-  const handleOnStaySelect = (product) => {
-    setDestination(product.name);
-  };
-
-  //Package Functions
-  const handleOnHover = (result) => {
-    // the item hovered
-    console.log(result);
-  };
+  }, [dispatch]);
 
   const handleOnSelect = (product) => {
     setPackageDestination(product.name);
   };
 
-  const handleOnFocus = () => {
-    console.log("Focused");
-  };
-
-  const formatResult = (product) => {
-    return (
-      <>
-        <span style={{ textAlign: "left", display: "none" }}>
-          id: {product._id}
-        </span>
-        <span style={{ display: "block", textAlign: "left" }}>
-          {product.name}
-        </span>
-      </>
-    );
-  };
-
   return (
     <>
       <div className="sec-fh5co-hero">
-          <div className="sec-fh5co-overlay"></div>
+        <div className="sec-fh5co-overlay"></div>
         <div className="sec-fh5co-cover" data-stellar-background-ratio="0.5">
           <div className="desc">
             <div className="container">
@@ -222,7 +79,7 @@ const SecNav = (props) => {
                     {/* <!-- Nav tabs --> */}
                     <ul
                       className="nav nav-tabs"
-                      style={{ justifyContent: "center",}}
+                      style={{ justifyContent: "center" }}
                       role="tablist"
                     >
                       <li role="presentation">
@@ -232,9 +89,11 @@ const SecNav = (props) => {
                           role="tab"
                           data-toggle="tab"
                           className="tab-menu active"
-                          style={{backgroundColor: '#36494c',
-                          color: 'white',
-                          boxShadow:' 0px 0px 7px 1px white'}}
+                          style={{
+                            backgroundColor: "#36494c",
+                            color: "white",
+                            boxShadow: " 0px 0px 7px 1px white",
+                          }}
                         >
                           Vacations
                         </a>
@@ -325,15 +184,18 @@ const SecNav = (props) => {
                               onClick={() => setOpenOptions(!openOptions)}
                             >{`${options.adult} Adult - ${options.children} Children`}</span>
                             {openOptions && (
-                              <div className="options2" style={{
-                                position: 'absolute',
-                                top: '111px',
-                                width: '19%',
-                                zIndex: '1000000',
-                                backgroundColor: 'white',
-                                boxShadow: '0px 0px 10px #848484',
-                                padding: '7px 10px',
-                              }}>
+                              <div
+                                className="options2"
+                                style={{
+                                  position: "absolute",
+                                  top: "111px",
+                                  width: "19%",
+                                  zIndex: "1000000",
+                                  backgroundColor: "white",
+                                  boxShadow: "0px 0px 10px #848484",
+                                  padding: "7px 10px",
+                                }}
+                              >
                                 <div className="optionItems">
                                   <span
                                     style={{
@@ -409,44 +271,6 @@ const SecNav = (props) => {
                                     </button>
                                   </div>
                                 </div>
-                                {/* <div className="optionItems">
-                                    <span
-                                      style={{
-                                        color: "black",
-                                        fontSize: "14px",
-                                      }}
-                                    >
-                                      Room
-                                    </span>
-                                    <div className="optionButton">
-                                      <button
-                                        className="optionbtn"
-                                        style={{ marginRight: "3px" }}
-                                        disabled={options.room <= 1}
-                                        onClick={() =>
-                                          handleOption("room", "decreament")
-                                        }
-                                      >
-                                        -
-                                      </button>
-                                      <span
-                                        style={{
-                                          color: "black",
-                                          fontSize: "14px",
-                                        }}
-                                      >
-                                        {options.room}
-                                      </span>
-                                      <button
-                                        className="optionbtn"
-                                        onClick={() =>
-                                          handleOption("room", "increament")
-                                        }
-                                      >
-                                        +
-                                      </button>
-                                    </div>
-                                  </div> */}
                               </div>
                             )}
                           </div>

@@ -1,7 +1,6 @@
 import React, { Fragment } from "react";
 import { Typography, Stepper, StepLabel, Step } from "@mui/material";
-import LocalShippingIcon from "@mui/icons-material/LocalShipping";
-import ContactsIcon from '@mui/icons-material/Contacts';
+import ContactsIcon from "@mui/icons-material/Contacts";
 import LibraryAddCheckIcon from "@mui/icons-material/LibraryAddCheck";
 import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
 import "./CheckoutSteps.css";
@@ -9,9 +8,7 @@ const CheckoutSteps = ({ activeStep }) => {
   const steps = [
     {
       label: <Typography>Contact Details</Typography>,
-      // icon: <LocalShippingIcon />,
       icon: <ContactsIcon />,
-
     },
     {
       label: <Typography>Activity Details</Typography>,

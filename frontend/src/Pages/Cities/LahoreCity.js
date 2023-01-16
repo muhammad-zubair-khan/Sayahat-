@@ -1,27 +1,22 @@
 import React, { useEffect, useState } from "react";
-import { Link, useHistory, useLocation, useParams } from "react-router-dom";
+import { useHistory, useLocation, useParams } from "react-router-dom";
 import Navbar from "../../Navbar/Navbar";
 import "./StyleCity.css";
 import Button from "@mui/material/Button";
-import Tooltip from "@mui/material/Tooltip";
 import Offcanvas from "react-bootstrap/Offcanvas";
 import Footer from "../../Footer/Footer";
 import { useDispatch, useSelector } from "react-redux";
 import { getPackageBySlug } from "../../Redux/Actions/packageAction";
 import { getProductDetailById } from "../../Redux/Actions/vacationProductAction";
-import { getDestinationDetailById } from "../../Redux/Actions/topDestinationAction";
 import { ImageUrl } from "../../Redux/UrlConfig";
 import { format } from "date-fns";
-import { DateRange, DateRangePicker } from "react-date-range";
-// import useFetch from "../../hook/useFetch";
-import { getAllPackages } from "../../Redux/Actions/packageAction";
+import { DateRange } from "react-date-range";
 import { Slider, Typography } from "@mui/material";
 
 const LahoreCity = (props) => {
   const params = useParams();
   let { id } = useParams();
-  const history = useHistory()
-  const location = useLocation();
+  const history = useHistory();
   const [packageDestination, setPackageDestination] = useState("");
   const [dates, setDates] = useState([
     {
@@ -37,23 +32,22 @@ const LahoreCity = (props) => {
   });
   const [openPackageDate, setOpenPackageDate] = useState(false);
   const [type, setType] = useState("");
-  const [price, setPrice] = useState([0, 95000]);
   const [ratings, setRatings] = useState(0);
   const [min, setMin] = useState(undefined);
   const [max, setMax] = useState(undefined);
 
   const dispatch = useDispatch();
-  const {packages} = useSelector((state) => state.packagesReducer);
-  const {product} = useSelector((state) => state.newVacation);
+  const { packages } = useSelector((state) => state.packagesReducer);
+  const { product } = useSelector((state) => state.newVacation);
 
   useEffect(() => {
     dispatch(getPackageBySlug(params.slug));
     dispatch(getProductDetailById(id));
     // dispatch(getAllPackages(type, min, max, ratings));
-  }, [dispatch, id,params.slug]);
+  }, [dispatch, id, params.slug]);
 
   const types = ["Full Day Tour", "Half Day Tour", "One Day Tour"];
-  
+
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -181,7 +175,7 @@ const LahoreCity = (props) => {
                       className="p-4 lsItem"
                     >
                       <p style={{ color: "white" }}>When are you traveling?</p>
-                  
+
                       <span
                         onClick={() => setOpenPackageDate(!openPackageDate)}
                       >{`${format(
@@ -193,7 +187,6 @@ const LahoreCity = (props) => {
                           onChange={(item) => setDates([item.selection])}
                           minDate={new Date()}
                           ranges={dates}
-                          
                         />
                       )}
                     </div>

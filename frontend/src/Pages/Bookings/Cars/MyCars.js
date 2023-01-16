@@ -2,17 +2,14 @@ import React, { Fragment, useEffect } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import "../Packages/MyPackages.css";
 import { useSelector, useDispatch } from "react-redux";
-// import Loader from "../layout/Loader/Loader";
-import { Link, useParams } from "react-router-dom";
-// import { useAlert } from "react-alert";
+import { Link } from "react-router-dom";
 import Typography from "@mui/material/Typography";
-// import MetaData from "../layout/MetaData";
 import LaunchIcon from "@mui/icons-material/Launch";
-import { clearErrors, myCars } from "../../../Redux/Actions/bookCarAction";
+import { myCars } from "../../../Redux/Actions/bookCarAction";
 
 const MyCars = () => {
   const dispatch = useDispatch();
-//   const alert = useAlert();
+  //   const alert = useAlert();
 
   const { loading, error, cars } = useSelector((state) => state.myCars);
   const { user } = useSelector((state) => state.auth);
@@ -20,38 +17,12 @@ const MyCars = () => {
   const columns = [
     { field: "id", headerName: "Car ID", minWidth: 300, flex: 1 },
     {
-        field: "name",
-        headerName: "Car Name",
-        minWidth: 150,
-        flex: 0.5,
-      },
-    //   {
-    //     field: "From",
-    //     headerName: "From",
-    //     type: "number",
-    //     minWidth: 150,
-    //     flex: 0.3,
-    //   },
-    //   {
-    //       field: "To",
-    //       headerName: "To",
-    //       type: "number",
-    //       minWidth: 150,
-    //       flex: 0.3,
-    //     },
-    // {
-    //     field: "PickupTime",
-    //     headerName: "Pickup Time",
-    //     minWidth: 150,
-    //     flex: 0.5,
-    //   },
-    // {
-    //     field: "DropoffTime",
-    //     headerName: "Drop Off Time",
-    //     minWidth: 150,
-    //     flex: 0.5,
-    //   },
-    
+      field: "name",
+      headerName: "Car Name",
+      minWidth: 150,
+      flex: 0.5,
+    },
+
     {
       field: "pickupDestination",
       headerName: "City",
@@ -87,18 +58,13 @@ const MyCars = () => {
   const rows = [];
 
   cars &&
-  cars.forEach((item, index) => {
-        rows.push({
-            // itemsQty: item.orderItems.length,
-            id: item._id,
-            name:item.name,
-            // From: item.From,
-            // To: item.To,
-            // PickupTime: item.PickupTime,
-            // DropoffTime: item.DropoffTime,
-            pickupDestination: item.pickupDestination,
-            amount: item.price,
-        });
+    cars.forEach((item, index) => {
+      rows.push({
+        id: item._id,
+        name: item.name,
+        pickupDestination: item.pickupDestination,
+        amount: item.price,
+      });
     });
 
   useEffect(() => {
@@ -129,7 +95,7 @@ const MyCars = () => {
 
           <Typography id="myOrdersHeading">{user.fullName}'s Cars</Typography>
         </div>
-      )} 
+      )}
     </Fragment>
   );
 };

@@ -167,7 +167,7 @@ export const hotelsReducer = (state = {}, action) => {
   }
 };
 
-export const hotelReducer = (state = {hotel:{}}, action) => {
+export const hotelReducer = (state = { hotel: {} }, action) => {
   switch (action.type) {
     case GET_HOTEL_BY_ID_REQUEST:
       return {

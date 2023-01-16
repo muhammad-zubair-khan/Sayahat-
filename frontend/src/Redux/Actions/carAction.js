@@ -33,25 +33,26 @@ export const addCar = (form) => {
     dispatch({ type: CREATE_NEW_CAR_REQUEST });
     try {
       const res = await axios.post("/car/add", form);
-      console.log("res......", res);
-      if (res.status === 201) {
-        dispatch({
-          type: CREATE_NEW_CAR_SUCCESS,
-          payload: res.data.car,
-        });
-      } else {
-        dispatch({
-          type: CREATE_NEW_CAR_FAIL,
-          payload: res.data.error,
-        });
-      }
+      // console.log("res......", res);
+      // if (res.status === 201) {
+      dispatch({
+        type: CREATE_NEW_CAR_SUCCESS,
+        payload: res.data.car,
+      });
+      // } else {
+
+      // }
     } catch (error) {
-      console.log(error.message);
+      // console.log(error.message);
+      dispatch({
+        type: CREATE_NEW_CAR_FAIL,
+        payload: error.response.data.message,
+      });
     }
   };
 };
 
-// Get All Cars 
+// Get All Cars
 export const getCars = () => async (dispatch) => {
   try {
     dispatch({ type: GET_ALL_CARS_REQUEST });
@@ -70,17 +71,19 @@ export const getCars = () => async (dispatch) => {
   }
 };
 
-// Get All Cars 
+// Get All Cars
 export const getAllCars =
-  ( min,max,startDestination,carType) => async (dispatch) => {
+  (min, max, startDestination, carType) => async (dispatch) => {
     try {
       dispatch({ type: GET_ALL_CARS_REQUEST });
-      let link = `/cars?city=${startDestination}&min=${min || 0}&max=${max || 99999
-        }`;
+      let link = `/cars?city=${startDestination}&min=${min || 0}&max=${
+        max || 99999
+      }`;
 
       if (carType) {
-        link = `/cars?city=${startDestination}&type=${carType}&min=${min || 0
-          }&max=${max || 99999}`;
+        link = `/cars?city=${startDestination}&type=${carType}&min=${
+          min || 0
+        }&max=${max || 99999}`;
       }
       // if(gear) {
       //   link = `/cars?city=${startDestination}&gear=${gear}&min=${
@@ -102,7 +105,7 @@ export const getAllCars =
     }
   };
 
-  // Get Car By Id
+// Get Car By Id
 export const getCarById = (id) => async (dispatch) => {
   try {
     dispatch({ type: GET_CAR_BY_ID_REQUEST });
@@ -114,18 +117,17 @@ export const getCarById = (id) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: GET_CAR_BY_ID_FAIL,
-      payload: error.response
+      payload: error.response,
     });
   }
 };
-
 
 //get Car by Slug
 export const getCarBySlug = (slug) => async (dispatch) => {
   try {
     dispatch({ type: GET_CAR_BY_SLUG_REQUEST });
     const { data } = await axios.get(`/car/${slug}`);
-    console.log(data);
+    // console.log(data);
     dispatch({
       type: GET_CAR_BY_SLUG_SUCCESS,
       payload: data.car,

@@ -4,7 +4,6 @@ import Footer from "../../Footer/Footer";
 import Navbar from "../../Navbar/Navbar";
 import "./StylePackage.css";
 import {
-  getPackageBySlug,
   getPackageDetailById,
   newPackageReview,
 } from "../../Redux/Actions/packageAction";
@@ -14,12 +13,19 @@ import { useHistory, useLocation, useParams } from "react-router-dom";
 import { ImageUrl } from "../../Redux/UrlConfig";
 import { useState } from "react";
 import { format } from "date-fns";
-import { DateRange, DateRangePicker } from "react-date-range";
-import { Button, Container, Dialog, DialogActions, DialogContent, DialogTitle, Rating } from "@mui/material";
+import { DateRange } from "react-date-range";
+import {
+  Button,
+  Container,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Rating,
+} from "@mui/material";
 import ReviewCard from "../HotelDetails/ReviewCard/ReviewCard";
-function PackageDetail({match}) {
-  const history = useHistory()
-  const location = useLocation();
+function PackageDetail({ match }) {
+  const history = useHistory();
   const [showResults, setShowResults] = useState(false);
   const [show, setShow] = useState(false);
   const [dates, setDates] = useState([
@@ -37,31 +43,9 @@ function PackageDetail({match}) {
   const onClickHandle = () => {
     setShowResults(true);
   };
-  // const Results = () => (
-  //   <div id="results" className="search-results">
-  //     {packages.package.startTime.map((item, index) => {
-  //       const handleShow = () => {
-  //         setShow(true);
-  //       };
-  //       return (
-  //         <>
-  //           <input
-  //             key={index}
-  //             type="radio"
-  //             value={item}
-  //             onChange={(e) => setTime(e.target.value)}
-  //             name="time"
-  //             onClick={handleShow}
-  //             style={{ margin: "14px 13px" }}
-  //           />
-  //           {item}
-  //         </>
-  //       );
-  //     })}
-  //   </div>
-  // );
+ 
   const auth = useSelector((state) => state.auth);
-  
+
   const bookPackage = () => {
     if (auth.authenticate) {
       dispatch({
@@ -91,28 +75,27 @@ function PackageDetail({match}) {
       : setOpenPackageReview(true);
   };
   const packageReviewSubmitHandler = () => {
-    if(auth.authenticate){
-
+    if (auth.authenticate) {
       const myForm = new FormData();
-      
+
       myForm.set("rating", rating);
-    myForm.set("comment", comment);
-    myForm.set("id", match.params.id);
+      myForm.set("comment", comment);
+      myForm.set("id", match.params.id);
 
-    dispatch(newPackageReview(myForm));
-    // dispatch({type:GET_ALL_REVIEWS})
+      dispatch(newPackageReview(myForm));
+      // dispatch({type:GET_ALL_REVIEWS})
 
-    setOpenPackageReview(false);
-    history.go(0);
-  }else if(!localStorage.token){
-    toast.error("Login First", {
-      position: toast.POSITION.BOTTOM_CENTER,
-    });
-    setOpenPackageReview(false)
-    setTimeout(() => {
-      history.push('/login')
-    }, 3000);
-  }
+      setOpenPackageReview(false);
+      history.go(0);
+    } else if (!localStorage.token) {
+      toast.error("Login First", {
+        position: toast.POSITION.BOTTOM_CENTER,
+      });
+      setOpenPackageReview(false);
+      setTimeout(() => {
+        history.push("/login");
+      }, 3000);
+    }
   };
 
   const Results = () => (
@@ -149,20 +132,7 @@ function PackageDetail({match}) {
               />
               {item}
 
-              {/* {show && (
-              <>
-                <p>{packages.package.name}</p>
-                <p>{packages.package.description}</p>
-                <p>
-                  Free Cancellation Untill{" "}
-                  <span className="siTaxiOp">
-                    {`${format(dates[0].startDate - 2, "MM/dd/yyyy")} `}
-                  </span>{" "}
-                </p>
-
-                <Button variant="contained">Book Now</Button>
-              </>
-            )} */}
+             
             </>
           );
         })}
@@ -173,7 +143,7 @@ function PackageDetail({match}) {
       </Button>
     </div>
   );
-  
+
   const [openOptions, setOpenOptions] = useState(false);
   const [options, setOptions] = useState({
     adult: 1,
@@ -189,7 +159,6 @@ function PackageDetail({match}) {
     });
   };
 
-  const params = useParams();
   let { id } = useParams();
 
   const dispatch = useDispatch();
@@ -245,12 +214,12 @@ function PackageDetail({match}) {
             <h4 className="text-black">Select Date and Travelers</h4>
             <span
               onClick={() => setOpenPackageDate(!openPackageDate)}
-              style={{cursor:'pointer'}}
+              style={{ cursor: "pointer" }}
             >
               {`${format(dates[0].startDate, "dd/MM/yyyy")} to ${format(
-              dates[0].endDate,
-              "dd/MM/yyyy"
-            )}`}
+                dates[0].endDate,
+                "dd/MM/yyyy"
+              )}`}
             </span>
             {openPackageDate && (
               <DateRange
@@ -402,7 +371,7 @@ function PackageDetail({match}) {
           {/* start of detials about package */}
           <h3 className="text-black fw-bold">Overview</h3>
           <p className="text-black">{packages.package.description}</p>
-    
+
           <hr />
           <h3 className="text-black fw-bold my-4">What's Included</h3>
           <div className="row">
@@ -564,10 +533,8 @@ function PackageDetail({match}) {
           <hr />
           {/* end of detials about package */}
 
-        
-
-  {/* ----------------------------Review-Section-Start----------------------- */}
-  <h3 className="reviewsHeading">REVIEWS</h3>
+          {/* ----------------------------Review-Section-Start----------------------- */}
+          <h3 className="reviewsHeading">REVIEWS</h3>
           <Dialog
             aria-labelledby="simple-dialog-title"
             open={openPackageReview}
@@ -612,7 +579,6 @@ function PackageDetail({match}) {
           </Dialog>
 
           <ToastContainer />
-        
 
           <Container>
             {packages.package.reviews && packages.package.reviews[0] ? (
@@ -629,9 +595,6 @@ function PackageDetail({match}) {
           </Container>
 
           {/* ----------------------------Review-Section-End----------------------- */}
-
-
-
         </div>
       </div>
 

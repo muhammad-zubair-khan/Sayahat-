@@ -1,6 +1,7 @@
 import React from "react";
 import Navbar from "../../Navbar/Navbar";
 import Footer from "../../Footer/Footer";
+import { Link } from "react-router-dom";
 
 const Contactus = () => {
   return (
@@ -22,9 +23,10 @@ const Contactus = () => {
             Are you a traveler in need of help? Have a question about your
             review? Problems booking your hotel, flight or attraction/activity?
             Trouble with a restaurant reservation?
-            <br/>
+            <br />
             We want to help! Did you know that nearly every customer service
-            questions can be answered. Please fill the form. We'll reach you in 2 business days. Thank You!
+            questions can be answered. Please fill the form. We'll reach you in
+            2 business days. Thank You!
           </p>
 
           <h4 className="text-black">General Contact Information</h4>
@@ -34,7 +36,6 @@ const Contactus = () => {
             <br />
             General company phone number: +92 324 8005000
           </p>
-
 
           <section className="mb-4">
             <h2 className="h1-responsive font-weight-bold text-center my-4 text-black">
@@ -121,12 +122,13 @@ const Contactus = () => {
                 </form>
 
                 <div className="text-center text-md-left">
-                  <a
+                  <Link
+                    to="#"
                     className="btn btn-primary"
                     onclick="document.getElementById('contact-form').submit();"
                   >
                     Submit
-                  </a>
+                  </Link>
                 </div>
                 <div className="status"></div>
               </div>
@@ -154,18 +156,28 @@ const Contactus = () => {
         </div>
       </div>
 
-      <div className='container-fluid bg-dark text-center'>
-        <h1 className='pt-5 text-white'>Save time, save money!</h1>
-        <h5 className='text-white pb-2'>Sign up and we'll send the best deals to you</h5>
-        <div className='container d-flex justify-content-center pb-5'>
-          <div className='row g-2'>
-            <div className=' col-md-8'>
+      <div className="container-fluid bg-dark text-center">
+        <h1 className="pt-5 text-white">Save time, save money!</h1>
+        <h5 className="text-white pb-2">
+          Sign up and we'll send the best deals to you
+        </h5>
+        <div className="container d-flex justify-content-center pb-5">
+          <div className="row g-2">
+            <div className=" col-md-8">
               <div className="input-group mb-3">
-                <input type="email" className="form-control" placeholder="Your email address" aria-label="email" aria-describedby="basic-addon1" />
+                <input
+                  type="email"
+                  className="form-control"
+                  placeholder="Your email address"
+                  aria-label="email"
+                  aria-describedby="basic-addon1"
+                />
               </div>
             </div>
-            <div className=' col-md-4'>
-              <button type="button" className="btn btn-primary h-75">Subscribe</button>
+            <div className=" col-md-4">
+              <button type="button" className="btn btn-primary h-75">
+                Subscribe
+              </button>
             </div>
           </div>
         </div>

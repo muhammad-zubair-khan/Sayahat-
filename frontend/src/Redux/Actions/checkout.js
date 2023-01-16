@@ -3,7 +3,6 @@ import {
   SAVE_CONTACT_INFO,
   SAVE_HOTEL_CONTACT_INFO,
 } from "../Constants/checkoutConstants";
-import axios from "axios";
 
 // SAVE CONTACT INFO
 export const saveContactInfo = (data) => async (dispatch) => {

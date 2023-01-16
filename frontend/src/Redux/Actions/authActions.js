@@ -14,22 +14,6 @@ import {
   LOAD_USER_REQUEST,
   LOAD_USER_SUCCESS,
   LOAD_USER_FAIL,
-  DELETE_USER_REQUEST,
-  DELETE_USER_SUCCESS,
-  DELETE_USER_FAIL,
-  DELETE_USER_RESET,
-  UPDATE_USER_REQUEST,
-  UPDATE_USER_SUCCESS,
-  UPDATE_USER_FAIL,
-  UPDATE_USER_RESET,
-  UPDATE_PROFILE_RESET,
-  UPDATE_PASSWORD_REQUEST,
-  UPDATE_PASSWORD_SUCCESS,
-  UPDATE_PASSWORD_RESET,
-  UPDATE_PASSWORD_FAIL,
-  // ALL_USER_REQUEST,
-  // ALL_USER_SUCCESS,
-  // ALL_USER_FAIL,
 } from "../Constants/authConstants";
 import axios from "../helpers/axios";
 // new update signup action
@@ -51,13 +35,12 @@ export const signup = (user) => {
             user,
           },
         });
-      } 
+      }
       // else {
       //   // const { error } = res.data;
       //   // dispatch({ type: SIGNUP_FAILURE, payload: { error } });
       // }
-    } 
-    catch (error) {
+    } catch (error) {
       const { data } = error.response;
       dispatch({
         type: SIGNUP_FAILURE,
@@ -96,43 +79,6 @@ export const login = (user) => {
   };
 };
 
-// export const login = (email, password) => async (dispatch) => {
-// 	const config = {
-// 		headers: {
-// 			"Content-Type": "application/json",
-// 		},
-// 	};
-
-// 	const body = JSON.stringify({ email, password });
-
-// 	try {
-// 		const res = await axios.post(
-// 			"/signin",
-// 			body,
-// 			config
-// 		);
-
-// 		dispatch({
-// 			type: LOGIN_SUCCESS,
-// 			payload: res.data,
-// 		});
-
-// 		dispatch(isUserLoggedIn());
-// 	} catch (err) {
-// 		const errors = err.response.data.errors;
-
-// 		if (errors) {
-// 			errors.forEach((error) => dispatch(setAlert(error.msg, "danger")));
-// 		}
-
-// 		dispatch({
-// 			type: LOGIN_FAILURE,
-// 		});
-// 	}
-// };
-
-// Load User
-
 export const loadUser = () => async (dispatch) => {
   try {
     dispatch({ type: LOAD_USER_REQUEST });
@@ -144,7 +90,6 @@ export const loadUser = () => async (dispatch) => {
     dispatch({ type: LOAD_USER_FAIL, payload: error.response.data.message });
   }
 };
-
 
 export const isUserLoggedIn = () => {
   return async (dispatch) => {
@@ -168,7 +113,7 @@ export const isUserLoggedIn = () => {
 };
 
 // Update Profile
-export const updateProfile = (userData,id) => async (dispatch) => {
+export const updateProfile = (userData, id) => async (dispatch) => {
   try {
     dispatch({ type: UPDATE_PROFILE_REQUEST });
 
@@ -203,7 +148,6 @@ export const signout = () => {
     // }
   };
 };
-
 
 // Clearing Errors
 export const clearErrors = () => async (dispatch) => {

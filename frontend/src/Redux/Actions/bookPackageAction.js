@@ -1,26 +1,37 @@
 import axios from "../helpers/axios";
-import { CLEAR_ERRORS, MY_PACKAGE_FAIL, MY_PACKAGE_REQUEST, MY_PACKAGE_SUCCESS, NEW_PACKAGE_BOOKING_FAIL, NEW_PACKAGE_BOOKING_REQUEST, NEW_PACKAGE_BOOKING_SUCCESS, PACKAGE_DETAILS_FAIL, PACKAGE_DETAILS_REQUEST, PACKAGE_DETAILS_SUCCESS } from "../Constants/bookPackageConstants";
+import {
+  CLEAR_ERRORS,
+  MY_PACKAGE_FAIL,
+  MY_PACKAGE_REQUEST,
+  MY_PACKAGE_SUCCESS,
+  NEW_PACKAGE_BOOKING_FAIL,
+  NEW_PACKAGE_BOOKING_REQUEST,
+  NEW_PACKAGE_BOOKING_SUCCESS,
+  PACKAGE_DETAILS_FAIL,
+  PACKAGE_DETAILS_REQUEST,
+  PACKAGE_DETAILS_SUCCESS,
+} from "../Constants/bookPackageConstants";
 
 // Book Package
 export const bookPackage = (bookPkg) => async (dispatch) => {
-    try {
-      dispatch({ type: NEW_PACKAGE_BOOKING_REQUEST });
-  
-      const config = {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      };
-      const { data } = await axios.post("/book/package", bookPkg, config);
-  
-      dispatch({ type: NEW_PACKAGE_BOOKING_SUCCESS, payload: data });
-    } catch (error) {
-      dispatch({
-        type: NEW_PACKAGE_BOOKING_FAIL,
-        payload: error.response.data.message,
-      });
-    }
-  };
+  try {
+    dispatch({ type: NEW_PACKAGE_BOOKING_REQUEST });
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    const { data } = await axios.post("/book/package", bookPkg, config);
+
+    dispatch({ type: NEW_PACKAGE_BOOKING_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({
+      type: NEW_PACKAGE_BOOKING_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
 
 // My Packages
 export const myPackages = () => async (dispatch) => {
@@ -53,8 +64,6 @@ export const getPackageDetails = (id) => async (dispatch) => {
     });
   }
 };
-
-
 
 // Clearing Errors
 export const clearErrors = () => async (dispatch) => {

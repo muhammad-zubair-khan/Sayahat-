@@ -1,7 +1,6 @@
 import React from "react";
 import { IoIosStar } from "react-icons/io";
 
-
 const Rating = (props) => {
   return (
     <span

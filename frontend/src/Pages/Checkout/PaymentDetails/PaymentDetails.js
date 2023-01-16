@@ -7,23 +7,22 @@ import { getPackageDetailById } from "../../../Redux/Actions/packageAction";
 import { ImageUrl } from "../../../Redux/UrlConfig";
 import CheckoutSteps from "../CheckoutSteps";
 import {
-    CardNumberElement,
-    CardCvcElement,
-    CardExpiryElement,
-    useStripe,
-    useElements,
-  } from "@stripe/react-stripe-js";
+  CardNumberElement,
+  CardCvcElement,
+  CardExpiryElement,
+  useStripe,
+  useElements,
+} from "@stripe/react-stripe-js";
 
 const PaymentDetails = () => {
   const dispatch = useDispatch();
-  const location = useLocation();
   const history = useHistory();
   const packages = useSelector((state) => state.addPackageReducer);
   const { id } = useParams();
   const stripe = useStripe();
   const elements = useElements();
   const payBtn = useRef(null);
-const {user} = useSelector((state)=>state.auth)
+  const { user } = useSelector((state) => state.auth);
   useEffect(() => {
     dispatch(getPackageDetailById(id));
   }, [dispatch, id]);
@@ -76,12 +75,12 @@ const {user} = useSelector((state)=>state.auth)
         alert.error(result.error.message);
       } else {
         if (result.paymentIntent.status === "succeeded") {
-        //   order.paymentInfo = {
-        //     id: result.paymentIntent.id,
-        //     status: result.paymentIntent.status,
-        //   };
+          //   order.paymentInfo = {
+          //     id: result.paymentIntent.id,
+          //     status: result.paymentIntent.status,
+          //   };
 
-        //   dispatch(createOrder(order));
+          //   dispatch(createOrder(order));
 
           history.push("/success");
         } else {
@@ -165,7 +164,6 @@ const {user} = useSelector((state)=>state.auth)
                     </Button>
                   )}
                 </StripeCheckout> */}
-
               </form>
             </div>
           </div>

@@ -2,7 +2,6 @@ import React, { Fragment, useEffect } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import "../Packages/MyPackages.css";
 import { useSelector, useDispatch } from "react-redux";
-// import { clearErrors, myPackages } from "../../actions/orderAction";
 // import Loader from "../layout/Loader/Loader";
 import { Link } from "react-router-dom";
 // import { useAlert } from "react-alert";
@@ -13,35 +12,31 @@ import { clearErrors, myHotels } from "../../../Redux/Actions/bookHotelAction";
 
 const MyHotels = () => {
   const dispatch = useDispatch();
-
-//   const alert = useAlert();
-
   const { loading, error, hotels } = useSelector((state) => state.myHotels);
-  console.log(hotels)
   const { user } = useSelector((state) => state.auth);
 
   const columns = [
     { field: "id", headerName: "Hotel ID", minWidth: 200, flex: 0.5 },
     {
-        field: "name",
-        headerName: "Hotel Name",
-        minWidth: 150,
-        flex: 0.3,
-      },
+      field: "name",
+      headerName: "Hotel Name",
+      minWidth: 150,
+      flex: 0.3,
+    },
     {
-        field: "adult",
-        headerName: "Adult",
+      field: "adult",
+      headerName: "Adult",
       type: "number",
-        minWidth: 150,
-        flex: 0.3,
-      },
+      minWidth: 150,
+      flex: 0.3,
+    },
     {
-        field: "children",
-        headerName: "Chidlren",
+      field: "children",
+      headerName: "Chidlren",
       type: "number",
-        minWidth: 150,
-        flex: 0.3,
-      },
+      minWidth: 150,
+      flex: 0.3,
+    },
     {
       field: "rooms",
       headerName: "Booked Rooms",
@@ -84,22 +79,22 @@ const MyHotels = () => {
 
   hotels &&
     hotels.forEach((item, index) => {
-        rows.push({
-            // itemsQty: item.orderItems.length,
-            id: item._id,
-            name:item.name,
-            rooms: item.rooms.length,
-            adult:item.hotelActivityInfo.options[0].adult,
-            children:item.hotelActivityInfo.options[0].children,
-            // room:item.hotelActivityInfo.options[0].room,
-            fullyRefundable:item.fullyRefundable,
-            price: item.price,
-        });
+      rows.push({
+        // itemsQty: item.orderItems.length,
+        id: item._id,
+        name: item.name,
+        rooms: item.rooms.length,
+        adult: item.hotelActivityInfo.options[0].adult,
+        children: item.hotelActivityInfo.options[0].children,
+        // room:item.hotelActivityInfo.options[0].room,
+        fullyRefundable: item.fullyRefundable,
+        price: item.price,
+      });
     });
 
   useEffect(() => {
     if (error) {
-    //   alert.error(error);
+      //   alert.error(error);
       dispatch(clearErrors());
     }
     dispatch(myHotels());

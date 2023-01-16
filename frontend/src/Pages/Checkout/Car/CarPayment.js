@@ -20,11 +20,10 @@ import { useLocation, useParams } from "react-router-dom";
 import { getCarById } from "../../../Redux/Actions/carAction";
 import { bookedCar } from "../../../Redux/Actions/bookCarAction";
 
-const CarPayment = ({history}) => {
-    const location = useLocation()
-const params = useParams()
+const CarPayment = ({ history }) => {
+  const location = useLocation();
   const dispatch = useDispatch();
-  const [totalPrice,setTotalPrice] = useState(location.state.state.totalPrice)
+  const [totalPrice, setTotalPrice] = useState(location.state.state.totalPrice);
   const [startDestination, setStartDestination] = useState(
     location.state.state.startDestination
   );
@@ -41,11 +40,11 @@ const params = useParams()
   const payBtn = useRef(null);
   const { id } = useParams();
   const { car } = useSelector((state) => state.addCarReducer);
-  const {user} = useSelector((state)=> state.auth)
+  const { user } = useSelector((state) => state.auth);
 
   useEffect(() => {
     dispatch(getCarById(id));
-  }, [dispatch,id]);
+  }, [dispatch, id]);
 
   const { CarContactInfo } = useSelector((state) => state.carContactCheckout);
   const paymentData = {
@@ -53,15 +52,15 @@ const params = useParams()
   };
 
   const bookCar = {
-    name:  car.name,
+    name: car.name,
     price: totalPrice,
     pickupDestination: car.city,
     From: startDestination,
     To: endDestination,
     StartingDate: dates[0].startDate,
     EndingDate: dates[0].endDate,
-    PickupTime:pickupTime,
-    DropoffTime:dropoffTime,
+    PickupTime: pickupTime,
+    DropoffTime: dropoffTime,
     CarContactInfo,
   };
 
@@ -94,10 +93,10 @@ const params = useParams()
             email: user.email,
             address: {
               city: car.city,
-            //   line1: shippingInfo.address,
-            //   state: shippingInfo.state,
-            //   postal_code: shippingInfo.pinCode,
-            //   country: shippingInfo.country,
+              //   line1: shippingInfo.address,
+              //   state: shippingInfo.state,
+              //   postal_code: shippingInfo.pinCode,
+              //   country: shippingInfo.country,
             },
           },
         },
@@ -128,37 +127,37 @@ const params = useParams()
   };
   return (
     <>
-  <Fragment>
-      {/* <MetaData title="Payment" /> */}
-      {/* <CheckoutSteps activeStep={2} /> */}
-      <div className="paymentContainer">
-        {/* <form className="paymentForm"> */}
-        <form className="paymentForm" onSubmit={(e) => submitHandler(e)}>
-          <Typography>Card Info</Typography>
-          <div>
-            <CreditCardIcon />
-            <CardNumberElement className="paymentInput" />
-          </div>
-          <div>
-            <EventIcon />
-            <CardExpiryElement className="paymentInput" />
-          </div>
-          <div>
-            <VpnKeyIcon />
-            <CardCvcElement className="paymentInput" />
-          </div>
+      <Fragment>
+        {/* <MetaData title="Payment" /> */}
+        {/* <CheckoutSteps activeStep={2} /> */}
+        <div className="paymentContainer">
+          {/* <form className="paymentForm"> */}
+          <form className="paymentForm" onSubmit={(e) => submitHandler(e)}>
+            <Typography>Card Info</Typography>
+            <div>
+              <CreditCardIcon />
+              <CardNumberElement className="paymentInput" />
+            </div>
+            <div>
+              <EventIcon />
+              <CardExpiryElement className="paymentInput" />
+            </div>
+            <div>
+              <VpnKeyIcon />
+              <CardCvcElement className="paymentInput" />
+            </div>
 
-          <input
-            type="submit"
-            value={`Pay - PKR ${totalPrice}`}
-            ref={payBtn}
-            className="paymentFormBtn"
-          />
-        </form>
-      </div>
-    </Fragment>
+            <input
+              type="submit"
+              value={`Pay - PKR ${totalPrice}`}
+              ref={payBtn}
+              className="paymentFormBtn"
+            />
+          </form>
+        </div>
+      </Fragment>
     </>
-  )
-}
+  );
+};
 
-export default CarPayment
+export default CarPayment;

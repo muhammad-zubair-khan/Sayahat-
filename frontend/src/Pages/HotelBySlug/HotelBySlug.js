@@ -7,18 +7,14 @@ import { MaterialButton } from "../../Components/MaterialUI";
 import Rating from "../../Components/Rating/Rating";
 import Price from "../../Components/Price/Price";
 import { ImageUrl } from "../../Redux/UrlConfig";
-import Zoom from "react-medium-image-zoom";
 import "react-medium-image-zoom/dist/styles.css";
 
 const HotelBySlug = (props) => {
   const { slug } = useParams();
   const { hotelsByPrice } = useSelector((state) => state.hotelReducer);
   const hotels = useSelector((state) => state.hotelReducer);
-  const priceRange = hotelsByPrice;
-  console.log(priceRange);
 
   const dispatch = useDispatch();
-  // console.log(hotels.hotels.hotelImages)
   useEffect(() => {
     dispatch(getHotelBySlug(slug));
   }, [dispatch, slug]);
@@ -47,7 +43,7 @@ const HotelBySlug = (props) => {
               margin: "20px",
             }}
           >
-            <div style={{ display: "flex"}}>
+            <div style={{ display: "flex" }}>
               {hotels &&
                 hotelsByPrice[key].map((product) => (
                   <Link
@@ -56,22 +52,25 @@ const HotelBySlug = (props) => {
                       display: "block",
                       textDecoration: "none",
                       color: "#000",
-                      margin: '0px 40px' 
+                      margin: "0px 40px",
                     }}
                     className="productContainer"
                   >
                     <div className="productImgContainer d-flex">
-                        {/* <Zoom> */}
+                      {/* <Zoom> */}
                       {hotels.hotels &&
                         hotels.hotels.map((item) => (
-
                           <img
                             src={ImageUrl(item.hotelImages[0].img)}
-                            style={{ width: "27%", height: "140px",margin: '0px 4px' }}
+                            style={{
+                              width: "27%",
+                              height: "140px",
+                              margin: "0px 4px",
+                            }}
                             alt=""
-                            />
-                            ))}
-                            {/* </Zoom> */}
+                          />
+                        ))}
+                      {/* </Zoom> */}
                     </div>
                     <div className="productInfo">
                       <div style={{ margin: "10px 0" }}>{product.name}</div>

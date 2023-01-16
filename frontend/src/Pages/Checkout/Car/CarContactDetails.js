@@ -37,7 +37,7 @@ const CarContactDetails = () => {
     /^[-!#$%&'*+\/0-9=?A-Z^_a-z{|}~](\.?[-!#$%&'*+\/0-9=?A-Z^_a-z`{|}~])*@[a-zA-Z0-9](-*\.?[a-zA-Z0-9])*\.[a-zA-Z](-?[a-zA-Z0-9])+$/.test(
       email
     );
-    const [active,setActive] = useState(0);
+  const [active, setActive] = useState(0);
   // carContactCheckout
 
   const [errors, setErrors] = useState({});
@@ -45,7 +45,7 @@ const CarContactDetails = () => {
   const [firstName, setFirstName] = useState(user.firstName);
   const [lastName, setLastName] = useState(user.lastName);
   const [phone, setPhone] = useState("");
-  const [nic, setNic ] = useState("");
+  const [nic, setNic] = useState("");
 
   const SubmitContactInfo = (e) => {
     e.preventDefault();
@@ -83,12 +83,14 @@ const CarContactDetails = () => {
               We'll use this information to send you confirmation and updates
               about your booking
             </h4>
-           {!localStorage.token && <h5 style={{ color: "black" }} className="mt-3">
-              Already have an account?
-              <span>
-                <Link to="/login">Log in</Link>
-              </span>
-            </h5>}
+            {!localStorage.token && (
+              <h5 style={{ color: "black" }} className="mt-3">
+                Already have an account?
+                <span>
+                  <Link to="/login">Log in</Link>
+                </span>
+              </h5>
+            )}
             <form
               encType="multipart/form-data"
               onSubmit={SubmitContactInfo}
@@ -176,19 +178,17 @@ const CarContactDetails = () => {
                 // disabled={state ? false : true}
               /> */}
               {active === 0 && (
-                      <Button
-                        variant="contained"
-                        type="submit"
-                        style={{ float: "right" }}
-                        className="send-button"
-                        disabled={
-                          !firstName || !lastName || !email || !phone || !nic
-                        }
-                        // onClick={handleShow}
-                      >
-                        Next
-                      </Button>
-                    )}
+                <Button
+                  variant="contained"
+                  type="submit"
+                  style={{ float: "right" }}
+                  className="send-button"
+                  disabled={!firstName || !lastName || !email || !phone || !nic}
+                  // onClick={handleShow}
+                >
+                  Next
+                </Button>
+              )}
             </form>
           </div>
         </Grid>

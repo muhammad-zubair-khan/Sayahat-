@@ -2,19 +2,21 @@ import React, { Fragment, useEffect } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import "./MyPackages.css";
 import { useSelector, useDispatch } from "react-redux";
-// import { clearErrors, myPackages } from "../../actions/orderAction";
 // import Loader from "../layout/Loader/Loader";
 import { Link } from "react-router-dom";
 // import { useAlert } from "react-alert";
 import Typography from "@mui/material/Typography";
 // import MetaData from "../layout/MetaData";
 import LaunchIcon from "@mui/icons-material/Launch";
-import { clearErrors, myPackages } from "../../../Redux/Actions/bookPackageAction";
+import {
+  clearErrors,
+  myPackages,
+} from "../../../Redux/Actions/bookPackageAction";
 
 const MyPackages = () => {
   const dispatch = useDispatch();
 
-//   const alert = useAlert();
+  //   const alert = useAlert();
 
   const { loading, error, packages } = useSelector((state) => state.myPackages);
   const { user } = useSelector((state) => state.auth);
@@ -22,23 +24,23 @@ const MyPackages = () => {
   const columns = [
     { field: "id", headerName: "Package ID", minWidth: 300, flex: 1 },
     {
-        field: "name",
-        headerName: "Package Name",
-        minWidth: 150,
-        flex: 0.5,
-      },
+      field: "name",
+      headerName: "Package Name",
+      minWidth: 150,
+      flex: 0.5,
+    },
     {
-        field: "adult",
-        headerName: "Adult",
-        minWidth: 150,
-        flex: 0.5,
-      },
+      field: "adult",
+      headerName: "Adult",
+      minWidth: 150,
+      flex: 0.5,
+    },
     {
-        field: "children",
-        headerName: "Chidlren",
-        minWidth: 150,
-        flex: 0.5,
-      },
+      field: "children",
+      headerName: "Chidlren",
+      minWidth: 150,
+      flex: 0.5,
+    },
     // {
     //   field: "status",
     //   headerName: "Status",
@@ -84,12 +86,13 @@ const MyPackages = () => {
         return (
           // <Link to={{`/myPackage/${params.getValue(params.id, "id")}`}}
           // >
-          <Link  to={{
-            pathname: `/myPackage/${params.getValue(params.id,"id")}`,
-            params: { id: params.getValue(params.id,"id") },
-          }}
+          <Link
+            to={{
+              pathname: `/myPackage/${params.getValue(params.id, "id")}`,
+              params: { id: params.getValue(params.id, "id") },
+            }}
           >
-          <LaunchIcon />
+            <LaunchIcon />
           </Link>
           // {params: { id: params.getValue(params.id, "id") }}
         );
@@ -100,18 +103,15 @@ const MyPackages = () => {
 
   packages &&
     packages.forEach((item, index) => {
-        rows.push({
-            // itemsQty: item.orderItems.length,
-            id: item._id,
-            name:item.name,
-            // status: item.orderStatus,
-            adult:item.activityInfo.options[0].adult,
-            children:item.activityInfo.options[0].children,
-            time:item.activityInfo.time,
-            refundable:item.refundable,
-            amount: item.price,
-        });
-        console.log(packages)
+      rows.push({
+        id: item._id,
+        name: item.name,
+        adult: item.activityInfo.options[0].adult,
+        children: item.activityInfo.options[0].children,
+        time: item.activityInfo.time,
+        refundable: item.refundable,
+        amount: item.price,
+      });
     });
 
   useEffect(() => {
@@ -140,9 +140,11 @@ const MyPackages = () => {
             autoHeight
           />
 
-          <Typography id="myOrdersHeading">{user.fullName}'s Packages</Typography>
+          <Typography id="myOrdersHeading">
+            {user.fullName}'s Packages
+          </Typography>
         </div>
-      )} 
+      )}
     </Fragment>
   );
 };

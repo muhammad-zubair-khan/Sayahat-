@@ -7,14 +7,10 @@ import "./Car.css";
 import { Container, Grid } from "@mui/material";
 const Car = () => {
   return (
-    <div style={{background:' rgb(0 0 0)',
-    height: '75px'}}>
+    <div style={{ background: " rgb(0 0 0)", height: "75px" }}>
       <Navbar />
       <Container>
-        <Grid container style={{padding: '0px 15px',paddingTop:'150px'}}>
-          {/* <Grid xs={12} md={3} lg={3} >
-            <Search />
-          </Grid> */}
+        <Grid container style={{ padding: "0px 15px", paddingTop: "150px" }}>
           <Grid xs={12} md={9} lg={12}>
             <CarList />
           </Grid>

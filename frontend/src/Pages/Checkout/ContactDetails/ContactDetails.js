@@ -15,35 +15,18 @@ const ContactDetails = () => {
   const [dates, setDates] = useState(location.state.state.dates);
   const [options, setOptions] = useState(location.state.state.options);
   const [time, setTimes] = useState(location.state.state.time);
-  const [show, setShow] = useState(false);
 
   const packages = useSelector((state) => state.addPackageReducer);
   const { id } = useParams();
-  // const { data, loading, error } = useFetch(
-  //   `http://localhost:5000/api/hotel/${id}`
-  // );
-  // console.log(data);
   useEffect(() => {
     dispatch(getPackageDetailById(id));
   }, [dispatch, id]);
-
-  const handleClose = () => {
-    setShow(false);
-    // navigate(0);
-  };
-  const handleShow = () => {
-    if (!isEmail(email)) {
-      setShow(false);
-    } else if (isEmail(email)) {
-      setShow(true);
-    }
-  };
   const history = useHistory();
   const isEmail = (email) =>
     /^[-!#$%&'*+\/0-9=?A-Z^_a-z{|}~](\.?[-!#$%&'*+\/0-9=?A-Z^_a-z`{|}~])*@[a-zA-Z0-9](-*\.?[a-zA-Z0-9])*\.[a-zA-Z](-?[a-zA-Z0-9])+$/.test(
       email
     );
-    const [active, setActive] = useState(0);
+  const [active, setActive] = useState(0);
 
   const [errors, setErrors] = useState({});
   const [email, setEmail] = useState(user.email);
@@ -155,7 +138,7 @@ const ContactDetails = () => {
                   {error}
                 </span>
               ))}
-           
+
               {/* <input
                 type="submit"
                 value="Continue"
@@ -163,19 +146,17 @@ const ContactDetails = () => {
                 // disabled={state ? false : true}
               /> */}
               {active === 0 && (
-                      <Button
-                        variant="contained"
-                        type="submit"
-                        style={{ float: "right" }}
-                        className="send-button"
-                        disabled={
-                          !firstName || !lastName || !email || !phone
-                        }
-                        // onClick={handleShow}
-                      >
-                        Next
-                      </Button>
-                    )}
+                <Button
+                  variant="contained"
+                  type="submit"
+                  style={{ float: "right" }}
+                  className="send-button"
+                  disabled={!firstName || !lastName || !email || !phone}
+                  // onClick={handleShow}
+                >
+                  Next
+                </Button>
+              )}
             </form>
           </div>
         </Grid>
@@ -212,9 +193,6 @@ const ContactDetails = () => {
               flexDirection: "column",
             }}
           >
-            {/* <span>Pick-up Time: <span className="siTaxiOp">{pickupTime}</span></span>
-                <span>Drop-off Time: <span className="siTaxiOp">{dropoffTime}</span></span> */}
-            {/* <span>{data.hotel.address}</span> */}
             <span>{packages.package.title}</span>
             <hr />
           </div>

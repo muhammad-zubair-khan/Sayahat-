@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Footer from "../../Footer/Footer";
 import Navbar from "../../Navbar/Navbar";
-import Search from "../Search/Search";
 import HotelList from "./HotelList/HotelList";
 import "./Hotel.css";
-import { Container, Grid } from "@mui/material";
+import { Container } from "@mui/material";
 const Hotel = () => {
   return (
     <>

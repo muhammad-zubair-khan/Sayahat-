@@ -8,7 +8,7 @@ import { DateRangePicker } from "react-date-range";
 import { format } from "date-fns";
 import "react-date-range/dist/styles.css"; // main style file
 import "react-date-range/dist/theme/default.css"; // theme css file
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { SearchContext } from "../../Context/SearchContext";
 import { ReactSearchAutocomplete } from "react-search-autocomplete";
 import { useEffect } from "react";
@@ -38,18 +38,6 @@ const Tab = () => {
   const [openCarDate, setOpenCarDate] = useState(false);
   const [pickupTime, setPickupTime] = useState(null);
   const [dropoffTime, setDropoffTime] = useState(null);
-  const [date, setDate] = useState([
-    {
-      startDate: new Date(),
-      endDate: new Date(),
-      key: "selection",
-    },
-  ]);
-  const [options3, setOptions3] = useState({
-    adult: 1,
-    children: 0,
-    room: 1,
-  });
 
   //Hotel
   const handleOption = (name, operation) => {
@@ -64,32 +52,12 @@ const Tab = () => {
 
   //Package
   const [openPackageDate, setOpenPackageDate] = useState(false);
-  const [packageDate, setPackageDate] = useState([
-    {
-      startDate: new Date(),
-      endDate: new Date(),
-      key: "selection",
-    },
-  ]);
 
   //package
   const [packageDestination, setPackageDestination] = useState("");
-  const [openOptions2, setOpenOptions2] = useState(false);
-  const [options2, setOptions2] = useState({
-    adult: 1,
-    children: 0,
-    room: 1,
-  });
+
   //Package
-  const handleOption2 = (name, operation) => {
-    setOptions2((prev) => {
-      return {
-        ...prev,
-        [name]:
-          operation === "increament" ? options2[name] + 1 : options2[name] - 1,
-      };
-    });
-  };
+
   const { dispatch } = useContext(SearchContext);
   const handleSearch = () => {
     dispatch({ type: "NEW_SEARCH", payload: { destination, dates, options } });
@@ -129,33 +97,13 @@ const Tab = () => {
   const { products } = useSelector((state) => state.vacationProduct);
   useEffect(() => {
     dispatch(getAllVacationProduct());
-  }, []);
-
-  // const handleOnSearch = (string, results) => {
-  //   // onSearch will have as the first callback parameter
-  //   // the string searched and for the second the results.
-  //   console.log(string, results)
-  // }
-
-  //Car Functions
-  const CarhandleOnHover = (result) => {
-    // the item hovered
-    console.log(result);
-  };
+  }, [dispatch]);
 
   const CarhandleOnSelect = (product) => {
-    // the item selected
     setStartDestination(product.name);
-    // console.log(product);
   };
   const CarEndhandleOnSelect = (product) => {
-    // the item selected
     setEndDestination(product.name);
-    console.log(product);
-  };
-
-  const CarhandleOnFocus = () => {
-    console.log("Focused");
   };
 
   const CarformatResult = (product) => {
@@ -171,28 +119,12 @@ const Tab = () => {
     );
   };
 
-  //Stays Function
-  const handleOnStayHover = (result) => {
-    // the item hovered
-    console.log(result);
-  };
-
   const handleOnStaySelect = (product) => {
     setDestination(product.name);
   };
 
-  //Package Functions
-  const handleOnHover = (result) => {
-    // the item hovered
-    console.log(result);
-  };
-
   const handleOnSelect = (product) => {
     setPackageDestination(product.name);
-  };
-
-  const handleOnFocus = () => {
-    console.log("Focused");
   };
 
   const formatResult = (product) => {
@@ -259,22 +191,9 @@ const Tab = () => {
               <div className="col-xxs-12 col-xs-6 col-md-3 col-lg-3 mt">
                 <div className="input-field">
                   <label for="from">From:</label>
-                  {/* <input
-                                type="text"
-                                className="form-control"
-                                id="from-place"
-                                placeholder="Lahore, PK"
-                                onChange={(e) =>
-                                  setStartDestination(e.target.value)
-                                }
-                              /> */}
                   <ReactSearchAutocomplete
                     items={products}
-                    // onSearch={handleOnSearch}
-                    onHover={CarhandleOnHover}
                     onSelect={CarhandleOnSelect}
-                    // onFocus={handleOnFocus}
-                    // autoFocus
                     formatResult={CarformatResult}
                     value={startDestination}
                     onChange={(e) => setStartDestination(e.target.value)}
@@ -285,22 +204,9 @@ const Tab = () => {
               <div className="col-xxs-12 col-xs-6 col-md-3 col-lg-3 mt">
                 <div className="input-field">
                   <label for="To">To:</label>
-                  {/* <input
-                                type="text"
-                                className="form-control"
-                                id="to-place"
-                                placeholder="Islamabad, PK"
-                                onChange={(e) =>
-                                  setEndDestination(e.target.value)
-                                }
-                              /> */}
                   <ReactSearchAutocomplete
                     items={products}
-                    // onSearch={handleOnSearch}
-                    onHover={CarhandleOnHover}
                     onSelect={CarEndhandleOnSelect}
-                    // onFocus={handleOnFocus}
-                    // autoFocus
                     formatResult={CarformatResult}
                     value={endDestination}
                     onChange={(e) => setEndDestination(e.target.value)}
@@ -402,23 +308,12 @@ const Tab = () => {
                   <div>
                     <ReactSearchAutocomplete
                       items={products}
-                      // onSearch={handleOnSearch}
-                      onHover={handleOnStayHover}
                       onSelect={handleOnStaySelect}
-                      // onFocus={handleOnFocus}
-                      autoFocus
                       formatResult={formatResult}
                       onChange={(e) => setDestination(e.target.value)}
                       placeholder="Lahore, PK"
                     />
                   </div>
-                  {/* <input
-                                type="text"
-                                className="form-control"
-                                id="from-place"
-                                placeholder="Lahore, PK"
-                                onChange={(e) => setDestination(e.target.value)}
-                              /> */}
                 </div>
               </div>
 
@@ -600,15 +495,7 @@ const Tab = () => {
                   <div>
                     <ReactSearchAutocomplete
                       items={products}
-                      // // onSearch={handleOnSearch}
-                      // onHover={handleOnHover}
                       onSelect={handleOnSelect}
-                      // // onFocus={handleOnFocus}
-                      // autoFocus
-                      // formatResult={formatResult}
-                      // onChange={(e) =>
-                      //   setPackageDestination(e.target.value)
-                      // }
                       value={packageDestination}
                       onChange={(e) => setPackageDestination(e.target.value)}
                       placeholder="Lahore, PK"
@@ -729,7 +616,6 @@ const Tab = () => {
                         </button>
                       </div>
                     </div>
-                    
                   </div>
                 )}
               </div>

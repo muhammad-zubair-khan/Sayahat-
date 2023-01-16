@@ -76,13 +76,13 @@ export const VacationCategoryReducer = (state = initialState, action) => {
       break;
     case CREATE_NEW_CATEGORY_SUCCESS:
       const category = action.payload.category;
-      console.log(">>>>>>>", category);
+      // console.log(">>>>>>>", category);
       const updatedCategories = buildNewVacationCategories(
         category.parentId,
         state.categories,
         category
       );
-      console.log("updated categoires", updatedCategories);
+      // console.log("updated categoires", updatedCategories);
 
       state = {
         ...state,

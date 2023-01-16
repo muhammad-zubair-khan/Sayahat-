@@ -2,15 +2,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleXmark } from "@fortawesome/free-solid-svg-icons";
 import "./Reserve.css";
 import useFetch from "../../hook/useFetch";
-import { useContext, useState } from "react";
+import {  useState } from "react";
 import { useSelector } from "react-redux";
-import { SearchContext } from "../../Context/SearchContext";
 import axios from "axios";
-import { Redirect, useHistory, useLocation } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const Reserve = ({ setOpen, hotelId,totalPrice }) => {
+const Reserve = ({ setOpen, hotelId, totalPrice }) => {
   const auth = useSelector((state) => state.auth);
   const location = useLocation();
   const id = location.pathname.split("/")[2];
@@ -82,7 +81,7 @@ const Reserve = ({ setOpen, hotelId,totalPrice }) => {
         });
         setTimeout(() => {
           history.push(`/hotel/${id}/contactDetail`, {
-            state: { destination, dates, options, selectedRooms,totalPrice },
+            state: { destination, dates, options, selectedRooms, totalPrice },
           });
         }, 3000);
       } catch (err) {}

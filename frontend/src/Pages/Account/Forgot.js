@@ -29,8 +29,7 @@ const Forgot = () => {
 
     const data = await res.json();
 
-    if (data.status == 201) {
-      console.log("user valid");
+    if (data.status === 201) {
     } else {
       history("*");
     }
@@ -52,18 +51,18 @@ const Forgot = () => {
         position: "top-center",
       });
     } else {
-    const data = {password} 
+      const data = { password };
 
       const res = await axios(`/save/${id}/${token}`, {
         method: "POST",
         config: { headers: { "Content-Type": "application/json" } },
         // body: JSON.stringify({ password }),
-        data:data
+        data: data,
       });
 
       const result = await res.json();
 
-      if (result.status == 201) {
+      if (result.status === 201) {
         setPassword("");
         setMessage(true);
       } else {

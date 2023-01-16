@@ -9,9 +9,6 @@ import {
   NEW_VACATION_PRODUCT_SUCCESS,
   NEW_VACATION_PRODUCT_FAIL,
   NEW_VACATION_PRODUCT_RESET,
-  GET_ALL_VACATIONS_REQUEST,
-  GET_ALL_VACATIONS_SUCCESS,
-  GET_ALL_VACATIONS_FAIL,
   GET_PRODUCT_DETAIL_BY_ID_REQUEST,
   GET_PRODUCT_DETAIL_BY_ID_SUCCESS,
   GET_PRODUCT_DETAIL_BY_ID_FAIL,
@@ -59,48 +56,6 @@ export const vacationProductReducer = (state = { products: [] }, action) => {
       return state;
   }
 };
-// export const allCitiesReducer = (state = { products: [] }, action) => {
-//   switch (action.type) {
-//     case GET_ALL_VACATIONS_REQUEST:
-//       return {
-//         loading: true,
-//         products: [],
-//       };
-//     case GET_ALL_VACATIONS_SUCCESS:
-//       return {
-//         loading: false,
-//         products: action.payload,
-//       };
-//     case GET_ALL_VACATIONS_FAIL:
-//       return {
-//         loading: false,
-//         error: action.payload,
-//       };
-
-//     case GET_VACATION_PRODUCTS_BY_SLUG_REQUEST:
-//       return {
-//         loading: true,
-//         products: [],
-//       };
-//     case GET_VACATION_PRODUCTS_BY_SLUG_SUCCESS:
-//       return {
-//         loading: false,
-//         products: [...action.payload],
-//       };
-//     case GET_VACATION_PRODUCTS_BY_SLUG_FAIL:
-//       return {
-//         loading: false,
-//         error: action.payload,
-//       };
-//     // case CLEAR_ERRORS:
-//     //   return {
-//     //     ...state,
-//     //     error: null,
-//     //   };
-//     default:
-//       return state;
-//   }
-// };
 
 const initialStateVacationProduct = {
   product: {},

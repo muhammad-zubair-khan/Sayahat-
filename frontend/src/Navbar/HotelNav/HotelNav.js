@@ -8,7 +8,7 @@ import { DateRangePicker } from "react-date-range";
 import { format } from "date-fns";
 import "react-date-range/dist/styles.css"; // main style file
 import "react-date-range/dist/theme/default.css"; // theme css file
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { SearchContext } from "../../Context/SearchContext";
 import { ReactSearchAutocomplete } from "react-search-autocomplete";
 import { useEffect } from "react";
@@ -33,8 +33,6 @@ const HotelNav = (props) => {
     room: 1,
   });
 
- 
-
   //Hotel
   const handleOption = (name, operation) => {
     setOptions((prev) => {
@@ -46,45 +44,20 @@ const HotelNav = (props) => {
     });
   };
 
-
   const { dispatch } = useContext(SearchContext);
   const handleSearch = () => {
     dispatch({ type: "NEW_SEARCH", payload: { destination, dates, options } });
     history.push("/hotels", { state: { destination, dates, options } });
   };
- 
+
   const { products } = useSelector((state) => state.vacationProduct);
   useEffect(() => {
     dispatch(getAllVacationProduct());
   }, []);
 
-  // const handleOnSearch = (string, results) => {
-  //   // onSearch will have as the first callback parameter
-  //   // the string searched and for the second the results.
-  //   console.log(string, results)
-  // }
-
- 
-
   //Stays Function
-  const handleOnStayHover = (result) => {
-    // the item hovered
-    console.log(result);
-  };
-
   const handleOnStaySelect = (product) => {
     setDestination(product.name);
-  };
-
-  //Package Functions
-  const handleOnHover = (result) => {
-    // the item hovered
-    console.log(result);
-  };
-
- 
-  const handleOnFocus = () => {
-    console.log("Focused");
   };
 
   const formatResult = (product) => {
@@ -103,7 +76,7 @@ const HotelNav = (props) => {
   return (
     <>
       <div className="sec-fh5co-hero">
-          <div className="sec-fh5co-overlay"></div>
+        <div className="sec-fh5co-overlay"></div>
         <div className="sec-fh5co-cover" data-stellar-background-ratio="0.5">
           <div className="desc">
             <div className="container">
@@ -113,7 +86,7 @@ const HotelNav = (props) => {
                     {/* <!-- Nav tabs --> */}
                     <ul
                       className="nav nav-tabs"
-                      style={{ justifyContent: "center",}}
+                      style={{ justifyContent: "center" }}
                       role="tablist"
                     >
                       <li role="presentation">
@@ -123,9 +96,11 @@ const HotelNav = (props) => {
                           role="tab"
                           data-toggle="tab"
                           className="tab-menu active"
-                          style={{backgroundColor: '#36494c',
-                          color: 'white',
-                          boxShadow:' 0px 0px 7px 1px white'}}
+                          style={{
+                            backgroundColor: "#36494c",
+                            color: "white",
+                            boxShadow: " 0px 0px 7px 1px white",
+                          }}
                         >
                           Stays
                         </a>
@@ -146,13 +121,11 @@ const HotelNav = (props) => {
                               <div>
                                 <ReactSearchAutocomplete
                                   items={products}
-                                  // onSearch={handleOnSearch}
-                                  onHover={handleOnStayHover}
                                   onSelect={handleOnStaySelect}
-                                  // onFocus={handleOnFocus}
-                                  autoFocus
                                   formatResult={formatResult}
-                                  onChange={(e) => setDestination(e.target.value)}
+                                  onChange={(e) =>
+                                    setDestination(e.target.value)
+                                  }
                                   placeholder="Lahore, PK"
                                 />
                               </div>
@@ -165,28 +138,33 @@ const HotelNav = (props) => {
                             >
                               <CalendarMonthIcon style={{ color: "white" }} />
                               <span
-                    style={{
-                      color: "rgba(255, 255, 255, 0.8)",
+                                style={{
+                                  color: "rgba(255, 255, 255, 0.8)",
 
-                      fontSize: "14px",
-                    }}
-                    onClick={() => setOpenDate(!openDate)}
-                  >
-                    {`${format(dates[0].startDate, "MM/dd/yyyy")} to ${format(
-                      dates[0].endDate,
-                      "MM/dd/yyyy"
-                    )}`}
-                  </span>
-                  {openDate && (
-                    <DateRangePicker
-                      editableDateInputs={true}
-                      onChange={(item) => setDates([item.selection])}
-                      moveRangeOnFirstSelection={false}
-                      ranges={dates}
-                      className="date"
-                      minDate={new Date()}
-                    />
-                  )}
+                                  fontSize: "14px",
+                                }}
+                                onClick={() => setOpenDate(!openDate)}
+                              >
+                                {`${format(
+                                  dates[0].startDate,
+                                  "MM/dd/yyyy"
+                                )} to ${format(
+                                  dates[0].endDate,
+                                  "MM/dd/yyyy"
+                                )}`}
+                              </span>
+                              {openDate && (
+                                <DateRangePicker
+                                  editableDateInputs={true}
+                                  onChange={(item) =>
+                                    setDates([item.selection])
+                                  }
+                                  moveRangeOnFirstSelection={false}
+                                  ranges={dates}
+                                  className="date"
+                                  minDate={new Date()}
+                                />
+                              )}
                             </div>
                           </div>
                           <div
@@ -194,127 +172,143 @@ const HotelNav = (props) => {
                             style={{ textAlign: "center" }}
                           >
                             <span
-                  style={{
-                    color: "rgba(255, 255, 255, 0.8)",
-                    position: "relative",
-                    top: "29px",
-                    fontSize: "14px",
-                    cursor: "pointer",
-                  }}
-                  onClick={() => setOpenOptions(!openOptions)}
-                >{`${options.adult} adult · ${options.children} children · ${options.room} room`}</span>
-                {openOptions && (
-                  <div className="options" style={{position: 'absolute',
-                    top: '111px',
-                    width: '19%',
-                    zIndex: '1000000',
-                    backgroundColor: 'white',
-                    boxShadow: '0px 0px 10px #848484',
-                    padding: '7px 10px',
-                }}>
-                    <div className="optionItems">
-                      <span
-                        style={{
-                          color: "black",
-                          fontSize: "14px",
-                        }}
-                      >
-                        Adult
-                      </span>
-                      <div className="optionButton">
-                        <button
-                          className="optionbtn"
-                          disabled={options.adult <= 1}
-                          onClick={() => handleOption("adult", "decreament")}
-                        >
-                          -
-                        </button>
-                        <span
-                          style={{
-                            color: "black",
-                            fontSize: "14px",
-                          }}
-                        >
-                          {options.adult}
-                        </span>
-                        <button
-                          className="optionbtn"
-                          style={{ marginRight: "1px" }}
-                          onClick={() => handleOption("adult", "increament")}
-                        >
-                          +
-                        </button>
-                      </div>
-                    </div>
-                    <div className="optionItems">
-                      <span
-                        style={{
-                          color: "black",
-                          fontSize: "14px",
-                        }}
-                      >
-                        Children
-                      </span>
-                      <div className="optionButton">
-                        <button
-                          className="optionbtn"
-                          disabled={options.children <= 0}
-                          onClick={() => handleOption("children", "decreament")}
-                        >
-                          -
-                        </button>
-                        <span
-                          style={{
-                            color: "black",
-                            fontSize: "14px",
-                          }}
-                        >
-                          {options.children}
-                        </span>
-                        <button
-                          className="optionbtn"
-                          onClick={() => handleOption("children", "increament")}
-                        >
-                          +
-                        </button>
-                      </div>
-                    </div>
-                    <div className="optionItems">
-                      <span
-                        style={{
-                          color: "black",
-                          fontSize: "14px",
-                        }}
-                      >
-                        Room
-                      </span>
-                      <div className="optionButton">
-                        <button
-                          className="optionbtn"
-                          style={{ marginRight: "3px" }}
-                          disabled={options.room <= 1}
-                          onClick={() => handleOption("room", "decreament")}
-                        >
-                          -
-                        </button>
-                        <span
-                          style={{
-                            color: "black",
-                            fontSize: "14px",
-                          }}
-                        >
-                          {options.room}
-                        </span>
-                        <button
-                          className="optionbtn"
-                          onClick={() => handleOption("room", "increament")}
-                        >
-                          +
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                )}
+                              style={{
+                                color: "rgba(255, 255, 255, 0.8)",
+                                position: "relative",
+                                top: "29px",
+                                fontSize: "14px",
+                                cursor: "pointer",
+                              }}
+                              onClick={() => setOpenOptions(!openOptions)}
+                            >{`${options.adult} adult · ${options.children} children · ${options.room} room`}</span>
+                            {openOptions && (
+                              <div
+                                className="options"
+                                style={{
+                                  position: "absolute",
+                                  top: "111px",
+                                  width: "19%",
+                                  zIndex: "1000000",
+                                  backgroundColor: "white",
+                                  boxShadow: "0px 0px 10px #848484",
+                                  padding: "7px 10px",
+                                }}
+                              >
+                                <div className="optionItems">
+                                  <span
+                                    style={{
+                                      color: "black",
+                                      fontSize: "14px",
+                                    }}
+                                  >
+                                    Adult
+                                  </span>
+                                  <div className="optionButton">
+                                    <button
+                                      className="optionbtn"
+                                      disabled={options.adult <= 1}
+                                      onClick={() =>
+                                        handleOption("adult", "decreament")
+                                      }
+                                    >
+                                      -
+                                    </button>
+                                    <span
+                                      style={{
+                                        color: "black",
+                                        fontSize: "14px",
+                                      }}
+                                    >
+                                      {options.adult}
+                                    </span>
+                                    <button
+                                      className="optionbtn"
+                                      style={{ marginRight: "1px" }}
+                                      onClick={() =>
+                                        handleOption("adult", "increament")
+                                      }
+                                    >
+                                      +
+                                    </button>
+                                  </div>
+                                </div>
+                                <div className="optionItems">
+                                  <span
+                                    style={{
+                                      color: "black",
+                                      fontSize: "14px",
+                                    }}
+                                  >
+                                    Children
+                                  </span>
+                                  <div className="optionButton">
+                                    <button
+                                      className="optionbtn"
+                                      disabled={options.children <= 0}
+                                      onClick={() =>
+                                        handleOption("children", "decreament")
+                                      }
+                                    >
+                                      -
+                                    </button>
+                                    <span
+                                      style={{
+                                        color: "black",
+                                        fontSize: "14px",
+                                      }}
+                                    >
+                                      {options.children}
+                                    </span>
+                                    <button
+                                      className="optionbtn"
+                                      onClick={() =>
+                                        handleOption("children", "increament")
+                                      }
+                                    >
+                                      +
+                                    </button>
+                                  </div>
+                                </div>
+                                <div className="optionItems">
+                                  <span
+                                    style={{
+                                      color: "black",
+                                      fontSize: "14px",
+                                    }}
+                                  >
+                                    Room
+                                  </span>
+                                  <div className="optionButton">
+                                    <button
+                                      className="optionbtn"
+                                      style={{ marginRight: "3px" }}
+                                      disabled={options.room <= 1}
+                                      onClick={() =>
+                                        handleOption("room", "decreament")
+                                      }
+                                    >
+                                      -
+                                    </button>
+                                    <span
+                                      style={{
+                                        color: "black",
+                                        fontSize: "14px",
+                                      }}
+                                    >
+                                      {options.room}
+                                    </span>
+                                    <button
+                                      className="optionbtn"
+                                      onClick={() =>
+                                        handleOption("room", "increament")
+                                      }
+                                    >
+                                      +
+                                    </button>
+                                  </div>
+                                </div>
+                              </div>
+                            )}
                           </div>
                           <div
                             className="col-xxs-12 col-xs-12 col-md-3 col-lg-3 mt"

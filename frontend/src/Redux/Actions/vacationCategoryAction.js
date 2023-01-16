@@ -19,20 +19,20 @@ export const createVacationCategory = (form) => {
     dispatch({ type: CREATE_NEW_CATEGORY_REQUEST });
     try {
       const res = await axios.post("/vacation/category/add", form);
-      if (res.status === 201) {
-        dispatch(getAllVacationsCategory());
-        dispatch({
-          type: CREATE_NEW_CATEGORY_SUCCESS,
-          payload: { Vacationcategory: res.data.category },
-        });
-      } else {
-        dispatch({
-          type: CREATE_NEW_CATEGORY_FAIL,
-          payload: res.data.error,
-        });
-      }
+      // if (res.status === 201) {
+      dispatch(getAllVacationsCategory());
+      dispatch({
+        type: CREATE_NEW_CATEGORY_SUCCESS,
+        payload: { Vacationcategory: res.data.category },
+      });
+      // } else {
+      // }
     } catch (error) {
-      console.log(error.response);
+      // console.log(error.response);
+      dispatch({
+        type: CREATE_NEW_CATEGORY_FAIL,
+        payload: error.response.data.message,
+      });
     }
   };
 };

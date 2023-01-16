@@ -4,7 +4,11 @@ import "./UpdateProfile.css";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import FaceIcon from "@mui/icons-material/Face";
 import { useDispatch, useSelector } from "react-redux";
-import { clearErrors, updateProfile, loadUser } from "../../Redux/Actions/authActions";
+import {
+  clearErrors,
+  updateProfile,
+  loadUser,
+} from "../../Redux/Actions/authActions";
 // import { useAlert } from "react-alert";
 import { UPDATE_PROFILE_RESET } from "../../Redux/Constants/authConstants";
 import { useParams } from "react-router-dom";
@@ -12,11 +16,11 @@ import { useParams } from "react-router-dom";
 
 const UpdateProfile = ({ history }) => {
   const dispatch = useDispatch();
-//   const alert = useAlert();
+  //   const alert = useAlert();
 
   const { user } = useSelector((state) => state.auth);
   const { error, isUpdated, loading } = useSelector((state) => state.profile);
-const {id} = useParams()
+  const { id } = useParams();
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");

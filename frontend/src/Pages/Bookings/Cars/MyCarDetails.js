@@ -1,19 +1,13 @@
 import React, { Fragment, useEffect } from "react";
 import "../Packages/MyPackageDetails.css";
 import { useSelector, useDispatch } from "react-redux";
-// import MetaData from "../layout/MetaData";
-import { Link } from "react-router-dom";
 import { Typography } from "@mui/material";
 import { getCarDetails, clearErrors } from "../../../Redux/Actions/bookCarAction";
-// import Loader from "../layout/Loader/Loader";
-// import { useAlert } from "react-alert";
-
 const MyCarDetails = ({ match }) => {
   const { error, loading } = useSelector((state) => state.myCarDetails);
   const {car} = useSelector((state) => state.myCarDetails);
 
   const dispatch = useDispatch();
-//   const alert = useAlert();
 
   useEffect(() => {
     if (error) {
