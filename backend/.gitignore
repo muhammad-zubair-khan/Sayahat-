@@ -3,3 +3,6 @@
 
 #prodution
 /build
+
+#env-var
+/.env
