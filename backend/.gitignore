@@ -1,8 +1,5 @@
 #dependencies
-/node_modules
-
-#prodution
-/build
+node_modules/
 
 #env-var
 /.env
