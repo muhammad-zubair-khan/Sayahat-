@@ -38,14 +38,14 @@ const Signin = () => {
   return (
     <Container>
       <Row>
-        <Col md={6} style={{ marginTop: "100px" }}>
+        <Col md={6}>
           <img
             src={logo}
             alt="SAYAHAT"
             style={{ width: "-webkit-fill-available" }}
           />
         </Col>
-        <Col md={6} style={{ marginTop: "150px" }}>
+        <Col md={6} >
           <Typography variant="h5" style={{ fontWeight: "bold" }}>
             Login to Access Dashboard
           </Typography>
@@ -73,11 +73,11 @@ const Signin = () => {
             <Button variant="contained" type="submit">
               Login
             </Button>
-            <Link to="/signup" style={{ marginLeft: "10px" }}>
+            {/* <Link to="/signup" style={{ marginLeft: "10px" }}>
               <Button variant="contained" type="submit">
                 Signup
               </Button>
-            </Link>
+            </Link> */}
           </Form>
         </Col>
       </Row>
