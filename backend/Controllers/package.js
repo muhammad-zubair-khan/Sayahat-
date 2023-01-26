@@ -92,6 +92,22 @@ exports.getAllPackages = async (req, res) => {
   });
 };
 
+//Get Featured Package
+exports.getAllFeaturedPackages = async (req, res) => {
+  const {...others } = req.query;
+  const apiFeature = new ApiFeatures(
+    Package.find({
+      ...others,
+    }).limit(req.query.limit)
+  )
+  const featuredPackages = await apiFeature.query;
+  res.status(200).json({
+    success: true,
+    featuredPackages,
+  });
+};
+
+
 //get package by slug
 exports.getPackageBySlug = (req, res) => {
   const { slug } = req.params;

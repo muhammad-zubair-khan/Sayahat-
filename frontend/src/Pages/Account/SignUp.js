@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { signup } from "../../Redux/Actions/authActions";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import MetaData from "../../Components/MetaData/MetaData";
 
 const SignUp = () => {
   const auth = useSelector((state) => state.auth);
@@ -116,6 +117,8 @@ const SignUp = () => {
   };
 
   return (
+    <>
+    <MetaData title={"Create an account"} />
     <Row>
       <Col
         md={6}
@@ -307,6 +310,8 @@ const SignUp = () => {
       </Col>
       <ToastContainer />
     </Row>
+    </>
+
   );
 };
 

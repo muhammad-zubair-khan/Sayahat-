@@ -143,7 +143,7 @@ exports.forgotPassword = async (req, res) => {
 
     const verifyToken = jwt.verify(token, keySecret);
 
-    console.log(verifyToken);
+    // console.log(verifyToken);
 
     if (validuser && verifyToken._id) {
       res.status(201).json({ status: 201, validuser });
@@ -168,12 +168,12 @@ exports.saveNewPass = async (req, res) => {
 
     if (validuser && verifyToken._id) {
       const newpassword = await bcrypt.hash(password, 12);
-      console.log("newpassword", newpassword);
+      // console.log("newpassword", newpassword);
       const setnewuserpass = await User.findByIdAndUpdate(
         { _id: id },
         { hash_password: newpassword }
       );
-      console.log("setnewuserpass", setnewuserpass);
+      // console.log("setnewuserpass", setnewuserpass);
 
       setnewuserpass.save();
       res.status(201).json({ status: 201, setnewuserpass });

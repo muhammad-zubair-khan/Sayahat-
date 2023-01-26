@@ -57,7 +57,7 @@ export const getCars = () => async (dispatch) => {
   try {
     dispatch({ type: GET_ALL_CARS_REQUEST });
 
-    const { data } = await axios.get("/cars");
+    const { data } = await axios.get("/allcars");
 
     dispatch({
       type: GET_ALL_CARS_SUCCESS,
@@ -73,17 +73,17 @@ export const getCars = () => async (dispatch) => {
 
 // Get All Cars
 export const getAllCars =
-  (min, max, startDestination, carType) => async (dispatch) => {
+  (min, max, startDestination, carType,ratings) => async (dispatch) => {
     try {
       dispatch({ type: GET_ALL_CARS_REQUEST });
       let link = `/cars?city=${startDestination}&min=${min || 0}&max=${
         max || 99999
-      }`;
+      }&ratings=${ratings || 0}`;
 
       if (carType) {
         link = `/cars?city=${startDestination}&type=${carType}&min=${
           min || 0
-        }&max=${max || 99999}`;
+        }&max=${max || 99999}&ratings=${ratings || 0}`;
       }
       // if(gear) {
       //   link = `/cars?city=${startDestination}&gear=${gear}&min=${

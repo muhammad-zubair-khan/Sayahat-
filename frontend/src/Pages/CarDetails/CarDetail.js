@@ -34,6 +34,7 @@ import {
   DialogTitle,
 } from "@mui/material";
 import { Container, Rating } from "@mui/material";
+import MetaData from "../../Components/MetaData/MetaData";
 
 const CarDetail = ({ match }) => {
   const dispatch = useDispatch();
@@ -183,6 +184,7 @@ const CarDetail = ({ match }) => {
   };
   return (
     <>
+    <MetaData title={car.name}/>
       <div style={{ background: "rgb(0, 0, 0)", height: "75px" }}>
         <Navbar />
       </div>

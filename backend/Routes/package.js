@@ -14,6 +14,7 @@ const {
   createPackageReview,
   getPackageReviews,
   deletePackageReview,
+  getAllFeaturedPackages,
 } = require("../Controllers/package");
 const {
   requireSignin,
@@ -83,6 +84,7 @@ router
   .delete(requireSignin, userMiddleware, deletePackageReview);
 
 router.get("/all-packages", getAllPackages);
+router.get("/allfeaturedpackages", getAllFeaturedPackages);
 router.get("/package/:slug", getPackageBySlug);
 router.get("/package-detail/:id", getPackageDetailsById);
 // router.get("/top-des-package/:slug", getTopDesPackageBySlug);

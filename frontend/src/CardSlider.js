@@ -11,7 +11,7 @@ import { Link } from "react-router-dom";
 
 const CardSlider = (props) => {
   const dispatch = useDispatch();
-  const { hotels } = useSelector((state) => state.featureHotels);
+  const { featuredHotels } = useSelector((state) => state.featureHotels);
   useEffect(() => {
     dispatch(getFeaturedHotels());
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -19,8 +19,8 @@ const CardSlider = (props) => {
 
   return (
     <Grid container>
-      {hotels &&
-        hotels.map((item) => {
+      {featuredHotels &&
+        featuredHotels.map((item) => {
           return (
               <Grid xs={12} lg={3} key={item.id}>
                 <div style={{ margin: "0px 10px" }}>

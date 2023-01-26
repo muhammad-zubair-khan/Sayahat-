@@ -9,6 +9,7 @@ import {
 import axios from "../../../Redux/helpers/axios";
 import { useHistory, useParams } from "react-router-dom";
 import {Button} from '@mui/material'
+import MetaData from "../../../Components/MetaData/MetaData";
 // import Loader from "../layout/Loader/Loader";
 // import { useAlert } from "react-alert";
 
@@ -56,6 +57,7 @@ const MyHotelDetails = (props) => {
       ) : ( */}
         <Fragment>
           {/* <MetaData title="Order Details" /> */}
+      <MetaData title={`Hotel Detais`} />
           <div className="orderDetailsPage">
             <div className="orderDetailsContainer">
               <Typography component="h1">

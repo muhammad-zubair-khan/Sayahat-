@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getCars } from "../../Redux/Actions/carAction";
 import { ImageUrl } from "../../Redux/UrlConfig";
 import CarNav from "../../Navbar/CarNav/CarNav";
+import MetaData from "../../Components/MetaData/MetaData";
 
 const CarRental = () => {
   const dispatch = useDispatch();
@@ -16,6 +17,7 @@ const CarRental = () => {
 
   return (
     <>
+      <MetaData title={`Car Rentals`} />
       <div style={{ background: "rgb(0, 0, 0)", height: "75px" }}>
         <Navbar />
       </div>

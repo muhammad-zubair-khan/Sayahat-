@@ -93,21 +93,44 @@ exports.createHotel = catchAsyncErrors(async (req, res, next) => {
 //   });
 // };
 
-
-
 exports.getAllHotels = async (req, res) => {
+  const hotels = await Hotel.find();
+  res.status(200).json({
+    success: true,
+    hotels,
+  });
+};
+
+exports.getSearchedHotels = async (req, res) => {
   const { min, max, ratings, ...others } = req.query;
   const apiFeature = new ApiFeatures(
     Hotel.find({
       ...others,
       cheapestPrice: { $gte: min | 1, $lte: max || 99999 },
-      // ratings,
+      ratings,
     }).limit(req.query.limit)
-  ).filter();
+  );
   const hotels = await apiFeature.query;
   res.status(200).json({
     success: true,
     hotels,
+  });
+};
+
+
+
+//Get Featured Hotel
+exports.getAllFeaturedHotels = async (req, res) => {
+  const {...others } = req.query;
+  const apiFeature = new ApiFeatures(
+    Hotel.find({
+      ...others,
+    }).limit(req.query.limit)
+  )
+  const featuredHotels = await apiFeature.query;
+  res.status(200).json({
+    success: true,
+    featuredHotels,
   });
 };
 

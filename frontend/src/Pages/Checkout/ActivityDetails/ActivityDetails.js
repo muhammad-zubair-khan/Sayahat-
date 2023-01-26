@@ -2,6 +2,7 @@ import { TextField, Button, Grid } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useLocation, useParams } from "react-router-dom";
+import MetaData from "../../../Components/MetaData/MetaData";
 import { getPackageDetailById } from "../../../Redux/Actions/packageAction";
 import { ImageUrl } from "../../../Redux/UrlConfig";
 import CheckoutSteps from "../CheckoutSteps";
@@ -41,6 +42,7 @@ const ActivityDetails = () => {
   }
   return (
     <>
+      <MetaData title={`Sayahat: Payment`} />
       <Grid container style={{ margin: "106px 43px" }}>
         <Grid lg={7}>
           <CheckoutSteps activeStep={1} />

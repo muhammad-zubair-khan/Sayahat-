@@ -2,10 +2,12 @@ import React from "react";
 import Navbar from "../../Navbar/Navbar";
 import Footer from "../../Footer/Footer";
 import { Link } from "react-router-dom";
+import MetaData from "../../Components/MetaData/MetaData";
 
 const Contactus = () => {
   return (
     <>
+    <MetaData title={`Contact us`}/>
       <div style={{ background: " rgb(0 0 0)", height: "75px" }}>
         <Navbar />
       </div>

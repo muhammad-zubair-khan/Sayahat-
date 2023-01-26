@@ -12,6 +12,7 @@ import {
   clearErrors,
   myPackages,
 } from "../../../Redux/Actions/bookPackageAction";
+import MetaData from "../../../Components/MetaData/MetaData";
 
 const MyPackages = () => {
   const dispatch = useDispatch();
@@ -120,8 +121,7 @@ const MyPackages = () => {
 
   return (
     <Fragment>
-      {/* <MetaData title={`${user.name} - Orders`} /> */}
-
+      <MetaData title={`${user.fullName} - Packages`} />
       {loading ? (
         // <Loader />
         "Loading"

@@ -35,6 +35,7 @@ import ReviewCard from "./ReviewCard/ReviewCard";
 import { NEW_REVIEW_RESET } from "../../Redux/Constants/hotelConstants";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import MetaData from "../../Components/MetaData/MetaData";
 
 const HotelDetail = ({ match }) => {
   const dispatch = useDispatch();
@@ -151,6 +152,7 @@ const HotelDetail = ({ match }) => {
 
   return (
     <>
+    <MetaData title={hotel.name}/>
       <div style={{ background: "rgb(0, 0, 0)", height: "75px" }}>
         <Navbar />
       </div>

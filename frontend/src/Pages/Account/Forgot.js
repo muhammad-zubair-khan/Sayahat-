@@ -7,6 +7,7 @@ import "./style.css";
 import { Row, Col } from "react-bootstrap";
 import logo from "../../Assets/logo/logo.png";
 import axios from "../../Redux/helpers/axios";
+import MetaData from "../../Components/MetaData/MetaData";
 
 const Forgot = () => {
   const { id, token } = useParams();
@@ -84,6 +85,7 @@ const Forgot = () => {
     <>
       {data2 ? (
         <>
+    <MetaData title={"Reset your password"} />
           <Row>
             <Col
               md={6}

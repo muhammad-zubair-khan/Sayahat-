@@ -9,6 +9,7 @@ import { getPackageDetailById } from "../../../Redux/Actions/packageAction";
 import { ImageUrl } from "../../../Redux/UrlConfig";
 import useFetch from "../../../hook/useFetch";
 import { getHotelDetailById } from "../../../Redux/Actions/hotelAction";
+import MetaData from "../../../Components/MetaData/MetaData";
 
 const HotelContactDetails = () => {
   const location = useLocation();
@@ -84,6 +85,7 @@ const HotelContactDetails = () => {
   }
   return (
     <>
+    <MetaData title={`Sayahat: Payment`}/>
       <Grid container style={{ margin: "106px 43px" }}>
         <Grid lg={6}>
           <CheckoutSteps activeStep={0} />

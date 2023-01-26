@@ -24,6 +24,7 @@ import {
   Rating,
 } from "@mui/material";
 import ReviewCard from "../HotelDetails/ReviewCard/ReviewCard";
+import MetaData from "../../Components/MetaData/MetaData";
 function PackageDetail({ match }) {
   const history = useHistory();
   const [showResults, setShowResults] = useState(false);
@@ -177,6 +178,7 @@ function PackageDetail({ match }) {
   }
   return (
     <>
+    <MetaData title={packages.package.name}/>
       <Navbar />
       <div className="bgPackage"></div>
       {/* start of page */}

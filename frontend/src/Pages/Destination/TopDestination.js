@@ -12,6 +12,7 @@ import { ImageUrl } from "../../Redux/UrlConfig";
 import { format } from "date-fns";
 import { DateRange } from "react-date-range";
 import { Slider, Typography } from "@mui/material";
+import MetaData from "../../Components/MetaData/MetaData";
 
 const TopDestination = (props) => {
   // window.scroll(0,0)
@@ -61,6 +62,7 @@ const TopDestination = (props) => {
   const handleShow = () => setShow(true);
   return (
     <>
+    <MetaData title={`Top destinations - ${params.slug}`}/>
       <Navbar />
       <div className="bgCity"></div>
       <div className="container-fluid position-absolute top-100 introText">

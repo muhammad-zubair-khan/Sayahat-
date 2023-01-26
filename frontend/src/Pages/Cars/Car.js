@@ -1,12 +1,19 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Footer from "../../Footer/Footer";
 import Navbar from "../../Navbar/Navbar";
-import Search from "../Search/Search";
 import CarList from "./CarList/CarList";
 import "./Car.css";
 import { Container, Grid } from "@mui/material";
+import { useLocation } from "react-router-dom";
+import MetaData from "../../Components/MetaData/MetaData";
 const Car = () => {
+  const location = useLocation()
+  const [startDestination, setStartDestination] = useState(
+    location.state.state.startDestination
+  );
   return (
+    <>
+    <MetaData title={`Rental Cars and Car Rentals at ${startDestination} from Sayahat`}/>
     <div style={{ background: " rgb(0 0 0)", height: "75px" }}>
       <Navbar />
       <Container>
@@ -18,6 +25,8 @@ const Car = () => {
       </Container>
       <Footer />
     </div>
+    </>
+
   );
 };
 

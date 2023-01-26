@@ -7,6 +7,7 @@ import { saveContactInfo } from "../../../Redux/Actions/checkout";
 import { Button, Grid } from "@mui/material";
 import { getPackageDetailById } from "../../../Redux/Actions/packageAction";
 import { ImageUrl } from "../../../Redux/UrlConfig";
+import MetaData from "../../../Components/MetaData/MetaData";
 
 const ContactDetails = () => {
   const location = useLocation();
@@ -60,6 +61,7 @@ const ContactDetails = () => {
   }
   return (
     <>
+      <MetaData title={`Sayahat: Payment`} />
       <Grid container style={{ margin: "106px 43px" }}>
         <Grid lg={7}>
           <CheckoutSteps activeStep={0} />

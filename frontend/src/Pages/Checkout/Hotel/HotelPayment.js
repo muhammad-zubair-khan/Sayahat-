@@ -19,6 +19,7 @@ import VpnKeyIcon from "@mui/icons-material/VpnKey";
 import { useLocation, useParams } from "react-router-dom";
 import { getHotelDetailById } from "../../../Redux/Actions/hotelAction";
 import { bookedHotel } from "../../../Redux/Actions/bookHotelAction";
+import MetaData from "../../../Components/MetaData/MetaData";
 // import { createOrder, clearErrors } from "../../actions/orderAction";
 
 const HotelPayment = ({ history }) => {
@@ -61,6 +62,17 @@ const [destination, setDestination] = useState(
     fullyRefundable:hotel.FullyRefundable,
     hotelContactInfo,
     hotelActivityInfo,
+  };
+  const bookingMail = async () => {
+    // e.preventDefault();
+    const res = await axios("http://localhost:5000/api/sendBookingMail", {
+      method: "POST",
+      data: bookHotel,
+    });
+    const result = await res.json();
+    if (result.res === 201) {
+      alert("Mail Send");
+    } 
   };
 
   const submitHandler = async (e) => {
@@ -113,7 +125,7 @@ const [destination, setDestination] = useState(
           };
 
           dispatch(bookedHotel(bookHotel));
-
+          bookingMail()
           history.push("/hotel/booking/success");
         } else {
           alert.error("There's some issue while processing payment ");
@@ -134,7 +146,7 @@ const [destination, setDestination] = useState(
 
   return (
     <Fragment>
-      {/* <MetaData title="Payment" /> */}
+            <MetaData title={'Sayahat: Payment'} />
       {/* <CheckoutSteps activeStep={2} /> */}
       <div className="paymentContainer">
         {/* <form className="paymentForm"> */}

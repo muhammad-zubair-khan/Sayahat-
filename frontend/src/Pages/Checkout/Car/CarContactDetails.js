@@ -2,6 +2,7 @@ import { Button, Grid, TextField } from "@mui/material";
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory, useLocation, useParams } from "react-router-dom";
+import MetaData from "../../../Components/MetaData/MetaData";
 import { getCarById } from "../../../Redux/Actions/carAction";
 import { saveCarContactInfo } from "../../../Redux/Actions/checkout";
 import { ImageUrl } from "../../../Redux/UrlConfig";
@@ -75,6 +76,7 @@ const CarContactDetails = () => {
   };
   return (
     <>
+      <MetaData title={`Sayahat: Payment`} />
       <Grid container style={{ margin: "106px 43px" }}>
         <Grid lg={6}>
           <CarCheckoutSteps activeStep={0} />

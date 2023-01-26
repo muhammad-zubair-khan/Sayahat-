@@ -1,10 +1,12 @@
 import React from "react";
 import Navbar from "../../Navbar/Navbar";
 import Footer from "../../Footer/Footer";
+import MetaData from "../../Components/MetaData/MetaData";
 
 const Aboutus = () => {
   return (
     <>
+    <MetaData title={`About us`}/>
       <div style={{ background: " rgb(0 0 0)", height: "75px" }}>
         <Navbar />
       </div>

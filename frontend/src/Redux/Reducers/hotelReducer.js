@@ -197,17 +197,17 @@ export const hotelReducer = (state = { hotel: {} }, action) => {
   }
 };
 
-export const featuredHotelReducer = (state = { hotels: [] }, action) => {
+export const featuredHotelReducer = (state = { featuredHotels: [] }, action) => {
   switch (action.type) {
     case GET_ALL_FEATURED_HOTELS_REQUEST:
       return {
         loading: true,
-        hotels: [],
+        featuredHotels: [],
       };
     case GET_ALL_FEATURED_HOTELS_SUCCESS:
       return {
         loading: false,
-        hotels: action.payload.hotels,
+        featuredHotels: action.payload.featuredHotels,
       };
     case GET_ALL_FEATURED_HOTELS_FAIL:
       return {

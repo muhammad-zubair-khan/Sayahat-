@@ -7,6 +7,7 @@ import { getVacationProductsBySlug } from "../../Redux/Actions/vacationProductAc
 import "./Cities.css";
 import SecNav from "../../Navbar/SecNav";
 import { Container } from "@mui/material";
+import MetaData from "../../Components/MetaData/MetaData";
 
 const Cities = ({ props, history }) => {
   let { slug } = useParams();
@@ -19,6 +20,7 @@ const Cities = ({ props, history }) => {
   }, [dispatch, slug]);
   return (
     <>
+    <MetaData title={`Vacation - ${slug}`}/>
       <Navbar />
       <SecNav />
       <Container>

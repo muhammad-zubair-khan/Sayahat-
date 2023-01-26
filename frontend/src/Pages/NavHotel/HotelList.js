@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import MetaData from "../../Components/MetaData/MetaData";
 import Footer from "../../Footer/Footer";
 import HotelNav from "../../Navbar/HotelNav/HotelNav";
 import Navbar from "../../Navbar/Navbar";
@@ -11,6 +12,7 @@ const HotelList = () => {
   const dispatch = useDispatch();
   const { hotels } = useSelector((state) => state.hotelReducer);
   const { products } = useSelector((state) => state.vacationProduct);
+
   useEffect(() => {
     dispatch(getHotels());
     dispatch(getAllVacationProduct());
@@ -18,6 +20,7 @@ const HotelList = () => {
 
   return (
     <>
+      <MetaData title={`Hotels`} />
       <div style={{ background: "rgb(0, 0, 0)", height: "75px" }}>
         <Navbar />
       </div>

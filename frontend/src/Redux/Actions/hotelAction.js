@@ -60,9 +60,7 @@ export const createHotel = (form) => {
 export const getHotels = () => async (dispatch) => {
   try {
     dispatch({ type: GET_ALL_HOTELS_REQUEST });
-
-    const { data } = await axios.get("/all-hotels");
-
+    const { data } = await axios.get(`/hotels`);
     dispatch({
       type: GET_ALL_HOTELS_SUCCESS,
       payload: data,
@@ -105,7 +103,7 @@ export const getAllHotels =
 export const getFeaturedHotels = () => async (dispatch) => {
   try {
     dispatch({ type: GET_ALL_FEATURED_HOTELS_REQUEST });
-    let link = `/all-hotels?featured=${true}&limit=${4}`;
+    let link = `/allfeaturedhotels?featured=${true}&limit=${4}`;
 
     const { data } = await axios.get(link);
     dispatch({

@@ -1,6 +1,7 @@
 import React, { Fragment, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import MetaData from "../../Components/MetaData/MetaData";
 import "./MyProfile.css";
 
 const MyProfile = ({ history }) => {
@@ -17,7 +18,7 @@ const MyProfile = ({ history }) => {
         "Loading"
       ) : (
         <Fragment>
-          {/* <MetaData title={`${user.name}'s Profile`} /> */}
+         <MetaData title={`My Profile`} />
           <div className="profileContainer">
             <div>
               <h1>My Profile</h1>

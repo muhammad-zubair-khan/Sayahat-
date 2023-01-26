@@ -7,17 +7,19 @@ import { Button, Grid } from "@mui/material";
 import { ImageUrl } from "./Redux/UrlConfig";
 
 const MyCard = () => {
-  const { packages } = useSelector((state) => state.featurePackages);
+  const { featuredPackages } = useSelector((state) => state.featurePackages);
+  console.log("packages",featuredPackages)
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getAllFeaturedPackages());
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <>
       <Grid container>
-        {packages.map((item, index) => {
+        {featuredPackages.map((item, index) => {
           return (
             <Grid md={4}>
               <div className="card1">

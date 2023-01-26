@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import Typography from "@mui/material/Typography";
 import LaunchIcon from "@mui/icons-material/Launch";
 import { myCars } from "../../../Redux/Actions/bookCarAction";
+import MetaData from "../../../Components/MetaData/MetaData";
 
 const MyCars = () => {
   const dispatch = useDispatch();
@@ -82,8 +83,7 @@ const MyCars = () => {
 
   return (
     <Fragment>
-      {/* <MetaData title={`${user.name} - Orders`} /> */}
-
+      <MetaData title={`${user.fullName} - Cars`} />
       {loading ? (
         // <Loader />
         "Loading"

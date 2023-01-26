@@ -9,6 +9,7 @@ import Typography from "@mui/material/Typography";
 // import MetaData from "../layout/MetaData";
 import LaunchIcon from "@mui/icons-material/Launch";
 import { clearErrors, myHotels } from "../../../Redux/Actions/bookHotelAction";
+import MetaData from "../../../Components/MetaData/MetaData";
 
 const MyHotels = () => {
   const dispatch = useDispatch();
@@ -107,7 +108,7 @@ const MyHotels = () => {
 
   return (
     <Fragment>
-      {/* <MetaData title={`${user.name} - Orders`} /> */}
+      <MetaData title={`${user.fullName} - Hotels`} />
 
       {loading ? (
         // <Loader />

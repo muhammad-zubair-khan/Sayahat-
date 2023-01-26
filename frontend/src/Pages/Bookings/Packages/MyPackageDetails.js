@@ -7,6 +7,7 @@ import { Button } from "@mui/material";
 import { useHistory,useParams } from "react-router-dom";
 import {useDispatch,useSelector} from 'react-redux';
 import {deleteBookedPackage} from '../../../Redux/Actions/bookPackageAction'
+import MetaData from "../../../Components/MetaData/MetaData";
 
 const MyPackageDetails = (props) => {
   const {id} = useParams()
@@ -52,7 +53,7 @@ const MyPackageDetails = (props) => {
         "Loading"
       ) : ( */}
       <Fragment>
-        {/* <MetaData title="Order Details" /> */}
+      <MetaData title={`Package Details`} />
         <div className="orderDetailsPage">
           <div className="orderDetailsContainer">
             <Typography component="h1">

@@ -10,6 +10,7 @@ import { format } from "date-fns";
 import { DateRange, DateRangePicker } from "react-date-range";
 import { getAllPackages } from "../../Redux/Actions/packageAction";
 import { Slider, Typography } from "@mui/material";
+import MetaData from "../../Components/MetaData/MetaData";
 
 const Package = (props) => {
   const dispatch = useDispatch();
@@ -48,6 +49,7 @@ const Package = (props) => {
 
   return (
     <>
+    <MetaData title={`Packages of ${packageDestination} from Sayahat`}/>
       <Navbar />
       <div className="bgCity"></div>
       <div className="container-fluid position-absolute top-100 introText">

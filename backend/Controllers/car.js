@@ -116,18 +116,42 @@ exports.addCar = catchAsyncErrors(async (req, res) => {
 // };
 
 exports.getAllCars = async (req, res) => {
-  const { min, max, ...others } = req.query;
+  const cars = await Car.find();
+  res.status(200).json({
+    success: true,
+    cars,
+  });
+};
+
+
+exports.getAllSearchedCars = async (req, res) => {
+  const { min, max,ratings, ...others } = req.query;
   const apiFeature = new ApiFeatures(
     Car.find({
       ...others,
       price: { $gte: min || 1, $lte: max || 99999 },
-      // ratings,
+      ratings,
     })
   ).filter();
   const cars = await apiFeature.query;
   res.status(200).json({
     success: true,
     cars,
+  });
+};
+
+//Get Featured Car
+exports.getAllFeaturedCars = async (req, res) => {
+  const {...others } = req.query;
+  const apiFeature = new ApiFeatures(
+    Car.find({
+      ...others,
+    }).limit(req.query.limit)
+  )
+  const featuredCars = await apiFeature.query;
+  res.status(200).json({
+    success: true,
+    featuredCars,
   });
 };
 

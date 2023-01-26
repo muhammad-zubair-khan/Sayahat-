@@ -160,7 +160,7 @@ export const getAllPackages =
 export const getAllFeaturedPackages = () => async (dispatch) => {
   try {
     dispatch({ type: GET_ALL_FEATURED_PACKAGES_REQUEST });
-    let link = `/all-packages?featured=${true}&limit=${6}`;
+    let link = `/allfeaturedpackages?featured=${true}&limit=${6}`;
     const { data } = await axios.get(link);
     dispatch({
       type: GET_ALL_FEATURED_PACKAGES_SUCCESS,

@@ -19,6 +19,7 @@ import VpnKeyIcon from "@mui/icons-material/VpnKey";
 import { useLocation, useParams } from "react-router-dom";
 import { getCarById } from "../../../Redux/Actions/carAction";
 import { bookedCar } from "../../../Redux/Actions/bookCarAction";
+import MetaData from "../../../Components/MetaData/MetaData";
 
 const CarPayment = ({ history }) => {
   const location = useLocation();
@@ -63,7 +64,17 @@ const CarPayment = ({ history }) => {
     DropoffTime: dropoffTime,
     CarContactInfo,
   };
-
+  const bookingMail = async () => {
+    // e.preventDefault();
+    const res = await axios("http://localhost:5000/api/sendBookingMail", {
+      method: "POST",
+      data: bookCar,
+    });
+    const result = await res.json();
+    if (result.res === 201) {
+      alert("Mail Send");
+    } 
+  };
   const submitHandler = async (e) => {
     e.preventDefault();
 
@@ -114,7 +125,7 @@ const CarPayment = ({ history }) => {
           };
 
           dispatch(bookedCar(bookCar));
-
+          bookingMail()
           history.push("/car/booking/success");
         } else {
           alert.error("There's some issue while processing payment ");
@@ -128,7 +139,7 @@ const CarPayment = ({ history }) => {
   return (
     <>
       <Fragment>
-        {/* <MetaData title="Payment" /> */}
+        <MetaData title={'Sayahat: Payment'} />
         {/* <CheckoutSteps activeStep={2} /> */}
         <div className="paymentContainer">
           {/* <form className="paymentForm"> */}

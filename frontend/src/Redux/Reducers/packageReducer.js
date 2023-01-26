@@ -128,17 +128,17 @@ export const allPackagesReducer = (state = { packages: [] }, action) => {
   }
 };
 
-export const featuredPackagesReducer = (state = { packages: [] }, action) => {
+export const featuredPackagesReducer = (state = { featuredPackages: [] }, action) => {
   switch (action.type) {
     case GET_ALL_FEATURED_PACKAGES_REQUEST:
       return {
         loading: true,
-        packages: [],
+        featuredPackages: [],
       };
     case GET_ALL_FEATURED_PACKAGES_SUCCESS:
       return {
         loading: false,
-        packages: action.payload.packages,
+        featuredPackages: action.payload.featuredPackages,
       };
     case GET_ALL_FEATURED_PACKAGES_FAIL:
       return {

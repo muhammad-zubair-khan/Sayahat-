@@ -7,6 +7,7 @@ import logo from "../../Assets/logo/logo.png";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "../../Redux/helpers/axios";
+import MetaData from "../../Components/MetaData/MetaData";
 
 const Forgot = () => {
   const [email, setEmail] = useState("");
@@ -34,6 +35,8 @@ const Forgot = () => {
   };
 
   return (
+    <>
+    <MetaData title={"Forgot Password"} />
     <Row>
       <Col
         md={6}
@@ -118,6 +121,7 @@ const Forgot = () => {
         </div>
       </Col>
     </Row>
+    </>
   );
 };
 

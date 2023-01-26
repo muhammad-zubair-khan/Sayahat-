@@ -17,6 +17,7 @@ import VpnKeyIcon from "@mui/icons-material/VpnKey";
 import { getPackageDetailById } from "../../Redux/Actions/packageAction";
 import { useLocation, useParams } from "react-router-dom";
 import { bookPackage } from "../../Redux/Actions/bookPackageAction";
+import MetaData from "../../Components/MetaData/MetaData";
 // import { createOrder, clearErrors } from "../../actions/orderAction";
 
 const Payment = ({ history }) => {
@@ -49,6 +50,17 @@ const Payment = ({ history }) => {
     contactInfo,
     activityInfo,
   };
+  const bookingMail = async () => {
+    // e.preventDefault();
+    const res = await axios("http://localhost:5000/api/sendBookingMail", {
+      method: "POST",
+      data: bookPkg,
+    });
+    const result = await res.json();
+    if (result.res === 201) {
+      alert("Mail Send");
+    } 
+  };
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -56,15 +68,15 @@ const Payment = ({ history }) => {
     payBtn.current.disabled = true;
 
     try {
-      const config = {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      };
+      // const config = {
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+      // };
       const { data } = await axios.post(
         "http://localhost:5000/api/payment/process",
         paymentData,
-        config
+        // config
       );
 
       const client_secret = data.client_secret;
@@ -79,10 +91,6 @@ const Payment = ({ history }) => {
             email: user.email,
             address: {
               city: packages.package.city,
-              //   line1: shippingInfo.address,
-              //   state: shippingInfo.state,
-              //   postal_code: shippingInfo.pinCode,
-              //   country: shippingInfo.country,
             },
           },
         },
@@ -100,7 +108,7 @@ const Payment = ({ history }) => {
           };
 
           dispatch(bookPackage(bookPkg));
-
+          bookingMail()
           history.push("/package/reserve/success");
         } else {
           alert.error("There's some issue while processing payment ");
@@ -121,7 +129,7 @@ const Payment = ({ history }) => {
 
   return (
     <Fragment>
-      {/* <MetaData title="Payment" /> */}
+      <MetaData title={'Sayahat: Payment'} />
       {/* <CheckoutSteps activeStep={2} /> */}
       <div className="paymentContainer">
         {/* <form className="paymentForm"> */}
@@ -145,6 +153,7 @@ const Payment = ({ history }) => {
             value={`Pay - PKR${packages && packages.package.price}`}
             ref={payBtn}
             className="paymentFormBtn"
+            // onClick={bookingMail}
           />
         </form>
       </div>

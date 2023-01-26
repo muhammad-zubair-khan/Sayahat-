@@ -5,6 +5,7 @@ import { Typography } from "@mui/material";
 import { clearErrors } from "../../../Redux/Actions/bookCarAction";
 import { useState } from "react";
 import axios from "../../../Redux/helpers/axios";
+import MetaData from "../../../Components/MetaData/MetaData";
 const MyCarDetails = (props) => {
   // const { error, loading } = useSelector((state) => state.myCarDetails);
   // const {car} = useSelector((state) => state.myCarDetails);
@@ -39,7 +40,7 @@ const MyCarDetails = (props) => {
         "Loading"
       ) : ( */}
         <Fragment>
-          {/* <MetaData title="Order Details" /> */}
+        <MetaData title={`Car Details`} />
           <div className="orderDetailsPage">
             <div className="orderDetailsContainer">
               {/* <Typography component="h1">

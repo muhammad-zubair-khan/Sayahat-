@@ -11,9 +11,11 @@ const {
   GetHotelById,
   getHotelRooms,
   getAllHotelsAdmin,
+  getAllFeaturedHotels,
   createHotelReview,
   getHotelReviews,
   deleteReview,
+  getSearchedHotels,
 } = require("../Controllers/hotel");
 // const { isAuthenticatedUser, authorizeRoles } = require("../middleware/auth");
 const {
@@ -62,7 +64,9 @@ router
   .get(getHotelReviews)
   .delete(requireSignin, userMiddleware, deleteReview);
 
-router.get("/all-hotels", getAllHotels);
+router.get("/all-hotels", getSearchedHotels);
+router.get("/hotels", getAllHotels);
+router.get("/allfeaturedhotels", getAllFeaturedHotels);
 router.get("/hotels/:slug", getHotelsBySlug);
 router.get("/hotel/:id", GetHotelById);
 router.get("/room/:id", getHotelRooms);

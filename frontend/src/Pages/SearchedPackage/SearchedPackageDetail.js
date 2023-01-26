@@ -23,6 +23,7 @@ import {
   DialogTitle,
 } from "@mui/material";
 import { Container, Rating } from "@mui/material";
+import MetaData from "../../Components/MetaData/MetaData";
 
 function SearchedPackageDetail({ match }) {
   const [showResults, setShowResults] = useState(false);
@@ -192,6 +193,7 @@ function SearchedPackageDetail({ match }) {
 
   return (
     <>
+    <MetaData title={packages.package.name}/>
       <Navbar />
       <div className="bgPackage"></div>
       {/* start of page */}

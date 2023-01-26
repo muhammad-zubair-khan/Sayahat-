@@ -32,8 +32,8 @@ const CarList = () => {
 
   const types = ["SUV", "Van", "Mercedes", "Mini-Van"];
   useEffect(() => {
-    dispatch(getAllCars(min, max, startDestination, carType));
-  }, [dispatch, min, max, startDestination, carType]);
+    dispatch(getAllCars(min, max, startDestination, carType,ratings));
+  }, [dispatch, min, max, startDestination, carType,ratings]);
 
   const [show, setShow] = useState(false);
 
