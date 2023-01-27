@@ -1,0 +1,25 @@
+.tab-item {
+    background-color: #132138!important;
+    color: white!important;
+    font-family: "Roboto","Helvetica","Arial",sans-serif!important;
+    font-weight: 400!important;
+    font-size: 0.875rem!important;
+    line-height: 1.43!important;
+    letter-spacing: 0.01071em!important;
+    padding: 8px!important;
+    text-align: center!important;
+    border-radius: 4px!important;
+  }
+  .act{
+    background-color: #4677c7 !important;
+    color: white!important;
+    font-weight: bold!important;
+    font-family: "Roboto","Helvetica","Arial",sans-serif!important;
+    font-weight: 400!important;
+    font-size: 0.875rem!important;
+    line-height: 1.43!important;
+    letter-spacing: 0.01071em!important;
+    padding: 8px!important;
+    text-align: center!important;
+    border-radius: 4px!important;
+  }

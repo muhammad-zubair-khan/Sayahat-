@@ -237,7 +237,7 @@ const CitiesManagementScreen = (props) => {
         </Grid>
 
         {hotelHidden ? (
-          <div className="dashboard">
+          <div className="dashboard" style={{ width: "1050px", height: "1160px", overflow: "auto"}}>
             <span className="hotel-arrow hotel-up"></span>
             <div className="newProductContainer">
               <form
@@ -524,7 +524,7 @@ const CitiesManagementScreen = (props) => {
           </div>
         ) : null}
         {carHidden ? (
-          <div className="dashboard">
+          <div className="dashboard" style={{ width: "1050px",height: "1160px", overflow: "auto"}}>
             <span className="car-arrow car-up"></span>
             <div className="newProductContainer">
               <form
@@ -809,7 +809,7 @@ const CitiesManagementScreen = (props) => {
           </div>
         ) : null}
         {packageHidden ? (
-          <div className="dashboard">
+          <div className="dashboard" style={{ width: "1050px", height: "1160px", overflow: "auto"}}>
             <span className="package-arrow package-up"></span>
             <div className="newProductContainer">
               <form

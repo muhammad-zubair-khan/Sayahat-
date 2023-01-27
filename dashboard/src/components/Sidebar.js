@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
-import { FaBars, FaHome, FaLock, FaMoneyBill, FaUser } from "react-icons/fa";
+import { FaBars, FaHome, FaLock, FaMoneyBill, FaUser,} from "react-icons/fa";
 import { AiTwotoneFileExclamation } from "react-icons/ai";
+import { MdTour } from "react-icons/md";
+import { BiCalendarEvent  } from "react-icons/bi";
+import { CgProfile  } from "react-icons/cg";
 import { BsCartCheck } from "react-icons/bs";
 import { AnimatePresence, motion } from "framer-motion";
 import SidebarMenu from "./SidebarMenu";
@@ -18,37 +21,37 @@ const routes = [
   {
     path: "/vacation",
     name: "Vacations",
-    icon: <AiTwotoneFileExclamation />,
+    icon: <MdTour />,
     subRoutes: [
       {
         path: "/vacations/punjab",
         name: "Punjab ",
-        icon: <FaUser />,
+        // icon: <FaUser />,
       },
       {
         path: "/vacations/KhyberPakhtunkhwa",
         name: "Khyber Pakhtunkhwa",
-        icon: <FaLock />,
+        // icon: <FaLock />,
       },
       {
         path: "/vacations/Sindh",
         name: "Sindh",
-        icon: <FaMoneyBill />,
+        // icon: <FaMoneyBill />,
       },
       {
         path: "/vacations/Balochistan",
         name: "Balochistan",
-        icon: <FaMoneyBill />,
+        // icon: <FaMoneyBill />,
       },
       {
         path: "/vacations/Kashmir",
         name: "Kashmir",
-        icon: <FaMoneyBill />,
+        // icon: <FaMoneyBill />,
       },
       {
         path: "/vacations/Gilgitbaltistan",
         name: "Gilgit Baltistan",
-        icon: <FaMoneyBill />,
+        // icon: <FaMoneyBill />,
       },
     ],
   },
@@ -58,10 +61,20 @@ const routes = [
     icon: <BsCartCheck />,
   },
   {
+    path: "/events",
+    name: "Events",
+    icon: <BiCalendarEvent />,
+  },
+  {
     path: "/profile",
     name: "Profile",
-    icon: <AccountBoxIcon />,
+    icon: <CgProfile />,
   },
+  // {
+  //   path: "/chart",
+  //   name: "Chart",
+  //   icon: <BsCartCheck />,
+  // },
 ];
 const Sidebar = ({ children, history }) => {
   const dispatch = useDispatch();
@@ -69,7 +82,7 @@ const Sidebar = ({ children, history }) => {
   const logoutt = () => {
     dispatch(signout());
   };
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
   const toggle = () => setIsOpen(!isOpen);
   const showAnimation = {
     hidden: {
@@ -94,11 +107,11 @@ const Sidebar = ({ children, history }) => {
 
         <motion.div
           animate={{
-            width: isOpen ? "290px" : "45px",
+            width: isOpen ? "340px" : "45px",
             transition: {
-              duration: 0.5,
+              duration: 1,
               type: "spring",
-              damping: 10,
+              damping: 13,
             },
           }}
           className={`sidebar `}
@@ -180,10 +193,10 @@ const Sidebar = ({ children, history }) => {
                   <AnimatePresence>
                     {isOpen && (
                       <motion.div
-                        // variants={showAnimation}
-                        // initial="hidden"
-                        // animate="show"
-                        // exit="hidden"
+                        variants={showAnimation}
+                        initial="hidden"
+                        animate="show"
+                        exit="hidden"
                         className="link_text"
                       >
                         {route.name}

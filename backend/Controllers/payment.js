@@ -45,12 +45,7 @@ exports.sendBookingMail = async(req, res) => {
           text: `
           Hi ${req.body.contactInfo.firstName},
           This is the confirmation mail of the reservation of the ${req.body.name} in ${req.body.city}.
-          Your booking is confirmed!! 
-          I want to make clear that if you want any kind of change in the reservation then please inform within 24 hours of this confirmation letter after which any request won’t be entertained. Rest we assure you that you won’t face any problems with the proposed trip.
-
-          Visit http://localhost:3000/myProfile
-
-          `,
+          Your booking is confirmed!!. I want to make clear that if you want any kind of change in the reservation then please inform within 24 hours of this confirmation letter after which any request won’t be entertained. Rest we assure you that you won’t face any problems with the proposed trip.`
         };
   
         transporter.sendMail(mailOptions, (error, info) => {

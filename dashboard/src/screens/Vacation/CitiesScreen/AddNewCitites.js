@@ -57,7 +57,10 @@ const AddNewCitites = () => {
     <>
       <Sidebar>
         <Header />
-        <div className="dashboard">
+        <div
+          className="dashboard"
+          style={{ width: "1050px", height: "500px", overflow: "auto"}}
+        >
           <div className="newProductContainer">
             <form
               className="createProductForm"

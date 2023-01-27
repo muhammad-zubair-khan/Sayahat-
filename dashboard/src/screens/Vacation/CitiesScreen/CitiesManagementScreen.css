@@ -7,11 +7,12 @@
   border-width: 0px 8px 8px 0;
   display: inline-block;
   padding: 9px;
-  margin-left: 31.5rem;
+  margin-left: 24.6rem;
 }
 .hotel-up {
   transform: rotate(-135deg);
   -webkit-transform: rotate(-135deg);
+  margin-top: 8px;
 }
 
 .car-arrow {
@@ -19,11 +20,12 @@
   border-width: 0px 8px 8px 0;
   display: inline-block;
   padding: 9px;
-  margin-left: 38.3rem;
+  margin-left: 31rem;
 }
 .car-up {
   transform: rotate(-135deg);
   -webkit-transform: rotate(-135deg);
+  margin-top: 8px;
 }
 .package-arrow {
   /* border: solid black; */
@@ -31,11 +33,12 @@
   border-width: 0px 8px 8px 0;
   display: inline-block;
   padding: 9px;
-  margin-left: 45.5rem;
+  margin-left: 38.3rem;
 }
 .package-up {
   transform: rotate(-135deg);
   -webkit-transform: rotate(-135deg);
+  margin-top: 8px;
 }
 
 .text-area{

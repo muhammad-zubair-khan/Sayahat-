@@ -5,7 +5,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import "./responsive.css";
 import Signin from "./components/Signin";
-import Signup from "./components/Signup.js";
+import Signup from "./components/Signup";
 import PrivateRoute from "./components/Private/PrivateRoute";
 import HomeScreen from "./screens/Home/HomeScreen";
 import UserScreen from "./screens/User/UserScreen";
@@ -31,6 +31,8 @@ import BookingDetailsScreen from "./screens/Booking/Car/BookingDetailsScreen";
 import { getAllBookedCars } from "./Redux/Actions/bookCarAction";
 import HotelBookingDetail from "./screens/Booking/Hotel/HotelBookingDetail";
 import PackageBookingDetail from "./screens/Booking/Package/PackageBookingDetail";
+import Event from "./screens/Events/Event";
+import Chart from "./screens/Charts/Chart";
 
 function App() {
   const dispatch = useDispatch();
@@ -99,6 +101,8 @@ function App() {
           path="/package/booking/details/:id"
           component={PackageBookingDetail}
         />
+        <PrivateRoute exact path="/events" component={Event} />
+        {/* <PrivateRoute exact path="/chart" component={Chart} /> */}
         <Route exact path="/login" component={Signin} />
         <Route exact path="/signup" component={Signup} />
 
