@@ -29,6 +29,13 @@ const CarContactDetails = () => {
   const [totalPrice, setTotalPrice] = useState(location.state.state.totalPrice);
 
   const { car } = useSelector((state) => state.addCarReducer);
+  const MILLISECONDS_PER_DAY = 1000 * 60 * 60 * 24;
+  function dayDifference(date1, date2) {
+    const timeDiff = Math.abs(date2.getTime() - date1.getTime());
+    const diffDays = Math.ceil(timeDiff / MILLISECONDS_PER_DAY);
+    return diffDays;
+  }
+  const days = dayDifference(dates[0].endDate, dates[0].startDate);
 
   useEffect(() => {
     dispatch(getCarById(id));
@@ -77,8 +84,8 @@ const CarContactDetails = () => {
   return (
     <>
       <MetaData title={`Sayahat: Payment`} />
-      <Grid container style={{ margin: "106px 43px" }}>
-        <Grid lg={6}>
+      <Grid container>
+        <Grid lg={6} style={{ padding: "78px 0px"}}>
           <CarCheckoutSteps activeStep={0} />
           <div className="container text-center mt-5">
             <h4 style={{ color: "black" }} className="my-3">
@@ -227,28 +234,28 @@ const CarContactDetails = () => {
             }}
           >
             <span>
-              From <span className="siTaxiOp">{startDestination}</span>
+              From <span>{startDestination}</span>
             </span>
             <span>
-              To: <span className="siTaxiOp">{endDestination}</span>
+              To: <span>{endDestination}</span>
             </span>
 
-            <span>
+            {/* <span>
               Pick-up Time: <span className="siTaxiOp">{pickupTime}</span>
             </span>
             <span>
               Drop-off Time: <span className="siTaxiOp">{dropoffTime}</span>
-            </span>
+            </span> */}
 
             <span>
-              Dates:{" "}
-              <span className="siTaxiOp">{`${dates[0].startDate} to ${dates[0].endDate}`}</span>
+              Pick-up & Drop-off:{" "}
+              <span >{`${dates[0].startDate}`.substring(0,11)} {`${pickupTime} - ${dates[0].endDate}`.substring(0,19)} {`${dropoffTime}`}</span>
             </span>
             {/* <span>{car.payAt}</span>
             <span>{car.refund}</span> */}
             <hr />
           </div>
-          <div
+          {/* <div
             style={{
               marginLeft: "36px",
               display: "flex",
@@ -257,7 +264,53 @@ const CarContactDetails = () => {
           >
             <b>Total Price</b>
             <b>PKR {totalPrice}</b>
+          </div> */}
+          <div
+            style={{
+              marginLeft: "36px",
+            }}
+          >
+            <h5 style={{fontWeight:"bolder"}}>Price details</h5>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+              marginTop:'20px'
+
+              }}
+            >
+              <span>
+              {/* {`${car.price} x ${days}`} */}
+             {`Car rental fee x  ${days} ${days > 1 ? 'days':'day'}`}
+              </span>
+              <span>PKR {totalPrice}</span>
+            </div>
+            <span style={{ fontSize: "small" }}>
+              PKR {car.fare}  per day
+            </span>
+
+            <div style={{
+                display: "flex",
+                justifyContent: "space-between",
+              marginTop:'20px'
+              }}>
+              <span>Taxes</span>
+              <span>PKR 0</span>
+            </div>
           </div>
+
+          <div
+            style={{
+              marginLeft: "36px",
+              display: "flex",
+              justifyContent: "space-between",
+              marginTop:'20px',
+            }}
+          >
+            <b>Total Price</b>
+            <b>PKR {totalPrice}</b>
+          </div>
+          
         </Grid>
       </Grid>
     </>

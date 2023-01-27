@@ -66,7 +66,7 @@ const CarPayment = ({ history }) => {
   };
   const bookingMail = async () => {
     // e.preventDefault();
-    const res = await axios("http://localhost:5000/api/sendBookingMail", {
+    const res = await axios("http://localhost:5000/api/sendCarBookingMail", {
       method: "POST",
       data: bookCar,
     });

@@ -43,116 +43,113 @@ const ActivityDetails = () => {
   return (
     <>
       <MetaData title={`Sayahat: Payment`} />
-      <Grid container style={{ margin: "106px 43px" }}>
-        <Grid lg={7}>
+      <Grid container>
+        <Grid lg={6} style={{ padding: "78px 0px" }}>
           <CheckoutSteps activeStep={1} />
+          <div style={{ padding: "0px 78px" }}>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+              marginTop: '32px',
+              }}
+            >
+                <img
+                  src={ImageUrl(packages.package.packageImages[0].img)}
+                  style={{ width: "30%" }}
+                  alt=""
+                />
+                <span>{packages.package.name}</span>
+           
+            </div>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                margin: "14px 19px",
+              }}
+            >
 
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}
-          >
-            <span>
-              <img
-                src={ImageUrl(packages.package.packageImages[0].img)}
-                style={{ width: "30%" }}
-                alt=""
-              />
-              <b>{packages.package.name}</b>
-            </span>
-            <span>
-              <b>PKR {packages.package.price}</b>
-            </span>
-          </div>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              margin: "14px 19px",
-            }}
-          >
-            <b>Date: {dates}</b>
-
-            {/* <span className="siTaxiOp mb-1">Dates {`${format(dates[0].startDate, "MM/dd/yyyy")} to ${format(
+              {/* <span className="siTaxiOp mb-1">Dates {`${format(dates[0].startDate, "MM/dd/yyyy")} to ${format(
                 dates[0].endDate,
                 "MM/dd/yyyy"
               )}`}</span> */}
-            <span className="siTaxiOp mb-1">
-              Adults {options.adult} Children {options.children}
-            </span>
-            <span className="siTaxiOp mb-1">Pickup Time {time}</span>
-            <span>{packages.package.carPickupDetails}</span>
+              <span className="siTaxiOp mb-1">
+                Adults {options.adult} Children {options.children}
+              </span>
+              <span className="siTaxiOp mb-1">Pickup Time {time}</span>
+              <span>{packages.package.carPickupDetails}</span>
 
-            <p style={{ marginTop: "10px" }}>
-              Total Price: <span>PKR {packages.package.price}</span>{" "}
-            </p>
-          </div>
+              {/* <p style={{ marginTop: "10px" }}>
+                Total Price: <span>PKR {packages.package.price}</span>{" "}
+              </p> */}
+            </div>
 
-          <div className="container mt-2">
-            <b>Adult 1</b>
-            <form
-              encType="multipart/form-data"
-              onSubmit={createProductSubmitHandler}
-              // className="col-md-6 mt-5"
-              style={{ margin: "0 auto" }}
-            >
-              <div className="my-3 inputField">
-                <TextField
-                  autoComplete="off"
-                  fullWidth
-                  required
-                  id="outlined-required"
-                  label="First Name"
-                  value={firstName}
-                  onChange={(e) => setFirstName(e.target.value)}
-                />
-              </div>
-              <div className="my-3 inputField">
-                <TextField
-                  autoComplete="off"
-                  fullWidth
-                  required
-                  id="outlined-required"
-                  label="Last Name"
-                  value={lastName}
-                  onChange={(e) => setLastName(e.target.value)}
-                />
-              </div>
+            <div className="container mt-2">
+              <b>Adult 1</b>
+              <form
+                encType="multipart/form-data"
+                onSubmit={createProductSubmitHandler}
+                // className="col-md-6 mt-5"
+                style={{ margin: "0 auto" }}
+              >
+                <div className="my-3 inputField">
+                  <TextField
+                    autoComplete="off"
+                    fullWidth
+                    required
+                    id="outlined-required"
+                    label="First Name"
+                    value={firstName}
+                    onChange={(e) => setFirstName(e.target.value)}
+                  />
+                </div>
+                <div className="my-3 inputField">
+                  <TextField
+                    autoComplete="off"
+                    fullWidth
+                    required
+                    id="outlined-required"
+                    label="Last Name"
+                    value={lastName}
+                    onChange={(e) => setLastName(e.target.value)}
+                  />
+                </div>
 
-              {active === 1 && (
-                <Button
-                  variant="contained"
-                  type="submit"
-                  style={{ float: "right" }}
-                  className="send-button"
-                  disabled={!firstName || !lastName}
-                  // onClick={handleShow}
-                >
-                  Next
-                </Button>
-              )}
-            </form>
+                {active === 1 && (
+                  <Button
+                    variant="contained"
+                    type="submit"
+                    style={{ float: "right" }}
+                    className="send-button"
+                    disabled={!firstName || !lastName}
+                    // onClick={handleShow}
+                  >
+                    Next
+                  </Button>
+                )}
+              </form>
+            </div>
           </div>
         </Grid>
         <Grid
-          lg={5}
+          lg={6}
           style={{ padding: "57px 78px", backgroundColor: "#f5f5f5" }}
         >
           <div
             style={{
               display: "flex",
-              justifyContent: "space-around",
+              justifyContent:"space-around",
               alignItems: "center",
             }}
           >
-            <span>
               <img
                 src={ImageUrl(packages.package.packageImages[0].img)}
                 style={{ width: "30%" }}
                 alt=""
               />
+              <span>
               <b>{packages.package.name}</b>
             </span>
             <span>
@@ -172,11 +169,38 @@ const ActivityDetails = () => {
             <span>{packages.package.title}</span>
             <hr />
           </div>
-          <div
+          {/* <div
             style={{
               // marginLeft: "36px",
               display: "flex",
               justifyContent: "space-between",
+            }}
+          >
+            <b>Total Price</b>
+            <b>PKR {packages.package.price}</b>
+          </div> */}
+             <div style={{marginTop:'20px'}}>
+            <h5 style={{fontWeight:"bolder",color:'black'}}>Price details</h5>
+           
+            {/* <span style={{ fontSize: "small" }}>
+              PKR {hotel.cheapestPrice} average per night
+            </span> */}
+
+            <div style={{
+                display: "flex",
+                justifyContent: "space-between",
+              marginTop:'20px'
+              }}>
+              <span>Taxes</span>
+              <span>PKR 0</span>
+            </div>
+          </div>
+
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              marginTop:'20px',
             }}
           >
             <b>Total Price</b>

@@ -400,7 +400,7 @@ const HotelDetail = ({ match }) => {
       </div>
       {/* )} */}
       {openModal && (
-        <Reserve setOpen={setOpenModal} hotelId={id} totalPrice={totalPrice} />
+        <Reserve setOpen={setOpenModal} hotelId={id} totalPrice={totalPrice}/>
       )}
       <Footer />
     </>

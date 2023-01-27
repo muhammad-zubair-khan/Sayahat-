@@ -74,14 +74,14 @@ const Reserve = ({ setOpen, hotelId, totalPrice }) => {
             );
             return res.data;
           })
-        );
-        setOpen(false);
+          );
+          setOpen(false);
         toast.success(`Room is Booked Successfully`, {
           position: toast.POSITION.BOTTOM_CENTER,
         });
         setTimeout(() => {
           history.push(`/hotel/${id}/contactDetail`, {
-            state: { destination, dates, options, selectedRooms, totalPrice },
+            state: { destination, dates, options, selectedRooms, totalPrice, },
           });
         }, 3000);
       } catch (err) {}

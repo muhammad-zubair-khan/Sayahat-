@@ -62,20 +62,20 @@ const ContactDetails = () => {
   return (
     <>
       <MetaData title={`Sayahat: Payment`} />
-      <Grid container style={{ margin: "106px 43px" }}>
-        <Grid lg={7}>
+      <Grid container>
+        <Grid lg={6} style={{ padding: "78px 0px"}}>
           <CheckoutSteps activeStep={0} />
           <div className="container text-center mt-5">
             <h4 style={{ color: "black" }} className="my-3">
               We'll use this information to send you confirmation and updates
               about your booking
             </h4>
-            <h5 style={{ color: "black" }} className="mt-3">
+            {!localStorage.token && <h5 style={{ color: "black" }} className="mt-3">
               Already have an account?
               <span>
                 <Link to="/login">Log in</Link>
               </span>
-            </h5>
+            </h5>}
             <form
               encType="multipart/form-data"
               onSubmit={SubmitContactInfo}
@@ -163,7 +163,7 @@ const ContactDetails = () => {
           </div>
         </Grid>
         <Grid
-          lg={5}
+          lg={6}
           style={{ padding: "57px 78px", backgroundColor: "#f5f5f5" }}
         >
           <div
@@ -173,12 +173,12 @@ const ContactDetails = () => {
               alignItems: "center",
             }}
           >
-            <span>
               <img
                 src={ImageUrl(packages.package.packageImages[0].img)}
                 style={{ width: "30%" }}
                 alt=""
-              />
+                />
+                <span>
               <b>{packages.package.name}</b>
             </span>
             <span>
@@ -199,16 +199,43 @@ const ContactDetails = () => {
             <hr />
           </div>
           <div>
-            <b>Pick-up Time: {time}</b>
+            <span>Pick-up Time: {time}</span>
           </div>
           <div>
-            <b>Date: {dates}</b>
+            <span>Date: {dates}</span>
           </div>
-          <div
+          {/* <div
             style={{
               // marginLeft: "36px",
               display: "flex",
               justifyContent: "space-between",
+            }}
+          >
+            <b>Total Price</b>
+            <b>PKR {packages.package.price}</b>
+          </div> */}
+            <div style={{marginTop:'20px'}}>
+            <h5 style={{fontWeight:"bolder",color:'black'}}>Price details</h5>
+           
+            {/* <span style={{ fontSize: "small" }}>
+              PKR {hotel.cheapestPrice} average per night
+            </span> */}
+
+            <div style={{
+                display: "flex",
+                justifyContent: "space-between",
+              marginTop:'20px'
+              }}>
+              <span>Taxes</span>
+              <span>PKR 0</span>
+            </div>
+          </div>
+
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              marginTop:'20px',
             }}
           >
             <b>Total Price</b>

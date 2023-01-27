@@ -52,7 +52,7 @@ const Payment = ({ history }) => {
   };
   const bookingMail = async () => {
     // e.preventDefault();
-    const res = await axios("http://localhost:5000/api/sendBookingMail", {
+    const res = await axios("http://localhost:5000/api/sendPackageBookingMail", {
       method: "POST",
       data: bookPkg,
     });
