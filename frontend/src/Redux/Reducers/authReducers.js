@@ -1,5 +1,3 @@
-// import { authConstants } from "../actions/constants";
-
 import { CLEAR_ERRORS, LOAD_USER_FAIL, LOAD_USER_REQUEST, LOAD_USER_SUCCESS, LOGIN_FAILURE, LOGIN_REQUEST, LOGIN_SUCCESS, LOGOUT_FAILURE, LOGOUT_REQUEST, LOGOUT_SUCCESS, SIGNUP_FAILURE, SIGNUP_REQUEST, SIGNUP_SUCCESS,
   UPDATE_PROFILE_REQUEST,
   UPDATE_PROFILE_SUCCESS,
@@ -17,7 +15,7 @@ const initState = {
   },
   authenticate: false,
   authenticating: false,
-  loading: false,
+  loading: true,
   error: null,
   message: "",
 };
@@ -25,7 +23,6 @@ const initState = {
 export const authReducer = (state = initState, action) => {
   // eslint-disable-next-line default-case
   switch (action.type) {
-    case LOGIN_REQUEST:
       case LOAD_USER_REQUEST:
       state = {
         ...state,
@@ -40,7 +37,7 @@ export const authReducer = (state = initState, action) => {
         token: action.payload.token,
         authenticate: true,
         authenticating: false,
-        error:null,
+        loading:false
         // success:action.payload.success,
       };
       break;
@@ -48,6 +45,8 @@ export const authReducer = (state = initState, action) => {
       state = {
         ...state,
         error: action.payload.error,
+        loading:false,
+        authenticate: false,
       };
       break;
     case LOGOUT_REQUEST:
@@ -77,13 +76,14 @@ export const authReducer = (state = initState, action) => {
         }
       break;
     case SIGNUP_REQUEST:
+
       break;
     case SIGNUP_SUCCESS:
       break;
     case SIGNUP_FAILURE:
       state = {
         ...state,
-        error: action.payload.error,
+        error: action.payload,
       };
       break;
   }

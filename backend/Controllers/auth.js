@@ -4,7 +4,6 @@ const bcrypt = require("bcrypt");
 const shortid = require("shortid");
 const catchAsyncErrors = require("../utils/catchAsyncErrors");
 const nodemailer = require("nodemailer");
-
 const keySecret = process.env.JWT_SECRET;
 
 const transporter = nodemailer.createTransport({
@@ -12,8 +11,6 @@ const transporter = nodemailer.createTransport({
   auth: {
     user: process.env.EMAIL,
     pass: process.env.PASSWORD,
-    // user:"mzk112000@gmail.com",
-    // pass:"razvdwxvxdfzoijh"
   },
 });
 
@@ -27,10 +24,13 @@ exports.signup = (req, res) => {
   User.findOne({ email: req.body.email }).exec(async (error, user) => {
     if (user)
       return res.status(400).json({
-        error: "User already registered",
+        msg: "User already registered",
       });
 
     const { firstName, lastName, email, password, createdAt } = req.body;
+    if(!firstName, !lastName || !email, !password){
+      return res.status(400).json({msg:"please enter all fields"})
+    }
     const hash_password = await bcrypt.hash(password, 10);
     const _user = new User({
       firstName,
@@ -43,16 +43,11 @@ exports.signup = (req, res) => {
 
     _user.save((error, user) => {
       if (error) {
-        return res.status(400).json({
-          message: "Something went wrong",
-          error,
-        });
+        throw error
       }
-
       if (user) {
         const token = generateJwtToken(user._id, user.role);
-        const { _id, firstName, lastName, email, role, fullName, createdAt } =
-          user;
+        const { _id, firstName, lastName, email, role, fullName, createdAt } = user;
         return res.status(201).json({
           token,
           user: { _id, firstName, lastName, email, role, fullName, createdAt },
@@ -62,9 +57,10 @@ exports.signup = (req, res) => {
   });
 };
 
-exports.signin = (req, res) => {
+exports.signin = async(req, res) => {
   User.findOne({ email: req.body.email }).exec(async (error, user) => {
     if (error) return res.status(400).json({ error });
+
     if (user) {
       const isPassword = await user.authenticate(req.body.password);
       if (isPassword && user.role === "user") {
@@ -77,28 +73,29 @@ exports.signin = (req, res) => {
         });
       } else {
         return res.status(400).json({
-          message: "Something went wrong",
+          message: "Invalid credentials",
         });
       }
     } else {
-      return res.status(400).json({ message: "Something went wrong" });
+      return res.status(400).json({ message: "Invalid credentials" });
     }
   });
 };
 
 exports.sendPasswordLink = async (req, res) => {
-  // console.log(req.body);
   const { email } = req.body;
   if (!email) {
     res.status(401).json({
-      status: 401,
       message: "Enter your Email",
     });
   }
   try {
-    const userFind = await User.findOne({ email: email });
-    // console.log("userFind",userFind)
-
+    const userFind = await User.findOne({ email: email })
+      if(!userFind){
+        return res.status(400).json({
+          message: 'User not found'
+        })
+      }
     //generate token
     const token = jwt.sign({ _id: userFind._id }, keySecret, {
       expiresIn: "1d",
@@ -133,7 +130,12 @@ exports.sendPasswordLink = async (req, res) => {
         }
       });
     }
-  } catch (error) {}
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      message: "Something went wrong. Please try again later"
+    });
+  }
 };
 exports.forgotPassword = async (req, res) => {
   const { id, token } = req.params;

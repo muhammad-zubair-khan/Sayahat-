@@ -16,111 +16,103 @@ const Forgot = () => {
 
   const forgotPassword = async (e) => {
     e.preventDefault();
-
-    const data = { email };
-
-    const res = await axios("/sendpasswordlink", {
-      method: "POST",
-      config: { headers: { "Content-Type": "application/json" } },
-      data: data,
-    });
-    const result = await res.json();
-    if (result.res === 201) {
-      setEmail("");
-      setMessage(true);
-      alert("hello");
-    } else {
+    // if (!email) {
+    //   toast.error("Enter your email");
+    // }
+    try {
+      const data = { email };
+      const response = await axios("/sendpasswordlink", {
+        method: "POST",
+        config: { headers: { "Content-Type": "application/json" } },
+        data: data,
+      });
+      if (response.data.message) {
+        if (response.data.message === "User not found") {
+          toast.error("Email not exists");
+        } else {
+          toast.success("Password reset link sent to your email");
+        }
+      }
+       else {
+        toast.error("Invalid User");
+      }
+    } 
+  catch (error) {
+      console.log(error);
       toast.error("Invalid User");
     }
   };
 
   return (
     <>
-    <MetaData title={"Forgot Password"} />
-    <Row>
-      <Col
-        md={6}
-        style={{
-          backgroundImage:
-            "linear-gradient(to right top, #173f4a, #395c5e, #5f7a72, #88988a, #b2b7a7)",
-          height: "100vh",
-        }}
-      >
-        <img
-          src={logo}
-          alt=""
-          style={{ width: "-webkit-fill-available", marginTop: "10%" }}
-        />
-      </Col>
-
-      <Col md={6} className="text-center bgimg">
-        <div
-          className="d-flex flex-column align-content-end"
-          style={{ marginTop: "20%" }}
+      <MetaData title={"Forgot Password"} />
+      <Row>
+        <Col
+          md={6}
+          style={{
+            backgroundImage:
+              "linear-gradient(to right top, #173f4a, #395c5e, #5f7a72, #88988a, #b2b7a7)",
+            height: "100vh",
+          }}
         >
-          <div className="auth-body mx-auto">
-            <h5 style={{ marginBottom: "20px" }}>Forgot Password</h5>
+          <img
+            src={logo}
+            alt=""
+            style={{ width: "-webkit-fill-available", marginTop: "10%" }}
+          />
+        </Col>
 
-            {message ? (
-              <p style={{ fontWeight: "bolder" }}>
-                password reser link send Successfully in your Email
-              </p>
-            ) : (
-              ""
-            )}
-            <div className="auth-form-container text-start">
-              <form className="auth-form" autoComplete={"off"}>
-                <div className="email mb-3">
-                  <input
-                    type="email"
-                    className={`form-control ${
-                      validate.validate && validate.validate.email
-                        ? "is-invalid "
-                        : ""
-                    }`}
-                    id="email"
-                    name="email"
-                    value={email}
-                    placeholder="Email"
-                    onChange={(e) => setEmail(e.target.value)}
-                  />
-
-                  <div
-                    className={`invalid-feedback text-start ${
-                      validate.validate && validate.validate.email
-                        ? "d-block"
-                        : "d-none"
-                    }`}
-                  >
-                    {validate.validate && validate.validate.email
-                      ? validate.validate.email[0]
-                      : ""}
+        <Col md={6} className="text-center bgimg">
+          <div
+            className="d-flex flex-column align-content-end"
+            style={{ marginTop: "20%" }}
+          >
+            <div className="auth-body mx-auto">
+              <h5 style={{ marginBottom: "20px" }}>Forgot Password</h5>
+              {/* {message ? (
+                <p style={{ fontWeight: "bolder" }}>
+                  password reser link send Successfully in your Email
+                </p>
+              ) : (
+                ""
+              )} */}
+              <div className="auth-form-container text-start">
+                <form className="auth-form" autoComplete={"off"}>
+                  <div className="email mb-3">
+                    <input
+                      type="email"
+                      className="form-control"
+                      id="email"
+                      name="email"
+                      value={email}
+                      placeholder="Email"
+                      onChange={(e) => setEmail(e.target.value)}
+                    />
                   </div>
-                </div>
 
-                <div className="text-center">
-                  <button
-                    type="submit"
-                    className="btn btn-primary w-100 theme-btn mx-auto"
-                    onClick={forgotPassword}
-                  >
-                    Forgot Password
-                  </button>
-                </div>
-              </form>
-              <ToastContainer />
+                  <div className="text-center">
+                    <button
+                      type="submit"
+                      className="btn btn-primary w-100 theme-btn mx-auto"
+                      onClick={forgotPassword}
+                    >
+                      Forgot Password
+                    </button>
+                  </div>
+                </form>
+                <ToastContainer />
 
-              <hr />
-              <div className="auth-option text-center pt-2">
-                <Link className="text-link" to="/login">
-                  Back to Login
-                </Link>
+                <hr />
+                <div className="auth-option text-center pt-2">
+                  <Link className="text-link" to="/login">
+                    Back to Login
+                  </Link>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </Col>
-    </Row>
+        </Col>
+      </Row>
     </>
   );
 };

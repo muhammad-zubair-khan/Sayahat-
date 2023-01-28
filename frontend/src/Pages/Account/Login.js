@@ -1,21 +1,21 @@
 import React from "react";
 import { useState } from "react";
 import { Link, Redirect } from "react-router-dom";
-import Form from "./utilities/Forms";
 import "./style.css";
 import logo from "../../Assets/logo/logo.png";
 import { Row, Col } from "react-bootstrap";
 import { login } from "../../Redux/Actions/authActions";
 import { useDispatch, useSelector } from "react-redux";
-import "react-toastify/dist/ReactToastify.css";
 import MetaData from "../../Components/MetaData/MetaData";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 const Login = () => {
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [remember, setRemember] = useState(false);
-  const [validate, setValidate] = useState({});
   const [showPassword, setShowPassword] = useState(false);
 
   const togglePassword = (e) => {
@@ -27,6 +27,11 @@ const Login = () => {
   };
   const signuInUser = (e) => {
     e.preventDefault();
+    if(!email || !password){
+      return toast.error("Please enter your email and password",{
+        position: toast.POSITION.BOTTOM_CENTER,
+      })
+    }
 
     const user = {
       email,
@@ -34,6 +39,9 @@ const Login = () => {
     };
 
     dispatch(login(user));
+    // toast.success("Successfully login",{
+    //   position: toast.POSITION.BOTTOM_CENTER,
+    // })
   };
 
   if (auth.authenticate) {
@@ -75,40 +83,20 @@ const Login = () => {
                   <div className="email mb-3">
                     <input
                       type="email"
-                      className={`form-control ${
-                        validate.validate && validate.validate.email
-                          ? "is-invalid "
-                          : ""
-                      }`}
+                      className="form-control"
                       id="email"
                       name="email"
                       value={email}
                       placeholder="Email"
                       onChange={(e) => setEmail(e.target.value)}
                     />
-
-                    <div
-                      className={`invalid-feedback text-start ${
-                        validate.validate && validate.validate.email
-                          ? "d-block"
-                          : "d-none"
-                      }`}
-                    >
-                      {validate.validate && validate.validate.email
-                        ? validate.validate.email[0]
-                        : ""}
-                    </div>
                   </div>
 
                   <div className="password mb-3">
                     <div className="input-group">
                       <input
                         type={showPassword ? "text" : "password"}
-                        className={`form-control ${
-                          validate.validate && validate.validate.password
-                            ? "is-invalid "
-                            : ""
-                        }`}
+                        className="form-control"
                         name="password"
                         id="password"
                         value={password}
@@ -127,18 +115,6 @@ const Login = () => {
                           }
                         ></i>{" "}
                       </button>
-
-                      <div
-                        className={`invalid-feedback text-start ${
-                          validate.validate && validate.validate.password
-                            ? "d-block"
-                            : "d-none"
-                        }`}
-                      >
-                        {validate.validate && validate.validate.password
-                          ? validate.validate.password[0]
-                          : ""}
-                      </div>
                     </div>
 
                     <div className="extra mt-3 row justify-content-between">
@@ -189,6 +165,7 @@ const Login = () => {
             </div>
           </div>
         </Col>
+        <ToastContainer/>
       </Row>
     </>
   );

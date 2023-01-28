@@ -84,7 +84,9 @@ const Reserve = ({ setOpen, hotelId, totalPrice }) => {
             state: { destination, dates, options, selectedRooms, totalPrice, },
           });
         }, 3000);
-      } catch (err) {}
+      } catch (err) {
+        console.log(err)
+      }
     } else {
       toast.error(`Booking is Failed please login first`, {
         position: toast.POSITION.BOTTOM_CENTER,
