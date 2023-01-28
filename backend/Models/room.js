@@ -18,15 +18,13 @@ const RoomSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    roomNumbers: [{ number: Number, unavailableDates: { type: [Date] } }],
-    // room: { type: mongoose.Schema.Types.ObjectId, ref: 'Hotel', required: true },
+    roomNumbers: [{ number: String, unavailableDates: { type: [Date] } }],
     reviews: [
       {
           userId: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
           review: String
       }
   ],
-  // createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
   },
 
   { timestamps: true }

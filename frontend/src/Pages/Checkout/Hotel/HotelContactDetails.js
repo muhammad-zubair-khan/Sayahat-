@@ -43,11 +43,10 @@ const HotelContactDetails = () => {
   const [selectedRooms, setSelectedRooms] = useState(
     location.state.state.selectedRooms
   );
-
+  
   const [show, setShow] = useState(false);
   const { hotel } = useSelector((state) => state.hotelById);
   const { id } = useParams();
-
   const { data, loading, error } = useFetch(
     `http://localhost:5000/api/room/${id}`
   );

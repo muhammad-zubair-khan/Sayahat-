@@ -18,7 +18,6 @@ const Reserve = ({ setOpen, hotelId, totalPrice }) => {
   const [destination, setDestination] = useState(
     location.state.state.destination
   );
-  // const [options, setOptions] = useState(location.state.state.options);
   const [selectedRooms, setSelectedRooms] = useState([]);
   const { data, loading, error } = useFetch(
     `http://localhost:5000/api/room/${hotelId}`
@@ -46,9 +45,10 @@ const Reserve = ({ setOpen, hotelId, totalPrice }) => {
     const isFound = roomNumber.unavailableDates.some((date) =>
       alldates.includes(new Date(date).getTime())
     );
-
     return !isFound;
   };
+
+
 
   const handleSelect = (e) => {
     const checked = e.target.checked;
@@ -118,7 +118,7 @@ const Reserve = ({ setOpen, hotelId, totalPrice }) => {
               <div className="rSelectRooms">
                 {item.roomNumbers.map((roomNumber) => (
                   <div className="room">
-                    <label htmlFor="roomNumber">{roomNumber.number}</label>
+                    <label htmlFor="roomNumber" >{roomNumber.number}</label>
                     <input
                       type="checkbox"
                       value={roomNumber._id}
@@ -130,7 +130,6 @@ const Reserve = ({ setOpen, hotelId, totalPrice }) => {
               </div>
             </div>
           ))}
-
         <button onClick={handleClick} className="rButton">
           Reserve Now!
         </button>
