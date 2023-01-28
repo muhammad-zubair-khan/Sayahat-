@@ -16,9 +16,9 @@ const Forgot = () => {
 
   const forgotPassword = async (e) => {
     e.preventDefault();
-    // if (!email) {
-    //   toast.error("Enter your email");
-    // }
+    if (!email) {
+      toast.error("Enter your email");
+    }
     try {
       const data = { email };
       const response = await axios("/sendpasswordlink", {
@@ -80,6 +80,7 @@ const Forgot = () => {
                 <form className="auth-form" autoComplete={"off"}>
                   <div className="email mb-3">
                     <input
+                      required
                       type="email"
                       className="form-control"
                       id="email"

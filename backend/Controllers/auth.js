@@ -84,11 +84,11 @@ exports.signin = async(req, res) => {
 
 exports.sendPasswordLink = async (req, res) => {
   const { email } = req.body;
-  if (!email) {
-    res.status(401).json({
-      message: "Enter your Email",
-    });
-  }
+  // if (!email) {
+  //   res.status(401).json({
+  //     message: "Enter your Email",
+  //   });
+  // }
   try {
     const userFind = await User.findOne({ email: email })
       if(!userFind){
