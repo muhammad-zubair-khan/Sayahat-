@@ -39,14 +39,16 @@ const Login = () => {
     };
 
     dispatch(login(user));
+    window.history.back()
     // toast.success("Successfully login",{
     //   position: toast.POSITION.BOTTOM_CENTER,
     // })
   };
 
-  if (auth.authenticate) {
-    return <Redirect to={`/`} />;
-  }
+  // if (auth.authenticate) {
+  //   // return <Redirect to={`/`} />;
+  //   return window.history.back();
+  // }
 
   return (
     <>

@@ -17,9 +17,9 @@ const Hotel = () => {
       <div style={{ background: " rgb(0 0 0)", height: "75px" }}>
         <Navbar />
       </div>
-      <Container>
+      {/* <Container> */}
         <HotelList />
-      </Container>
+      {/* </Container> */}
       <Footer />
     </>
   );

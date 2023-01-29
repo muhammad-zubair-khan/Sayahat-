@@ -130,7 +130,8 @@ exports.getAllSearchedCars = async (req, res) => {
     Car.find({
       ...others,
       price: { $gte: min || 1, $lte: max || 99999 },
-      ratings,
+      ratings:{$gte:ratings},
+
     })
   ).filter();
   const cars = await apiFeature.query;

@@ -15,6 +15,8 @@ const ActivityDetails = () => {
   const [lastName, setLastName] = useState("");
   const [dates, setDates] = useState(location.state.state.dates);
   const [options, setOptions] = useState(location.state.state.options);
+  const [travelDate, setTravelDate] = useState(location.state.state.travelDate);
+  console.warn(travelDate)
   const [time, setTimes] = useState(location.state.state.time);
   const [active, setActive] = useState(1);
   const packages = useSelector((state) => state.addPackageReducer);
@@ -27,14 +29,15 @@ const ActivityDetails = () => {
     const data = {
       firstName,
       lastName,
-      dates,
+      // dates,
       time,
+      travelDate,
       options,
     };
 
     sessionStorage.setItem("activityInfo", JSON.stringify(data));
     history.push(`/package/${id}/process/payment`, {
-      state: { time },
+      state: { time,travelDate },
     });
   };
   if (Object.keys(packages.package).length === 0) {
@@ -60,7 +63,7 @@ const ActivityDetails = () => {
                   style={{ width: "30%" }}
                   alt=""
                 />
-                <span>{packages.package.name}</span>
+                <small>{packages.package.name}</small>
            
             </div>
             <div
@@ -150,11 +153,9 @@ const ActivityDetails = () => {
                 alt=""
               />
               <span>
-              <b>{packages.package.name}</b>
+              <small>{packages.package.name}</small>
             </span>
-            <span>
-              <b>PKR {packages.package.price}</b>
-            </span>
+           
           </div>
           <div
             style={{

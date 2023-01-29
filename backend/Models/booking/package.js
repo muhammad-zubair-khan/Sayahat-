@@ -27,10 +27,7 @@ const bookPkgSchema = new mongoose.Schema({
     },
   },
   activityInfo: {
-    dates: {
-      type:String,
-      required:true
-    },
+    // dates: [{type:String,required:true}],
     firstName: {
       type: String,
     },
@@ -53,6 +50,9 @@ const bookPkgSchema = new mongoose.Schema({
     time: {
       type: String,
     },
+    travelDate:{
+      type: String,
+    }
   },
   paymentInfo: {
     id: {

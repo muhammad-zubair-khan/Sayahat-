@@ -14,6 +14,7 @@ const ContactDetails = () => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
   const [dates, setDates] = useState(location.state.state.dates);
+  const [travelDate, setTravelDate] = useState(location.state.state.travelDate);
   const [options, setOptions] = useState(location.state.state.options);
   const [time, setTimes] = useState(location.state.state.time);
 
@@ -50,12 +51,10 @@ const ContactDetails = () => {
     myForm.set("phone", phone);
     dispatch(saveContactInfo({ firstName, lastName, email, phone }));
     history.push(`/package/${id}/activitydetails`, {
-      state: { time, dates, options },
+      state: { time, dates, options,travelDate },
     });
   };
-  // const setEmail = (e) => {
-  //   setValues((values) => ({ ...values, email: e.target.value }));
-  // };
+
   if (Object.keys(packages.package).length === 0) {
     return null;
   }
@@ -141,12 +140,6 @@ const ContactDetails = () => {
                 </span>
               ))}
 
-              {/* <input
-                type="submit"
-                value="Continue"
-                className="shippingBtn"
-                // disabled={state ? false : true}
-              /> */}
               {active === 0 && (
                 <Button
                   variant="contained"
@@ -181,9 +174,7 @@ const ContactDetails = () => {
                 <span>
               <b>{packages.package.name}</b>
             </span>
-            <span>
-              <b>PKR {packages.package.price}</b>
-            </span>
+        
           </div>
           <div
             style={{
@@ -202,7 +193,7 @@ const ContactDetails = () => {
             <span>Pick-up Time: {time}</span>
           </div>
           <div>
-            <span>Date: {dates}</span>
+            <span>Date: {travelDate}</span>
           </div>
           {/* <div
             style={{

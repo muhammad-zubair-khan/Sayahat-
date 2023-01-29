@@ -5,7 +5,7 @@ import Navbar from "../../Navbar/Navbar";
 import { getPackageDetailById } from "../../Redux/Actions/packageAction";
 import { useLocation, useParams, useHistory } from "react-router-dom";
 import { ImageUrl } from "../../Redux/UrlConfig";
-import { Button } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import Zoom from "react-medium-image-zoom";
 import "react-medium-image-zoom/dist/styles.css";
 import {
@@ -24,8 +24,10 @@ import {
 } from "@mui/material";
 import { Container, Rating } from "@mui/material";
 import MetaData from "../../Components/MetaData/MetaData";
+import CircularProgress from "@mui/material/CircularProgress";
 
 function SearchedPackageDetail({ match }) {
+  const [data2, setData] = useState(false);
   const [showResults, setShowResults] = useState(false);
   const history = useHistory();
   const [rating, setRating] = useState(0);
@@ -33,19 +35,31 @@ function SearchedPackageDetail({ match }) {
   const [show, setShow] = useState(false);
   const location = useLocation();
   const [time, setTime] = useState("");
-  const [buttonText, setButtonText] = useState("Check Availability");
-  const onClickHandle = () => {
-    setTimeout(() => setShowResults(true), 1000);
-    setButtonText("Update Dates");
-  };
+  const [error,setError] = useState("")
+  let [buttonText, setButtonText] = useState("Check Availability");
+
   const [packageDestination, setPackageDestination] = useState(
     location.state.state.packageDestination
   );
   const [openPackageDate, setOpenPackageDate] = useState(false);
   const [dates, setDates] = useState(location.state.state.dates);
+  const [travelDate, setTravelDate] = useState('');
   const [options, setOptions] = useState(location.state.state.options);
-
+console.warn(travelDate)
   const [openOptions, setOpenOptions] = useState(false);
+  const onClickHandle = () => {
+    // const handleBlur = () => {
+      if (travelDate) {
+        setTimeout(() =>  setData(true), 3000);
+        setTimeout(() => setShowResults(true), 500);
+        setButtonText("Update Dates");
+        setError(null)
+      } else {
+        // setError(null);
+        setError('Select date');
+      }
+    // };
+};
   const handleOption = (name, operation) => {
     setOptions((prev) => {
       return {
@@ -62,14 +76,14 @@ function SearchedPackageDetail({ match }) {
     if (auth.authenticate) {
       dispatch({
         type: "NEW_SEARCH",
-        payload: { packageDestination, dates, options },
+        payload: { packageDestination, dates, options,travelDate },
       });
       toast.success(`Confirming! please wait`, {
         position: toast.POSITION.BOTTOM_CENTER,
       });
       setTimeout(() => {
         history.push(`/package/${id}/contactdetails`, {
-          state: { packageDestination, dates, time, options },
+          state: { packageDestination, dates, time, options ,travelDate},
         });
       }, 3000);
     } else {
@@ -109,14 +123,19 @@ function SearchedPackageDetail({ match }) {
       }, 3000);
     }
   };
-
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     setData(true);
+  //   }, 3000);
+  // }, []);
   const Results = () => (
-    <div
+    data2 ? (<>
+     <div
       id="results"
       className="search-results"
       style={{
-        border: " 1px solid black",
-        backgroundColor: "#d9dae0",
+        // border: " 1px solid black",
+        backgroundColor: "rgb(245 245 245)",
         padding: "17px 31px",
         margin: "36px 1px",
       }}
@@ -152,11 +171,27 @@ function SearchedPackageDetail({ match }) {
         Book Now
       </Button>
     </div>
+    </>) : (<>
+      <Box
+                      sx={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        // height: "100vh",
+                        marginTop:"80px"
+                      }}
+                    >
+                      Loading... &nbsp;
+                      <CircularProgress />
+                    </Box>
+    </>)
+   
   );
   let { id } = useParams();
 
   const dispatch = useDispatch();
   const packages = useSelector((state) => state.addPackageReducer);
+  const { loading } = useSelector((state) => state.addPackageReducer);
   useEffect(() => {
     dispatch(getPackageDetailById(id));
   }, [dispatch, id]);
@@ -164,6 +199,8 @@ function SearchedPackageDetail({ match }) {
   const { success, error: reviewError } = useSelector(
     (state) => state.newPackageReview
   );
+
+  
   useEffect(() => {
     // if (error) {
     //   toast.error(error, {
@@ -190,435 +227,495 @@ function SearchedPackageDetail({ match }) {
   if (Object.keys(packages.package).length === 0) {
     return null;
   }
-
+  // Object.keys(packages.package).length === 0
   return (
     <>
-    <MetaData title={packages.package.name}/>
+      <MetaData title={packages.package.name} />
       <Navbar />
       <div className="bgPackage"></div>
-      {/* start of page */}
-      <div className="container aboutPackage">
-        {/* start of package images and price */}
-        <div className="row">
-          <h3 className="text-black">{packages.package.name}</h3>
-          <div class="col-2" style={{ height: "fit-content" }}>
-            {packages.package.packageImages &&
-              packages.package.packageImages.map((pic, index) => {
-                return (
-                  <img
-                    src={ImageUrl(pic.img)}
-                    alt="Girl in a jacket"
-                    className="p-1"
-                    width="80%"
-                    height="16%"
-                  />
-                );
-              })}
-          </div>
-          <div className="col-6">
-            <Zoom>
-              <img
-                src={ImageUrl(packages.package.packageImages[0].img)}
-                className=""
-                width="100%"
-                height=""
-                alt=""
-              />
-            </Zoom>
-          </div>
-
-          <div className="col-4 BgPackage p-3 h-100">
-            <h4 className="text-black">From PKR {packages.package.price}</h4>
-            <span style={{ color: "#1874A2" }}>Lowest Price Guarantee</span>
-            <hr />
-            <h4 className="text-black">Select Date and Travelers</h4>
-            <div className="p-4 lsItem">
-              <input
-                type="date"
-                value={dates}
-                onChange={(e) => setDates(e.target.value)}
-              />
-            </div>
-
-            <div
-              className=" col-xxs-12 col-xs-6 mt"
-              style={{ textAlign: "center" }}
+      {!loading ? (
+        <>
+          {Object.keys(packages.package).length === 0 ? (
+            <p
+              className="col-md-8"
+              style={{ textAlign: "center", marginTop: "100px" }}
             >
-              <section>
-                <span
-                  style={{
-                    color: "#0000000",
-                    fontSize: "14px",
-                    cursor: "pointer",
-                  }}
-                  onClick={() => setOpenOptions(!openOptions)}
-                >
-                  <input
-                    type="text"
-                    className="form-control mt-2"
-                    disabled
-                    style={{ cursor: "pointer" }}
-                    placeholder={`${options.adult} Adult - ${options.children} Children`}
-                  />
-                </span>
-                {openOptions && (
-                  <div
-                    className="options"
-                    style={{
-                      position: "absolute",
-                      // top: "275px",
-                      top: "316px",
-                      width: "31%",
-                      zIndex: "1000000",
-                      backgroundColor: "white",
-                      boxShadow: "0px 0px 10px #848484",
-                      padding: "7px 10px",
-                    }}
-                  >
-                    <span>You can select up to 15 travelers in total.</span>
-                    <div className="optionItems">
-                      <span
-                        style={{
-                          color: "black",
-                          fontSize: "14px",
-                        }}
-                      >
-                        Adult
-                      </span>
-                      <div className="optionButton">
-                        <button
-                          className="optionbtn"
-                          disabled={options.adult <= 1}
-                          onClick={() => handleOption("adult", "decreament")}
-                        >
-                          -
-                        </button>
-                        <span
-                          style={{
-                            color: "black",
-                            fontSize: "14px",
-                          }}
-                        >
-                          {options.adult}
-                        </span>
-                        <button
-                          className="optionbtn"
-                          style={{ marginRight: "1px" }}
-                          onClick={() => handleOption("adult", "increament")}
-                          disabled={options.adult >= 15}
-                        >
-                          +
-                        </button>
-                      </div>
+              No data found.
+            </p>
+          ) : (
+            <>
+              <div className="container aboutPackage">
+                <div className="row">
+                  <h3 className="text-black">{packages.package.name}</h3>
+                  <div class="col-2" style={{ height: "fit-content" }}>
+                    {packages.package.packageImages &&
+                      packages.package.packageImages.map((pic, index) => {
+                        return (
+                          <img
+                            src={ImageUrl(pic.img)}
+                            alt="Girl in a jacket"
+                            className="p-1"
+                            width="80%"
+                            height="16%"
+                          />
+                        );
+                      })}
+                  </div>
+                  <div className="col-6">
+                    <Zoom>
+                      <img
+                        src={ImageUrl(packages.package.packageImages[0].img)}
+                        className=""
+                        width="100%"
+                        height=""
+                        alt=""
+                      />
+                    </Zoom>
+                  </div>
+
+                  <div className="col-4 BgPackage p-3 h-100">
+                    <h4 className="text-black">
+                      From PKR {packages.package.price}
+                    </h4>
+                    <span style={{ color: "#1874A2" }}>
+                      Lowest Price Guarantee
+                    </span>
+                    <hr />
+                    <h4 className="text-black">Select Date and Travelers</h4>
+                    <div className="p-4 lsItem">
+                      <input
+                      required
+                        type="date"
+                        value={travelDate}
+                        onChange={(e) => setTravelDate(e.target.value)}
+                        // onBlur={handleBlur}
+                      />
                     </div>
-                    <div className="optionItems">
-                      <span
-                        style={{
-                          color: "black",
-                          fontSize: "14px",
-                        }}
-                      >
-                        Children
-                      </span>
-                      <div className="optionButton">
-                        <button
-                          className="optionbtn"
-                          disabled={options.children <= 0}
-                          onClick={() => handleOption("children", "decreament")}
-                        >
-                          -
-                        </button>
+                    {error && <div style={{ color: 'red' }}>{error}</div>}
+                    <div
+                      className=" col-xxs-12 col-xs-6 mt"
+                      style={{ textAlign: "center" }}
+                    >
+                      <section>
                         <span
                           style={{
-                            color: "black",
+                            color: "#0000000",
                             fontSize: "14px",
+                            cursor: "pointer",
                           }}
+                          onClick={() => setOpenOptions(!openOptions)}
                         >
-                          {options.children}
+                          <input
+                            type="text"
+                            className="form-control mt-2"
+                            disabled
+                            style={{ cursor: "pointer" }}
+                            placeholder={`${options.adult} Adult - ${options.children} Children`}
+                          />
                         </span>
-                        <button
-                          className="optionbtn"
-                          onClick={() => handleOption("children", "increament")}
-                          disabled={
-                            options.children >= 15 && options.adult >= 15
-                          }
-                        >
-                          +
-                        </button>
-                      </div>
+                        {openOptions && (
+                          <div
+                            className="options"
+                            style={{
+                              position: "absolute",
+                              // top: "275px",
+                              top: "316px",
+                              width: "31%",
+                              zIndex: "1000000",
+                              backgroundColor: "white",
+                              boxShadow: "0px 0px 10px #848484",
+                              padding: "7px 10px",
+                            }}
+                          >
+                            <span>
+                              You can select up to 15 travelers in total.
+                            </span>
+                            <div className="optionItems">
+                              <span
+                                style={{
+                                  color: "black",
+                                  fontSize: "14px",
+                                }}
+                              >
+                                Adult
+                              </span>
+                              <div className="optionButton">
+                                <button
+                                  className="optionbtn"
+                                  disabled={options.adult <= 1}
+                                  onClick={() =>
+                                    handleOption("adult", "decreament")
+                                  }
+                                >
+                                  -
+                                </button>
+                                <span
+                                  style={{
+                                    color: "black",
+                                    fontSize: "14px",
+                                  }}
+                                >
+                                  {options.adult}
+                                </span>
+                                <button
+                                  className="optionbtn"
+                                  style={{ marginRight: "1px" }}
+                                  onClick={() =>
+                                    handleOption("adult", "increament")
+                                  }
+                                  disabled={options.adult >= 15}
+                                >
+                                  +
+                                </button>
+                              </div>
+                            </div>
+                            <div className="optionItems">
+                              <span
+                                style={{
+                                  color: "black",
+                                  fontSize: "14px",
+                                }}
+                              >
+                                Children
+                              </span>
+                              <div className="optionButton">
+                                <button
+                                  className="optionbtn"
+                                  disabled={options.children <= 0}
+                                  onClick={() =>
+                                    handleOption("children", "decreament")
+                                  }
+                                >
+                                  -
+                                </button>
+                                <span
+                                  style={{
+                                    color: "black",
+                                    fontSize: "14px",
+                                  }}
+                                >
+                                  {options.children}
+                                </span>
+                                <button
+                                  className="optionbtn"
+                                  onClick={() =>
+                                    handleOption("children", "increament")
+                                  }
+                                  disabled={
+                                    options.children >= 15 &&
+                                    options.adult >= 15
+                                  }
+                                >
+                                  +
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        )}
+                      </section>
+                    </div>
+
+                    <button
+                      type="button"
+                      className="btn btn-danger w-100 mt-4 p-2 mb-4"
+                      onClick={onClickHandle}
+                      id="availabilitybtn"
+                      // disabled={buttonText="Update Dates"}
+                    >
+                      {buttonText}
+                    </button>
+
+                    <small className="fw-bold">Reserve Now & Pay Later</small>
+                    <br />
+                    <small>Secure your spot while staying flexible</small>
+                    <br />
+                    <small className="fw-bold">
+                      {packages.package.refundable}
+                    </small>
+                    <br />
+                    {/* <small>Up to 24 hours in advance.Learn more</small> */}
+                    <button
+                      onClick={submitPackageReviewToggle}
+                      className="submitReview"
+                    >
+                      Submit Review
+                    </button>
+                  </div>
+                </div>
+                {/* end of package images and price */}
+
+                {/* return !spinner && <div>Your content</div>; */}
+                <>
+                  {showResults &&
+                    <Results />
+                  }
+                </>
+                <div className="row">
+                  {/* start of detials about package */}
+                  <h3 className="text-black fw-bold">Overview</h3>
+                  <p className="text-black">{packages.package.description}</p>
+
+                  <hr />
+                  <h3 className="text-black fw-bold my-4">What's Included</h3>
+                  <div className="row">
+                    <div className="col-4">
+                      <span>
+                        <i class="fa-solid fa-check"></i>
+                        {packages.package.duration}
+                      </span>
+                    </div>
+                    <div className="col-4">
+                      <span>
+                        <i class="fa-solid fa-check"></i> 1 Route - Las Vegas
+                        Viator Late Night Tour
+                      </span>
+                    </div>
+                    <div className="col-4">
+                      <span>
+                        <i class="fa-solid fa-xmark"></i> Hotel pickup and
+                        drop-off
+                      </span>
                     </div>
                   </div>
-                )}
-              </section>
-            </div>
+                  <span className="mt-3">
+                    <i class="fa-solid fa-check"></i> Live English guide
+                  </span>
+                  <span className="mt-3">
+                    <i class="fa-solid fa-check"></i> Night Tour of Las Vegas on
+                    double-decker bus
+                  </span>
+                  <span className="mt-3 mb-4">
+                    <i class="fa-solid fa-check"></i> 1 Stop for a Photo
+                    opportunity at the Las Vegas Sign
+                  </span>
+                  <hr />
 
-            <button
-              type="button"
-              className="btn btn-danger w-100 mt-4 p-2 mb-4"
-              onClick={onClickHandle}
-              id="availabilitybtn"
-            >
-              {buttonText}
-            </button>
+                  <h3 className="text-black fw-bold my-4">
+                    Meeting And Pickup
+                  </h3>
+                  <h6 className="text-black fw-bold mb-3">Meeting point</h6>
+                  <span>
+                    3973 Linq Ln3973 Linq Ln, Las Vegas, NV 89109, USA
+                  </span>
 
-            <small className="fw-bold">Reserve Now & Pay Later</small>
-            <br />
-            <small>Secure your spot while staying flexible</small>
-            <br />
-            <small className="fw-bold">{packages.package.refundable}</small>
-            <br />
-            {/* <small>Up to 24 hours in advance.Learn more</small> */}
-            <button
-              onClick={submitPackageReviewToggle}
-              className="submitReview"
-            >
-              Submit Review
-            </button>
-          </div>
-        </div>
-        {/* end of package images and price */}
+                  <h6 className="text-black fw-bold my-3">Start time</h6>
+                  <span>10:15 PM</span>
 
-        {/* return !spinner && <div>Your content</div>; */}
-        <>
-          {!showResults ? (
-            <div style={{ display: "none" }}>loading</div>
-          ) : (
-            <Results />
+                  <h6 className="text-black fw-bold my-3">End point</h6>
+                  <span>This activity ends back at the meeting point.</span>
+
+                  <hr />
+
+                  <h3 className="text-black fw-bold my-4">What To Expect</h3>
+                  <ul className="ms-5">
+                    <li className="text-black">
+                      <span className="fw-bold">High Roller</span>
+                      <p className="text-muted my-2">
+                        This 550-foot-tall Ferris wheel with observation cabins
+                        offers city views and holds up to 40 people.
+                      </p>
+                    </li>
+                    <li className="text-black">
+                      <span className="fw-bold">Fountains of Bellagio</span>
+                      <p className="text-muted my-2">
+                        Soaring, iconic fountains featuring dramatic aquatic
+                        shows choreographed with music and lights.
+                      </p>
+                    </li>
+                    <li className="text-black">
+                      <span className="fw-bold">
+                        Welcome to Fabulous Las Vegas Sign
+                      </span>
+                      <p className="text-muted my-2">
+                        Iconic 1950s neon sign and popular photo op marking the
+                        southern end of the Las Vegas Strip. Where we will get
+                        off the bus for up to 30 minutes for a photo
+                        opportunity.
+                      </p>
+                    </li>
+                    <li className="text-black">
+                      <span className="fw-bold">
+                        Madame Tussauds - Las Vegas
+                      </span>
+                      <p className="text-muted my-2">
+                        Museum chain for life-size wax replicas of famous
+                        Americans and historic icons in themed galleries.
+                      </p>
+                    </li>
+                    <li className="text-black">
+                      <span className="fw-bold">Eiffel Tower Viewing Deck</span>
+                      <p className="text-muted my-2">
+                        460-foot-high observation deck atop Paris Las Vegas'
+                        half-scale replica of the Eiffel Tower.
+                      </p>
+                    </li>
+                    <li className="text-black">
+                      <span className="fw-bold">MGM Grand Arena</span>
+                      <p className="text-muted my-2">Hotel</p>
+                    </li>
+                  </ul>
+
+                  <hr />
+
+                  <h3 className="text-black fw-bold my-4">Additional Info</h3>
+                  <div className="row">
+                    <div className="col-6">
+                      <ul className="text-black ms-5">
+                        <li>
+                          Confirmation will be received at time of booking
+                        </li>
+                        <li className="mt-3">Service animals allowed</li>
+                        <li className="mt-3">Stroller accessible</li>
+                        <li className="mt-3">Wheelchair accessible</li>
+                      </ul>
+                    </div>
+                    <div className="col-6">
+                      <ul className="text-black ms-5">
+                        <li>
+                          Please advise at time of booking if wheelchair
+                          assistance is required
+                        </li>
+                        <li className="mt-3">Most travelers can participate</li>
+                        <li className="mt-3">
+                          A guide shares stories about the city as you take in
+                          the bright lights
+                        </li>
+                        <li className="mt-3">
+                          Night Tour is not a hop-on hop-off tour
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+
+                  <hr />
+
+                  <h3 className="text-black fw-bold my-4">
+                    Cancellation Policy
+                  </h3>
+                  <p className="text-black">
+                    You can cancel up to 24 hours in advance of the experience
+                    for a full refund.
+                  </p>
+                  <div className="row">
+                    <div className="col-6">
+                      <ul className="text-black ms-5">
+                        <li>
+                          For a full refund, you must cancel at least 24 hours
+                          before the experiences start time.
+                        </li>
+                        <li className="mt-3">
+                          If you cancel less than 24 hours before the
+                          experiences start time, the amount you paid will not
+                          be refunded.
+                        </li>
+                        <li className="mt-3">
+                          Any changes made less than 24 hours before the
+                          experiences start time will not be accepted.
+                        </li>
+                      </ul>
+                    </div>
+                    <div className="col-6">
+                      <ul className="text-black ms-5">
+                        <li>
+                          Cut-off times are based on the experiences local time.
+                        </li>
+                        <li className="mt-3">
+                          This experience requires good weather. If its canceled
+                          due to poor weather, youll be offered a different date
+                          or a full refund.
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+
+                  <hr />
+                  {/* end of detials about package */}
+
+                  {/* start of package reviews */}
+                  {/* ----------------------------Review-Section-Start----------------------- */}
+                  <h3 className="reviewsHeading">REVIEWS</h3>
+                  <Dialog
+                    aria-labelledby="simple-dialog-title"
+                    open={openPackageReview}
+                    onClose={submitPackageReviewToggle}
+                  >
+                    <DialogTitle>Submit Review</DialogTitle>
+                    <DialogContent
+                      className="submitDialog"
+                      style={{ display: "flex", flexDirection: "column" }}
+                    >
+                      <Rating
+                        onChange={(e) => setRating(e.target.value)}
+                        value={rating}
+                        size="large"
+                      />
+
+                      <textarea
+                        required
+                        className="submitDialogTextArea"
+                        cols="40"
+                        rows="5"
+                        value={comment}
+                        onChange={(e) => setComment(e.target.value)}
+                      ></textarea>
+                    </DialogContent>
+                    <DialogActions>
+                      <Button
+                        onClick={submitPackageReviewToggle}
+                        variant="outlined"
+                        color="secondary"
+                      >
+                        Cancel
+                      </Button>
+                      <Button
+                        onClick={packageReviewSubmitHandler}
+                        variant="outlined"
+                        color="primary"
+                      >
+                        Submit
+                      </Button>
+                    </DialogActions>
+                  </Dialog>
+
+                  <ToastContainer />
+
+                  <Container>
+                    {packages.package.reviews && packages.package.reviews[0] ? (
+                      <div className="reviews">
+                        {packages.package.reviews &&
+                          packages.package.reviews.map((review) => (
+                            <ReviewCard key={review._id} review={review} />
+                            // {/* <img src={profilePng} alt="User" /> */}
+                          ))}
+                      </div>
+                    ) : (
+                      <p className="noReviews">No Reviews Yet</p>
+                    )}
+                  </Container>
+
+                  {/* ----------------------------Review-Section-End----------------------- */}
+
+                  {/* end of package reviews */}
+                </div>
+              </div>
+            </>
           )}
         </>
-        <div className="row">
-          {/* start of detials about package */}
-          <h3 className="text-black fw-bold">Overview</h3>
-          <p className="text-black">{packages.package.description}</p>
-
-          <hr />
-          <h3 className="text-black fw-bold my-4">What's Included</h3>
-          <div className="row">
-            <div className="col-4">
-              <span>
-                <i class="fa-solid fa-check"></i>
-                {packages.package.duration}
-              </span>
-            </div>
-            <div className="col-4">
-              <span>
-                <i class="fa-solid fa-check"></i> 1 Route - Las Vegas Viator
-                Late Night Tour
-              </span>
-            </div>
-            <div className="col-4">
-              <span>
-                <i class="fa-solid fa-xmark"></i> Hotel pickup and drop-off
-              </span>
-            </div>
-          </div>
-          <span className="mt-3">
-            <i class="fa-solid fa-check"></i> Live English guide
-          </span>
-          <span className="mt-3">
-            <i class="fa-solid fa-check"></i> Night Tour of Las Vegas on
-            double-decker bus
-          </span>
-          <span className="mt-3 mb-4">
-            <i class="fa-solid fa-check"></i> 1 Stop for a Photo opportunity at
-            the Las Vegas Sign
-          </span>
-          <hr />
-
-          <h3 className="text-black fw-bold my-4">Meeting And Pickup</h3>
-          <h6 className="text-black fw-bold mb-3">Meeting point</h6>
-          <span>3973 Linq Ln3973 Linq Ln, Las Vegas, NV 89109, USA</span>
-
-          <h6 className="text-black fw-bold my-3">Start time</h6>
-          <span>10:15 PM</span>
-
-          <h6 className="text-black fw-bold my-3">End point</h6>
-          <span>This activity ends back at the meeting point.</span>
-
-          <hr />
-
-          <h3 className="text-black fw-bold my-4">What To Expect</h3>
-          <ul className="ms-5">
-            <li className="text-black">
-              <span className="fw-bold">High Roller</span>
-              <p className="text-muted my-2">
-                This 550-foot-tall Ferris wheel with observation cabins offers
-                city views and holds up to 40 people.
-              </p>
-            </li>
-            <li className="text-black">
-              <span className="fw-bold">Fountains of Bellagio</span>
-              <p className="text-muted my-2">
-                Soaring, iconic fountains featuring dramatic aquatic shows
-                choreographed with music and lights.
-              </p>
-            </li>
-            <li className="text-black">
-              <span className="fw-bold">
-                Welcome to Fabulous Las Vegas Sign
-              </span>
-              <p className="text-muted my-2">
-                Iconic 1950s neon sign and popular photo op marking the southern
-                end of the Las Vegas Strip. Where we will get off the bus for up
-                to 30 minutes for a photo opportunity.
-              </p>
-            </li>
-            <li className="text-black">
-              <span className="fw-bold">Madame Tussauds - Las Vegas</span>
-              <p className="text-muted my-2">
-                Museum chain for life-size wax replicas of famous Americans and
-                historic icons in themed galleries.
-              </p>
-            </li>
-            <li className="text-black">
-              <span className="fw-bold">Eiffel Tower Viewing Deck</span>
-              <p className="text-muted my-2">
-                460-foot-high observation deck atop Paris Las Vegas' half-scale
-                replica of the Eiffel Tower.
-              </p>
-            </li>
-            <li className="text-black">
-              <span className="fw-bold">MGM Grand Arena</span>
-              <p className="text-muted my-2">Hotel</p>
-            </li>
-          </ul>
-
-          <hr />
-
-          <h3 className="text-black fw-bold my-4">Additional Info</h3>
-          <div className="row">
-            <div className="col-6">
-              <ul className="text-black ms-5">
-                <li>Confirmation will be received at time of booking</li>
-                <li className="mt-3">Service animals allowed</li>
-                <li className="mt-3">Stroller accessible</li>
-                <li className="mt-3">Wheelchair accessible</li>
-              </ul>
-            </div>
-            <div className="col-6">
-              <ul className="text-black ms-5">
-                <li>
-                  Please advise at time of booking if wheelchair assistance is
-                  required
-                </li>
-                <li className="mt-3">Most travelers can participate</li>
-                <li className="mt-3">
-                  A guide shares stories about the city as you take in the
-                  bright lights
-                </li>
-                <li className="mt-3">
-                  Night Tour is not a hop-on hop-off tour
-                </li>
-              </ul>
-            </div>
-          </div>
-
-          <hr />
-
-          <h3 className="text-black fw-bold my-4">Cancellation Policy</h3>
-          <p className="text-black">
-            You can cancel up to 24 hours in advance of the experience for a
-            full refund.
-          </p>
-          <div className="row">
-            <div className="col-6">
-              <ul className="text-black ms-5">
-                <li>
-                  For a full refund, you must cancel at least 24 hours before
-                  the experiences start time.
-                </li>
-                <li className="mt-3">
-                  If you cancel less than 24 hours before the experiences start
-                  time, the amount you paid will not be refunded.
-                </li>
-                <li className="mt-3">
-                  Any changes made less than 24 hours before the experiences
-                  start time will not be accepted.
-                </li>
-              </ul>
-            </div>
-            <div className="col-6">
-              <ul className="text-black ms-5">
-                <li>Cut-off times are based on the experiences local time.</li>
-                <li className="mt-3">
-                  This experience requires good weather. If its canceled due to
-                  poor weather, youll be offered a different date or a full
-                  refund.
-                </li>
-              </ul>
-            </div>
-          </div>
-
-          <hr />
-          {/* end of detials about package */}
-
-          {/* start of package reviews */}
-          {/* ----------------------------Review-Section-Start----------------------- */}
-          <h3 className="reviewsHeading">REVIEWS</h3>
-          <Dialog
-            aria-labelledby="simple-dialog-title"
-            open={openPackageReview}
-            onClose={submitPackageReviewToggle}
+      ) : (
+        <>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              height: "100vh",
+            }}
           >
-            <DialogTitle>Submit Review</DialogTitle>
-            <DialogContent
-              className="submitDialog"
-              style={{ display: "flex", flexDirection: "column" }}
-            >
-              <Rating
-                onChange={(e) => setRating(e.target.value)}
-                value={rating}
-                size="large"
-              />
-
-              <textarea
-                required
-                className="submitDialogTextArea"
-                cols="40"
-                rows="5"
-                value={comment}
-                onChange={(e) => setComment(e.target.value)}
-              ></textarea>
-            </DialogContent>
-            <DialogActions>
-              <Button
-                onClick={submitPackageReviewToggle}
-                variant="outlined"
-                color="secondary"
-              >
-                Cancel
-              </Button>
-              <Button
-                onClick={packageReviewSubmitHandler}
-                variant="outlined"
-                color="primary"
-              >
-                Submit
-              </Button>
-            </DialogActions>
-          </Dialog>
-
-          <ToastContainer />
-
-          <Container>
-            {packages.package.reviews && packages.package.reviews[0] ? (
-              <div className="reviews">
-                {packages.package.reviews &&
-                  packages.package.reviews.map((review) => (
-                    <ReviewCard key={review._id} review={review} />
-                    // {/* <img src={profilePng} alt="User" /> */}
-                  ))}
-              </div>
-            ) : (
-              <p className="noReviews">No Reviews Yet</p>
-            )}
-          </Container>
-
-          {/* ----------------------------Review-Section-End----------------------- */}
-
-          {/* end of package reviews */}
-        </div>
-      </div>
+            Loading... &nbsp;
+            <CircularProgress />
+          </Box>
+        </>
+      )}
 
       {/* end of page */}
 

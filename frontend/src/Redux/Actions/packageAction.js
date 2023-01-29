@@ -125,12 +125,6 @@ export const getAllPackages =
   (type, min, max, packageDestination, ratings) => async (dispatch) => {
     try {
       dispatch({ type: GET_ALL_PACKAGES_REQUEST });
-      // if(ratings==0){
-      //   var link = `/all-packages?city=${packageDestination}&min=${min || 0}&max=${max || 9999}&ratings=${ratings===0}`;
-      // }
-      // else{
-      //   link = `/all-packages?city=${packageDestination}&min=${min || 0}&max=${max || 9999}&ratings=${ratings}`;
-      // }
       let link = `/all-packages?city=${packageDestination}&min=${
         min || 0
       }&max=${max || 9999}&ratings=${ratings}`;
@@ -138,13 +132,9 @@ export const getAllPackages =
       if (type) {
         link = `/all-packages?city=${packageDestination}&type=${type}&min=${
           min || 0
-        }&max=${max || 9999}&ratings=${ratings || 0}`;
+        }&max=${max || 9999}&ratings=${ratings}`;
       }
-      // if (type) {
-      //   link = `/all-packages?type=${type}&min=${min || 0}&max=${max || 9999}&ratings=${ratings || 0}`;
-      // }
       const { data } = await axios.get(link);
-
       dispatch({
         type: GET_ALL_PACKAGES_SUCCESS,
         payload: data,

@@ -78,12 +78,12 @@ export const getAllCars =
       dispatch({ type: GET_ALL_CARS_REQUEST });
       let link = `/cars?city=${startDestination}&min=${min || 0}&max=${
         max || 99999
-      }&ratings=${ratings || 0}`;
+      }&ratings=${ratings}`;
 
       if (carType) {
         link = `/cars?city=${startDestination}&type=${carType}&min=${
           min || 0
-        }&max=${max || 99999}&ratings=${ratings || 0}`;
+        }&max=${max || 99999}&ratings=${ratings}`;
       }
       // if(gear) {
       //   link = `/cars?city=${startDestination}&gear=${gear}&min=${

@@ -82,7 +82,7 @@ exports.getAllPackages = async (req, res) => {
     Package.find({
       ...others,
       price: { $gte: min | 1, $lte: max || 99999 },
-      ratings,
+      ratings:{$gte:ratings},
     }).limit(req.query.limit)
   ).filter();
   const packages = await apiFeature.query;

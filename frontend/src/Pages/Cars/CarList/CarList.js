@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./CarList.css";
 import { useLocation } from "react-router-dom";
-import { Button, Grid, Slider, Typography } from "@mui/material";
+import { Button, Container, Grid, Slider, Typography } from "@mui/material";
 import { format } from "date-fns";
 import { DateRange } from "react-date-range";
 import CarSearchItem from "../../../Components/CarSearchItem/CarSearchItem.js";
@@ -26,6 +26,7 @@ const CarList = () => {
   );
   const [carType, setCarType] = useState("");
   const [ratings, setRatings] = useState(0);
+  
   const { cars } = useSelector((state) => state.carsReducer);
   const [min, setMin] = useState(undefined);
   const [max, setMax] = useState(undefined);
@@ -39,10 +40,14 @@ const CarList = () => {
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const handleChange = (event) => {
+    setRatings(event.target.value);
+  };
   return (
     <>
+    {/* <Container fixed> */}
       <Grid container>
-        <Grid item xs={12} lg={3}>
+        <Grid item xs={12} lg={4}>
           <Button variant="primary" onClick={handleShow}>
             <i class="fa-solid fa-bars me-2 fs-3"></i>{" "}
             <span className="fs-3">Filters</span>
@@ -147,17 +152,10 @@ const CarList = () => {
                   <fieldset>
                     <Typography component="legend">Ratings Above</Typography>
                     <Slider
-                      value={ratings}
-                      onChange={(e, newRating) => {
-                        setRatings(newRating);
-                      }}
-                      aria-labelledby="continuous-slider"
-                      valueLabelDisplay="auto"
-                      default={cars.map((item) => {
-                        return item.ratings;
-                      })}
                       min={0}
                       max={5}
+                      value={ratings}
+                      onChange={handleChange}
                     />
                   </fieldset>
                 </div>
@@ -190,7 +188,7 @@ const CarList = () => {
         ) : ( */}
         <Grid
           container
-          lg={9}
+          lg={8}
           style={{
             height: "fit-content",
             // border: "1px solid #f1e1e1",
@@ -203,6 +201,8 @@ const CarList = () => {
         {/* )} */}
         {/* </div> */}
       </Grid>
+      {/* </Container> */}
+
     </>
   );
 };

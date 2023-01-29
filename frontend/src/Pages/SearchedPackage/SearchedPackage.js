@@ -7,10 +7,11 @@ import Footer from "../../Footer/Footer";
 import { useDispatch, useSelector } from "react-redux";
 import { ImageUrl } from "../../Redux/UrlConfig";
 import { format } from "date-fns";
-import { DateRange, DateRangePicker } from "react-date-range";
+import { DateRange } from "react-date-range";
 import { getAllPackages } from "../../Redux/Actions/packageAction";
-import { Slider, Typography } from "@mui/material";
+import { Box, Slider, Typography } from "@mui/material";
 import MetaData from "../../Components/MetaData/MetaData";
+import CircularProgress from "@mui/material/CircularProgress";
 
 const Package = (props) => {
   const dispatch = useDispatch();
@@ -23,16 +24,13 @@ const Package = (props) => {
   const [options, setOptions] = useState(location.state.state.options);
   const [openPackageDate, setOpenPackageDate] = useState(false);
   const [type, setType] = useState("");
-  const [price, setPrice] = useState([0, 95000]);
-  const { packages } = useSelector((state) => state.packagesReducer);
+  const { packages, loading } = useSelector((state) => state.packagesReducer);
   const [min, setMin] = useState(undefined);
   const [max, setMax] = useState(undefined);
   const [ratings, setRatings] = useState(0);
-
   useEffect(() => {
     dispatch(getAllPackages(type, min, max, packageDestination, ratings));
   }, [dispatch, type, min, max, packageDestination, ratings]);
-
 
   const types = [
     "Full Day Tour",
@@ -46,10 +44,12 @@ const Package = (props) => {
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-
+  const handleChange = (event) => {
+    setRatings(event.target.value);
+  };
   return (
     <>
-    <MetaData title={`Packages of ${packageDestination} from Sayahat`}/>
+      <MetaData title={`Packages of ${packageDestination} from Sayahat`} />
       <Navbar />
       <div className="bgCity"></div>
       <div className="container-fluid position-absolute top-100 introText">
@@ -57,7 +57,6 @@ const Package = (props) => {
         <div className="row ms-4 mt-5">
           <div className="col-10 ms-5">
             <h1 className="lhrH1">{packageDestination}</h1>
-            {/* <p className="lhrIntro mt-5">{product.description}</p> */}
           </div>
         </div>
         {/* End of introduction of city */}
@@ -159,7 +158,6 @@ const Package = (props) => {
         </div>
 
         {/* End of carousel cards */}
-
         <div className="container-fluid">
           <div className="row">
             {/* Start of filters */}
@@ -231,36 +229,29 @@ const Package = (props) => {
                           Ratings Above
                         </Typography>
                         <Slider
-                          value={ratings}
-                          onChange={(e, newRating) => {
-                            setRatings(newRating);
-                          }}
-                          aria-labelledby="continuous-slider"
-                          valueLabelDisplay="auto"
-                          default={packages.map((item) => {
-                            return item.ratings;
-                          })}
                           min={0}
                           max={5}
+                          value={ratings}
+                          onChange={handleChange}
                         />
                       </fieldset>
                     </div>
 
                     {/* <div className="p-4">
-                    <div className="lsOptionItem">
-                        <span
-                          className="lsOptionText"
-                          style={{ color: "black" }}
-                        >
-                          Max Rating
-                        </span>
-                        <input
-                          type="number"
-                          onChange={(e) => setRatings(e.target.value)}
-                          className="lsOptionInput"
-                        />
-                      </div>
-                    </div> */}
+                <div className="lsOptionItem">
+                    <span
+                      className="lsOptionText"
+                      style={{ color: "black" }}
+                    >
+                      Max Rating
+                    </span>
+                    <input
+                      type="number"
+                      onChange={(e) => setRatings(e.target.value)}
+                      className="lsOptionInput"
+                    />
+                  </div>
+                </div> */}
 
                     <div className="px-4">
                       <p className="fw-bold text-dark">Duration</p>
@@ -288,21 +279,21 @@ const Package = (props) => {
                           );
                         })}
                         {/* <li class="list-group-item border-0">
-                          <div class="form-check">
-                            <input
-                              class="form-check-input"
-                              type="checkbox"
-                              value=""
-                              id="flexCheckDefault"
-                            />
-                            <label
-                              class="form-check-label"
-                              for="flexCheckDefault"
-                            >
-                              Up to 1 hour
-                            </label>
-                          </div>
-                        </li> */}
+                      <div class="form-check">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          value=""
+                          id="flexCheckDefault"
+                        />
+                        <label
+                          class="form-check-label"
+                          for="flexCheckDefault"
+                        >
+                          Up to 1 hour
+                        </label>
+                      </div>
+                    </li> */}
                       </ul>
                     </div>
 
@@ -452,128 +443,148 @@ const Package = (props) => {
             {/* End of filters */}
 
             {/* Start of package cards */}
-            <div className="col-md-8">
-              {packages
-                ? packages.map((data, index) => {
-                    return (
-                      <div class="card mb-3 p-4" key={index}>
-                        <div class="row g-0">
-                          <div class="col-md-4 position-relative">
-                            <img
-                              src={ImageUrl(data.packageImages[0].img)}
-                              class="img-fluid rounded-start h-100"
-                              alt="pic"
-                            />
-                            <div className="heartIcon">
-                              <i class="fa-regular fa-heart fs-4 d-flex justify-content-center"></i>
-                            </div>
-                          </div>
-                          <div class="col-md-8">
-                            <div class="card-body">
-                              <div className="row">
-                                <div className="col-8">
-                                  <h5 class="card-title text-dark">
-                                    {data.name}
-                                  </h5>
-                                </div>
-                                <div className="col-4 text-end">
-                                  <h5
-                                    class="card-title text-dark"
-                                    style={{ fontWeight: "bolder" }}
-                                  >
-                                    PKR {data.price}
-                                  </h5>
+            {!loading ? (
+              <>
+                {packages.length === 0 ? (
+                  <p className="col-md-8" style={{textAlign:"center",marginTop:"100px"}}>No data found.</p>
+                ) : (
+                  <>
+                    <div className="col-md-8">
+                      {packages
+                        ? packages.map((data, index) => {
+                            return (
+                              <div class="card mb-3 p-4" key={index}>
+                                <div class="row g-0">
+                                  <div class="col-md-4 position-relative">
+                                    <img
+                                      src={ImageUrl(data.packageImages[0].img)}
+                                      class="img-fluid rounded-start h-100"
+                                      alt="pic"
+                                    />
+                                    <div className="heartIcon">
+                                      <i class="fa-regular fa-heart fs-4 d-flex justify-content-center"></i>
+                                    </div>
+                                  </div>
+                                  <div class="col-md-8">
+                                    <div class="card-body">
+                                      <div className="row">
+                                        <div className="col-8">
+                                          <h5 class="card-title text-dark">
+                                            {data.name}
+                                          </h5>
+                                        </div>
+                                        <div className="col-4 text-end">
+                                          <h5
+                                            class="card-title text-dark"
+                                            style={{ fontWeight: "bolder" }}
+                                          >
+                                            PKR {data.price}
+                                          </h5>
+                                        </div>
+                                      </div>
+                                      {data.reviews.length > 0 ? (
+                                        <p
+                                          className="text-data"
+                                          style={{
+                                            fontWeight: "bolder",
+                                            fontSize: "small",
+                                          }}
+                                        >
+                                          {data.ratings}/5 ({data.numOfReviews}){" "}
+                                          {data.numOfReviews >= 1
+                                            ? "Review"
+                                            : "Reviews"}
+                                        </p>
+                                      ) : (
+                                        <p style={{ fontSize: "small" }}>
+                                          No Reviews
+                                        </p>
+                                      )}
+                                      <small class="text-dark">
+                                        <div>
+                                          <i class="fa-regular fa-clock me-2"></i>
+                                          {data.duration}
+                                        </div>
+                                        <i class="fa-solid fa-check me-2"></i>
+                                        {data.refundable}
+                                      </small>
+                                      {/* <Link
+                          to={`/${data._id}`}
+                        > */}
+                                      <Button
+                                        onClick={function () {
+                                          dispatch({
+                                            type: "NEW_SEARCH",
+                                            payload: {
+                                              packageDestination,
+                                              dates,
+                                              options,
+                                            },
+                                          });
+                                          history.push(`/package/${data._id}`, {
+                                            state: {
+                                              packageDestination,
+                                              dates,
+                                              options,
+                                            },
+                                          });
+                                        }}
+                                        variant="contained"
+                                        style={{ float: "right" }}
+                                      >
+                                        Reserve
+                                      </Button>
+                                      {/* </Link> */}
+                                    </div>
+                                  </div>
                                 </div>
                               </div>
-                              {data.reviews.length > 0 ? (
-                                <p
-                                  className="text-data"
-                                  style={{
-                                    fontWeight: "bolder",
-                                    fontSize: "small",
-                                  }}
-                                >
-                                  {data.ratings}/5 ({data.numOfReviews}){" "}
-                                  {data.numOfReviews >= 1
-                                    ? "Review"
-                                    : "Reviews"}
-                                </p>
-                              ) : (
-                                <p style={{ fontSize: "small" }}>No Reviews</p>
-                              )}
-                              <small class="text-dark">
-                                <div>
-                                  <i class="fa-regular fa-clock me-2"></i>
-                                  {data.duration}
-                                </div>
-                                <i class="fa-solid fa-check me-2"></i>
-                                {data.refundable}
-                              </small>
-                              {/* <Link
-                              to={`/${data._id}`}
-                            > */}
-                              <Button
-                                onClick={function () {
-                                  dispatch({
-                                    type: "NEW_SEARCH",
-                                    payload: {
-                                      packageDestination,
-                                      dates,
-                                      options,
-                                    },
-                                  });
-                                  history.push(`/package/${data._id}`, {
-                                    state: {
-                                      packageDestination,
-                                      dates,
-                                      options,
-                                    },
-                                  });
-                                }}
-                                variant="contained"
-                                style={{ float: "right" }}
-                              >
-                                Reserve
-                              </Button>
-                              {/* </Link> */}
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    );
-                  })
-                : "No Data Found"}
+                            );
+                          })
+                        : "No Data Found"}
 
-              {/* <nav aria-label="Page navigation example">
-                <ul class="pagination d-flex justify-content-center">
-                  <li class="page-item">
-                    <a class="page-link" href="#">
-                      Previous
-                    </a>
-                  </li>
-                  <li class="page-item">
-                    <a class="page-link" href="#">
-                      1
-                    </a>
-                  </li>
-                  <li class="page-item">
-                    <a class="page-link" href="#">
-                      2
-                    </a>
-                  </li>
-                  <li class="page-item">
-                    <a class="page-link" href="#">
-                      3
-                    </a>
-                  </li>
-                  <li class="page-item">
-                    <a class="page-link" href="#">
-                      Next
-                    </a>
-                  </li>
-                </ul>
-              </nav> */}
-            </div>
+                      {/* <nav aria-label="Page navigation example">
+            <ul class="pagination d-flex justify-content-center">
+              <li class="page-item">
+                <a class="page-link" href="#">
+                  Previous
+                </a>
+              </li>
+              <li class="page-item">
+                <a class="page-link" href="#">
+                  1
+                </a>
+              </li>
+              <li class="page-item">
+                <a class="page-link" href="#">
+                  2
+                </a>
+              </li>
+              <li class="page-item">
+                <a class="page-link" href="#">
+                  3
+                </a>
+              </li>
+              <li class="page-item">
+                <a class="page-link" href="#">
+                  Next
+                </a>
+              </li>
+            </ul>
+          </nav> */}
+                    </div>
+                  </>
+                )}
+              </>
+            ) : (
+              <>
+                <Box className="col-md-8 mt-5" style={{ textAlign: "center" }}>
+                  Loading... &nbsp;
+                  <CircularProgress />
+                </Box>
+              </>
+            )}
+
             {/* End of package cards */}
           </div>
         </div>
@@ -584,3 +595,23 @@ const Package = (props) => {
 };
 
 export default Package;
+{
+  /* {!loading ? (
+        <>
+        </>
+      ) : (
+        <>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              height: "100vh",
+            }}
+          >
+            Loading... &nbsp;
+            <CircularProgress />
+          </Box>
+        </>
+      )} */
+}

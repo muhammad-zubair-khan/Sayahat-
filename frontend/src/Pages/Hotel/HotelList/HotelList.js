@@ -7,13 +7,11 @@ import Offcanvas from "react-bootstrap/Offcanvas";
 import { DateRange } from "react-date-range";
 import SearchItem from "../../../Components/searchItem/SearchItem";
 import "./HotelList.css";
-import {
-  getAllHotels,
-} from "../../../Redux/Actions/hotelAction";
+import { getAllHotels } from "../../../Redux/Actions/hotelAction";
 import { useDispatch, useSelector } from "react-redux";
 import { Col, Row } from "react-bootstrap";
 import { Slider, Typography } from "@mui/material";
-const HotelList = () => {
+const HotelList = ({ onFilterChange }) => {
   const dispatch = useDispatch();
   const location = useLocation();
   const [destination, setDestination] = useState(
@@ -26,6 +24,7 @@ const HotelList = () => {
   const [max, setMax] = useState(undefined);
   const [type, setType] = useState("");
   const [ratings, setRatings] = useState(0);
+  // const [minRating,setMinRating] = useState(0);
 
   useEffect(() => {
     dispatch(getAllHotels(type, min, max, ratings, destination));
@@ -36,9 +35,14 @@ const HotelList = () => {
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+  const handleChange = (event) => {
+    setRatings(event.target.value);
+    // onFilterChange(event.target.value);
+  };
   return (
     <>
-      <Row container className="mt-5">
+      <Row className="mt-5 container-fluid">
         <div className="col-md-4">
           <Button variant="primary" onClick={handleShow}>
             <i class="fa-solid fa-bars me-2 fs-3"></i>{" "}
@@ -142,21 +146,19 @@ const HotelList = () => {
                   <fieldset>
                     <Typography component="legend">Ratings Above</Typography>
                     <Slider
-                      value={ratings}
-                      onChange={(e, newRating) => {
-                        setRatings(newRating);
-                      }}
-                      aria-labelledby="continuous-slider"
-                      valueLabelDisplay="auto"
-                      default={hotels.map((item) => {
-                        return item.ratings;
-                      })}
                       min={0}
                       max={5}
+                      value={ratings}
+                      onChange={handleChange}
                     />
                   </fieldset>
                 </div>
-
+                {/* <div className="p-4">
+                  <fieldset>
+                    <Typography component="legend">Ratings Above</Typography>
+                    <input type="range"  min={0} max={5} value={ratings} onChange={handleChange} />
+                  </fieldset>
+                </div> */}
                 <div className="px-4">
                   <p className="fw-bold text-dark">Types</p>
                   <ul className="list-group">

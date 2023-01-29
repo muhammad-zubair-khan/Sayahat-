@@ -90,8 +90,8 @@ const Event = (props) => {
     bookedPackages.map((data) => ({
       title: data.name,
       allDay: true,
-      start: new Date(data.activityInfo.dates),
-      end: new Date(data.activityInfo.dates),
+      start: new Date(data.activityInfo.travelDate),
+      end: new Date(data.activityInfo.travelDate),
       // TimeRanges: {
       //     end: data.activityInfo.time,
       //     start: data.activityInfo.time

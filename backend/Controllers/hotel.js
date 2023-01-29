@@ -107,7 +107,7 @@ exports.getSearchedHotels = async (req, res) => {
     Hotel.find({
       ...others,
       cheapestPrice: { $gte: min | 1, $lte: max || 99999 },
-      ratings,
+      ratings:{$gte:ratings},
     }).limit(req.query.limit)
   );
   const hotels = await apiFeature.query;

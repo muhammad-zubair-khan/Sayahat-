@@ -80,11 +80,11 @@ export const getAllHotels =
       dispatch({ type: GET_ALL_HOTELS_REQUEST });
       let link = `/all-hotels?city=${destination}&min=${min || 0}&max=${
         max || 9999
-      }&ratings=${ratings || 0}`;
+      }&ratings=${ratings}`;
       if (type) {
         link = `/all-hotels?city=${destination}&type=${type}&min=${
           min || 0
-        }&max=${max || 9999}&ratings=${ratings || 0}`;
+        }&max=${max || 9999}&ratings=${ratings}`;
       }
       const { data } = await axios.get(link);
       dispatch({
