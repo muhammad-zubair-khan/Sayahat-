@@ -62,6 +62,10 @@ const packageSchema = new mongoose.Schema(
       ref: "Product",
       required: true,
     },
+    isFavorite: {
+      type: Boolean,
+      default: "false" 
+    },
     ratings: {
       type: String,
       // required:true,

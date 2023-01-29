@@ -15,6 +15,7 @@ const {
   getPackageReviews,
   deletePackageReview,
   getAllFeaturedPackages,
+  favorite,
 } = require("../Controllers/package");
 const {
   requireSignin,
@@ -74,7 +75,7 @@ router.get(
   adminMiddleware,
   getPackageDetailsById
 );
-
+router.route('/packages/:id/favorite').post(favorite)
 router
   .route("/create/review")
   .put(requireSignin, userMiddleware, createPackageReview);

@@ -21,6 +21,7 @@ exports.createPackage = catchAsyncErrors(async (req, res) => {
     carPickupDetails,
     product,
     featured,
+    isFavorite,
     createdBy,
   } = req.body;
 
@@ -46,6 +47,7 @@ exports.createPackage = catchAsyncErrors(async (req, res) => {
     carPickupDetails,
     product,
     featured,
+    isFavorite,
     createdBy: req.user._id,
   });
 
@@ -82,7 +84,7 @@ exports.getAllPackages = async (req, res) => {
     Package.find({
       ...others,
       price: { $gte: min | 1, $lte: max || 99999 },
-      ratings:{$gte:ratings},
+      ratings: { $gte: ratings },
     }).limit(req.query.limit)
   ).filter();
   const packages = await apiFeature.query;
@@ -94,12 +96,12 @@ exports.getAllPackages = async (req, res) => {
 
 //Get Featured Package
 exports.getAllFeaturedPackages = async (req, res) => {
-  const {...others } = req.query;
+  const { ...others } = req.query;
   const apiFeature = new ApiFeatures(
     Package.find({
       ...others,
     }).limit(req.query.limit)
-  )
+  );
   const featuredPackages = await apiFeature.query;
   res.status(200).json({
     success: true,
@@ -107,11 +109,10 @@ exports.getAllFeaturedPackages = async (req, res) => {
   });
 };
 
-
 //get package by slug
 exports.getPackageBySlug = (req, res) => {
   const { slug } = req.params;
-  const {min,max, ...others } = req.query;
+  const { min, max, ...others } = req.query;
   product
     .findOne({ slug: slug })
     .select("_id")
@@ -126,9 +127,11 @@ exports.getPackageBySlug = (req, res) => {
         });
       }
       if (product) {
-        Package.find({ product: product._id,
+        Package.find({
+          product: product._id,
           price: { $gte: min | 1, $lte: max || 99999 },
-          ...others }).exec((error, packages) => {
+          ...others,
+        }).exec((error, packages) => {
           if (error) {
             return res.status(400).json({
               error,
@@ -291,3 +294,16 @@ exports.deletePackageReview = catchAsyncErrors(async (req, res, next) => {
     success: true,
   });
 });
+
+exports.favorite = (req, res) => {
+  const id = req.params.id;
+  Package.findById(id)
+    .lean()
+    .exec((err, package) => {
+      if (err) return res.status(500).send(err);
+      if (!package)
+        return res.status(404).json({ message: "Package not found" });
+        package.isFavorite = !package.isFavorite;
+      res.status(200).json(package);
+    });
+};

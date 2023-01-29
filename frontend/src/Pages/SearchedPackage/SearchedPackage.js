@@ -12,6 +12,7 @@ import { getAllPackages } from "../../Redux/Actions/packageAction";
 import { Box, Slider, Typography } from "@mui/material";
 import MetaData from "../../Components/MetaData/MetaData";
 import CircularProgress from "@mui/material/CircularProgress";
+import axios from "axios";
 
 const Package = (props) => {
   const dispatch = useDispatch();
@@ -28,6 +29,8 @@ const Package = (props) => {
   const [min, setMin] = useState(undefined);
   const [max, setMax] = useState(undefined);
   const [ratings, setRatings] = useState(0);
+  const [hotels,setHotels] = (packages);
+  console.warn(hotels)
   useEffect(() => {
     dispatch(getAllPackages(type, min, max, packageDestination, ratings));
   }, [dispatch, type, min, max, packageDestination, ratings]);
@@ -46,6 +49,20 @@ const Package = (props) => {
   const handleShow = () => setShow(true);
   const handleChange = (event) => {
     setRatings(event.target.value);
+  };
+  const handleToggleFavorite = id => {
+    axios
+      .post(`http://localhost:5000/api/packages/${id}/favorite`)
+      .then(res => {
+        const updatedPackages = packages.map(pack => {
+          if (pack.id === id) {
+            return res.data.package;
+          }
+          return pack;
+        });
+        setHotels(updatedPackages);
+      })
+      .catch(err => console.log(err));
   };
   return (
     <>
@@ -454,19 +471,19 @@ const Package = (props) => {
                         ? packages.map((data, index) => {
                             return (
                               <div class="card mb-3 p-4" key={index}>
-                                <div class="row g-0">
-                                  <div class="col-md-4 position-relative">
+                                <div className="row g-0">
+                                  <div className="col-md-4 position-relative">
                                     <img
                                       src={ImageUrl(data.packageImages[0].img)}
                                       class="img-fluid rounded-start h-100"
                                       alt="pic"
                                     />
-                                    <div className="heartIcon">
-                                      <i class="fa-regular fa-heart fs-4 d-flex justify-content-center"></i>
+                                    <div className="heartIcon" style={{cursor:'pointer'}}>
+                                      <i className="fa-regular fa-heart fs-4 d-flex justify-content-center" onClick={() => handleToggleFavorite(data._id)}></i>
                                     </div>
                                   </div>
-                                  <div class="col-md-8">
-                                    <div class="card-body">
+                                  <div className="col-md-8">
+                                    <div className="card-body">
                                       <div className="row">
                                         <div className="col-8">
                                           <h5 class="card-title text-dark">

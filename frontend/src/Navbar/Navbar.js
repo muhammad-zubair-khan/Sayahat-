@@ -129,7 +129,7 @@ const Navbar = (props) => {
             }}
           >
             {user.firstName.substring(0, 1)}
-            {user.lastName.substring(0, 1)}
+            {/* {user.lastName.substring(0, 1)} */}
           </Link>
         }
         menus={[
