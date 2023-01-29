@@ -187,11 +187,10 @@ background-position-y:bottom;
   }
 }
 .fh5co-cover .desc {
-  top: 40%;
+  top: 20%;
   position: absolute;
   width: 100%;
-  /* margin-top: -80px; */
-  margin-top: -137px;
+  /* margin-top: -137px; */
   z-index: 2;
   color: #fff;
 }
