@@ -45,7 +45,6 @@ function SearchedPackageDetail({ match }) {
   const [dates, setDates] = useState(location.state.state.dates);
   const [travelDate, setTravelDate] = useState('');
   const [options, setOptions] = useState(location.state.state.options);
-console.warn(travelDate)
   const [openOptions, setOpenOptions] = useState(false);
   const onClickHandle = () => {
     // const handleBlur = () => {

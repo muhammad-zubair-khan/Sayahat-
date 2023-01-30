@@ -1,9 +1,13 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../../Navbar/Navbar";
 import Footer from "../../Footer/Footer";
 import MetaData from "../../Components/MetaData/MetaData";
 
 const Aboutus = () => {
+  const [loading,setLoading] = useState(false)
+  useEffect(() => {
+      window.scrollTo(0, 0);
+}, []);
   return (
     <>
     <MetaData title={`About us`}/>

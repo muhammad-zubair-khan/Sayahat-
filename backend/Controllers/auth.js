@@ -67,6 +67,7 @@ exports.signin = async(req, res) => {
         const token = generateJwtToken(user._id, user.role);
         const { _id, firstName, lastName, email, role, fullName, createdAt } =
           user;
+        // res.cookie("token", token, { expiresIn: "1d" });
         res.status(200).json({
           token,
           user: { _id, firstName, lastName, email, role, fullName, createdAt },

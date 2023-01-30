@@ -1,0 +1,43 @@
+.trip-heading{
+    color:#141D38;
+    font-size: 2rem;
+    font-weight: 500;
+    line-height: 2.25rem;
+}
+.main-trip-container{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    margin-top: 2.4rem;
+    width: max-content;
+}
+.trip-login-button{
+    background-color: #3662D8;
+    color: #FFFFFF;
+    border-radius: 0.5rem;
+    inline-size: 100%;
+    -webkit-margin-end: 0;
+    margin-inline-end: 0;
+    -webkit-margin-start: 0;
+    margin-inline-start: 0;
+    /* font-size: 1rem; */
+    line-height: 1.25rem;
+    min-block-size: 2.25rem;
+    padding: 0.25rem 1rem;
+    align-items: center;
+    border-radius: 2500rem;
+    border-style: solid;
+    border-width: 0;
+    cursor: pointer;
+    /* display: inline-flex; */
+    /* flex-wrap: nowrap; */
+    font-weight: 500;
+    justify-content: center;
+    -webkit-tap-highlight-color: transparent;
+    text-shadow: none;
+
+}
+.trip-login-button:hover{
+    color:white
+}

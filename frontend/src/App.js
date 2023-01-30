@@ -45,6 +45,7 @@ import MyCarDetails from "./Pages/Bookings/Cars/MyCarDetails";
 import MyProfile from "./Pages/Profile/MyProfile";
 import PrivateRoute from "./Components/Private/PrivateRoute";
 import TopDestination from "./Pages/Destination/TopDestination";
+import Trip from "./Pages/Trip/Trip";
 
 function App() {
   const dispatch = useDispatch();
@@ -69,10 +70,9 @@ function App() {
     // }
   }, [dispatch, auth.authenticate]);
 
-  // useEffect(() => {
-  //   // 👇️ scroll to top on page load
-  //   window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
-  // }, []);
+  useEffect(() => {
+      window.scrollTo(0, 0);
+  }, []);
 
   return (
     <Router>
@@ -169,6 +169,7 @@ function App() {
         <PrivateRoute exact path="/myCar/:id" component={MyCarDetails} />
 
         <Route exact path="/hotels/all" component={HotelList} />
+        <Route exact path="/trips" component={Trip} />
 
         <PrivateRoute exact path="/myProfile" component={MyProfile} />
         {/* <Route exact path="/me/update/:id" component={UpdateProfile} /> */}

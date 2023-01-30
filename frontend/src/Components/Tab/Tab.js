@@ -15,13 +15,14 @@ import { useEffect } from "react";
 import { getAllVacationProduct } from "../../Redux/Actions/vacationProductAction";
 const Tab = () => {
   const history = useHistory();
+  const [error, setError] = useState("");
   //Stays
   const [destination, setDestination] = useState("");
   const [openDate, setOpenDate] = useState(false);
   const [dates, setDates] = useState([
     {
       startDate: new Date(),
-      endDate: new Date(),
+      endDate: new Date(new Date().getTime() + 24 * 60 * 60 * 1000),
       key: "selection",
     },
   ]);
@@ -60,10 +61,19 @@ const Tab = () => {
 
   const { dispatch } = useContext(SearchContext);
   const handleSearch = () => {
-    dispatch({ type: "NEW_SEARCH", payload: { destination, dates, options } });
-    history.push("/hotels", { state: { destination, dates, options } });
+    if(destination){
+      dispatch({ type: "NEW_SEARCH", payload: { destination, dates, options } });
+      history.push("/hotels", { state: { destination, dates, options } });
+      setError("")
+    }else{
+      setError("Please enter destination");
+    }
   };
   const handlePackageSearch = () => {
+    if (!packageDestination) {
+      setError("Please enter destination");
+    } else {
+      setError("");
     dispatch({
       type: "NEW_SEARCH",
       payload: { packageDestination, dates, options },
@@ -71,8 +81,11 @@ const Tab = () => {
     history.push("/packages", {
       state: { packageDestination, dates, options },
     });
+  }
   };
   const handleCarSearch = () => {
+    if (startDestination && endDestination && pickupTime && dropoffTime) {
+      setError("")
     dispatch({
       type: "NEW_SEARCH",
       payload: {
@@ -93,6 +106,10 @@ const Tab = () => {
         dates,
       },
     });
+    }else{
+      setError("Please enter a value");
+
+  }
   };
   const { products } = useSelector((state) => state.vacationProduct);
   useEffect(() => {
@@ -139,6 +156,10 @@ const Tab = () => {
       </>
     );
   };
+  const today = new Date();
+const nextDay = new Date(today.getTime() + 24 * 60 * 60 * 1000);
+
+
 
   return (
     <>
@@ -200,6 +221,7 @@ const Tab = () => {
                     placeholder="Lahore, PK"
                   />
                 </div>
+                {error && <p style={{ color: 'red' }}>{error}</p>}
               </div>
               <div className="col-xxs-12 col-xs-6 col-md-3 col-lg-3 mt">
                 <div className="input-field">
@@ -213,6 +235,7 @@ const Tab = () => {
                     placeholder="Islamabad, PK"
                   />
                 </div>
+                {error && <p style={{ color: 'red' }}>{error}</p>}
               </div>
               <div className="col-xxs-12 col-xs-6 col-md-3 col-lg-3 mt">
                 <div className="input-field">
@@ -229,6 +252,8 @@ const Tab = () => {
                     required
                   />
                 </div>
+                {error && <p style={{ color: 'red' }}>{error}</p>}
+
               </div>
               <div className="col-xxs-12 col-xs-6 col-md-3 col-lg-3 mt">
                 <div className="input-field">
@@ -246,6 +271,7 @@ const Tab = () => {
                     required
                   />
                 </div>
+                {error && <p style={{ color: 'red' }}>{error}</p>}
               </div>
               <div className="row">
                 <div
@@ -268,6 +294,7 @@ const Tab = () => {
                         dates[0].endDate,
                         "MM/dd/yyyy"
                       )}`}
+                      
                     </span>
                     {openCarDate && (
                       <DateRangePicker
@@ -314,6 +341,7 @@ const Tab = () => {
                       placeholder="Lahore, PK"
                     />
                   </div>
+                {error && <p style={{ color: 'red' }}>{error}</p>}
                 </div>
               </div>
 
@@ -502,6 +530,7 @@ const Tab = () => {
                     />
                   </div>
                 </div>
+                {error && <p style={{ color: 'red' }}>{error}</p>}
               </div>
               <div className="col-xxs-12 col-xs-6 col-md-4 col-lg-4 mt alternate">
                 <div
@@ -532,6 +561,8 @@ const Tab = () => {
                     />
                   )}
                 </div>
+               
+
               </div>
               <div
                 className=" col-xxs-12 col-xs-6 col-md-4 col-lg-4 mt"

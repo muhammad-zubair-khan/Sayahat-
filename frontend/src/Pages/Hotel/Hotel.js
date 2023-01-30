@@ -10,7 +10,8 @@ const Hotel = () => {
   const location = useLocation()
   const [destination, setDestination] = useState(
     location.state.state.destination
-  );
+    );
+
   return (
     <>
     <MetaData title={`${destination}, Pakistan - Hotel Search Results`}/>

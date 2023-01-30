@@ -123,12 +123,13 @@ const Navbar = (props) => {
               textTransform: "uppercase",
               background: "rgb(255 255 255 / 16%)",
               color: "white",
-              borderRadius: "78%",
+              borderRadius: "0%",
               // padding: '16px 18px',
-              // fontSize:'20px'
+              fontSize:'small',
+              marginLeft:'10px'
             }}
           >
-            {user.firstName.substring(0, 1)}
+            {user.firstName}
             {/* {user.lastName.substring(0, 1)} */}
           </Link>
         }
@@ -204,6 +205,14 @@ const Navbar = (props) => {
                   </Link>
                 </li>
                 <li>
+                  <Link to="/trips">
+                    <TipsAndUpdatesIcon
+                      style={{ width: "18px", height: "15px" }}
+                    />{" "}
+                    Trips
+                  </Link>
+                </li>
+                {/* <li>
                   <Link to="/aboutus">
                     <TipsAndUpdatesIcon
                       style={{ width: "18px", height: "15px" }}
@@ -216,7 +225,7 @@ const Navbar = (props) => {
                     <PhoneIcon style={{ width: "18px", height: "15px" }} />{" "}
                     Contact Us
                   </Link>
-                </li>
+                </li> */}
                 <li>
                   {auth.authenticate
                     ? renderLoggedInMenu()
