@@ -29,8 +29,7 @@ const Package = (props) => {
   const [min, setMin] = useState(undefined);
   const [max, setMax] = useState(undefined);
   const [ratings, setRatings] = useState(0);
-  const [hotels,setHotels] = (packages);
-  console.warn(hotels)
+  // const [hotels,setHotels] = (packages);
   useEffect(() => {
     dispatch(getAllPackages(type, min, max, packageDestination, ratings));
   }, [dispatch, type, min, max, packageDestination, ratings]);
@@ -50,20 +49,20 @@ const Package = (props) => {
   const handleChange = (event) => {
     setRatings(event.target.value);
   };
-  const handleToggleFavorite = id => {
-    axios
-      .post(`https://sayahat-api.onrender.com/api/packages/${id}/favorite`)
-      .then(res => {
-        const updatedPackages = packages.map(pack => {
-          if (pack.id === id) {
-            return res.data.package;
-          }
-          return pack;
-        });
-        setHotels(updatedPackages);
-      })
-      .catch(err => console.log(err));
-  };
+  // const handleToggleFavorite = id => {
+  //   axios
+  //     .post(`https://sayahat-api.onrender.com/api/packages/${id}/favorite`)
+  //     .then(res => {
+  //       const updatedPackages = packages.map(pack => {
+  //         if (pack.id === id) {
+  //           return res.data.package;
+  //         }
+  //         return pack;
+  //       });
+  //       setHotels(updatedPackages);
+  //     })
+  //     .catch(err => console.log(err));
+  // };
   return (
     <>
       <MetaData title={`Packages of ${packageDestination} from Sayahat`} />
@@ -479,7 +478,11 @@ const Package = (props) => {
                                       alt="pic"
                                     />
                                     <div className="heartIcon" style={{cursor:'pointer'}}>
-                                      <i className="fa-regular fa-heart fs-4 d-flex justify-content-center" onClick={() => handleToggleFavorite(data._id)}></i>
+                                      <i className="fa-regular fa-heart fs-4 d-flex justify-content-center" 
+                                      // onClick={() => handleToggleFavorite(data._id)}
+                                      >
+
+                                      </i>
                                     </div>
                                   </div>
                                   <div className="col-md-8">
@@ -559,36 +562,6 @@ const Package = (props) => {
                             );
                           })
                         : "No Data Found"}
-
-                      {/* <nav aria-label="Page navigation example">
-            <ul class="pagination d-flex justify-content-center">
-              <li class="page-item">
-                <a class="page-link" href="#">
-                  Previous
-                </a>
-              </li>
-              <li class="page-item">
-                <a class="page-link" href="#">
-                  1
-                </a>
-              </li>
-              <li class="page-item">
-                <a class="page-link" href="#">
-                  2
-                </a>
-              </li>
-              <li class="page-item">
-                <a class="page-link" href="#">
-                  3
-                </a>
-              </li>
-              <li class="page-item">
-                <a class="page-link" href="#">
-                  Next
-                </a>
-              </li>
-            </ul>
-          </nav> */}
                     </div>
                   </>
                 )}

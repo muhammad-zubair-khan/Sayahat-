@@ -1,13 +1,21 @@
 import React, { useEffect, useState } from "react";
 import "./CarList.css";
 import { useLocation } from "react-router-dom";
-import { Button, Container, Grid, Slider, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Container,
+  Grid,
+  Slider,
+  Typography,
+} from "@mui/material";
 import { format } from "date-fns";
 import { DateRange } from "react-date-range";
 import CarSearchItem from "../../../Components/CarSearchItem/CarSearchItem.js";
 import Offcanvas from "react-bootstrap/Offcanvas";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllCars } from "../../../Redux/Actions/carAction";
+import CircularProgress from "@mui/material/CircularProgress";
 
 const CarList = () => {
   const location = useLocation();
@@ -26,15 +34,15 @@ const CarList = () => {
   );
   const [carType, setCarType] = useState("");
   const [ratings, setRatings] = useState(0);
-  
-  const { cars } = useSelector((state) => state.carsReducer);
+
+  const { cars, loading } = useSelector((state) => state.carsReducer);
   const [min, setMin] = useState(undefined);
   const [max, setMax] = useState(undefined);
 
   const types = ["SUV", "Van", "Mercedes", "Mini-Van"];
   useEffect(() => {
-    dispatch(getAllCars(min, max, startDestination, carType,ratings));
-  }, [dispatch, min, max, startDestination, carType,ratings]);
+    dispatch(getAllCars(min, max, startDestination, carType, ratings));
+  }, [dispatch, min, max, startDestination, carType, ratings]);
 
   const [show, setShow] = useState(false);
 
@@ -45,7 +53,7 @@ const CarList = () => {
   };
   return (
     <>
-    {/* <Container fixed> */}
+      {/* <Container fixed> */}
       <Grid container>
         <Grid item xs={12} lg={4}>
           <Button variant="primary" onClick={handleShow}>
@@ -183,26 +191,45 @@ const CarList = () => {
           </Offcanvas>
         </Grid>
 
-        {/* {loading ? (
-          "loading"
-        ) : ( */}
-        <Grid
-          container
-          lg={8}
-          style={{
-            height: "fit-content",
-            // border: "1px solid #f1e1e1",
-            padding: "18px 18px",
-          }}
-        >
-          {cars &&
-            cars.map((item) => <CarSearchItem item={item} key={item._id} />)}
-        </Grid>
-        {/* )} */}
-        {/* </div> */}
+        {!loading ? (
+          <>
+            {cars.length === 0 ? (
+              <p
+                className="col-md-8"
+                style={{ textAlign: "center", marginTop: "100px" }}
+              >
+                No data found.
+              </p>
+            ) : (
+              <>
+                <Grid
+                  container
+                  lg={8}
+                  md={6}
+                  style={{
+                    height: "fit-content",
+
+                    padding: "18px 18px",
+                  }}
+                >
+                  {cars &&
+                    cars.map((item) => (
+                      <CarSearchItem item={item} key={item._id} />
+                    ))}
+                </Grid>
+              </>
+            )}
+          </>
+        ) : (
+          <>
+            <Box className="col-md-8 mt-5" style={{ textAlign: "center" }}>
+              Loading... &nbsp;
+              <CircularProgress />
+            </Box>
+          </>
+        )}
       </Grid>
       {/* </Container> */}
-
     </>
   );
 };

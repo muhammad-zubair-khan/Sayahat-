@@ -10,14 +10,16 @@ import "./HotelList.css";
 import { getAllHotels } from "../../../Redux/Actions/hotelAction";
 import { useDispatch, useSelector } from "react-redux";
 import { Col, Row } from "react-bootstrap";
-import { Slider, Typography } from "@mui/material";
+import { Box, Slider, Typography } from "@mui/material";
+import CircularProgress from "@mui/material/CircularProgress";
+
 const HotelList = ({ onFilterChange }) => {
   const dispatch = useDispatch();
   const location = useLocation();
   const [destination, setDestination] = useState(
     location.state.state.destination
   );
-  const { hotels } = useSelector((state) => state.hotelReducer);
+  const { hotels, loading } = useSelector((state) => state.hotelReducer);
   const [dates, setDates] = useState(location.state.state.dates);
   const [openDate, setOpenDate] = useState(false);
   const [min, setMin] = useState(undefined);
@@ -253,18 +255,34 @@ const HotelList = ({ onFilterChange }) => {
             </Offcanvas.Body>
           </Offcanvas>
         </div>
-        <Col md={6} lg={8}>
-          {/* <div className="listResult"> */}
-          {/* {loading ? (
-            "loading"
-          ) : (
-            <> */}
-          {hotels &&
-            hotels.map((item) => <SearchItem item={item} key={item._id} />)}
-          {/* </>
-          )} */}
-          {/* </div> */}
-        </Col>
+        {!loading ? (
+          <>
+            {hotels.length === 0 ? (
+              <p
+                className="col-md-8"
+                style={{ textAlign: "center", marginTop: "100px" }}
+              >
+                No data found.
+              </p>
+            ) : (
+              <>
+                <Col md={6} lg={8}>
+                  {hotels &&
+                    hotels.map((item) => (
+                      <SearchItem item={item} key={item._id} />
+                    ))}
+                </Col>
+              </>
+            )}
+          </>
+        ) : (
+          <>
+            <Box className="col-md-8 mt-5" style={{ textAlign: "center" }}>
+              Loading... &nbsp;
+              <CircularProgress />
+            </Box>
+          </>
+        )}
       </Row>
 
       {/* </div>
