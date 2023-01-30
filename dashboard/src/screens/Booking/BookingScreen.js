@@ -88,7 +88,7 @@ const BookingScreen = () => {
       }
     });
   const changeView = (id) => {
-    const changeViewUrl = `http://localhost:5000/api/admin/bookedCars/update`;
+    const changeViewUrl = `https://sayahat-api.onrender.com/api/admin/bookedCars/update`;
     try {
       axios.patch(`${changeViewUrl}/${id}`);
     } catch (err) {
@@ -96,7 +96,7 @@ const BookingScreen = () => {
     }
   };
   const changeHotelView = (id) => {
-    const changeHotelViewUrl = `http://localhost:5000/api/admin/bookedHotel/update`;
+    const changeHotelViewUrl = `https://sayahat-api.onrender.com/api/admin/bookedHotel/update`;
     try {
       axios.patch(`${changeHotelViewUrl}/${id}`);
     } catch (err) {
@@ -104,7 +104,7 @@ const BookingScreen = () => {
     }
   };
   const changePackageView = (id) => {
-    const changePackageViewUrl = `http://localhost:5000/api/admin/bookedPackage/update`;
+    const changePackageViewUrl = `https://sayahat-api.onrender.com/api/admin/bookedPackage/update`;
     try {
       axios.patch(`${changePackageViewUrl}/${id}`);
     } catch (err) {

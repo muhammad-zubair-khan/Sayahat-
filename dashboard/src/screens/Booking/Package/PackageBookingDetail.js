@@ -5,7 +5,7 @@ import "../CarBookingDetails.css";
 
 const PackageBookingDetail = (props) => {
   let [responseData, setResponseData] = useState("");
-  const url = `http://localhost:5000/api/admin/bookedPackage/detail`;
+  const url = `https://sayahat-api.onrender.com/api/admin/bookedPackage/detail`;
 
   const getBookedPackageDetail = async () => {
     const id = props.location.params.id;

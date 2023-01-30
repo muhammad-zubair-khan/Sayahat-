@@ -14,7 +14,7 @@ const UserScreen = () => {
   const dispatch = useDispatch();
   const { admins } = useSelector((state) => state.allAdmins);
   const deleteUserHandler = (id) => {
-    const deleteUrl = `http://www.localhost:5000/api/admin/user/delete`;
+    const deleteUrl = `https://sayahat-api.onrender.com/api/admin/user/delete`;
     try {
       axios.delete(`${deleteUrl}/${id}`);
       history.go(0);

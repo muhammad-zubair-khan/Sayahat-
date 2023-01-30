@@ -1,5 +1,5 @@
-export const api = `http://localhost:5000/api`;
-export const imageApi = `http://localhost:5000`;
+export const api = `https://sayahat-api.onrender.com/api`;
+export const imageApi = `https://sayahat-api.onrender.com`;
 
 export const ImageUrl = (fileName) => {
   return `${imageApi}/public/${fileName}`;
