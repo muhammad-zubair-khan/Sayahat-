@@ -52,7 +52,7 @@ const Package = (props) => {
   };
   const handleToggleFavorite = id => {
     axios
-      .post(`http://localhost:5000/api/packages/${id}/favorite`)
+      .post(`https://sayahat-api.onrender.com/api/packages/${id}/favorite`)
       .then(res => {
         const updatedPackages = packages.map(pack => {
           if (pack.id === id) {

@@ -14,7 +14,7 @@ const MyPackageDetails = (props) => {
   const dispatch = useDispatch()
   const history = useHistory()
   let [responseData, setResponseData] = useState("");
-  const url = `http://localhost:5000/api/bookPackageDetail`;
+  const url = `https://sayahat-api.onrender.com/api/bookPackageDetail`;
 
   // const {id} = useParams()
   const getBookedPackageDetail = async () => {

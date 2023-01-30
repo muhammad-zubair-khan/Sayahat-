@@ -22,7 +22,7 @@ const MyHotelDetails = (props) => {
   // );
   // const hotels = useSelector((state) => state.myHotelDetails);
   let [responseData, setResponseData] = useState("");
-  const url = `http://localhost:5000/api/bookHotelDetail`;
+  const url = `https://sayahat-api.onrender.com/api/bookHotelDetail`;
 
   const getBookedHotelDetail = async () => {
     const id = props.location.params.id;

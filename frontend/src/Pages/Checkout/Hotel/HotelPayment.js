@@ -65,7 +65,7 @@ const [destination, setDestination] = useState(
   };
   const bookingMail = async () => {
     // e.preventDefault();
-    const res = await axios("http://localhost:5000/api/sendHotelBookingMail", {
+    const res = await axios("https://sayahat-api.onrender.com/api/sendHotelBookingMail", {
       method: "POST",
       data: bookHotel,
     });
@@ -87,7 +87,7 @@ const [destination, setDestination] = useState(
         },
       };
       const { data } = await axios.post(
-        "http://localhost:5000/api/payment/process",
+        "https://sayahat-api.onrender.com/api/payment/process",
         paymentData,
         config
       );

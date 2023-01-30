@@ -45,7 +45,7 @@ import MyCarDetails from "./Pages/Bookings/Cars/MyCarDetails";
 import MyProfile from "./Pages/Profile/MyProfile";
 import PrivateRoute from "./Components/Private/PrivateRoute";
 import TopDestination from "./Pages/Destination/TopDestination";
-import Trip from "./Pages/Trip/Trip";
+// import Trip from "./Pages/Trip/Trip";
 
 function App() {
   const dispatch = useDispatch();
@@ -54,7 +54,7 @@ function App() {
   const [stripeApiKey, setStripeApiKey] = useState("");
   async function getStripeApiKey() {
     const { data } = await axios.get(
-      `http://www.localhost:5000/api/stripeapikey`
+      `https://sayahat-api.onrender.com/api/stripeapikey`
     );
     setStripeApiKey(data.stripeApiKey);
   }
@@ -169,7 +169,7 @@ function App() {
         <PrivateRoute exact path="/myCar/:id" component={MyCarDetails} />
 
         <Route exact path="/hotels/all" component={HotelList} />
-        <Route exact path="/trips" component={Trip} />
+        {/* <Route exact path="/trips" component={Trip} /> */}
 
         <PrivateRoute exact path="/myProfile" component={MyProfile} />
         {/* <Route exact path="/me/update/:id" component={UpdateProfile} /> */}

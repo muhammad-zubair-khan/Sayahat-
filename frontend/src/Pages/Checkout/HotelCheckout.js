@@ -38,7 +38,7 @@ const HotelCheckout = () => {
   //   `http://localhost:5000/api/hotel/${id}`
   // );
   const { data, loading, error } = useFetch(
-    `http://localhost:5000/api/room/${id}`
+    `https://sayahat-api.onrender.com/api/room/${id}`
   );
 
   useEffect(() => {

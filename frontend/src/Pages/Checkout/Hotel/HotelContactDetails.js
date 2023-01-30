@@ -48,7 +48,7 @@ const HotelContactDetails = () => {
   const { hotel } = useSelector((state) => state.hotelById);
   const { id } = useParams();
   const { data, loading, error } = useFetch(
-    `http://localhost:5000/api/room/${id}`
+    `https://sayahat-api.onrender.com/api/room/${id}`
   );
   useEffect(() => {
     dispatch(getHotelDetailById(id));

@@ -28,7 +28,7 @@ const Checkout = () => {
   );
   const { id } = useParams();
   const { data } = useFetch(
-    `http://localhost:5000/api/car-detail/${id}`
+    `https://sayahat-api.onrender.com/api/car-detail/${id}`
   );
   const [show, setShow] = useState(false);
 

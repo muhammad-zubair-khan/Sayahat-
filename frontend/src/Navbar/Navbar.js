@@ -204,15 +204,15 @@ const Navbar = (props) => {
                     Cars
                   </Link>
                 </li>
-                <li>
+                {/* <li>
                   <Link to="/trips">
                     <TipsAndUpdatesIcon
                       style={{ width: "18px", height: "15px" }}
                     />{" "}
                     Trips
                   </Link>
-                </li>
-                {/* <li>
+                </li> */}
+                <li>
                   <Link to="/aboutus">
                     <TipsAndUpdatesIcon
                       style={{ width: "18px", height: "15px" }}
@@ -225,7 +225,7 @@ const Navbar = (props) => {
                     <PhoneIcon style={{ width: "18px", height: "15px" }} />{" "}
                     Contact Us
                   </Link>
-                </li> */}
+                </li>
                 <li>
                   {auth.authenticate
                     ? renderLoggedInMenu()

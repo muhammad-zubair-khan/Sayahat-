@@ -43,7 +43,7 @@ const PaymentDetails = () => {
         },
       };
       const { data } = await axios.post(
-        "http://localhost:5000/api/payment/process",
+        "https://sayahat-api.onrender.com/api/payment/process",
         paymentData,
         config
       );

@@ -11,7 +11,7 @@ const MyCarDetails = (props) => {
   // const {car} = useSelector((state) => state.myCarDetails);
   const dispatch = useDispatch();
   let [responseData, setResponseData] = useState("");
-  const url = `http://localhost:5000/api/bookCarDetail`;
+  const url = `https://sayahat-api.onrender.com/api/bookCarDetail`;
 
   // const {id} = useParams()
   const getBookedCarDetail = async () => {

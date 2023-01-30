@@ -66,7 +66,7 @@ const CarPayment = ({ history }) => {
   };
   const bookingMail = async () => {
     // e.preventDefault();
-    const res = await axios("http://localhost:5000/api/sendCarBookingMail", {
+    const res = await axios("https://sayahat-api.onrender.com/api/sendCarBookingMail", {
       method: "POST",
       data: bookCar,
     });
@@ -87,7 +87,7 @@ const CarPayment = ({ history }) => {
         },
       };
       const { data } = await axios.post(
-        "http://localhost:5000/api/payment/process",
+        "https://sayahat-api.onrender.com/api/payment/process",
         paymentData,
         config
       );
