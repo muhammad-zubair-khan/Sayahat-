@@ -9,6 +9,8 @@ import { useDispatch, useSelector } from "react-redux";
 import MetaData from "../../Components/MetaData/MetaData";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+// import { GoogleLogin } from "react-google-login";
+// import axios from "axios";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -27,10 +29,10 @@ const Login = () => {
   };
   const signuInUser = (e) => {
     e.preventDefault();
-    if(!email || !password){
-      return toast.error("Please enter your email and password",{
+    if (!email || !password) {
+      return toast.error("Please enter your email and password", {
         position: toast.POSITION.BOTTOM_CENTER,
-      })
+      });
     }
 
     const user = {
@@ -39,7 +41,7 @@ const Login = () => {
     };
 
     dispatch(login(user));
-    window.history.back()
+    window.history.back();
     // toast.success("Successfully login",{
     //   position: toast.POSITION.BOTTOM_CENTER,
     // })
@@ -49,6 +51,19 @@ const Login = () => {
   //   // return <Redirect to={`/`} />;
   //   return window.history.back();
   // }
+  // const responseSuccessGoogle = (response) => {
+  //   console.warn(response);
+  //   axios({
+  //     method:"POST",
+  //     url: 'http://localhost:5000/api/googlelogin',
+  //     data:{tokenId: response.tokenId}
+  //   }).then(response=>{
+  //     console.log(response)
+  //   })
+  // };
+  // const responseFailGoogle = (response) => {
+  //   console.warn(response);
+  // };
 
   return (
     <>
@@ -154,6 +169,19 @@ const Login = () => {
                       Log In
                     </button>
                   </div>
+                  <div className="text-center">
+                    {/* <GoogleLogin
+                    style={{width:'100%'}}
+                      clientId="1095256031891-tp3o0gdgpio4144t4k6c0itrlrpkjs31.apps.googleusercontent.com"
+                      buttonText="Login with Google"
+                      onSuccess={responseSuccessGoogle}
+                      onFailure={responseFailGoogle}
+                      cookiePolicy={"single_host_origin"}
+                    /> */}
+                    {/* <button onClick={responseSuccessGoogle}>
+            {'Sign In with Google'}
+        </button> */}
+                  </div>
                 </form>
 
                 <hr />
@@ -167,7 +195,7 @@ const Login = () => {
             </div>
           </div>
         </Col>
-        <ToastContainer/>
+        <ToastContainer />
       </Row>
     </>
   );

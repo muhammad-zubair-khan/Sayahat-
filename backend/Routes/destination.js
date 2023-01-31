@@ -10,7 +10,7 @@ const {
 const multer = require("multer");
 const path = require("path");
 const shortid = require("shortid");
-const router = express.Router();
+const router = express.Router(); 
 
 const storage = multer.diskStorage({
     destination:  (req, file, cb)=> {

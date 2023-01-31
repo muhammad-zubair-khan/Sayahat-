@@ -2,6 +2,9 @@ const jwt = require("jsonwebtoken");
 const multer = require("multer");
 const shortid = require("shortid");
 const path = require("path");
+// const env = require("dotenv");
+// env.config({path:'../.env'});
+// const JWT_SECRET = 837153946289
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -23,8 +26,20 @@ exports.requireSignin = (req, res, next) => {
     return res.status(400).json({ message: "Authorization required" });
   }
   next();
-  //jwt.decode()
 };
+
+// exports.requireSignin = (req, res, next) => {
+//   if (!req.headers.authorization) {
+//     const token = req.headers.authorization.split("Bearer")[1];
+//     const user = jwt.verify(token, JWT_SECRET);
+//     req.user = user;
+//   } else {
+//     return res.status(400).json({
+//       message: "Authorization Required",
+//     });
+//   }
+//   next();
+// };
 
 exports.userMiddleware = (req, res, next) => {
   if (req.user.role !== "user") {

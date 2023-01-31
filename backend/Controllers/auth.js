@@ -5,7 +5,9 @@ const shortid = require("shortid");
 const catchAsyncErrors = require("../utils/catchAsyncErrors");
 const nodemailer = require("nodemailer");
 const keySecret = process.env.JWT_SECRET;
+const {OAuth2Client} = require("google-auth-library")
 
+const client = new OAuth2Client("1095256031891-tp3o0gdgpio4144t4k6c0itrlrpkjs31.apps.googleusercontent.com")
 const transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
@@ -209,3 +211,13 @@ exports.saveNewPass = async (req, res) => {
 //     const user =  User.findById(req.user)
 //     console.log(user)
 // };
+
+exports.googlelogin = (req,res)=>{
+  const {tokenId} = req.body;
+
+  client.verifyIdToken({tokenId,audience: "1095256031891-tp3o0gdgpio4144t4k6c0itrlrpkjs31.apps.googleusercontent.com"}).then(response =>{
+    const {email_verified,name,email} = response.payload;
+    console.log(response.payload)
+  })
+  console.log()
+}

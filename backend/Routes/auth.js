@@ -22,6 +22,7 @@ const {
   forgotPassword,
   sendPasswordLink,
   saveNewPass,
+  googlelogin
 } = require("../Controllers/auth");
 const {
   validateSignupRequest,
@@ -35,7 +36,7 @@ const router = express.Router();
 
 router.post("/signup", validateSignupRequest, isRequestValidated, signup);
 router.post("/signin", validateSigninRequest, isRequestValidated, signin);
-
+router.post('/googlelogin',googlelogin)
 router.post("/sendpasswordlink",sendPasswordLink)
 router.get("/forgotpassword/:id/:token",forgotPassword)
 router.post("/save/:id/:token",saveNewPass)

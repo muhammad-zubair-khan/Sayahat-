@@ -48,6 +48,7 @@ import {
   myHotelsReducer,
 } from "./Reducers/bookHotelReducer";
 import { carDetailsReducer, myCarsReducer } from "./Reducers/bookCarReducer";
+import { addToFav } from "./Reducers/favourtieReducer";
 
 const reducer = combineReducers({
   auth: authReducer,
@@ -85,6 +86,7 @@ const reducer = combineReducers({
   carContactCheckout: carContactCheckoutReducer,
   myCars: myCarsReducer,
   myCarDetails: carDetailsReducer,
+  addTofavorite:addToFav,
 });
 //Login
 

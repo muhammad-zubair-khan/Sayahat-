@@ -4,7 +4,7 @@ import "react-multi-carousel/lib/styles.css";
 import "../../Landing/Landing.css";
 import { Button } from "@mui/material";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
-import { DateRangePicker } from "react-date-range";
+import { DateRangePicker,DateRange } from "react-date-range";
 import { format } from "date-fns";
 import "react-date-range/dist/styles.css"; // main style file
 import "react-date-range/dist/theme/default.css"; // theme css file
@@ -297,10 +297,10 @@ const nextDay = new Date(today.getTime() + 24 * 60 * 60 * 1000);
                       
                     </span>
                     {openCarDate && (
-                      <DateRangePicker
-                        editableDateInputs={true}
+                      <DateRange
+                        // editableDateInputs={true}
                         ranges={dates}
-                        moveRangeOnFirstSelection={false}
+                        // moveRangeOnFirstSelection={false}
                         onChange={(item) => setDates([item.selection])}
                         className="date"
                         minDate={new Date()}

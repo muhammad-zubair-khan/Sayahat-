@@ -9,6 +9,7 @@ import Modal from "@mui/material/Modal";
 import Fade from "@mui/material/Fade";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
+import axios from "axios";
 
 const style = {
   position: "absolute",
@@ -28,6 +29,8 @@ const Trip = () => {
   const [loading, setLoading] = useState(true);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
+  const [trips, setTrips] = useState([]);
+
   setTimeout(() => {
     setLoading(false);
   }, 1000);
@@ -89,6 +92,17 @@ const Trip = () => {
     setOpen(false);
   };
 
+  const getTrips = async () => {
+    const response = await axios("http://localhost:5000/api/trips", {
+      method: "GET",
+    });
+    setTrips(response.data.trips);
+  };
+
+  useEffect(() => {
+    getTrips();
+  }, []);
+
   const showCreatedTrip = () => {
     return (
       <>
@@ -96,21 +110,61 @@ const Trip = () => {
           <div style={{ textAlign: "left" }}>
             <h1 className="trip-heading"> Trip</h1>
           </div>
+          <div>
+          <small onClick={handleOpenModal} style={{ cursor: "pointer",float:'right' }}>
+            + Create a trip
+          </small>
+        </div>
           <div style={{ textAlign: "left" }}>
             <h1 className="trip-heading"> Potential</h1>
           </div>
-          <section>
-            <img src="" alt="saved trip" />
+          {trips && trips.map((data)=>{
+            return(
+              <>
+          <section key={data._id} style={{ position: "relative",padding:"13px 0px" }}>
+            <Link to={`/trip/${data.name}/${data._id}`}>
+            <img
+              src="https://images.unsplash.com/photo-1622546758596-f1f06ba11f58?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8bGFob3JlfGVufDB8fDB8fA%3D%3D&w=1000&q=80"
+              style={{ width: "45%", filter: "brightness(0.5)" }}
+              alt="saved trip"
+            />
+            <div
+              style={{
+                position: "absolute",
+                top: "80%",
+                left: "31%",
+                color: "white",
+                fontSize:'large'
+              }}
+            >
+              {data.name} 
+            </div>
+            </Link>
+
           </section>
+              
+              </>
+            )
+          })}
         </div>
       </>
     );
   };
-  const handleSearch = () => {
+  const handleSearch = async () => {
     if (name) {
       setError("");
+      const token = localStorage.getItem("token");
+      const data = { name, description };
+      const response = await axios("http://localhost:5000/api/create/trip", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + token,
+        },
+        data: data,
+      });
+      getTrips()
       setOpen(false);
-      showCreatedTrip();
     } else {
       setError("Please enter trip name");
     }
@@ -122,7 +176,8 @@ const Trip = () => {
       <div style={{ background: " rgb(0 0 0)", height: "75px" }}>
         <Navbar />
       </div>
-      {localStorage.token ? loggedInData() : nonLoggedInData()}
+      {localStorage.token ?  (!trips ? loggedInData() : "") : (trips ? nonLoggedInData() : "")}
+      {localStorage.token ? (trips.length===0 ? loggedInData() : showCreatedTrip()) : ""}
       {open && (
         <div>
           <Modal

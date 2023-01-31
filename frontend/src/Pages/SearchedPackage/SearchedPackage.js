@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useHistory, useLocation } from "react-router-dom";
+import { Link, useHistory, useLocation } from "react-router-dom";
 import Navbar from "../../Navbar/Navbar";
 import Button from "@mui/material/Button";
 import Offcanvas from "react-bootstrap/Offcanvas";
@@ -13,11 +13,30 @@ import { Box, Slider, Typography } from "@mui/material";
 import MetaData from "../../Components/MetaData/MetaData";
 import CircularProgress from "@mui/material/CircularProgress";
 import axios from "axios";
+import {
+  addToFavorites,
+  removeFromFavorites,
+} from "../../Redux/Actions/favourtieAction";
+import Backdrop from "@mui/material/Backdrop";
+import Modal from "@mui/material/Modal";
+import Fade from "@mui/material/Fade";
 
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "background.paper",
+  border: "2px solid #000",
+  boxShadow: 24,
+  p: 4,
+};
 const Package = (props) => {
   const dispatch = useDispatch();
   const history = useHistory();
   const location = useLocation();
+  const [open, setOpen] = useState(false);
   const [packageDestination, setPackageDestination] = useState(
     location.state.state.packageDestination
   );
@@ -30,10 +49,20 @@ const Package = (props) => {
   const [max, setMax] = useState(undefined);
   const [ratings, setRatings] = useState(0);
   // const [hotels,setHotels] = (packages);
+  const [trips, setTrips] = useState([]);
   useEffect(() => {
     dispatch(getAllPackages(type, min, max, packageDestination, ratings));
   }, [dispatch, type, min, max, packageDestination, ratings]);
+  const getTrips = async () => {
+    const response = await axios("http://localhost:5000/api/trips", {
+      method: "GET",
+    });
+    setTrips(response.data.trips);
+  };
 
+  useEffect(() => {
+    getTrips();
+  }, []);
   const types = [
     "Full Day Tour",
     "Half Day Tour",
@@ -49,20 +78,47 @@ const Package = (props) => {
   const handleChange = (event) => {
     setRatings(event.target.value);
   };
-  // const handleToggleFavorite = id => {
-  //   axios
-  //     .post(`https://sayahat-api.onrender.com/api/packages/${id}/favorite`)
-  //     .then(res => {
-  //       const updatedPackages = packages.map(pack => {
-  //         if (pack.id === id) {
-  //           return res.data.package;
-  //         }
-  //         return pack;
-  //       });
-  //       setHotels(updatedPackages);
-  //     })
-  //     .catch(err => console.log(err));
-  // };
+
+  const { favorites } = useSelector((state) => state.addTofavorite);
+  const [packageId,setPackageId] = useState("")
+  const handleToggleFavorites = (itemId) => {
+    setOpen(true);
+    setPackageId(itemId)
+    console.warn(itemId)
+      // dispatch(addToFavorites(itemId));
+
+    // if (favorites.includes(itemId)) {
+    //   dispatch(removeFromFavorites(itemId));
+    //   console.warn("KKK",favorites);
+    // } else {
+    // }
+  };
+  const handleCloseModal = () => {
+    setOpen(false);
+  };
+  const handleAddToFavorites = () => {
+    // Make a POST request to the server to add the hotel to the favorites list
+    axios("http://localhost:5000/api/save/favourite", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ packageId }),
+    })
+      .then((res) => res.json())
+      .then((trip) => {
+        // Update the local state to reflect the added hotel
+        this.setState({ trips: [...this.state.trips, trip] });
+      })
+      .catch((error) => {
+        console.error("Error adding hotel to favorites:", error);
+      });
+  };
+
+  const addtoFavourite = () =>{
+    // dispatch(addToFavorites(PackageId));
+    handleAddToFavorites()
+    console.warn("packageId",packageId)
+
+  }
   return (
     <>
       <MetaData title={`Packages of ${packageDestination} from Sayahat`} />
@@ -462,14 +518,19 @@ const Package = (props) => {
             {!loading ? (
               <>
                 {packages.length === 0 ? (
-                  <p className="col-md-8" style={{textAlign:"center",marginTop:"100px"}}>No data found.</p>
+                  <p
+                    className="col-md-8"
+                    style={{ textAlign: "center", marginTop: "100px" }}
+                  >
+                    No data found.
+                  </p>
                 ) : (
                   <>
                     <div className="col-md-8">
                       {packages
                         ? packages.map((data, index) => {
                             return (
-                              <div class="card mb-3 p-4" key={index}>
+                              <div class="card mb-3 p-4" key={data._id}>
                                 <div className="row g-0">
                                   <div className="col-md-4 position-relative">
                                     <img
@@ -477,14 +538,77 @@ const Package = (props) => {
                                       class="img-fluid rounded-start h-100"
                                       alt="pic"
                                     />
-                                    <div className="heartIcon" style={{cursor:'pointer'}}>
-                                      <i className="fa-regular fa-heart fs-4 d-flex justify-content-center" 
-                                      // onClick={() => handleToggleFavorite(data._id)}
+                                    <div
+                                      className="heartIcon"
+                                      style={{ cursor: "pointer" }}
+                                    >
+                                      <button
+                                        onClick={() =>
+                                          handleToggleFavorites(data._id)
+                                        }
                                       >
-
-                                      </i>
+                                        {favorites.includes(data._id)
+                                          ? "Remove from"
+                                          : "Add to"}{" "}
+                                        favorites
+                                      </button>
                                     </div>
                                   </div>
+                                  {open && (
+                                    <div>
+                                      <Modal
+                                        aria-labelledby="transition-modal-title"
+                                        aria-describedby="transition-modal-description"
+                                        open={open}
+                                        onClose={handleCloseModal}
+                                        closeAfterTransition
+                                        BackdropComponent={Backdrop}
+                                        BackdropProps={{
+                                          timeout: 500,
+                                        }}
+                                      >
+                                        <Fade in={open}>
+                                          <Box sx={style}>
+                                            <Typography
+                                              id="transition-modal-description"
+                                              sx={{ mt: 2 }}
+                                            >
+                                              Your Trips
+                                            </Typography>
+
+                                              {trips &&
+                                                trips.map((data) => {
+                                                  return (
+                                                    <>
+                                                      <div
+                                                        style={{
+                                                          border:
+                                                            "1px solid rgb(212 211 211)",
+                                                          padding: "9px 9px",
+                                                          margin: "14px 0px",
+                                                          display: "flex",
+                                                          justifyContent:
+                                                            "space-between",
+                                                          cursor: "pointer",
+                                                        }}
+                                                        onClick={addtoFavourite}
+                                                      >
+                                                        <span>{data.name}</span>
+                                                        <span id="getsavetext">
+                                                          save
+                                                        </span>
+                                                      </div>
+                                                    </>
+                                                  );
+                                                })}
+                                            <div></div>
+
+                                            <br />
+                                          </Box>
+                                        </Fade>
+                                      </Modal>
+                                    </div>
+                                  )}
                                   <div className="col-md-8">
                                     <div className="card-body">
                                       <div className="row">

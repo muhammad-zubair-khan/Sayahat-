@@ -45,7 +45,8 @@ import MyCarDetails from "./Pages/Bookings/Cars/MyCarDetails";
 import MyProfile from "./Pages/Profile/MyProfile";
 import PrivateRoute from "./Components/Private/PrivateRoute";
 import TopDestination from "./Pages/Destination/TopDestination";
-// import Trip from "./Pages/Trip/Trip";
+import Trip from "./Pages/Trip/Trip";
+import TripDetail from "./Pages/Trip/TripDetail";
 
 function App() {
   const dispatch = useDispatch();
@@ -169,7 +170,8 @@ function App() {
         <PrivateRoute exact path="/myCar/:id" component={MyCarDetails} />
 
         <Route exact path="/hotels/all" component={HotelList} />
-        {/* <Route exact path="/trips" component={Trip} /> */}
+        <Route exact path="/trips" component={Trip} />
+        <Route exact path="/trip/:name/:id" component={TripDetail} />
 
         <PrivateRoute exact path="/myProfile" component={MyProfile} />
         {/* <Route exact path="/me/update/:id" component={UpdateProfile} /> */}

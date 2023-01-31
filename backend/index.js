@@ -2,6 +2,8 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 app.use(cors());
+// const cookieParser = require("cookie-parser");
+// app.use((cookieParser))
 const bodyParser = require("body-parser");
 const env = require("dotenv");
 env.config({ path: "./.env" });
@@ -58,6 +60,9 @@ app.use("/api", bookHotelRoutes);
 
 const bookCarRoutes = require("./Routes/booking/car");
 app.use("/api", bookCarRoutes);
+
+const favRoutes = require("./Routes/favourite");
+app.use("/api", favRoutes);
 
 const initialDataRoutes = require("./Routes/Admin/initialData");
 app.use("/api", initialDataRoutes);
