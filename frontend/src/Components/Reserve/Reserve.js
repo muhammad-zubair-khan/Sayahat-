@@ -20,7 +20,7 @@ const Reserve = ({ setOpen, hotelId, totalPrice }) => {
   );
   const [selectedRooms, setSelectedRooms] = useState([]);
   const { data, loading, error } = useFetch(
-    `http://localhost:5000/api/room/${hotelId}`
+    `https://sayahat-api.onrender.com/api/room/${hotelId}`
   );
   // const { dates } = useContext(SearchContext);
   const getDatesInRange = (startDate, endDate) => {
@@ -67,7 +67,7 @@ const Reserve = ({ setOpen, hotelId, totalPrice }) => {
         await Promise.all(
           selectedRooms.map((roomId) => {
             const res = axios.put(
-              `http://localhost:5000/api/rooms/availability/${roomId}`,
+              `https://sayahat-api.onrender.com/api/rooms/availability/${roomId}`,
               {
                 dates: alldates,
               }
