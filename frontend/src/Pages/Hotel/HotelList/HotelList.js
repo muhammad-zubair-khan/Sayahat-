@@ -45,7 +45,7 @@ const HotelList = ({ onFilterChange }) => {
   return (
     <>
       <Row className="mt-5 container-fluid">
-        <div className="col-md-4">
+        <div className="col-sm-12 col-md-4 col-lg-4">
           <Button variant="primary" onClick={handleShow}>
             <i class="fa-solid fa-bars me-2 fs-3"></i>{" "}
             <span className="fs-3">Filters</span>
@@ -56,7 +56,7 @@ const HotelList = ({ onFilterChange }) => {
               <Offcanvas.Title>Offcanvas</Offcanvas.Title>
             </Offcanvas.Header>
             <Offcanvas.Body>
-              <div className="col-12">
+              <div className="col-sm-12 col-lg-12 col-md-12">
                 <div
                   className="lsItem p-4"
                   style={{ backgroundColor: "#186B6D" }}
@@ -266,7 +266,7 @@ const HotelList = ({ onFilterChange }) => {
               </p>
             ) : (
               <>
-                <Col md={6} lg={8}>
+                <Col sm={12} md={6} lg={8}>
                   {hotels &&
                     hotels.map((item) => (
                       <SearchItem item={item} key={item._id} />

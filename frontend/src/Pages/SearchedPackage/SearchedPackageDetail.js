@@ -246,7 +246,7 @@ function SearchedPackageDetail({ match }) {
               <div className="container aboutPackage">
                 <div className="row">
                   <h3 className="text-black">{packages.package.name}</h3>
-                  <div class="col-2" style={{ height: "fit-content" }}>
+                  <div class="col-sm-12 col-md-2 col-lg-2" style={{ height: "fit-content" }}>
                     {packages.package.packageImages &&
                       packages.package.packageImages.map((pic, index) => {
                         return (
@@ -260,7 +260,7 @@ function SearchedPackageDetail({ match }) {
                         );
                       })}
                   </div>
-                  <div className="col-6">
+                  <div className="col-sm-12 col-md-6 col-lg-6">
                     <Zoom>
                       <img
                         src={ImageUrl(packages.package.packageImages[0].img)}
@@ -272,7 +272,7 @@ function SearchedPackageDetail({ match }) {
                     </Zoom>
                   </div>
 
-                  <div className="col-4 BgPackage p-3 h-100">
+                  <div className="col-sm-12 col-md-4 col-lg-4 BgPackage p-3 h-100">
                     <h4 className="text-black">
                       From PKR {packages.package.price}
                     </h4>
@@ -457,19 +457,19 @@ function SearchedPackageDetail({ match }) {
                   <hr />
                   <h3 className="text-black fw-bold my-4">What's Included</h3>
                   <div className="row">
-                    <div className="col-4">
+                    <div className="col-sm-12 col-md-4 col-lg-4">
                       <span>
                         <i class="fa-solid fa-check"></i>
                         {packages.package.duration}
                       </span>
                     </div>
-                    <div className="col-4">
+                    <div className="col-sm-12 col-md-4 col-lg-4">
                       <span>
                         <i class="fa-solid fa-check"></i> 1 Route - Las Vegas
                         Viator Late Night Tour
                       </span>
                     </div>
-                    <div className="col-4">
+                    <div className="col-sm-12 col-md-4 col-lg-4">
                       <span>
                         <i class="fa-solid fa-xmark"></i> Hotel pickup and
                         drop-off
@@ -558,8 +558,8 @@ function SearchedPackageDetail({ match }) {
 
                   <h3 className="text-black fw-bold my-4">Additional Info</h3>
                   <div className="row">
-                    <div className="col-6">
-                      <ul className="text-black ms-5">
+                    <div className="col-sm-12 col-md-6 col-lg-6">
+                      <ul className="text-black ms-2">
                         <li>
                           Confirmation will be received at time of booking
                         </li>
@@ -568,7 +568,7 @@ function SearchedPackageDetail({ match }) {
                         <li className="mt-3">Wheelchair accessible</li>
                       </ul>
                     </div>
-                    <div className="col-6">
+                    <div className="col-sm-12 col-md-6 col-lg-6">
                       <ul className="text-black ms-5">
                         <li>
                           Please advise at time of booking if wheelchair
@@ -596,7 +596,7 @@ function SearchedPackageDetail({ match }) {
                     for a full refund.
                   </p>
                   <div className="row">
-                    <div className="col-6">
+                    <div className="col-sm-12 col-md-6 col-lg-6">
                       <ul className="text-black ms-5">
                         <li>
                           For a full refund, you must cancel at least 24 hours
@@ -613,7 +613,7 @@ function SearchedPackageDetail({ match }) {
                         </li>
                       </ul>
                     </div>
-                    <div className="col-6">
+                    <div className="col-sm-12 col-md-6 col-lg-6">
                       <ul className="text-black ms-5">
                         <li>
                           Cut-off times are based on the experiences local time.
