@@ -1,6 +1,6 @@
-import { Box, CircularProgress, TextField } from "@mui/material";
+import { Box, TextField } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import MetaData from "../../Components/MetaData/MetaData";
 import Navbar from "../../Navbar/Navbar";
 import "./Trip.css";
@@ -24,9 +24,9 @@ const style = {
 };
 const Trip = () => {
   const [open, setOpen] = useState(false);
-  const history = useHistory();
+  // const history = useHistory();
   const [error, setError] = useState("");
-  const [loading, setLoading] = useState(true);
+  const [, setLoading] = useState(true);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [trips, setTrips] = useState([]);
@@ -111,41 +111,46 @@ const Trip = () => {
             <h1 className="trip-heading"> Trip</h1>
           </div>
           <div>
-          <small onClick={handleOpenModal} style={{ cursor: "pointer",float:'right' }}>
-            + Create a trip
-          </small>
-        </div>
+            <small
+              onClick={handleOpenModal}
+              style={{ cursor: "pointer", float: "right" }}
+            >
+              + Create a trip
+            </small>
+          </div>
           <div style={{ textAlign: "left" }}>
             <h1 className="trip-heading"> Potential</h1>
           </div>
-          {trips && trips.map((data)=>{
-            return(
-              <>
-          <section key={data._id} style={{ position: "relative",padding:"13px 0px" }}>
-            <Link to={`/trip/${data.name}/${data._id}`}>
-            <img
-              src="https://images.unsplash.com/photo-1622546758596-f1f06ba11f58?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8bGFob3JlfGVufDB8fDB8fA%3D%3D&w=1000&q=80"
-              style={{ width: "45%", filter: "brightness(0.5)" }}
-              alt="saved trip"
-            />
-            <div
-              style={{
-                position: "absolute",
-                top: "80%",
-                left: "31%",
-                color: "white",
-                fontSize:'large'
-              }}
-            >
-              {data.name} 
-            </div>
-            </Link>
-
-          </section>
-              
-              </>
-            )
-          })}
+          {trips &&
+            trips.map((data) => {
+              return (
+                <>
+                  <section
+                    key={data._id}
+                    style={{ position: "relative", padding: "13px 0px" }}
+                  >
+                    <Link to={`/trip/${data.name}/${data._id}`}>
+                      <img
+                        src="https://images.unsplash.com/photo-1622546758596-f1f06ba11f58?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8bGFob3JlfGVufDB8fDB8fA%3D%3D&w=1000&q=80"
+                        style={{ width: "45%", filter: "brightness(0.5)" }}
+                        alt="saved trip"
+                      />
+                      <div
+                        style={{
+                          position: "absolute",
+                          top: "80%",
+                          left: "31%",
+                          color: "white",
+                          fontSize: "large",
+                        }}
+                      >
+                        {data.name}
+                      </div>
+                    </Link>
+                  </section>
+                </>
+              );
+            })}
         </div>
       </>
     );
@@ -163,7 +168,8 @@ const Trip = () => {
         },
         data: data,
       });
-      getTrips()
+      console.log(response)
+      getTrips();
       setOpen(false);
     } else {
       setError("Please enter trip name");
@@ -176,8 +182,18 @@ const Trip = () => {
       <div style={{ background: " rgb(0 0 0)", height: "75px" }}>
         <Navbar />
       </div>
-      {localStorage.token ?  (!trips ? loggedInData() : "") : (trips ? nonLoggedInData() : "")}
-      {localStorage.token ? (trips.length===0 ? loggedInData() : showCreatedTrip()) : ""}
+      {localStorage.token
+        ? !trips
+          ? loggedInData()
+          : ""
+        : trips
+        ? nonLoggedInData()
+        : ""}
+      {localStorage.token
+        ? trips.length === 0
+          ? loggedInData()
+          : showCreatedTrip()
+        : ""}
       {open && (
         <div>
           <Modal

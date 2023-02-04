@@ -8,7 +8,8 @@ import { Button, Grid } from "@mui/material";
 import { getPackageDetailById } from "../../../Redux/Actions/packageAction";
 import { ImageUrl } from "../../../Redux/UrlConfig";
 import MetaData from "../../../Components/MetaData/MetaData";
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const ContactDetails = () => {
   const location = useLocation();
   const dispatch = useDispatch();
@@ -48,6 +49,11 @@ const ContactDetails = () => {
       myForm.set("email", email);
     }
     setErrors(errors);
+    if (!/^\d{11}$/.test(phone)) {
+      return toast.error("Enter correct phone number",{
+        position: toast.POSITION.BOTTOM_CENTER,
+      });
+    }
     myForm.set("phone", phone);
     dispatch(saveContactInfo({ firstName, lastName, email, phone }));
     history.push(`/package/${id}/activitydetails`, {
@@ -153,6 +159,7 @@ const ContactDetails = () => {
                 </Button>
               )}
             </form>
+            <ToastContainer/>
           </div>
         </Grid>
         <Grid

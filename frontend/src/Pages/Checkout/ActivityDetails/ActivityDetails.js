@@ -6,6 +6,8 @@ import MetaData from "../../../Components/MetaData/MetaData";
 import { getPackageDetailById } from "../../../Redux/Actions/packageAction";
 import { ImageUrl } from "../../../Redux/UrlConfig";
 import CheckoutSteps from "../CheckoutSteps";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const ActivityDetails = () => {
   const history = useHistory();
@@ -34,6 +36,7 @@ const ActivityDetails = () => {
       travelDate,
       options,
     };
+  
 
     sessionStorage.setItem("activityInfo", JSON.stringify(data));
     history.push(`/package/${id}/process/payment`, {
@@ -133,6 +136,7 @@ const ActivityDetails = () => {
                   </Button>
                 )}
               </form>
+              <ToastContainer/>
             </div>
           </div>
         </Grid>

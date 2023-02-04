@@ -32,7 +32,7 @@ import { getAllBookedCars } from "./Redux/Actions/bookCarAction";
 import HotelBookingDetail from "./screens/Booking/Hotel/HotelBookingDetail";
 import PackageBookingDetail from "./screens/Booking/Package/PackageBookingDetail";
 import Event from "./screens/Events/Event";
-import Chart from "./screens/Charts/Chart";
+// import Chart from "./screens/Charts/Chart";
 
 function App() {
   const dispatch = useDispatch();
@@ -102,7 +102,7 @@ function App() {
           component={PackageBookingDetail}
         />
         <PrivateRoute exact path="/events" component={Event} />
-        {/* <PrivateRoute exact path="/chart" component={Chart} /> */}
+        {/* <PrivateRoute exact path="/chart" component={Chart} /> */}     
         <Route exact path="/login" component={Signin} />
         <Route exact path="/signup" component={Signup} />
 

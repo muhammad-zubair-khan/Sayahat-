@@ -1,12 +1,12 @@
 import {
-  LOGIN_REQUEST,
+  // LOGIN_REQUEST,
   LOGIN_SUCCESS,
   LOGIN_FAILURE,
   LOGOUT_REQUEST,
   LOGOUT_SUCCESS,
   // LOGIN_FAILURE,
   SIGNUP_FAILURE,
-  SIGNUP_REQUEST,
+  // SIGNUP_REQUEST,
   SIGNUP_SUCCESS,
   UPDATE_PROFILE_REQUEST,
   UPDATE_PROFILE_SUCCESS,
@@ -17,7 +17,7 @@ import {
   LOAD_USER_FAIL,
 } from "../Constants/authConstants";
 import axios from "../helpers/axios";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 // new update signup action

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useHistory, useLocation } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import Navbar from "../../Navbar/Navbar";
 import Button from "@mui/material/Button";
 import Offcanvas from "react-bootstrap/Offcanvas";
@@ -13,10 +13,10 @@ import { Box, Slider, Typography } from "@mui/material";
 import MetaData from "../../Components/MetaData/MetaData";
 import CircularProgress from "@mui/material/CircularProgress";
 import axios from "axios";
-import {
-  addToFavorites,
-  removeFromFavorites,
-} from "../../Redux/Actions/favourtieAction";
+// import {
+//   addToFavorites,
+//   removeFromFavorites,
+// } from "../../Redux/Actions/favourtieAction";
 import Backdrop from "@mui/material/Backdrop";
 import Modal from "@mui/material/Modal";
 import Fade from "@mui/material/Fade";
@@ -37,11 +37,11 @@ const Package = (props) => {
   const history = useHistory();
   const location = useLocation();
   const [open, setOpen] = useState(false);
-  const [packageDestination, setPackageDestination] = useState(
+  const [packageDestination] = useState(
     location.state.state.packageDestination
   );
   const [dates, setDates] = useState(location.state.state.dates);
-  const [options, setOptions] = useState(location.state.state.options);
+  const [options] = useState(location.state.state.options);
   const [openPackageDate, setOpenPackageDate] = useState(false);
   const [type, setType] = useState("");
   const { packages, loading } = useSelector((state) => state.packagesReducer);
@@ -80,12 +80,12 @@ const Package = (props) => {
   };
 
   const { favorites } = useSelector((state) => state.addTofavorite);
-  const [packageId,setPackageId] = useState("")
+  const [packageId, setPackageId] = useState("");
   const handleToggleFavorites = (itemId) => {
     setOpen(true);
-    setPackageId(itemId)
-    console.warn(itemId)
-      // dispatch(addToFavorites(itemId));
+    setPackageId(itemId);
+    console.warn(itemId);
+    // dispatch(addToFavorites(itemId));
 
     // if (favorites.includes(itemId)) {
     //   dispatch(removeFromFavorites(itemId));
@@ -113,12 +113,11 @@ const Package = (props) => {
       });
   };
 
-  const addtoFavourite = () =>{
+  const addtoFavourite = () => {
     // dispatch(addToFavorites(PackageId));
-    handleAddToFavorites()
-    console.warn("packageId",packageId)
-
-  }
+    handleAddToFavorites();
+    console.warn("packageId", packageId);
+  };
   return (
     <>
       <MetaData title={`Packages of ${packageDestination} from Sayahat`} />
@@ -576,31 +575,31 @@ const Package = (props) => {
                                               Your Trips
                                             </Typography>
 
-                                              {trips &&
-                                                trips.map((data) => {
-                                                  return (
-                                                    <>
-                                                      <div
-                                                        style={{
-                                                          border:
-                                                            "1px solid rgb(212 211 211)",
-                                                          padding: "9px 9px",
-                                                          margin: "14px 0px",
-                                                          display: "flex",
-                                                          justifyContent:
-                                                            "space-between",
-                                                          cursor: "pointer",
-                                                        }}
-                                                        onClick={addtoFavourite}
-                                                      >
-                                                        <span>{data.name}</span>
-                                                        <span id="getsavetext">
-                                                          save
-                                                        </span>
-                                                      </div>
-                                                    </>
-                                                  );
-                                                })}
+                                            {trips &&
+                                              trips.map((data) => {
+                                                return (
+                                                  <>
+                                                    <div
+                                                      style={{
+                                                        border:
+                                                          "1px solid rgb(212 211 211)",
+                                                        padding: "9px 9px",
+                                                        margin: "14px 0px",
+                                                        display: "flex",
+                                                        justifyContent:
+                                                          "space-between",
+                                                        cursor: "pointer",
+                                                      }}
+                                                      onClick={addtoFavourite}
+                                                    >
+                                                      <span>{data.name}</span>
+                                                      <span id="getsavetext">
+                                                        save
+                                                      </span>
+                                                    </div>
+                                                  </>
+                                                );
+                                              })}
                                             <div></div>
 
                                             <br />
@@ -709,23 +708,3 @@ const Package = (props) => {
 };
 
 export default Package;
-{
-  /* {!loading ? (
-        <>
-        </>
-      ) : (
-        <>
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              height: "100vh",
-            }}
-          >
-            Loading... &nbsp;
-            <CircularProgress />
-          </Box>
-        </>
-      )} */
-}

@@ -3,7 +3,6 @@ import Footer from "../../Footer/Footer";
 import Navbar from "../../Navbar/Navbar";
 import HotelList from "./HotelList/HotelList";
 import "./Hotel.css";
-import { Container } from "@mui/material";
 import MetaData from "../../Components/MetaData/MetaData";
 import { useLocation } from "react-router-dom";
 const Hotel = () => {

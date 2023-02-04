@@ -25,7 +25,6 @@ import MetaData from "../../../Components/MetaData/MetaData";
 const HotelPayment = ({ history }) => {
 //   const orderInfo = JSON.parse(sessionStorage.getItem("orderInfo"));
 const location = useLocation()
-const params = useParams()
   const dispatch = useDispatch();
 //   const alert = useAlert();
 const [destination, setDestination] = useState(

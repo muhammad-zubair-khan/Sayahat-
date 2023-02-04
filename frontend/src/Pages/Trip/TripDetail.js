@@ -12,12 +12,13 @@ import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 
 const TripDetail = () => {
   const dispatch = useDispatch();
-  var { loading, error, packages } = useSelector((state) => state.myPackages);
-  var { loading, error, cars } = useSelector((state) => state.myCars);
-  var { loading, error, hotels } = useSelector((state) => state.myHotels);
+  var {  packages } = useSelector((state) => state.myPackages);
+  var {  cars } = useSelector((state) => state.myCars);
+  var {  hotels } = useSelector((state) => state.myHotels);
   const [trip, setTrip] = useState({});
   const params = useParams();
   const { id } = params;
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const getTrip = async () => {
     const response = await axios(`http://localhost:5000/api/trip/${id}`, {
       method: "GET",
@@ -30,7 +31,7 @@ const TripDetail = () => {
     dispatch(myPackages());
     dispatch(myCars());
     dispatch(myHotels());
-  }, []);
+  }, [dispatch, getTrip]);
 
   //   if(Object.keys(trip).length === 0 ){
   //     return null

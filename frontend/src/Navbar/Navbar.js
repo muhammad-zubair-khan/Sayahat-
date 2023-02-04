@@ -8,7 +8,6 @@ import "./Navbar.css";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllVacationsCategory } from "../Redux/Actions/vacationCategoryAction";
 import PermIdentityIcon from "@mui/icons-material/PermIdentity";
-import PhoneIcon from "@mui/icons-material/Phone";
 import HouseboatIcon from "@mui/icons-material/Houseboat";
 import HotelIcon from "@mui/icons-material/Hotel";
 import TipsAndUpdatesIcon from "@mui/icons-material/TipsAndUpdates";
@@ -40,7 +39,7 @@ const Navbar = (props) => {
   }, [dispatch]);
 
   const [prevScrollPos, setPrevScrollPos] = useState(0);
-  const [visible,setVisible] = useState(true);
+  const [setVisible] = useState(true);
 
   const handleScroll = () => {
     const currentScrollPos = window.scrollY;
@@ -204,15 +203,15 @@ const Navbar = (props) => {
                     Cars
                   </Link>
                 </li>
-                {/* <li>
+                <li>
                   <Link to="/trips">
                     <TipsAndUpdatesIcon
                       style={{ width: "18px", height: "15px" }}
                     />{" "}
                     Trips
                   </Link>
-                </li> */}
-                <li>
+                </li>
+                {/* <li>
                   <Link to="/aboutus">
                     <TipsAndUpdatesIcon
                       style={{ width: "18px", height: "15px" }}
@@ -225,7 +224,7 @@ const Navbar = (props) => {
                     <PhoneIcon style={{ width: "18px", height: "15px" }} />{" "}
                     Contact Us
                   </Link>
-                </li>
+                </li> */}
                 <li>
                   {auth.authenticate
                     ? renderLoggedInMenu()

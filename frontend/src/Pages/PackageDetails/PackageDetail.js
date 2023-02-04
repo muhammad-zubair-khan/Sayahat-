@@ -9,7 +9,7 @@ import {
 } from "../../Redux/Actions/packageAction";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useHistory, useLocation, useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { ImageUrl } from "../../Redux/UrlConfig";
 import { useState } from "react";
 import { format } from "date-fns";

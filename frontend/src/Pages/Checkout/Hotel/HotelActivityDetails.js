@@ -9,7 +9,6 @@ import useFetch from "../../../hook/useFetch";
 import { getHotelDetailById } from "../../../Redux/Actions/hotelAction";
 import MetaData from "../../../Components/MetaData/MetaData";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
-import Typography from "@mui/material/Typography";
 import { AiOutlineInfoCircle } from "react-icons/ai";
 import { styled } from "@mui/material/styles";
 
@@ -26,7 +25,7 @@ const HtmlTooltip = styled(({ className, ...props }) => (
 }));
 
 const HotelActivityDetails = () => {
-  const [active, setActive] = useState(0);
+  const [active] = useState(0);
   const location = useLocation();
   const dispatch = useDispatch();
   const [destination, setDestination] = useState(
@@ -35,7 +34,7 @@ const HotelActivityDetails = () => {
   const [dates, setDates] = useState(location.state.state.dates);
   const [options, setOptions] = useState(location.state.state.options);
   const [totalPrice, setTotalPrice] = useState(location.state.state.totalPrice);
-  const [selectedRooms, setSelectedRooms] = useState(
+  const [selectedRooms] = useState(
     location.state.state.selectedRooms
   );
   const { hotel } = useSelector((state) => state.hotelById);
