@@ -73,6 +73,12 @@ app.use("/public", express.static(path.join(__dirname, "uploads")));
 //     app.use(express.static("frontend/build"))
 // }
 
+const clientDirectory = path.join(__dirname, '../frontend/build');
+const adminDirectory = path.join(__dirname, '../dashboard/build');
+app.use(express.static(clientDirectory));
+app.use(express.static(adminDirectory));
+
+
 const PORT = process.env.PORT || 5001;
 app.listen(process.env.PORT, () => {
   console.log(`Server is working on ${PORT}`);
